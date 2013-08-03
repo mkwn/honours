@@ -1,0 +1,124 @@
+%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=3cm,headsep=3cm,footskip=1.5cm}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{setspace}
+\setstretch{1.5}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%\AtBeginDocument{
+%\addtolength\abovedisplayskip{-10pt}
+%\addtolength\belowdisplayskip{-5pt}
+%}
+
+\renewcommand\theenumi{\arabic{enumi}}
+\renewcommand\labelenumi{(\theenumi)}
+
+\let\originalleft\left
+\let\originalright\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\title{Honours Readings Summaries}
+
+
+\author{Matthew Kwan}
+
+\maketitle
+\global\long\def\floor#1{\left\lfloor #1\right\rfloor }
+
+
+\global\long\def\ceil#1{\left\lceil #1\right\rceil }
+
+
+
+\section{Combinatorial estimates by the switching method}
+
+M. Hasheminezhad and B. D. McKay, Combinatorial estimates by the switching
+method, Contemporary Mathematics, 531 (2010) 209-221.
+
+
+\subsection{Summary}
+
+Consider a finite set $\Omega$ of objects. A switching is a (nondeterministic)
+operation that transforms one object into another (or more generally,
+a switching is a relation $R\subseteq\Omega\times\Omega$). We can
+partition $\Omega$ into subsets $\left\{ C\left(v\right)\right\} _{v\in V}$
+and put a directed graph structure (possibly with loops) on the index
+set $V$: if an element in $C\left(v\right)$ can switch to an element
+in $C\left(w\right)$ then there is an arc between $v$ and $w$.
+
+Hopefully, for each $v$ we can find a good lower bound $a\left(v\right)$
+on the number of ways an $\omega\in C\left(v\right)$ can be switched,
+and a good upper bound $b\left(v\right)$ on the number of switchings
+an $\omega\in C\left(v\right)$ can be produced by. If we imagine
+that all switchings are performed at once, $a$ and $b$ give bounds
+on the inflow and outflow at each vertex in terms of the size of each
+$C\left(v\right)$. (So, $a\left(v\right)$ and $b\left(v\right)$
+can more generally be bounds on the \textit{average} number of switchings
+per element in $C\left(v\right)$).
+
+This gives some information about the relative sizes of the classes
+$C\left(v\right)$. Given a set of vertices $X$, let $N\left(X\right)$
+be the total amount of elements in all $C\left(x\right)$, where $x\in X$.
+The objective of the paper is to bound $N\left(Y\right)/N\left(X\right)$
+for given vertex sets $X$ and $Y$.
+
+In order to obtain bounds on $N\left(Y\right)/N\left(X\right)$, we
+write the constraints as a system of linear inequalities. Let $s'\left(v,w\right)$
+be the (unknown) amount of switchings going from $C\left(v\right)$
+to $C\left(w\right)$. For instance, for any vertex $v$, we have
+$\sum s'\left(vw\right)\ge a\left(v\right)N\left(v\right)$. A nonzero
+assignment of $s$ and $N$ satisfying the full set of inequalities
+is called a \textit{feasible solution}, and a feasible solution which
+maximizes $N\left(Y\right)/N\left(X\right)$ is called an \textit{optimal
+solution}.
+
+The key result of the paper is to show that optimal solutions always
+take one of six standard forms. This is proved by a reduction of the
+inequalities to a linear program, and the fact that an optimal solution
+of a linear program always occurs at a vertex of the corresponding
+convex polytope. The analysis is amenable to a general bound $\alpha$
+on the arcs of the digraph instead of the functions $a,b$ (in that
+case we have $\alpha\left(v,w\right)=b\left(w\right)/a\left(v\right)$).
+Although$\alpha$ doesn't have a clear combinatorial interpretation,
+the paper suggests that different $\alpha$ may arise from richer
+information bounding the behaviour of the flow of switchings.
+
+For a number of commonly-satisfied assumptions, the paper proves some
+alternative bounds for $N\left(Y\right)/N\left(X\right)$ that are
+slightly looser but easier to apply. In particular, a common use case
+is that we have some statistic on the objects in $\Omega$ and we
+believe that objects with a high value of that statistic make up a
+negligible fraction of all the objects in $\Omega$. We would then
+partition the objects according to our statistic, and design a switching
+that tends to decrease the statistic, but by no more than some fixed
+amount. We would choose $X$ to be the set of all vertices (partititions)
+and $Y$ would be the set of all vertices (partitions) with a statistic
+value higher than some $M$.
+
+
+\subsection{Remarks}
+\begin{itemize}
+\item I'm not sure why $i_{k-1}=\max\left\{ M-\left(k-1\right)K,N+1\right\} $
+is required for cases (a) and (b) of Lemma 3, instead of just $M-\left(k-1\right)K$
+as in case (c).
+\item In Corollary 1, it isn't spelled out what assumptions $X$ should
+satisfy, but it would seem A1 still has to hold.
+\item In Corollary 1, the somewhat inscrutable expression $k=\ceil{\frac{M+\min\left\{ 0,K-\rho-1\right\} }{K}}$
+can be more easily seen to be $k=\ceil{\frac{M-\floor{\rho}}{K}}$.\end{itemize}
+
+\end{document}

@@ -1,0 +1,423 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+%\AtBeginDocument{
+%\addtolength\abovedisplayskip{-10pt}
+%\addtolength\belowdisplayskip{-5pt}
+%}
+
+\renewcommand\theenumi{\arabic{enumi}}
+\renewcommand\labelenumi{(\theenumi)}
+
+\let\originalleft\left
+\let\originalright\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing other 1.5
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
+\headheight 3cm
+\headsep 3cm
+\footskip 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Honours Readings Summaries
+\end_layout
+
+\begin_layout Author
+Matthew Kwan
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor }
+{\boldsymbol{\left\lfloor #1\right\rfloor }}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil }
+{\boldsymbol{\left\lceil #1\right\rceil }}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Combinatorial estimates by the switching method
+\end_layout
+
+\begin_layout Standard
+M.
+ Hasheminezhad and B.
+ D.
+ McKay, Combinatorial estimates by the switching method, Contemporary Mathematic
+s, 531 (2010) 209-221.
+\end_layout
+
+\begin_layout Subsection
+Summary
+\end_layout
+
+\begin_layout Standard
+Consider a finite set 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ of objects.
+ A switching is a (nondeterministic) operation that transforms one object
+ into another (or more generally, a switching is a relation 
+\begin_inset Formula $R\subseteq\Omega\times\Omega$
+\end_inset
+
+).
+ We can partition 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ into subsets 
+\begin_inset Formula $\left\{ C\left(v\right)\right\} _{v\in V}$
+\end_inset
+
+ and put a directed graph structure (possibly with loops) on the index set
+ 
+\begin_inset Formula $V$
+\end_inset
+
+: if an element in 
+\begin_inset Formula $C\left(v\right)$
+\end_inset
+
+ can switch to an element in 
+\begin_inset Formula $C\left(w\right)$
+\end_inset
+
+ then there is an arc between 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Hopefully, for each 
+\begin_inset Formula $v$
+\end_inset
+
+ we can find a good lower bound 
+\begin_inset Formula $a\left(v\right)$
+\end_inset
+
+ on the number of ways an 
+\begin_inset Formula $\omega\in C\left(v\right)$
+\end_inset
+
+ can be switched, and a good upper bound 
+\begin_inset Formula $b\left(v\right)$
+\end_inset
+
+ on the number of switchings an 
+\begin_inset Formula $\omega\in C\left(v\right)$
+\end_inset
+
+ can be produced by.
+ If we imagine that all switchings are performed at once, 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ give bounds on the inflow and outflow at each vertex in terms of the size
+ of each 
+\begin_inset Formula $C\left(v\right)$
+\end_inset
+
+.
+ (So, 
+\begin_inset Formula $a\left(v\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $b\left(v\right)$
+\end_inset
+
+ can more generally be bounds on the 
+\shape italic
+average
+\shape default
+ number of switchings per element in 
+\begin_inset Formula $C\left(v\right)$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+This gives some information about the relative sizes of the classes 
+\begin_inset Formula $C\left(v\right)$
+\end_inset
+
+.
+ Given a set of vertices 
+\begin_inset Formula $X$
+\end_inset
+
+, let 
+\begin_inset Formula $N\left(X\right)$
+\end_inset
+
+ be the total amount of elements in all 
+\begin_inset Formula $C\left(x\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $x\in X$
+\end_inset
+
+.
+ The objective of the paper is to bound 
+\begin_inset Formula $N\left(Y\right)/N\left(X\right)$
+\end_inset
+
+ for given vertex sets 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In order to obtain bounds on 
+\begin_inset Formula $N\left(Y\right)/N\left(X\right)$
+\end_inset
+
+, we write the constraints as a system of linear inequalities.
+ Let 
+\begin_inset Formula $s'\left(v,w\right)$
+\end_inset
+
+ be the (unknown) amount of switchings going from 
+\begin_inset Formula $C\left(v\right)$
+\end_inset
+
+ to 
+\begin_inset Formula $C\left(w\right)$
+\end_inset
+
+.
+ For instance, for any vertex 
+\begin_inset Formula $v$
+\end_inset
+
+, we have 
+\begin_inset Formula $\sum s'\left(vw\right)\ge a\left(v\right)N\left(v\right)$
+\end_inset
+
+.
+ A nonzero assignment of 
+\begin_inset Formula $s$
+\end_inset
+
+ and 
+\begin_inset Formula $N$
+\end_inset
+
+ satisfying the full set of inequalities is called a 
+\shape italic
+feasible solution
+\shape default
+, and a feasible solution which maximizes 
+\begin_inset Formula $N\left(Y\right)/N\left(X\right)$
+\end_inset
+
+ is called an 
+\shape italic
+optimal solution
+\shape default
+.
+\end_layout
+
+\begin_layout Standard
+The key result of the paper is to show that optimal solutions always take
+ one of six standard forms.
+ This is proved by a reduction of the inequalities to a linear program,
+ and the fact that an optimal solution of a linear program always occurs
+ at a vertex of the corresponding convex polytope.
+ The analysis is amenable to a general bound 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ on the arcs of the digraph instead of the functions 
+\begin_inset Formula $a,b$
+\end_inset
+
+ (in that case we have 
+\begin_inset Formula $\alpha\left(v,w\right)=b\left(w\right)/a\left(v\right)$
+\end_inset
+
+).
+ Although
+\begin_inset Formula $\alpha$
+\end_inset
+
+ doesn't have a clear combinatorial interpretation, the paper suggests that
+ different 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ may arise from richer information bounding the behaviour of the flow of
+ switchings.
+\end_layout
+
+\begin_layout Standard
+For a number of commonly-satisfied assumptions, the paper proves some alternativ
+e bounds for 
+\begin_inset Formula $N\left(Y\right)/N\left(X\right)$
+\end_inset
+
+ that are slightly looser but easier to apply.
+ In particular, a common use case is that we have some statistic on the
+ objects in 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ and we believe that objects with a high value of that statistic make up
+ a negligible fraction of all the objects in 
+\begin_inset Formula $\Omega$
+\end_inset
+
+.
+ We would then partition the objects according to our statistic, and design
+ a switching that tends to decrease the statistic, but by no more than some
+ fixed amount.
+ We would choose 
+\begin_inset Formula $X$
+\end_inset
+
+ to be the set of all vertices (partititions) and 
+\begin_inset Formula $Y$
+\end_inset
+
+ would be the set of all vertices (partitions) with a statistic value higher
+ than some 
+\begin_inset Formula $M$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Remarks
+\end_layout
+
+\begin_layout Itemize
+I'm not sure why 
+\begin_inset Formula $i_{k-1}=\max\left\{ M-\left(k-1\right)K,N+1\right\} $
+\end_inset
+
+ is required for cases (a) and (b) of Lemma 3, instead of just 
+\begin_inset Formula $M-\left(k-1\right)K$
+\end_inset
+
+ as in case (c).
+\end_layout
+
+\begin_layout Itemize
+In Corollary 1, it isn't spelled out what assumptions 
+\begin_inset Formula $X$
+\end_inset
+
+ should satisfy, but it would seem A1 still has to hold.
+\end_layout
+
+\begin_layout Itemize
+In Corollary 1, the somewhat inscrutable expression 
+\begin_inset Formula $k=\ceil{\frac{M+\min\left\{ 0,K-\rho-1\right\} }{K}}$
+\end_inset
+
+ can be more easily seen to be 
+\begin_inset Formula $k=\ceil{\frac{M-\floor{\rho}}{K}}$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document
