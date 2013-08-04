@@ -419,5 +419,73 @@ In Corollary 1, the somewhat inscrutable expression
 .
 \end_layout
 
+\begin_layout Section
+Asymptotic enumeration of sparse multigraphs with given degrees
+\end_layout
+
+\begin_layout Standard
+C.
+ Greenhill and B.
+ D.
+ McKay, Asymptotic enumeration of sparse multigraphs with given degrees,
+ arXiv preprint arXiv:1303.4218 (2013)
+\end_layout
+
+\begin_layout Subsection
+Summary
+\end_layout
+
+\begin_layout Standard
+The paper introduces a generalized version of the switching method, where
+ there are multiple different 
+\begin_inset Quotes eld
+\end_inset
+
+colours
+\begin_inset Quotes erd
+\end_inset
+
+ of switchings that operate on the same set of objects.
+ By slightly loosening the bound, this generalized model can be reduced
+ to an instance of the single-switching model.
+\end_layout
+
+\begin_layout Standard
+(unfinished)
+\end_layout
+
+\begin_layout Section
+Asymptotic enumeration by degree sequence of graphs with degrees 
+\begin_inset Formula $o\left(n^{1/2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+B.
+ D.
+ McKay and N.
+ C.
+ Wormald, Asymptotic enumeration by degree sequence of graphs with degrees
+ 
+\begin_inset Formula $o\left(n^{1/2}\right)$
+\end_inset
+
+, Combinatorica, 11 (1991) 369-382.
+\end_layout
+
+\begin_layout Subsection
+Summary
+\end_layout
+
+\begin_layout Standard
+(unfinished)
+\end_layout
+
+\begin_layout Subsection
+Remarks
+\end_layout
+
 \end_body
 \end_document
