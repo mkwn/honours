@@ -110,6 +110,33 @@ Matthew Kwan
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\NN}{\mathbb{N}}
+{\boldsymbol{\mathbb{N}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbb{E}}
+{\boldsymbol{\mathbb{E}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Combinatorial estimates by the switching method
 \end_layout
@@ -431,6 +458,10 @@ C.
  arXiv preprint arXiv:1303.4218 (2013)
 \end_layout
 
+\begin_layout Standard
+(unfinished)
+\end_layout
+
 \begin_layout Subsection
 Summary
 \end_layout
@@ -450,8 +481,38 @@ colours
  to an instance of the single-switching model.
 \end_layout
 
-\begin_layout Standard
-(unfinished)
+\begin_layout Subsection
+Remarks
+\end_layout
+
+\begin_layout Itemize
+The switchings are described in terms of 
+\shape italic
+oriented
+\shape default
+ edges.
+ That makes sense because 
+\begin_inset Formula $M$
+\end_inset
+
+ is the sum of the degrees and therefore twice the number of edges.
+\end_layout
+
+\begin_layout Itemize
+When giving a lower bound for the number of switchings, there are formulas
+ like 
+\begin_inset Formula $\left[\ell_{1}\right]_{3}-O\left(k_{\mathrm{max}}\ell_{1}^{2}\right)$
+\end_inset
+
+.
+ The reasoning for the 
+\begin_inset Formula $O\left(k_{\mathrm{max}}\ell_{1}^{2}\right)$
+\end_inset
+
+ term is that it bounds the number of triples where two vertices are loops
+ and the second of those is adjacent to the final vertex.
+ This is an upper bound for the number of triples of loops which contain
+ an edge.
 \end_layout
 
 \begin_layout Section
@@ -475,16 +536,386 @@ B.
 , Combinatorica, 11 (1991) 369-382.
 \end_layout
 
-\begin_layout Subsection
-Summary
-\end_layout
-
 \begin_layout Standard
 (unfinished)
 \end_layout
 
+\begin_layout Section
+Random Graphs
+\end_layout
+
+\begin_layout Standard
+S.
+ Janson, T.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+L{}
+\end_layout
+
+\end_inset
+
+uczak and A.
+ Ruci
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'n
+\end_layout
+
+\end_inset
+
+ski, Random Graphs (2000).
+\end_layout
+
 \begin_layout Subsection
 Remarks
+\end_layout
+
+\begin_layout Subsubsection
+Proposition 1.15
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+subsubsequence principle
+\begin_inset Quotes erd
+\end_inset
+
+ means that taking 
+\begin_inset Formula $n$
+\end_inset
+
+ along any subsequence of 
+\begin_inset Formula $\NN$
+\end_inset
+
+, we can find a subsubsequence so that either 
+\begin_inset Formula $M$
+\end_inset
+
+ is bounded, or 
+\begin_inset Formula $N-M$
+\end_inset
+
+ is bounded, or 
+\begin_inset Formula $M\left(N-M\right)/N\to\infty$
+\end_inset
+
+.
+ For, suppose none of these are true.
+ Take a subsubsequence where 
+\begin_inset Formula $M/N$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(N-M\right)/N$
+\end_inset
+
+ both converge.
+ They cannot both converge to zero; if for example 
+\begin_inset Formula $M/N\to L>0$
+\end_inset
+
+ then 
+\begin_inset Formula $M\left(N-M\right)/N=\Theta\left(N-M\right)$
+\end_inset
+
+, contradiction.
+\end_layout
+
+\begin_layout Standard
+In fact we can assume that if 
+\begin_inset Formula $M\left(N-M\right)/N\not\to\infty$
+\end_inset
+
+ then 
+\begin_inset Formula $M$
+\end_inset
+
+ or 
+\begin_inset Formula $N-M$
+\end_inset
+
+ is constant, which simplifies the analysis significantly.
+ If 
+\begin_inset Formula $M$
+\end_inset
+
+ is constant, prove that 
+\begin_inset Formula $\Pr\left(\left|\Gamma_{M/N}\right|<M\right)\to p_{M}\left(M\right)/e^{M}$
+\end_inset
+
+, where 
+\begin_inset Formula $p_{M}$
+\end_inset
+
+ is the first 
+\begin_inset Formula $M$
+\end_inset
+
+ terms of the taylor expansion of 
+\begin_inset Formula $e^{z}$
+\end_inset
+
+.
+ Also, I think the result of the central limit theorem is not enough for
+ the estimate 
+\begin_inset Formula $\Pr\left(\left|\Gamma_{M/N}\right|<M\right)\to1/2$
+\end_inset
+
+, one needs to dig into the proof by convergence of characteristic function.
+\end_layout
+
+\begin_layout Subsubsection
+Theorem 5.4
+\end_layout
+
+\begin_layout Standard
+The process can be viewed as either exploring a random graph or randomly
+ generating a graph in an exotic edge order.
+ Both are equivalent, but different viewpoints help understand different
+ parts of the argument.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $k$
+\end_inset
+
+th step
+\begin_inset Quotes erd
+\end_inset
+
+ means the 
+\begin_inset Formula $k$
+\end_inset
+
+th saturation, not the 
+\begin_inset Formula $k$
+\end_inset
+
+th generation.
+ If the process is dead before step 
+\begin_inset Formula $k$
+\end_inset
+
+, then 
+\begin_inset Formula $X_{k}$
+\end_inset
+
+ is not defined.
+ The last paragraph on p109/first paragraph on p110 is confusing and contains
+ some typos, here's a little reprashing of bits and pieces:
+\end_layout
+
+\begin_layout Standard
+The event that after the first 
+\begin_inset Formula $k$
+\end_inset
+
+ steps (saturations) there are fewer than 
+\begin_inset Formula $\left(c-1\right)k/2$
+\end_inset
+
+ unsaturated vertices remaining and the process is alive is 
+\begin_inset Formula 
+\[
+H=\left\{ \mbox{process is alive for step \ensuremath{k}and}\sum_{i=1}^{k}X_{i}-k<\frac{\left(c-1\right)k}{2}\right\} .
+\]
+
+\end_inset
+
+Now, at step 
+\begin_inset Formula $i$
+\end_inset
+
+, if 
+\begin_inset Formula $m$
+\end_inset
+
+ vertices have been touched there are 
+\begin_inset Formula $n-m$
+\end_inset
+
+ vertices that can be touched, each with probability 
+\begin_inset Formula $p$
+\end_inset
+
+, so 
+\begin_inset Formula $X_{i}\sim\mathrm{Bi}\left(n-m,p\right)$
+\end_inset
+
+.
+ For event 
+\begin_inset Formula $H$
+\end_inset
+
+, no more than 
+\begin_inset Formula $\left(c+1\right)k_{+}/2$
+\end_inset
+
+ vertices can have been touched up to step 
+\begin_inset Formula $k$
+\end_inset
+
+, so 
+\begin_inset Formula $X_{i}\ge X_{i}^{-}$
+\end_inset
+
+ where 
+\begin_inset Formula $X_{i}^{-}\sim\mathrm{Bi}\left(n-k_{+}\left(c+1\right)/2,p\right)$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\sum_{i=1}^{k}X_{i}^{-}\sim\mathrm{Bi}\left(k\left(n-n^{2/3}\left(c+1\right)\right)/2,p\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\E\left[\sum_{i=1}^{k}X_{i}^{-}\right]>k-1$
+\end_inset
+
+ for sufficiently large 
+\begin_inset Formula $n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The bound for there to be two giant components uses 
+\begin_inset Formula $e^{Q}\ge1+Q$
+\end_inset
+
+ for 
+\begin_inset Formula $Q=-c/n$
+\end_inset
+
+.
+ I think formal justification for the for the 
+\begin_inset Formula $o\left(1\right)$
+\end_inset
+
+ term in 
+\begin_inset Formula $\rho_{-}+o\left(1\right)$
+\end_inset
+
+ is quite complicated.
+ Let 
+\begin_inset Formula $Y_{n}\sim\mathrm{Bi}\left(n,c/n\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $Y\sim\mathrm{Po}\left(c\right)$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $Y_{n}\xrightarrow{d}Y$
+\end_inset
+
+, for all 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ there is 
+\begin_inset Formula $N$
+\end_inset
+
+ so that 
+\begin_inset Formula $Y_{n}\le\left(1+\varepsilon\right)Y$
+\end_inset
+
+ for 
+\begin_inset Formula $n>N$
+\end_inset
+
+.
+ The pgf of 
+\begin_inset Formula $Y$
+\end_inset
+
+ is 
+\begin_inset Formula $G:x\mapsto\exp\left(c\left(x^{1+\varepsilon}-1\right)\right)$
+\end_inset
+
+ so by the implicit function theorem, the solution for 
+\begin_inset Formula $x$
+\end_inset
+
+ of 
+\begin_inset Formula $G\left(x;\varepsilon\right)=x$
+\end_inset
+
+ is continuous in 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{align*}
+ & \Pr\left(\mbox{branching process with }X_{i}\sim\mathrm{Bi}\left(n,c/n\right)\mbox{ dies after more than }k_{-}\mbox{ steps}\right)\\
+ & \le\Pr\left(\mbox{branching process with }X_{i}\sim\mathrm{Po}\left(c\right)\mbox{ dies after more than }k_{-}\mbox{ steps}\right)+o\left(1\right)
+\end{align*}
+
+\end_inset
+
+because 
+\begin_inset Formula $\Pr\left(\mbox{process dies at all}\right)$
+\end_inset
+
+ is (in the limit) the same for both cases.
+ But since 
+\begin_inset Formula $k_{-}\to\infty$
+\end_inset
+
+ the above probability is 
+\begin_inset Formula $o\left(1\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To choose an ordered pair of small vertices, first choose a small vertex
+ arbitrarily (there are 
+\begin_inset Formula $n\rho\left(n,p\right)$
+\end_inset
+
+ ways to do this on average), then either choose a small vertex in the same
+ component (there are at most 
+\begin_inset Formula $k_{-}-1$
+\end_inset
+
+ ways to do this), or choose a small vertex in a different component (there
+ are independently 
+\begin_inset Formula $n\rho\left(n-O\left(k_{-}\right),p\right)$
+\end_inset
+
+ ways of doing this on average).
+ Using a similar bounding argument as for 
+\begin_inset Formula $\rho\left(n,p\right)$
+\end_inset
+
+ we have 
+\begin_inset Formula $\rho\left(n-O\left(k_{-}\right),p\right)\sim\rho\left(n,p\right)$
+\end_inset
+
+.
 \end_layout
 
 \end_body

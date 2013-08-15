@@ -1,4 +1,4 @@
-%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,english]{article}
 \usepackage[T1]{fontenc}
@@ -9,6 +9,7 @@
 \setlength{\parindent}{0pt}
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{setspace}
 \setstretch{1.5}
 
@@ -43,6 +44,14 @@
 
 \global\long\def\ceil#1{\left\lceil #1\right\rceil }
 
+
+\global\long\def\NN{\mathbb{N}}
+
+
+\global\long\def\E{\mathbb{E}}
+
+
+\tableofcontents{}
 
 
 \section{Combinatorial estimates by the switching method}
@@ -127,6 +136,8 @@ can be more easily seen to be $k=\ceil{\frac{M-\floor{\rho}}{K}}$.
 C. Greenhill and B. D. McKay, Asymptotic enumeration of sparse multigraphs
 with given degrees, arXiv preprint arXiv:1303.4218 (2013)
 
+(unfinished)
+
 
 \subsection{Summary}
 
@@ -136,8 +147,20 @@ operate on the same set of objects. By slightly loosening the bound,
 this generalized model can be reduced to an instance of the single-switching
 model.
 
-(unfinished)
 
+\subsection{Remarks}
+\begin{itemize}
+\item The switchings are described in terms of \textit{oriented} edges.
+That makes sense because $M$ is the sum of the degrees and therefore
+twice the number of edges.
+\item When giving a lower bound for the number of switchings, there are
+formulas like $\left[\ell_{1}\right]_{3}-O\left(k_{\mathrm{max}}\ell_{1}^{2}\right)$.
+The reasoning for the $O\left(k_{\mathrm{max}}\ell_{1}^{2}\right)$
+term is that it bounds the number of triples where two vertices are
+loops and the second of those is adjacent to the final vertex. This
+is an upper bound for the number of triples of loops which contain
+an edge.
+\end{itemize}
 
 \section{Asymptotic enumeration by degree sequence of graphs with degrees
 $o\left(n^{1/2}\right)$}
@@ -146,11 +169,83 @@ B. D. McKay and N. C. Wormald, Asymptotic enumeration by degree sequence
 of graphs with degrees $o\left(n^{1/2}\right)$, Combinatorica, 11
 (1991) 369-382.
 
-
-\subsection{Summary}
-
 (unfinished)
 
 
+\section{Random Graphs}
+
+S. Janson, T. \L{}uczak and A. Ruci\'nski, Random Graphs (2000).
+
+
 \subsection{Remarks}
+
+
+\subsubsection{Proposition 1.15}
+
+The ``subsubsequence principle'' means that taking $n$ along any
+subsequence of $\NN$, we can find a subsubsequence so that either
+$M$ is bounded, or $N-M$ is bounded, or $M\left(N-M\right)/N\to\infty$.
+For, suppose none of these are true. Take a subsubsequence where $M/N$
+and $\left(N-M\right)/N$ both converge. They cannot both converge
+to zero; if for example $M/N\to L>0$ then $M\left(N-M\right)/N=\Theta\left(N-M\right)$,
+contradiction.
+
+In fact we can assume that if $M\left(N-M\right)/N\not\to\infty$
+then $M$ or $N-M$ is constant, which simplifies the analysis significantly.
+If $M$ is constant, prove that $\Pr\left(\left|\Gamma_{M/N}\right|<M\right)\to p_{M}\left(M\right)/e^{M}$,
+where $p_{M}$ is the first $M$ terms of the taylor expansion of
+$e^{z}$. Also, I think the result of the central limit theorem is
+not enough for the estimate $\Pr\left(\left|\Gamma_{M/N}\right|<M\right)\to1/2$,
+one needs to dig into the proof by convergence of characteristic function.
+
+
+\subsubsection{Theorem 5.4}
+
+The process can be viewed as either exploring a random graph or randomly
+generating a graph in an exotic edge order. Both are equivalent, but
+different viewpoints help understand different parts of the argument.
+The ``$k$th step'' means the $k$th saturation, not the $k$th
+generation. If the process is dead before step $k$, then $X_{k}$
+is not defined. The last paragraph on p109/first paragraph on p110
+is confusing and contains some typos, here's a little reprashing of
+bits and pieces:
+
+The event that after the first $k$ steps (saturations) there are
+fewer than $\left(c-1\right)k/2$ unsaturated vertices remaining and
+the process is alive is 
+\[
+H=\left\{ \mbox{process is alive for step \ensuremath{k}and}\sum_{i=1}^{k}X_{i}-k<\frac{\left(c-1\right)k}{2}\right\} .
+\]
+Now, at step $i$, if $m$ vertices have been touched there are $n-m$
+vertices that can be touched, each with probability $p$, so $X_{i}\sim\mathrm{Bi}\left(n-m,p\right)$.
+For event $H$, no more than $\left(c+1\right)k_{+}/2$ vertices can
+have been touched up to step $k$, so $X_{i}\ge X_{i}^{-}$ where
+$X_{i}^{-}\sim\mathrm{Bi}\left(n-k_{+}\left(c+1\right)/2,p\right)$.
+Then $\sum_{i=1}^{k}X_{i}^{-}\sim\mathrm{Bi}\left(k\left(n-n^{2/3}\left(c+1\right)\right)/2,p\right)$
+and $\E\left[\sum_{i=1}^{k}X_{i}^{-}\right]>k-1$ for sufficiently
+large $n$.
+
+The bound for there to be two giant components uses $e^{Q}\ge1+Q$
+for $Q=-c/n$. I think formal justification for the for the $o\left(1\right)$
+term in $\rho_{-}+o\left(1\right)$ is quite complicated. Let $Y_{n}\sim\mathrm{Bi}\left(n,c/n\right)$
+and $Y\sim\mathrm{Po}\left(c\right)$. Since $Y_{n}\xrightarrow{d}Y$,
+for all $\varepsilon$ there is $N$ so that $Y_{n}\le\left(1+\varepsilon\right)Y$
+for $n>N$. The pgf of $Y$ is $G:x\mapsto\exp\left(c\left(x^{1+\varepsilon}-1\right)\right)$
+so by the implicit function theorem, the solution for $x$ of $G\left(x;\varepsilon\right)=x$
+is continuous in $\varepsilon$ and 
+\begin{align*}
+ & \Pr\left(\mbox{branching process with }X_{i}\sim\mathrm{Bi}\left(n,c/n\right)\mbox{ dies after more than }k_{-}\mbox{ steps}\right)\\
+ & \le\Pr\left(\mbox{branching process with }X_{i}\sim\mathrm{Po}\left(c\right)\mbox{ dies after more than }k_{-}\mbox{ steps}\right)+o\left(1\right)
+\end{align*}
+because $\Pr\left(\mbox{process dies at all}\right)$ is (in the limit)
+the same for both cases. But since $k_{-}\to\infty$ the above probability
+is $o\left(1\right)$.
+
+To choose an ordered pair of small vertices, first choose a small
+vertex arbitrarily (there are $n\rho\left(n,p\right)$ ways to do
+this on average), then either choose a small vertex in the same component
+(there are at most $k_{-}-1$ ways to do this), or choose a small
+vertex in a different component (there are independently $n\rho\left(n-O\left(k_{-}\right),p\right)$
+ways of doing this on average). Using a similar bounding argument
+as for $\rho\left(n,p\right)$ we have $\rho\left(n-O\left(k_{-}\right),p\right)\sim\rho\left(n,p\right)$.
 \end{document}
