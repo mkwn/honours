@@ -458,10 +458,6 @@ C.
  arXiv preprint arXiv:1303.4218 (2013)
 \end_layout
 
-\begin_layout Standard
-(unfinished)
-\end_layout
-
 \begin_layout Subsection
 Summary
 \end_layout
@@ -534,10 +530,6 @@ B.
 \end_inset
 
 , Combinatorica, 11 (1991) 369-382.
-\end_layout
-
-\begin_layout Standard
-(unfinished)
 \end_layout
 
 \begin_layout Section
@@ -916,6 +908,288 @@ To choose an ordered pair of small vertices, first choose a small vertex
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsubsection
+Theorem 5.5
+\end_layout
+
+\begin_layout Standard
+The reasoning behind the estimate 
+\begin_inset Formula $k!k^{2}$
+\end_inset
+
+ is that each bad subgraph can be constructed by choosing a path then choosing
+ two points on that path to glue the endpoints to.
+ The first line of the displayed inequality is due to Markov's inequality,
+ the second can be derived with 
+\begin_inset Formula $\left(\frac{2M}{n}\right)^{k+1}>\frac{n^{k+1}\left[M\right]_{k+1}}{\left[n^{2}/2-1\right]_{k+1}}>\frac{\left[n\right]_{k}\left[M\right]_{k+1}}{\left[{n \choose 2}\right]_{k+1}}$
+\end_inset
+
+ for 
+\begin_inset Formula $2\le k<n/2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Proof of Theorem 9.23
+\end_layout
+
+\begin_layout Standard
+For the trace identity, prove by induction that 
+\begin_inset Formula $\left(A^{k}\right)_{ij}$
+\end_inset
+
+ is the sum of all products 
+\begin_inset Formula $a_{i\alpha_{1}}a_{\alpha_{1}\alpha_{2}}\dots a_{\alpha_{k-2}\alpha_{k-1}}a_{\alpha_{k-1}j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Fundamentals of Stein's Method
+\end_layout
+
+\begin_layout Standard
+N.
+ Ross, Fundamentals of Stein's Method, Probability Surveys, 8 (2000) 210-293.
+\end_layout
+
+\begin_layout Subsection
+Summary
+\end_layout
+
+\begin_layout Standard
+Stein's method is a technique for bounding the 
+\begin_inset Quotes eld
+\end_inset
+
+distance
+\begin_inset Quotes erd
+\end_inset
+
+ between distributions in some metric of the form 
+\begin_inset Formula $d\left(X,Z\right)=\sup_{h\in\mathcal{H}}\left|\mathbb{E}h\left(X\right)-\mathbb{E}h\left(Z\right)\right|$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is a family of functions.
+ If 
+\begin_inset Formula $\mathcal{H}=\left\{ 1_{\left(-\infty,x\right]}:x\in\mathbb{R}\right\} $
+\end_inset
+
+, then this measures the maximum distance between distribution functions
+ (Kolmogorov metric).
+ It's often possible to transfer bounds between different metrics, so it's
+ worthwhile to define some auxilary metrics for which it's easier to apply
+ Stein's method.
+\end_layout
+
+\begin_layout Standard
+I think the motivations behind Stein's method are twofold.
+ First, it gives a concrete bound of the kind not usually provided by asymptotic
+ methods.
+ Second, it can be used to give uniform convergence of probabilities, which
+ is sometimes a necessary ingredient to asymptotic results where we allow
+ things to vary (for example, proving something about 
+\begin_inset Formula $\mathbb{G}\left(n,p\right)$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+The idea of Stein's method is that there is some characterizing operator
+ 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ of a random variable 
+\begin_inset Formula $Z$
+\end_inset
+
+ so that 
+\begin_inset Formula $\mathbb{E}\mathcal{A}f\left(X\right)=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $f$
+\end_inset
+
+ in some manageable family 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+, precisely when 
+\begin_inset Formula $X$
+\end_inset
+
+ has the distribution of 
+\begin_inset Formula $Z$
+\end_inset
+
+.
+ For example, if 
+\begin_inset Formula $Z\sim\mathcal{N}\left(0,1\right)$
+\end_inset
+
+ then we can choose 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ as 
+\begin_inset Formula $f\mapsto\left(x\mapsto f'\left(x\right)-xf\left(x\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+ as the set of bounded, continuously differentiable functions.
+ If 
+\begin_inset Formula $Z\sim\mbox{Po}\left(\lambda\right)$
+\end_inset
+
+ then we can choose 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ as 
+\begin_inset Formula $f\mapsto\left(k\mapsto\lambda f\left(k+1\right)-kf\left(k\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+ as the set of all bounded functions.
+\end_layout
+
+\begin_layout Standard
+For all 
+\begin_inset Formula $h\in\mathcal{H}$
+\end_inset
+
+, we can try to choose 
+\begin_inset Formula $f_{h}$
+\end_inset
+
+ to solve (or approximately solve) the equation 
+\begin_inset Formula $\mathcal{A}f_{h}=h-\mathbb{E}hZ$
+\end_inset
+
+ (and adjust/refine 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+ to include all such 
+\begin_inset Formula $f_{h}$
+\end_inset
+
+).
+ Then, 
+\begin_inset Formula $d\left(X,Z\right)\le\sup_{f\in\mathcal{F}}\left|\mathbb{E}\mathcal{A}f\left(X\right)\right|$
+\end_inset
+
+.
+ By the choice of 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+, we hope that this bound is relatively sharp.
+ Also, we also hope that bounding 
+\begin_inset Formula $\left|\mathbb{E}\mathcal{A}f\left(X\right)\right|$
+\end_inset
+
+ is easier than directly bounding 
+\begin_inset Formula $\left|\mathbb{E}h\left(X\right)-\mathbb{E}h\left(Z\right)\right|$
+\end_inset
+
+.
+ This is usually the case when 
+\begin_inset Formula $\mathcal{A}f$
+\end_inset
+
+ can be broken up into multiple components that can be bounded independently.
+\end_layout
+
+\begin_layout Subsection
+Remarks
+\end_layout
+
+\begin_layout Enumerate
+For the proof of proposition 1, the 
+\begin_inset Formula $C\varepsilon/2$
+\end_inset
+
+ term comes from a 
+\begin_inset Formula $C\times\varepsilon$
+\end_inset
+
+ triangular region of integration.
+ The 
+\begin_inset Formula $d_{W}\left(W,Z\right)/\varepsilon$
+\end_inset
+
+ term comes from the fact that 
+\begin_inset Formula $h_{x,\varepsilon}\varepsilon$
+\end_inset
+
+ is 1-Lipschitz.
+\end_layout
+
+\begin_layout Enumerate
+For the proof of Lemma 3.4, as well as Cauchy-Schwarz Holder's inequality
+ 
+\begin_inset Formula $\mathbb{E}\left|X\right|\le\left(\mathbb{E}X^{2}\right)^{1/2}$
+\end_inset
+
+ is used.
+\end_layout
+
+\begin_layout Enumerate
+For the proof of Theorem 3.5, the fact 
+\begin_inset Formula $\sum_{i=1}^{n}\sum_{j\in N_{i}}X_{i}=\left(\sum_{i=1}^{n}X_{i}\right)^{2}$
+\end_inset
+
+ is used.
+\end_layout
+
+\begin_layout Section
+Exchangeable Pairs and Poisson Approximation
+\end_layout
+
+\begin_layout Standard
+S.
+ Chatterjee, P.
+ Diaconis, E.
+ Meckes, Fundamentals of Stein's Method, Probability Surveys, 2 (2005) 64-106.
+\end_layout
+
+\begin_layout Section
+Exchangeable pairs and Poisson Approximation
+\end_layout
+
+\begin_layout Standard
+S.
+ Chatterjee, P.
+ Diaconis, E.
+ Meckes, Fundamentals of Stein's Method, Probability Surveys, 2 (2005) 64-106.
+\end_layout
+
+\begin_layout Section
+Exchangeable Pairs, Switchings and Random Regular Graphs
+\end_layout
+
+\begin_layout Standard
+T.
+ Johnson, Exchangeable Pairs, Switchings and Random Regular Graphs.
 \end_layout
 
 \end_body
