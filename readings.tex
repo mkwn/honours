@@ -59,10 +59,7 @@
 \tableofcontents{}
 
 
-\section{Combinatorial estimates by the switching method}
-
-M. Hasheminezhad and B. D. McKay, Combinatorial estimates by the switching
-method, Contemporary Mathematics, 531 (2010) 209-221.
+\section{Combinatorial estimates by the switching method \cite{HM10}}
 
 
 \subsection{Summary}
@@ -136,10 +133,7 @@ satisfy, but it would seem A1 still has to hold.
 can be more easily seen to be $k=\ceil{\frac{M-\floor{\rho}}{K}}$.
 \end{itemize}
 
-\section{Asymptotic enumeration of sparse multigraphs with given degrees}
-
-C. Greenhill and B. D. McKay, Asymptotic enumeration of sparse multigraphs
-with given degrees, arXiv preprint arXiv:1303.4218 (2013)
+\section{Asymptotic enumeration of sparse multigraphs with given degrees \cite{GM13} }
 
 
 \subsection{Summary}
@@ -165,17 +159,7 @@ is an upper bound for the number of triples of loops which contain
 an edge.
 \end{itemize}
 
-\section{Asymptotic enumeration by degree sequence of graphs with degrees
-$o\left(n^{1/2}\right)$}
-
-B. D. McKay and N. C. Wormald, Asymptotic enumeration by degree sequence
-of graphs with degrees $o\left(n^{1/2}\right)$, Combinatorica, 11
-(1991) 369-382.
-
-
-\section{Random Graphs}
-
-S. Janson, T. \L{}uczak and A. Ruci\'nski, Random Graphs (2000).
+\section{Random Graphs \cite{JLR00}}
 
 
 \subsection{Remarks}
@@ -267,10 +251,7 @@ For the trace identity, prove by induction that $\left(A^{k}\right)_{ij}$
 is the sum of all products $a_{i\alpha_{1}}a_{\alpha_{1}\alpha_{2}}\dots a_{\alpha_{k-2}\alpha_{k-1}}a_{\alpha_{k-1}j}$.
 
 
-\section{Fundamentals of Stein's Method}
-
-N. Ross, Fundamentals of Stein's Method, Probability Surveys, 8 (2000)
-210-293.
+\section{Fundamentals of Stein's Method \cite{Ros11}}
 
 
 \subsection{Summary}
@@ -356,13 +337,51 @@ is used.
 is used.
 \end{itemize}
 
-\section{Exchangeable Pairs and Poisson Approximation}
-
-S. Chatterjee, P. Diaconis, E. Meckes, Fundamentals of Stein's Method,
-Probability Surveys, 2 (2005) 64-106.
+\section{Exchangeable Pairs and Poisson Approximation \cite{CDM05}}
 
 
-\section{Exchangeable Pairs, Switchings and Random Regular Graphs}
+\subsection{Summary}
 
-T. Johnson, Exchangeable Pairs, Switchings and Random Regular Graphs.
+This paper gives a higher-level overview of Stein's method with exchangeable
+pairs. If we think $X$ is ``near'' $Z$, then the operators $\mathbb{E}:f\mapsto\mathbb{E}\left[f\left(X\right)\right]$
+and $\mathbb{E}_{0}:f\mapsto\mathbb{E}\left[f\left(Z\right)\right]$
+should also be close. An exchangeable pair $\left(X,X'\right)$ is
+in correspondence with a symmetric measure $\mathbb{Q}$ with $\mathbb{Q}\left(A,A'\right)=\Pr\left(X\in A,X'\in A'\right)$
+and margins $\mathbb{Q}\left(A,\Omega\right)=\Pr\left(X\in A\right)$.
+Let $T_{0}$ ($\mathcal{A}$ from before) be the characterizing operator
+of $Z$. (unfinished)
+
+
+\section{Exchangeable Pairs, Switchings and Random Regular Graphs \cite{Joh11}}
+
+
+\subsection{Summary}
+
+A previous paper \cite{MWW04} proved that small cycle counts were
+asymptotically Poisson under some ``natural'' conditions on the
+growth of the maximum cycle length, and conjectured that this was
+a threshold; if the maximum cycle length was to grow faster the cycle
+counts would no longer be asymptotically Poisson. Johnson disproves
+the conjecture with Stein's method.
+
+The use of switchings is quite different to Hasheminezhad and McKay.
+The switching operation (relation) induces a markov chain on the space
+of all regular graphs; by adding loops this chain can be adjusted
+so that the stationary distribution is uniform and the chain is reversible.
+The Markov chain then gives an exchangeable pair with which to apply
+Stein's method.
+
+
+\subsection{Remarks}
+\begin{itemize}
+\item Proof of Theorem 7: I think every vertex of $\mathfrak{G}$ needs
+to have total \textit{weight} $d_{0}$, not degree $d_{0}$.
+\item Unlike most (?) applications of Stein's method, Johnson is more interested
+in asymptotics than explicit quantitative bounds between distributions,
+so there are undetermined constants. I'm not sure whether it's feasible
+or useful to obtain these.
+\end{itemize}
+\bibliographystyle{amsalpha}
+\addcontentsline{toc}{section}{\refname}\bibliography{readings}
+
 \end{document}

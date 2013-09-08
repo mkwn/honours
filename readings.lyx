@@ -16,6 +16,11 @@
 \let\originalright\right
 \renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
 \renewcommand{\right}{\aftergroup\egroup\originalright}
+
+\usepackage{tocloft}
+\setlength\cftparskip{-2pt}
+\setlength\cftbeforesecskip{1pt}
+\setlength\cftaftertoctitleskip{2pt}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -85,7 +90,7 @@ theorems-ams
 \begin_body
 
 \begin_layout Title
-Honours Readings Summaries
+Honours Readings
 \end_layout
 
 \begin_layout Author
@@ -138,15 +143,14 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Section
-Combinatorial estimates by the switching method
-\end_layout
+Combinatorial estimates by the switching method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "HM10"
 
-\begin_layout Standard
-M.
- Hasheminezhad and B.
- D.
- McKay, Combinatorial estimates by the switching method, Contemporary Mathematic
-s, 531 (2010) 209-221.
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -447,15 +451,14 @@ In Corollary 1, the somewhat inscrutable expression
 \end_layout
 
 \begin_layout Section
-Asymptotic enumeration of sparse multigraphs with given degrees
-\end_layout
+Asymptotic enumeration of sparse multigraphs with given degrees 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "GM13"
 
-\begin_layout Standard
-C.
- Greenhill and B.
- D.
- McKay, Asymptotic enumeration of sparse multigraphs with given degrees,
- arXiv preprint arXiv:1303.4218 (2013)
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -512,61 +515,14 @@ When giving a lower bound for the number of switchings, there are formulas
 \end_layout
 
 \begin_layout Section
-Asymptotic enumeration by degree sequence of graphs with degrees 
-\begin_inset Formula $o\left(n^{1/2}\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-B.
- D.
- McKay and N.
- C.
- Wormald, Asymptotic enumeration by degree sequence of graphs with degrees
- 
-\begin_inset Formula $o\left(n^{1/2}\right)$
-\end_inset
-
-, Combinatorica, 11 (1991) 369-382.
-\end_layout
-
-\begin_layout Section
-Random Graphs
-\end_layout
-
-\begin_layout Standard
-S.
- Janson, T.
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-L{}
-\end_layout
+Random Graphs 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JLR00"
 
 \end_inset
 
-uczak and A.
- Ruci
-\begin_inset ERT
-status open
 
-\begin_layout Plain Layout
-
-
-\backslash
-'n
-\end_layout
-
-\end_inset
-
-ski, Random Graphs (2000).
 \end_layout
 
 \begin_layout Subsection
@@ -950,16 +906,22 @@ For the trace identity, prove by induction that
 \end_layout
 
 \begin_layout Section
-Fundamentals of Stein's Method
-\end_layout
+Fundamentals of Stein's Method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ros11"
 
-\begin_layout Standard
-N.
- Ross, Fundamentals of Stein's Method, Probability Surveys, 8 (2000) 210-293.
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 Summary
+\end_layout
+
+\begin_layout Subsubsection
+Overview
 \end_layout
 
 \begin_layout Standard
@@ -1068,7 +1030,7 @@ The idea of Stein's method is that there is some characterizing operator
 \begin_inset Formula $\mathcal{F}$
 \end_inset
 
- as the set of all bounded functions.
+ as the set of all bounded functions with bounded differences.
 \end_layout
 
 \begin_layout Standard
@@ -1080,7 +1042,7 @@ For all
 \begin_inset Formula $f_{h}$
 \end_inset
 
- to solve (or approximately solve) the equation 
+ to solve (or approximately solve) the functional equation 
 \begin_inset Formula $\mathcal{A}f_{h}=h-\mathbb{E}hZ$
 \end_inset
 
@@ -1112,18 +1074,179 @@ For all
 \end_inset
 
 .
- This is usually the case when 
-\begin_inset Formula $\mathcal{A}f$
+\end_layout
+
+\begin_layout Subsubsection
+Exchangeable Pairs for Poisson Approximation
+\end_layout
+
+\begin_layout Standard
+A pair of random variables 
+\begin_inset Formula $\left(X,X'\right)$
 \end_inset
 
- can be broken up into multiple components that can be bounded independently.
+ is exchangable if it has the same distribution as 
+\begin_inset Formula $\left(X',X\right)$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\left(X,X'\right)$
+\end_inset
+
+ are exchangeable, we have 
+\begin_inset Formula $\mathbb{E}\left[1\left\{ X=X'+1\right\} f\left(X\right)\right]=\mathbb{E}\left[1\left\{ X'=X+1\right\} f\left(X'\right)\right]$
+\end_inset
+
+ so 
+\begin_inset Formula $\mathbb{E}\left[\Pr\left(X'=X-1|X\right)f\left(X\right)\right]=\mathbb{E}\left[\Pr\left(X'=X+1|X\right)f\left(X+1\right)\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So, if we have 
+\begin_inset Formula $\Pr\left(X'=X-1|X\right)\approx cX$
+\end_inset
+
+ and 
+\begin_inset Formula $\Pr\left(X'=X+1|X\right)\approx c\lambda$
+\end_inset
+
+ for some 
+\begin_inset Formula $c$
+\end_inset
+
+ then 
+\begin_inset Formula $\mathbb{E}\left[\lambda f\left(X\right)-Xf\left(X\right)\right]\approx0$
+\end_inset
+
+ and 
+\begin_inset Formula $X$
+\end_inset
+
+ is approximately Poisson.
+\end_layout
+
+\begin_layout Standard
+To choose appropriate 
+\begin_inset Formula $X'$
+\end_inset
+
+, we want to perturb 
+\begin_inset Formula $X$
+\end_inset
+
+ in some 
+\begin_inset Quotes eld
+\end_inset
+
+reversible
+\begin_inset Quotes erd
+\end_inset
+
+ way, so that 
+\begin_inset Formula $X$
+\end_inset
+
+ can also be symmetrically viewed as a perturbation of 
+\begin_inset Formula $X'$
+\end_inset
+
+.
+ Sometimes 
+\begin_inset Formula $X$
+\end_inset
+
+ can be viewed as some statistic on a space 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ of combinatorial objects with some distribution 
+\begin_inset Formula $\pi$
+\end_inset
+
+, so we can obtain 
+\begin_inset Formula $X'$
+\end_inset
+
+ with a reversible Markov chain on 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ that has stationary distribution 
+\begin_inset Formula $\pi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For example, if 
+\begin_inset Formula $X$
+\end_inset
+
+ is a sum of indicator variables 
+\begin_inset Formula $X_{1},.\dots,X_{n}$
+\end_inset
+
+, we could view 
+\begin_inset Formula $X$
+\end_inset
+
+ as the cardinality of a random subset of 
+\begin_inset Formula $\left\{ 1,\dots,n\right\} $
+\end_inset
+
+.
+ For the transitions of a Markov chain, we could randomly select some 
+\begin_inset Formula $i\in\left\{ 1,\dots,n\right\} $
+\end_inset
+
+ and independently re-determine its membership.
+ This sort of construction often naturally gives a suitable exchangeable
+ pair.
+ The event 
+\begin_inset Formula $\left\{ X'=X-1\right\} $
+\end_inset
+
+ can be interpreted as a 
+\begin_inset Quotes eld
+\end_inset
+
+death
+\begin_inset Quotes erd
+\end_inset
+
+ and the event 
+\begin_inset Formula $\left\{ X'=X+1\right\} $
+\end_inset
+
+ can be interpreted as an 
+\begin_inset Quotes eld
+\end_inset
+
+immigration
+\begin_inset Quotes erd
+\end_inset
+
+ in the Markov chain.
+ The probability of a death is roughly proportional to the number alive,
+ and the probability of an immigration is roughly proportional to the sum
+ of the probabilities for each element to be alive in the stationary distributio
+n, which is 
+\begin_inset Formula $\mathbb{E}\left[X\right]\approx\lambda$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
 Remarks
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Itemize
 For the proof of proposition 1, the 
 \begin_inset Formula $C\varepsilon/2$
 \end_inset
@@ -1144,16 +1267,28 @@ For the proof of proposition 1, the
  is 1-Lipschitz.
 \end_layout
 
-\begin_layout Enumerate
-For the proof of Lemma 3.4, as well as Cauchy-Schwarz Holder's inequality
- 
+\begin_layout Itemize
+For the proof of Lemma 3.4, as well as Cauchy-Schwarz H
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+"o
+\end_layout
+
+\end_inset
+
+lder's inequality 
 \begin_inset Formula $\mathbb{E}\left|X\right|\le\left(\mathbb{E}X^{2}\right)^{1/2}$
 \end_inset
 
  is used.
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Itemize
 For the proof of Theorem 3.5, the fact 
 \begin_inset Formula $\sum_{i=1}^{n}\sum_{j\in N_{i}}X_{i}=\left(\sum_{i=1}^{n}X_{i}\right)^{2}$
 \end_inset
@@ -1162,34 +1297,167 @@ For the proof of Theorem 3.5, the fact
 \end_layout
 
 \begin_layout Section
-Exchangeable Pairs and Poisson Approximation
+Exchangeable Pairs and Poisson Approximation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CDM05"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary
 \end_layout
 
 \begin_layout Standard
-S.
- Chatterjee, P.
- Diaconis, E.
- Meckes, Fundamentals of Stein's Method, Probability Surveys, 2 (2005) 64-106.
+This paper gives a higher-level overview of Stein's method with exchangeable
+ pairs.
+ If we think 
+\begin_inset Formula $X$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+near
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $Z$
+\end_inset
+
+, then the operators 
+\begin_inset Formula $\mathbb{E}:f\mapsto\mathbb{E}\left[f\left(X\right)\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbb{E}_{0}:f\mapsto\mathbb{E}\left[f\left(Z\right)\right]$
+\end_inset
+
+ should also be close.
+ An exchangeable pair 
+\begin_inset Formula $\left(X,X'\right)$
+\end_inset
+
+ is in correspondence with a symmetric measure 
+\begin_inset Formula $\mathbb{Q}$
+\end_inset
+
+ with 
+\begin_inset Formula $\mathbb{Q}\left(A,A'\right)=\Pr\left(X\in A,X'\in A'\right)$
+\end_inset
+
+ and margins 
+\begin_inset Formula $\mathbb{Q}\left(A,\Omega\right)=\Pr\left(X\in A\right)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ (
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ from before) be the characterizing operator of 
+\begin_inset Formula $Z$
+\end_inset
+
+.
+ (unfinished)
 \end_layout
 
 \begin_layout Section
-Exchangeable pairs and Poisson Approximation
+Exchangeable Pairs, Switchings and Random Regular Graphs 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Joh11"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary
 \end_layout
 
 \begin_layout Standard
-S.
- Chatterjee, P.
- Diaconis, E.
- Meckes, Fundamentals of Stein's Method, Probability Surveys, 2 (2005) 64-106.
-\end_layout
+A previous paper 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MWW04"
 
-\begin_layout Section
-Exchangeable Pairs, Switchings and Random Regular Graphs
+\end_inset
+
+ proved that small cycle counts were asymptotically Poisson under some 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+ conditions on the growth of the maximum cycle length, and conjectured that
+ this was a threshold; if the maximum cycle length was to grow faster the
+ cycle counts would no longer be asymptotically Poisson.
+ Johnson disproves the conjecture with Stein's method.
 \end_layout
 
 \begin_layout Standard
-T.
- Johnson, Exchangeable Pairs, Switchings and Random Regular Graphs.
+The use of switchings is quite different to Hasheminezhad and McKay.
+ The switching operation (relation) induces a markov chain on the space
+ of all regular graphs; by adding loops this chain can be adjusted so that
+ the stationary distribution is uniform and the chain is reversible.
+ The Markov chain then gives an exchangeable pair with which to apply Stein's
+ method.
+\end_layout
+
+\begin_layout Subsection
+Remarks
+\end_layout
+
+\begin_layout Itemize
+Proof of Theorem 7: I think every vertex of 
+\begin_inset Formula $\mathfrak{G}$
+\end_inset
+
+ needs to have total 
+\shape italic
+weight
+\shape default
+ 
+\begin_inset Formula $d_{0}$
+\end_inset
+
+, not degree 
+\begin_inset Formula $d_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Unlike most (?) applications of Stein's method, Johnson is more interested
+ in asymptotics than explicit quantitative bounds between distributions,
+ so there are undetermined constants.
+ I'm not sure whether it's feasible or useful to obtain these.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "readings"
+options "bibtotoc,amsalpha"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
