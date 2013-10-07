@@ -1,0 +1,4422 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+%clickable links
+\usepackage[bookmarks,hidelinks]{hyperref} 
+
+%\ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
+\usepackage[nameinlink,capitalise]{cleveref}
+\AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
+\theoremstyle{plain}
+\newtheorem{mythm}{\protect\theoremname}[section]
+\renewenvironment{thm}{\begin{mythm}}{\end{mythm}}
+\theoremstyle{definition}
+\newtheorem{mydefn}[mythm]{\protect\definitionname}
+\renewenvironment{defn}{\begin{mydefn}}{\end{mydefn}}
+\theoremstyle{definition}
+\newtheorem{myexample}[mythm]{\protect\examplename}
+\renewenvironment{example}{\begin{myexample}}{\end{myexample}}
+\theoremstyle{plain}
+\newtheorem{myprop}[mythm]{\protect\propositionname}
+\renewenvironment{prop}{\begin{myprop}}{\end{myprop}}
+\theoremstyle{plain}
+\newtheorem{mycor}[mythm]{\protect\corollaryname}
+\renewenvironment{cor}{\begin{mycor}}{\end{mycor}}
+\theoremstyle{plain}
+\newtheorem{mylem}[mythm]{\protect\lemmaname}
+\renewenvironment{lem}{\begin{mylem}}{\end{mylem}}
+\theoremstyle{plain}
+\newtheorem{myconjecture}[mythm]{\protect\conjecturename}
+\renewenvironment{conjecture}{\begin{myconjecture}}{\end{myconjecture}}
+\theoremstyle{remark}
+\newtheorem{myrem}[mythm]{\protect\remarkname}
+\renewenvironment{rem}{\begin{myrem}}{\end{myrem}}
+\theoremstyle{remark}
+\newtheorem{myclaim}[mythm]{\protect\claimname}
+\renewenvironment{claim}{\begin{myclaim}}{\end{myclaim}}
+\crefformat{equation}{#2(#1)#3}
+
+%ordered lists should use parens instead of a point
+%\renewcommand\theenumi{\arabic{enumi}}
+%\renewcommand\labelenumi{(\theenumi)}
+
+%\left(\right) should behave the same as ()
+\let\originalleft\left
+\let\originalright\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+
+%table of contents spacing tweaks
+\usepackage{tocloft}
+\setlength\cftparskip{-2pt}
+\setlength\cftbeforesecskip{1pt}
+\setlength\cftaftertoctitleskip{2pt}
+
+%comment environment
+\usepackage{verbatim}
+
+%mainly for light colours color!percent
+\usepackage{xcolor}
+
+%shaded WIP notes
+\usepackage{framed}
+\usepackage{lipsum}
+\colorlet{shadecolor}{blue!20}
+\newenvironment{note}
+{\colorlet{shadecolor}{blue!20}\begin{shaded}}{\end{shaded}}
+\newenvironment{todo}
+{\colorlet{shadecolor}{red!20}\begin{shaded}}{\end{shaded}}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing other 1.5
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\branch Folded
+\selected 1
+\filename_suffix 0
+\color #faf0e6
+\end_branch
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
+\headheight 3cm
+\headsep 3cm
+\footskip 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Stein's Method
+\end_layout
+
+\begin_layout Author
+Matthew Kwan
+\end_layout
+
+\begin_layout Standard
+\begin_inset Branch Folded
+status collapsed
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+t
+\end_layout
+
+\begin_layout Corollary
+c
+\end_layout
+
+\begin_layout Lemma
+l
+\end_layout
+
+\begin_layout Proposition
+p
+\end_layout
+
+\begin_layout Conjecture
+c
+\end_layout
+
+\begin_layout Definition
+d
+\end_layout
+
+\begin_layout Example
+e
+\end_layout
+
+\begin_layout Remark
+r
+\end_layout
+
+\begin_layout Claim
+c
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\floor}[1]{\left\lfloor #1\right\rfloor }
+{\boldsymbol{\left\lfloor #1\right\rfloor }}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ceil}[1]{\left\lceil #1\right\rceil }
+{\boldsymbol{\left\lceil #1\right\rceil }}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\i}{i}
+{\boldsymbol{i}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ii}{j}
+{\boldsymbol{j}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\NN}{\mathbb{N}}
+{\boldsymbol{\mathbb{N}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ZZ}{\mathbb{Z}}
+{\boldsymbol{\mathbb{Z}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\RR}{\mathbb{R}}
+{\boldsymbol{\mathbb{R}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\CC}{\mathbb{C}}
+{\boldsymbol{\mathbb{C}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\F}{\mathcal{F}}
+{\boldsymbol{\mathcal{F}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\d}{\operatorname d}
+{\mathbf{d}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\id}{\operatorname{id}}
+{\mathbf{id}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\one}{\operatorname{1}}
+{\mathbf{1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+Commentary in blue
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+Issues in red
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+introduce with limit theorems: Central Limit theorem, Poisson Limit theorem.
+ Failure of limit theorems: they provide no understanding of speed of convergenc
+e, in particular convergence cannot be assumed to be uniform as parameters
+ vary.
+\end_layout
+
+\begin_layout Standard
+Stein's method is a technique for bounding the distance between distributions,
+ with a variety of different distance metrics.
+ Quantitative bounds can be useful in their own right, or can be further
+ applied to prove asymptotic results.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Notation
+\end_layout
+
+\begin_layout Standard
+For this thesis, the set of natural numbers 
+\begin_inset Formula $\NN$
+\end_inset
+
+ includes zero.
+ We write 
+\begin_inset Formula $\one_{A}$
+\end_inset
+
+ for the characteristic function of 
+\begin_inset Formula $A$
+\end_inset
+
+: 
+\begin_inset Formula $\one_{A}\left(x\right)=1$
+\end_inset
+
+ if 
+\begin_inset Formula $x\in A$
+\end_inset
+
+, otherwise 
+\begin_inset Formula $\one_{A}\left(x\right)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Unless otherwise specified, all asympotics are as 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+.
+ Apart from standard asymptotic notation, we use two notions of asymptotic
+ equivalence: 
+\begin_inset Formula $f\sim g$
+\end_inset
+
+ means 
+\begin_inset Formula $f=g\left(1+o\left(1\right)\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $f\asymp g$
+\end_inset
+
+ means 
+\begin_inset Formula $f=O\left(g\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $g=O\left(f\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Part
+Theory
+\end_layout
+
+\begin_layout Section
+General Probability Theory
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\L}[1]{\mathcal{L}_{#1}}
+{\boldsymbol{\mathcal{L}}_{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+DeclareRobustCommand{
+\backslash
+L}[1]{
+\backslash
+ifmmode{
+\backslash
+mathcal{L}_{#1}}
+\backslash
+else
+\backslash
+polishL
+\backslash
+fi}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Om}{\Omega}
+{\boldsymbol{\Omega}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\om}{\omega}
+{\boldsymbol{\omega}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cA}{\mathcal{A}}
+{\boldsymbol{\mathcal{A}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\B}{\mathcal{B}}
+{\boldsymbol{\mathcal{B}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbb{E}}
+{\boldsymbol{\mathbb{E}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\renewcommand{\F}{F}
+{\boldsymbol{F}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\N}{\mathcal{N}}
+{\boldsymbol{\mathcal{N}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Po}{\operatorname{Po}}
+{\mathbf{Po}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Var}{\operatorname{Var}}
+{\mathbf{Var}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\im}{\operatorname{im}}
+{\mathbf{im}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Pr}{\mathbb{P}}
+{\boldsymbol{\mathbb{P}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\m}{\mu}
+{\boldsymbol{\mu}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\X}{X}
+{\boldsymbol{X}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\bX}{\mathbf{X}}
+{\boldsymbol{\mathbf{X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\A}{A}
+{\boldsymbol{A}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathcal{P}}
+{\boldsymbol{\mathcal{P}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For many combinatorial applications, an informal understanding of probability
+ theory will suffice, because probability spaces of combinatorial objects
+ are usually finite.
+ However, we will need a more rigorous foundation in probability theory.
+ The following is only intended as a brief review (cite textbook).
+\end_layout
+
+\begin_layout Subsection
+Measure theory
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\A$
+\end_inset
+
+ be a collection of subsets of some set 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+ We say 
+\begin_inset Formula $\cA$
+\end_inset
+
+ is a 
+\emph on
+
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra
+\emph default
+ if it is closed under countable unions and complements, and contains the
+ empty set.
+ A 
+\emph on
+measure
+\emph default
+ on 
+\begin_inset Formula $\cA$
+\end_inset
+
+ is a map 
+\begin_inset Formula $\m:\cA\to\left[0,\infty\right)$
+\end_inset
+
+ such that for any collection of pairwise disjoint sets 
+\begin_inset Formula $\left\{ \A_{\i}\right\} _{\i\in\NN}\subseteq\cA$
+\end_inset
+
+, we have 
+\begin_inset Formula $\sum_{\i\in\NN}\m\left(A_{\i}\right)=\m\left(\bigcup_{i\in\NN}\A_{\i}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A 
+\emph on
+measure space
+\emph default
+ consists of a set 
+\begin_inset Formula $\Om$
+\end_inset
+
+, a 
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra 
+\begin_inset Formula $\cA$
+\end_inset
+
+ of subsets of 
+\begin_inset Formula $\Om$
+\end_inset
+
+ and a measure 
+\begin_inset Formula $\m$
+\end_inset
+
+ on 
+\begin_inset Formula $\cA$
+\end_inset
+
+.
+ We represent a measure space by the triple 
+\begin_inset Formula $\left(\Om,\cA,\m\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+define 
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra generated by a set
+\end_layout
+
+\begin_layout Itemize
+define Borel 
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra 
+\begin_inset Formula $\B$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $\Om$
+\end_inset
+
+ is countable we can choose 
+\begin_inset Formula $\cA=\Om$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+define measurable functions 
+\begin_inset Formula $X:\Om_{1}\to\Om_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+define integration
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Review of basic concepts
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I'm a little bit uncertain how much depth to go into for this.
+ At the moment, it's written so that someone who's seen measure theory but
+ no probability theory (an analyst) can understand.
+ Where possible, I've tried to translate things into the discrete case,
+ because it's often more intuitive (and since I plan for applications to
+ be combinatorial).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For many combinatorial applications, an informal understanding of probability
+ theory will suffice.
+ However, in this thesis a rigorous foundation in probability theory will
+ be useful.
+ The following is intended only as a brief review.
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+probability space
+\emph default
+ is a measure space 
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $\Pr\left(\Om\right)=1$
+\end_inset
+
+.
+ In this case we say 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ is a 
+\emph on
+probability measure
+\emph default
+, and denote the set of all probability measures on 
+\begin_inset Formula $\left(\Om,\cA\right)$
+\end_inset
+
+ by 
+\begin_inset Formula $\P\left(\Om,\cA\right)$
+\end_inset
+
+ or 
+\begin_inset Formula $\P\left(\Om\right)$
+\end_inset
+
+ if there is no ambiguity.
+ An 
+\emph on
+event
+\emph default
+ is a measurable set 
+\begin_inset Formula $\A\in\cA$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+probability space
+\emph default
+ is a measure space 
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $\Pr\left(\Om\right)=1$
+\end_inset
+
+.
+ In this case we say 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ is a 
+\emph on
+probability measure
+\emph default
+, and denote the set of all probability measures on 
+\begin_inset Formula $\left(\Om,\cA\right)$
+\end_inset
+
+ by 
+\begin_inset Formula $\P\left(\Om,\cA\right)$
+\end_inset
+
+ or 
+\begin_inset Formula $\P\left(\Om\right)$
+\end_inset
+
+ if there is no ambiguity.
+ An 
+\emph on
+event
+\emph default
+ is a measurable set 
+\begin_inset Formula $\A\in\cA$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For our purposes 
+\begin_inset Formula $\Om$
+\end_inset
+
+ will often be a finite set of combinatorial objects, with 
+\begin_inset Formula $\cA$
+\end_inset
+
+ as the power set of 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+ In this case 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ is defined by 
+\begin_inset Formula $\Pr\left(\om\right):=\Pr\left(\left\{ \om\right\} \right)$
+\end_inset
+
+, for each 
+\begin_inset Formula $\om\in\Om$
+\end_inset
+
+.
+ We will discuss specific probability spaces on combinatorial objects in
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:random-structures"
+
+\end_inset
+
+, but we include a particularly useful definition here:
+\end_layout
+
+\begin_layout Definition
+In a probability space 
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $\Om$
+\end_inset
+
+ is finite, if 
+\begin_inset Formula $\Pr\left(\om\right)=1/\left|\Om\right|$
+\end_inset
+
+ for each 
+\begin_inset Formula $\om\in\Om$
+\end_inset
+
+, then we say 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ is 
+\emph on
+uniform
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+For an event 
+\begin_inset Formula $\A$
+\end_inset
+
+, 
+\begin_inset Formula $\Pr\left(\A\right)$
+\end_inset
+
+ is interpreted as the 
+\begin_inset Quotes eld
+\end_inset
+
+probability that 
+\begin_inset Formula $\A$
+\end_inset
+
+ occurs
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For combinatorial spaces, events are usually of the form 
+\begin_inset Formula $\A=\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} $
+\end_inset
+
+, where 
+\begin_inset Formula $P\left(\om\right)$
+\end_inset
+
+ is some property of an object 
+\begin_inset Formula $\om$
+\end_inset
+
+.
+ For clarity, we often abuse notation slightly and write 
+\begin_inset Formula $\Pr\left(P\left(\om\right)\mbox{ holds}\right)$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\Pr\left(\A\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+random element
+\emph default
+ 
+\begin_inset Formula $\X:\Om_{1}\to\Om_{2}$
+\end_inset
+
+ is a measurable function from a probability space 
+\begin_inset Formula $\left(\Om_{1},\cA_{1},\Pr\right)$
+\end_inset
+
+ to some measure space 
+\begin_inset Formula $\left(\Om_{2},\cA_{2},\m\right)$
+\end_inset
+
+.
+ If the target measure space is 
+\begin_inset Formula $\RR^{n}$
+\end_inset
+
+ with the Borel 
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra and the Lebesgue measure, then we say 
+\begin_inset Formula $\X$
+\end_inset
+
+ is a 
+\emph on
+random vector
+\emph default
+; if 
+\begin_inset Formula $n=1$
+\end_inset
+
+ then 
+\begin_inset Formula $\X$
+\end_inset
+
+ is a 
+\emph on
+random variable
+\emph default
+.
+ If 
+\begin_inset Formula $\X$
+\end_inset
+
+ only takes countably many values then we say 
+\begin_inset Formula $\X$
+\end_inset
+
+ is 
+\emph on
+discrete
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+If the underlying probability space 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\Om_{1}$
+\end_inset
+
+ is countable, then any function is measurable.
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+We will often be interested in the probability that a random element takes
+ certain values, without regard to the underlying probability space.
+\end_layout
+
+\begin_layout Definition
+Suppose 
+\begin_inset Formula $\X$
+\end_inset
+
+ is a random element with target measure space 
+\begin_inset Formula $\left(\Om,\cA,\m\right)$
+\end_inset
+
+.
+ The 
+\emph on
+distribution
+\emph default
+ (or 
+\emph on
+law
+\emph default
+) 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+ of 
+\begin_inset Formula $\X$
+\end_inset
+
+ is the pushforward measure with respect to 
+\begin_inset Formula $\X$
+\end_inset
+
+.
+ That is, it is a probability measure defined by 
+\begin_inset Formula $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\A\subseteq\cA$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It is worth noting that in fact any probability measure is the distribution
+ of some random element.
+ To see this, note that given a probability measure 
+\begin_inset Formula $\Pr\in\P\left(\Om\right)$
+\end_inset
+
+, we can choose 
+\begin_inset Formula $X=\id_{\Om}$
+\end_inset
+
+ to have 
+\begin_inset Formula $\L{\X}=\Pr$
+\end_inset
+
+.
+ So, it is often convenient to specify random variables by their distributions,
+ without defining an underlying probability space.
+ We can use slightly abusive (but standard) notation like 
+\begin_inset Formula $\Pr\left(\X>1\right)$
+\end_inset
+
+ to denote 
+\begin_inset Formula $\L{\X}\left(\left\{ x:x>1\right\} \right)$
+\end_inset
+
+.
+ This is equal to 
+\begin_inset Formula $\Pr\left(\left\{ \om\in\Om:\X\left(\om\right)>1\right\} \right)$
+\end_inset
+
+ for any particular realization of 
+\begin_inset Formula $\X$
+\end_inset
+
+ as a function on a probability space 
+\begin_inset Formula $\left(\Om,\cA,\m\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+If 
+\begin_inset Formula $\X$
+\end_inset
+
+ has the normal distribution with parameters 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ then we say 
+\begin_inset Formula $\L{\X}=\N\left(\mu,\sigma\right)$
+\end_inset
+
+; this distribution is defined by 
+\begin_inset Formula $\L{\X}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x$
+\end_inset
+
+ for Borel 
+\begin_inset Formula $B$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\X$
+\end_inset
+
+ is discrete, then 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+ is just an assignment of a probability to each possible value.
+\end_layout
+
+\begin_layout Example
+If 
+\begin_inset Formula $\X$
+\end_inset
+
+ is Poisson distributed with parameter 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, we write 
+\begin_inset Formula $\L{\X}=\Po\left(\lambda\right)$
+\end_inset
+
+; this is defined by 
+\begin_inset Formula $\Pr\left(\X=k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+expected value 
+\emph default
+of a random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ is 
+\begin_inset Formula $\E\X=\int x\d\L{\X}\left(x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For a random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ that takes integer values, this definition is equivalent to the well-known
+ formula 
+\begin_inset Formula $\E\X=\sum_{x\in\ZZ}x\Pr\left(\X=x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If we fix a particular underlying probability space 
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\end_inset
+
+, we can also equivalently view expectation as a bounded linear functional
+ on the space of integrable functions: 
+\begin_inset Formula $\E\X=\int\X\left(\om\right)\d\Pr$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula $\E$
+\end_inset
+
+ is defined in terms of a particular underlying probability space.
+ Sometimes we will define a new probability space 
+\begin_inset Formula $\left(\Om,\cA,\Pr'\right)$
+\end_inset
+
+ by changing the measure on the same underlying set.
+ In this case we will write 
+\begin_inset Formula $\E_{\Pr'}$
+\end_inset
+
+ to indicate expecation with respect to the measure 
+\begin_inset Formula $\Pr'$
+\end_inset
+
+, to avoid ambiguity.
+\end_layout
+
+\begin_layout Standard
+In fact, the expectation functional defines its underlying probability measure,
+ because 
+\begin_inset Formula $\E\one_{\A}=\Pr\left(\A\right)$
+\end_inset
+
+.
+ Since the distribution of a random variable is specified by a probability
+ measure, the distribution 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+ of a random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ also uniquely defines an expectation functional 
+\begin_inset Formula $\E_{\X}:=\E_{\L{\X}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+variance 
+\emph default
+of a random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ is 
+\begin_inset Formula $\Var\X=\E\left(\X-\E X\right)^{2}$
+\end_inset
+
+.
+ The 
+\emph on
+
+\begin_inset Formula $n$
+\end_inset
+
+th moment
+\emph default
+ of a random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ is 
+\begin_inset Formula $\E\left[\X^{n}\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+conditional variance?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+For two collections 
+\begin_inset Formula $S,S'\subseteq\cA_{1}$
+\end_inset
+
+ of events, we say that 
+\begin_inset Formula $S$
+\end_inset
+
+ and 
+\begin_inset Formula $S'$
+\end_inset
+
+ are 
+\emph on
+independent
+\emph default
+ if 
+\begin_inset Formula $\Pr\left(\A\cap\A'\right)=\Pr\left(\A\right)\Pr\left(\A'\right)$
+\end_inset
+
+ for each 
+\begin_inset Formula $\A\in S$
+\end_inset
+
+ and 
+\begin_inset Formula $\A\in S'$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $S=\left\{ \A\right\} $
+\end_inset
+
+ contained a single set, then we say 
+\begin_inset Formula $\A$
+\end_inset
+
+ itself is independent of 
+\begin_inset Formula $S'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\left(\Om_{1},\cA_{1},\Pr\right)$
+\end_inset
+
+ be a probability space and 
+\begin_inset Formula $\left(\Om_{2},\cA_{2},\m\right)$
+\end_inset
+
+ a measure space.
+ Let 
+\begin_inset Formula $\X$
+\end_inset
+
+ be a random variable 
+\begin_inset Formula $\Om_{1}\to\Om_{2}$
+\end_inset
+
+, and let 
+\begin_inset Formula $S$
+\end_inset
+
+ be the set of all events of the form 
+\begin_inset Formula $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
+\end_inset
+
+ for 
+\begin_inset Formula $\A_{2}\in\cA_{2}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $S$
+\end_inset
+
+ is independent of 
+\begin_inset Formula $S'$
+\end_inset
+
+ then we say 
+\begin_inset Formula $\X$
+\end_inset
+
+ itself is independent of 
+\begin_inset Formula $S'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can analogously say that two random variables are independent, or a random
+ variable and an event are independent, or any similar combination.
+\end_layout
+
+\begin_layout Definition
+If two objects are not independent, then we say they are 
+\emph on
+dependent
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Suppose 
+\begin_inset Formula $\X:\Om_{1}\to\Om_{2}$
+\end_inset
+
+ is a random element defined on these spaces, and 
+\begin_inset Formula $\A_{1}\in\cA_{1}$
+\end_inset
+
+ is an event with nonzero probability.
+ Then the 
+\emph on
+distribution of 
+\begin_inset Formula $\X$
+\end_inset
+
+ conditioned on 
+\begin_inset Formula $\A_{1}$
+\end_inset
+
+
+\emph default
+ is denoted by 
+\begin_inset Formula $\L{\X|\A_{1}}$
+\end_inset
+
+ and defined by 
+\begin_inset Formula $\L{\X|\A_{1}}\left(\A_{2}\right)=\Pr\left(\X\in\A_{2}|\A_{1}\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\A_{2}\in\cA_{2}$
+\end_inset
+
+.
+ The expected value of a random variable with distribution 
+\begin_inset Formula $\L{\X|\A_{1}}$
+\end_inset
+
+ is called the 
+\emph on
+conditional expected value of 
+\begin_inset Formula $\X$
+\end_inset
+
+ given 
+\begin_inset Formula $\A_{1}$
+\end_inset
+
+
+\emph default
+ and is denoted 
+\begin_inset Formula $\E\left[\X|\A_{1}\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can also define conditional expectation with respect to another random
+ variable.
+ If 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ are random variables defined on the same underlying probability space 
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\end_inset
+
+, then the sets 
+\begin_inset Formula $\X_{2}^{-1}\left(B\right)$
+\end_inset
+
+ for Borel 
+\begin_inset Formula $B$
+\end_inset
+
+ comprise a sub-
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra 
+\begin_inset Formula $\cA'$
+\end_inset
+
+ of 
+\begin_inset Formula $\cA$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\m:\A'\mapsto\E\left[\X_{1}\one_{\A'}\right]$
+\end_inset
+
+ is a signed measure on 
+\begin_inset Formula $\cA'$
+\end_inset
+
+ that is absolutely continuous with respect to the restriction of 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ to 
+\begin_inset Formula $\cA'$
+\end_inset
+
+.
+ By the Radon-Nikodym theorem there is an 
+\begin_inset Formula $\cA'$
+\end_inset
+
+-measurable random variable 
+\begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\E\left[\X_{1}\one_{\A'}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A'}\right]$
+\end_inset
+
+ for all 
+\begin_inset Formula $\A'$
+\end_inset
+
+ in 
+\begin_inset Formula $\cA'$
+\end_inset
+
+.
+ This random variable is almost uniquely defined: for any two choices of
+ 
+\begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]$
+\end_inset
+
+, the probability that they differ is zero.
+\end_layout
+
+\begin_layout Definition
+The random variable 
+\begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]$
+\end_inset
+
+ as defined above is called the 
+\emph on
+conditional expectation of 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+
+\emph default
+.
+ We can also view conditional expectation as a bounded linear operator between
+ functions: we define 
+\begin_inset Formula $\E^{\X_{2}}$
+\end_inset
+
+ by 
+\begin_inset Formula $\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This definition generalizes the previous definition of expectation conditioned
+ on an event: if 
+\begin_inset Formula $\om\in\A$
+\end_inset
+
+ and 
+\begin_inset Formula $\Pr\left(\A\right)>0$
+\end_inset
+
+ then 
+\begin_inset Formula $\E\left[\X|\one_{\A}\right]\left(\om\right)=\E\left[\X|\A\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that if 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ is discrete then we do not need to invoke Radon-Nikodym.
+ We can define 
+\begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]$
+\end_inset
+
+ by 
+\begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]\left(\om\right)=\E\left[\X_{1}|\X_{2}=\X_{2}\left(\om\right)\right]$
+\end_inset
+
+ whenever 
+\begin_inset Formula $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Coupling
+\end_layout
+
+\begin_layout Standard
+Given a finite collection of measure spaces 
+\begin_inset Formula $\left(\Om_{1},\cA_{1},\m_{1}\right),\dots,\left(\Om_{n},\cA_{n},\m_{n}\right)$
+\end_inset
+
+ recall the construction of the product measure space 
+\begin_inset Formula $\left(\Om,\cA,\m\right):=\left(\prod_{i=1}^{n}\Om_{i},\bigotimes_{i=1}^{n}\cA_{i},\prod_{i=1}^{n}\m_{i}\right)$
+\end_inset
+
+.
+ If a random element takes values in a product space then each component
+ is measurable, and conversely if the components of a random tuple are measurabl
+e then that tuple is measurable in the product space.
+ So, we can make the following definitions:
+\end_layout
+
+\begin_layout Definition
+Given random elements 
+\begin_inset Formula $\X_{1},\dots,\X_{n}$
+\end_inset
+
+ on the same underlying probability space, 
+\begin_inset Formula $\L{\X_{1},\dots,\X_{n}}:=\L{\left(\X_{1},\dots,\X_{n}\right)}$
+\end_inset
+
+ is called the 
+\emph on
+joint distribution
+\emph default
+ of 
+\begin_inset Formula $\X_{1},\dots,\X_{n}$
+\end_inset
+
+.
+ Conversely, given a random tuple 
+\begin_inset Formula $\left(\X_{1},\dots,\X_{n}\right)$
+\end_inset
+
+, each 
+\begin_inset Formula $\L{\X_{i}}$
+\end_inset
+
+ is called a 
+\emph on
+marginal distribution
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Suppose we have two distributions of random elements 
+\begin_inset Formula $\L{\X_{1}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\L{\X_{1}}$
+\end_inset
+
+.
+ 
+\emph on
+Coupling
+\emph default
+ is the technique of constructing a random ordered pair 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+ which realizes the given distributions as marginal distributions.
+ Usually this is done by specifying the joint distribution 
+\begin_inset Formula $\L{\X_{1},\X_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The idea is that coupling creates a particular kind of dependence between
+ 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ that allows us to compare the two distributions.
+ Often, we are able to make conclusions about the distributions 
+\begin_inset Formula $\L{\X_{i}}$
+\end_inset
+
+ which are independent of their specific realizations as random elements
+ in the coupling.
+\end_layout
+
+\begin_layout Subsection
+Markov Chains
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I'll need to define Markov Chains, stationary distributions and time-reversibili
+ty.
+\end_layout
+
+\begin_layout Standard
+Perhaps I should talk more generally about stochastic processes, because
+ applying exchangeable pairs to Stein's method is has connections with Ornstein-
+Uhlenbeck processes and also Stein's method can be applied to Poisson processes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The Weak Topology on Probability Measures
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cH}{\mathcal{H}}
+{\boldsymbol{\mathcal{H}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\h}{h}
+{\boldsymbol{h}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\TV}{\mathrm{TV}}
+{\boldsymbol{\mathrm{TV}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathrm{K}}
+{\boldsymbol{\mathrm{K}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\W}{\mathrm{W}}
+{\boldsymbol{\mathrm{W}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main purpose of this section is to motivate the metrics usually used
+ in Stein's method: they are all legitimate topological metrics and are
+ consistent with the topology of convergence in distribution
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\left(\X_{n}\right)_{n\in\NN}$
+\end_inset
+
+ be a sequence of random variables.
+ We say 
+\begin_inset Formula $\X_{n}$
+\end_inset
+
+ 
+\emph on
+converges in distribution
+\emph default
+ to a random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ if 
+\begin_inset Formula $\E f\left(\X_{n}\right)\to\E f\left(\X\right)$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ for all bounded continuous functions 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Alternatively, we say 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $\L{\X_{n}}$
+\end_inset
+
+ converges 
+\emph on
+weakly
+\emph default
+ to 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+, or simply 
+\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\end_inset
+
+.
+ The topology on 
+\begin_inset Formula $\P\left(\RR\right)$
+\end_inset
+
+ associated with this convergence is called the 
+\emph on
+weak topology
+\emph default
+ (we will see that it is indeed a topology).
+ Convergence in distribution of random vectors is defined component-wise.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+distribution function
+\emph default
+ 
+\begin_inset Formula $\F_{\X}$
+\end_inset
+
+ of a random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ is defined by 
+\begin_inset Formula $\F_{\X}\left(x\right)=\Pr\left(\X\le x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:dist"
+
+\end_inset
+
+The following are equivalent.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:dist-def"
+
+\end_inset
+
+
+\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:dist-F"
+
+\end_inset
+
+
+\begin_inset Formula $\F_{\X_{n}}\left(x\right)\to\F_{\X}\left(x\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+ where 
+\begin_inset Formula $\F_{\X}$
+\end_inset
+
+ is continuous
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+(L
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+vy's continuity theorem) 
+\begin_inset Formula $\E e^{it\X_{n}}\to\E e^{it\X}$
+\end_inset
+
+ for all 
+\begin_inset Formula $t\in\RR$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The equivalence of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{prop:dist-def,prop:dist-F}
+\end_layout
+
+\end_inset
+
+ is a well-known result called the Portmanteau Theorem.
+\end_layout
+
+\begin_layout Standard
+When 
+\begin_inset Formula $\X$
+\end_inset
+
+ and each 
+\begin_inset Formula $\X_{n}$
+\end_inset
+
+ are integer random variables, then 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:dist-F"
+
+\end_inset
+
+ reduces to the condition that 
+\begin_inset Formula $\Pr\left(\X_{n}=k\right)\to\Pr\left(\X=k\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ This characterization is usually used to prove the Poisson limit theorem.
+ L
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+vy's continuity theorem is classically used to prove the central limit theorem,
+ but we will not discuss it in this thesis.
+\end_layout
+
+\begin_layout Standard
+For combinatorial applications, convergence in distribution can also be
+ proved by the 
+\begin_inset Quotes eld
+\end_inset
+
+method of moments
+\begin_inset Quotes erd
+\end_inset
+
+: if 
+\begin_inset Formula $\X$
+\end_inset
+
+ is the only random variable with the moments 
+\begin_inset Formula $\left(\E\X^{k}\right)_{k\in\NN}$
+\end_inset
+
+, then 
+\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\end_inset
+
+ if 
+\begin_inset Formula $\E\X_{n}^{k}\to\E\X^{k}$
+\end_inset
+
+.
+ Convergence in distribution can also sometimes be inferred from stronger
+ forms of convergence when 
+\begin_inset Formula $\X$
+\end_inset
+
+ and all the 
+\begin_inset Formula $\X_{n}$
+\end_inset
+
+ are coupled to the same underlying space.
+\end_layout
+
+\begin_layout Standard
+A disadvantage of all these approaches is that it is difficult to quantify
+ the rate of convergence.
+\end_layout
+
+\begin_layout Standard
+In functional analysis terms, note that
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ expectation operators are bounded linear functionals on the space of real
+ bounded continuous functions.
+ Then, 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\end_inset
+
+ just means that 
+\begin_inset Formula $\E_{\X_{n}}\to\E_{\X}$
+\end_inset
+
+ in the weak-star topology.
+ Although 
+\begin_inset Formula $C_{b}\left(\RR\right)^{*}$
+\end_inset
+
+ is not metrizable, the subspace corresponding to 
+\begin_inset Formula $\P\left(\RR\right)$
+\end_inset
+
+ is in fact metrizable, with a metric called the L
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+vy metric.
+ For Stein's method we will be interested in some slightly stronger metrics.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:general-metrics"
+
+\end_inset
+
+For two probability measures 
+\begin_inset Formula $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
+\end_inset
+
+ and a collection of real measurable 
+\begin_inset Quotes eld
+\end_inset
+
+test
+\begin_inset Quotes erd
+\end_inset
+
+ functions 
+\begin_inset Formula $\cH$
+\end_inset
+
+, define 
+\begin_inset Formula $d_{\cH}$
+\end_inset
+
+ by 
+\begin_inset Formula $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$
+\end_inset
+
+.
+ For random variables 
+\begin_inset Formula $\X_{1},\X_{2}$
+\end_inset
+
+, we abuse notation to write 
+\begin_inset Formula $d_{\cH}\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ instead of 
+\begin_inset Formula $d_{\cH}\left(\L{\X_{1}},\L{\X_{2}}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Each 
+\begin_inset Formula $d_{\cH}$
+\end_inset
+
+ is non-negative, symmetric and satisfies the triangle inequality.
+\end_layout
+
+\begin_layout Definition
+A set of real functions 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is a 
+\emph on
+determining class
+\emph default
+ if 
+\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+\end_inset
+
+ for all 
+\begin_inset Formula $\h\in\cH$
+\end_inset
+
+ implies that 
+\begin_inset Formula $\Pr_{1}=\Pr_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To check that 
+\begin_inset Formula $d_{\cH}$
+\end_inset
+
+ is a metric, we only need to check that 
+\begin_inset Formula $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$
+\end_inset
+
+ implies that 
+\begin_inset Formula $\Pr_{1}=\Pr_{2}$
+\end_inset
+
+.
+ That is, we need to check that 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is a determining class.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:special-metrics"
+
+\end_inset
+
+We define some special cases of 
+\begin_inset Formula $d_{\cH}$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+If 
+\begin_inset Formula $\cH_{\K}=\left\{ \one_{\left(-\infty,x\right]}:x\in\RR\right\} $
+\end_inset
+
+ then 
+\begin_inset Formula $d_{\K}:=d_{\cH_{\K}}$
+\end_inset
+
+ is called the 
+\emph on
+Kolmogorov metric
+\emph default
+.
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+If 
+\begin_inset Formula $\cH_{\W}$
+\end_inset
+
+ is the set of real functions 
+\begin_inset Formula $\h$
+\end_inset
+
+ that satisfy 
+\begin_inset Formula $\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
+\end_inset
+
+ for all 
+\begin_inset Formula $x_{1},x_{2}\in\RR$
+\end_inset
+
+ (that is, the set of functions with Lipschitz constant 1), then 
+\begin_inset Formula $d_{\W}:=d_{\cH_{\W}}$
+\end_inset
+
+ is called the 
+\emph on
+Wasserstein metric
+\emph default
+.
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+If 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\cH_{\TV}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ is the set of functions 
+\begin_inset Formula $\one_{B}$
+\end_inset
+
+ for Borel 
+\begin_inset Formula $B$
+\end_inset
+
+, 
+\begin_inset Formula $d_{\TV}:=d_{\cH_{\TV}}$
+\end_inset
+
+ is called the 
+\emph on
+total variation metric
+\emph default
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:metric"
+
+\end_inset
+
+The Kolmogorov, Wasserstein and total variation 
+\begin_inset Quotes eld
+\end_inset
+
+metrics
+\begin_inset Quotes erd
+\end_inset
+
+ are actually metrics.
+\end_layout
+
+\begin_layout Proof
+We check that 
+\begin_inset Formula $\cH_{\K}$
+\end_inset
+
+, 
+\begin_inset Formula $\cH_{\W}$
+\end_inset
+
+ and 
+\begin_inset Formula $\cH_{\TV}$
+\end_inset
+
+ are determining classes.
+ Let 
+\begin_inset Formula $\cH\in\left\{ \cH_{\K},\cH_{\W},\cH_{\TV}\right\} $
+\end_inset
+
+, and suppose that 
+\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+\end_inset
+
+ for all 
+\begin_inset Formula $\h\in\cH$
+\end_inset
+
+.
+ It suffices to prove that 
+\begin_inset Formula $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+, since the sets 
+\begin_inset Formula $\left(-\infty,x\right]$
+\end_inset
+
+ generate the Borel 
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra.
+ For 
+\begin_inset Formula $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $
+\end_inset
+
+ this is immediate, because 
+\begin_inset Formula $\Pr_{\i}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
+\end_inset
+
+.
+ So, consider, 
+\begin_inset Formula $\cH=\cH_{\W}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+ and 
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+, let 
+\begin_inset Formula $\h_{x,\varepsilon}$
+\end_inset
+
+ be the continuous function which takes the value 1 on the set 
+\begin_inset Formula $\left(-\infty,x\right]$
+\end_inset
+
+, takes the value 0 on the set 
+\begin_inset Formula $\left[x+\varepsilon,\infty\right)$
+\end_inset
+
+, and is linearly interpolated in the range 
+\begin_inset Formula $\left[x,x+\varepsilon\right]$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\varepsilon\h_{x,\varepsilon}\in\cH_{\W}$
+\end_inset
+
+, we have 
+\begin_inset Formula $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
+\end_inset
+
+ for each 
+\begin_inset Formula $n\in\NN$
+\end_inset
+
+.
+ For each 
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+, 
+\begin_inset Formula $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$
+\end_inset
+
+ pointwise and each 
+\begin_inset Formula $\h_{x,1/n}\le1$
+\end_inset
+
+ so by the dominated convergence theorem, 
+\begin_inset Formula $\E_{\Pr_{\i}}\h_{1/n}\to\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
+\end_inset
+
+ for each 
+\begin_inset Formula $\i\in\left\{ 1,2\right\} $
+\end_inset
+
+.
+ We have again proved that 
+\begin_inset Formula $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:stronger-than-weak"
+
+\end_inset
+
+The topologies induced by the Kolmogorov, Wasserstein and total variation
+ metrics are each stronger than the weak topology.
+\end_layout
+
+\begin_layout Proof
+If 
+\begin_inset Formula $d_{\K}\left(\X_{n},\X\right)\to0$
+\end_inset
+
+ or 
+\begin_inset Formula $d_{\TV}\left(\X_{n},\X\right)\to0$
+\end_inset
+
+ then 
+\begin_inset Formula $\F_{\X_{n}}\to\F_{\X}$
+\end_inset
+
+ uniformly, so certainly 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:dist-F"
+
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:dist"
+
+\end_inset
+
+ holds.
+\end_layout
+
+\begin_layout Proof
+Now, suppose 
+\begin_inset Formula $d_{\K}\left(\X_{n},\X\right)\to0$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $d_{n}=\sqrt{d_{\K}\left(\X_{n},\X\right)}$
+\end_inset
+
+ and recall the definition of 
+\begin_inset Formula $\h_{x,\varepsilon}$
+\end_inset
+
+ from the proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:metric"
+
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $d_{n}\h_{x,d_{n}}\in\cH_{\K}$
+\end_inset
+
+ for each 
+\begin_inset Formula $n\in\NN$
+\end_inset
+
+, we have 
+\begin_inset Formula $\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\K}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0$
+\end_inset
+
+ uniformly for 
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+.
+ Now, note that 
+\begin_inset Formula $\F_{\X}\left(x-\varepsilon\right)\le\E_{\X}h_{x-\varepsilon,\varepsilon}\le\F_{\X}\left(x\right)\le\E_{\X}h_{x,\varepsilon}\le\F_{\X}\left(x+\varepsilon\right)$
+\end_inset
+
+ for any random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\F_{\X}$
+\end_inset
+
+ is continuous at 
+\begin_inset Formula $x$
+\end_inset
+
+ then 
+\begin_inset Formula 
+\begin{align*}
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le\left(\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\right)+\left(\F_{\X}\left(x+d_{n}\right)-\F_{\X}\left(x\right)\right)\to0\\
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge\left(\E_{\X_{n}}\h_{x-d_{n},d_{n}}-\E_{\X}\h_{x-d_{n},d_{n}}\right)+\left(\F_{\X}\left(x-d_{n}\right)-\F_{\X}\left(x\right)\right)\to0
+\end{align*}
+
+\end_inset
+
+so 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:dist-F"
+
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:dist"
+
+\end_inset
+
+ holds.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:stronger-than-weak"
+
+\end_inset
+
+ tells us that we can sensibly use our metrics to quantify the distance
+ between random variables, in a way that is consistent with distributional
+ (weak) convergence.
+ All three metrics are relevant in their own right, but sometimes one may
+ be easier to work with.
+ It is sometimes possible to transfer results between metrics, though this
+ usually results in worse constants than working directly in the desired
+ metric.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+It may be worthwhile to actually characterize the Wasserstein, Kolmogorov
+ and Total Variation topologies.
+ In particular, Wikipedia says that Wasserstein convergence is just weak
+ convergence plus convergence of the first moment.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+If 
+\begin_inset Formula $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
+\end_inset
+
+ then 
+\begin_inset Formula $f_{\X}$
+\end_inset
+
+ is called the 
+\family default
+\series default
+\shape default
+\size default
+\emph on
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+Lebesgue density
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ of 
+\begin_inset Formula $\X$
+\end_inset
+
+, and 
+\begin_inset Formula $\X$
+\end_inset
+
+ is called a 
+\family default
+\series default
+\shape default
+\size default
+\emph on
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+continuous
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ random variable.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\X$
+\end_inset
+
+ is a continuous random variable, then by the Radon-Nikodym chain rule 
+\begin_inset Formula $\E_{\X}\h=\int_{\RR}\h\left(x\right)f_{\X}\left(x\right)\d x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proposition
+Let 
+\begin_inset Formula $\X_{1},\X_{2}$
+\end_inset
+
+ be random variables.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:transfer-K/TV"
+
+\end_inset
+
+
+\begin_inset Formula $d_{\K}\left(\X_{1},\X_{2}\right)\le d_{\TV}\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:transfer-K/W"
+
+\end_inset
+
+If 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ has Lebesgue density bounded by 
+\begin_inset Formula $C$
+\end_inset
+
+, then 
+\begin_inset Formula $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\W}\left(\X_{1},\X_{2}\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+(Adapted from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Proposition 1.2"
+key "Ros11"
+
+\end_inset
+
+).
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:transfer-K/TV"
+
+\end_inset
+
+ is immediate from the definition.
+ Then, as in the proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:stronger-than-weak"
+
+\end_inset
+
+,
+\begin_inset Formula 
+\begin{eqnarray*}
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le & \left(\E_{\X_{n}}\h_{x,\varepsilon}-\E_{\X}\h_{x,\varepsilon}\right)+\left(\E_{\X}\h_{x,\varepsilon}-\F_{\X}\left(x\right)\right)\\
+ & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}f_{\X}\left(x\right)\d x\\
+ & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+C\varepsilon/2
+\end{eqnarray*}
+
+\end_inset
+
+and similarly
+\begin_inset Formula 
+\begin{eqnarray*}
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge & -d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon-C\varepsilon/2,
+\end{eqnarray*}
+
+\end_inset
+
+So, we can take 
+\begin_inset Formula $\varepsilon=\sqrt{2d_{\W}\left(\X_{1},\X_{2}\right)/C}$
+\end_inset
+
+ to prove 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:transfer-K/W"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+If 
+\begin_inset Formula $\L{\X_{2}}=\N\left(0,1\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\W}\left(\X_{1},\X_{2}\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In a combinatorial setting, many of our results are about integer random
+ variables.
+ The total variation metric is usually exclusively used in this case.
+\end_layout
+
+\begin_layout Proposition
+If 
+\begin_inset Formula $\X_{1},\X_{2}$
+\end_inset
+
+ are integer-valued random variables, then
+\begin_inset Formula 
+\[
+d_{\TV}\left(\X_{1},\X_{2}\right)=\frac{1}{2}\sum_{k\in\ZZ}\left|\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right|.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For any Borel set 
+\begin_inset Formula $\A$
+\end_inset
+
+, let 
+\begin_inset Formula $d_{\A}=\Pr\left(\X_{1}\in\A\right)-\Pr\left(\X_{2}\in\A\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula $d_{\TV}\left(\X_{1},\X_{2}\right)=\sup\left|d_{\A}\right|$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula 
+\begin{align*}
+\A_{<} & =\left\{ k\in\ZZ:\,\Pr\left(\X_{1}=k\right)<\Pr\left(\X_{2}=k\right)\right\} ,\\
+\A_{>} & =\left\{ k\in\ZZ:\,\Pr\left(\X_{1}=k\right)>\Pr\left(\X_{2}=k\right)\right\} .
+\end{align*}
+
+\end_inset
+
+For any Borel 
+\begin_inset Formula $\A$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align*}
+d_{\A} & =\sum_{k\in\ZZ\cap\A}\left(\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right)\\
+ & \le\sum_{k\in\A_{>}}\left(\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right)\\
+ & =d_{\A_{>}}
+\end{align*}
+
+\end_inset
+
+and similarly 
+\begin_inset Formula $\Pr\left(\X_{1}\in\A\right)-\Pr\left(\X_{2}\in\A\right)\ge d_{\A_{<}}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $d_{\A_{>}}=-d_{\A_{<}}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+d_{\TV}\left(\X_{1},\X_{2}\right)=\left(d_{\A_{>}}-d_{\A_{<}}\right)/2=\frac{1}{2}\sum_{k\in\ZZ}\left|\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right|.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Random Combinatorial Structures
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:random-structures"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\G}[2]{\mathcal{G}_{#1,#2}}
+{\boldsymbol{\mathcal{G}_{#1,#2}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I'll leave this section until I'm sure what applications I'll be looking
+ at.
+ Definitely random graph models, probably random permutations and random
+ matrices.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Stein's Method in the Abstract
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+There are a few quite different presentations of Stein's method.
+ One thing I'm trying to do here is to unify Stein's functional analysis
+ approach for exchangeable pairs 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste86"
+
+\end_inset
+
+ with Ross' general presentation
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ros11"
+
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cF}{\mathcal{F}}
+{\boldsymbol{\mathcal{F}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\T}{T}
+{\boldsymbol{T}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\U}{U}
+{\boldsymbol{U}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cX}{\mathcal{X}}
+{\boldsymbol{\mathcal{X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose we have a potentially complicated random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+, and we believe the distribution of 
+\begin_inset Formula $\X$
+\end_inset
+
+ is close to a 
+\begin_inset Quotes eld
+\end_inset
+
+standard
+\begin_inset Quotes erd
+\end_inset
+
+ distribution 
+\begin_inset Formula $\L 0$
+\end_inset
+
+.
+ Then, Stein's method allows us to compare the operators 
+\begin_inset Formula $\E_{\X}$
+\end_inset
+
+ and 
+\begin_inset Formula $\E_{0}:=\E_{\L 0}$
+\end_inset
+
+.
+ This is sometimes directly useful for approximating statistics of 
+\begin_inset Formula $\X$
+\end_inset
+
+ (for example, 
+\begin_inset Formula $\Pr\left(\X\in\A\right)=\E_{\X}\one_{\A}$
+\end_inset
+
+).
+ However, particularly for combinatorical applications, Stein's method is
+ most often used to bound the distance 
+\begin_inset Formula $d_{\cH}\left(\L{\X},\L 0\right)$
+\end_inset
+
+, where the metric 
+\begin_inset Formula $d_{\cH}$
+\end_inset
+
+ from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:general-metrics"
+
+\end_inset
+
+ is defined in terms of 
+\begin_inset Formula $\E_{\X}$
+\end_inset
+
+ and 
+\begin_inset Formula $\E_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Stein's method is motivated by the idea of a characterizing operator.
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $\cF_{0}$
+\end_inset
+
+ be a vector space and 
+\begin_inset Formula $\cX_{0}$
+\end_inset
+
+ be a vector space of measurable functions.
+ We say a linear operator 
+\begin_inset Formula $\T_{0}:\cF_{0}\to\cX_{0}$
+\end_inset
+
+ is a 
+\emph on
+characterizing operator
+\emph default
+ for the distribution 
+\begin_inset Formula $\L 0$
+\end_inset
+
+ if 
+\begin_inset Formula $\im\T_{0}=\cX_{0}\cap\ker\E_{0}$
+\end_inset
+
+.
+ For convenience, where there is no ambiguity we will often implicitly restrict
+ 
+\begin_inset Formula $\E_{0}$
+\end_inset
+
+ to 
+\begin_inset Formula $\cX_{0}$
+\end_inset
+
+, so we can write 
+\begin_inset Formula $\im\T_{0}=\ker\E_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The following proposition shows why 
+\begin_inset Formula $\T_{0}$
+\end_inset
+
+ is called a characterizing operator.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:characterizing"
+
+\end_inset
+
+If 
+\begin_inset Formula $\cX_{0}$
+\end_inset
+
+ is a determining class and 
+\begin_inset Formula $\im\T_{0}\subseteq\ker\E_{\X}$
+\end_inset
+
+ then 
+\begin_inset Formula $\L{\X}=\L 0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+If 
+\begin_inset Formula $\h\in\cX_{0}$
+\end_inset
+
+, then 
+\begin_inset Formula $\h-\E_{0}\h\in\ker\E_{0}=\im\T_{0}$
+\end_inset
+
+ so 
+\begin_inset Formula $\E_{\X}\left[\h-\E_{0}\h\right]=0$
+\end_inset
+
+.
+ That is, 
+\begin_inset Formula $\E_{\X}\h=\E_{0}\h$
+\end_inset
+
+ for all 
+\begin_inset Formula $\h\in\cX_{0}$
+\end_inset
+
+, which means 
+\begin_inset Formula $\L{\X}=\L 0$
+\end_inset
+
+ by the definition of a determining class.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:U_0-characterizing"
+
+\end_inset
+
+
+\begin_inset Formula $\T_{0}:\cF_{0}\to\cX_{0}$
+\end_inset
+
+ is characterizing if and only if there is a linear operator 
+\begin_inset Formula $\U_{0}:\cX_{0}\to\cF_{0}$
+\end_inset
+
+ such that the following two equations hold.
+\begin_inset Formula 
+\begin{align}
+\E_{0}\T_{0} & =0_{\cF_{0}},\label{eq:E_0T_0-consistency}\\
+\T_{0}\U_{0}+\E_{0} & =\id_{\cX_{0}}.\label{eq:U_0-characterizing}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Suppose 
+\begin_inset Formula $\T_{0}$
+\end_inset
+
+ is a characterizing operator.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E_0T_0-consistency"
+
+\end_inset
+
+ is immediate.
+ Let 
+\begin_inset Formula $\left\{ \h_{\i}\right\} _{\i\in\mathcal{I}}$
+\end_inset
+
+ be a (Hamel) basis of 
+\begin_inset Formula $\cX_{0}$
+\end_inset
+
+.
+ For each 
+\begin_inset Formula $\i\in\mathcal{I}$
+\end_inset
+
+ we have 
+\begin_inset Formula $\h_{\i}-\E_{0}\h_{\i}\in\ker\E_{0}$
+\end_inset
+
+ so there is some 
+\begin_inset Formula $f_{\i}$
+\end_inset
+
+ (not necessarily unique) that solves 
+\begin_inset Formula $\T_{0}f_{\i}=\h_{\i}-\E_{0}\h_{\i}$
+\end_inset
+
+.
+ The operator 
+\begin_inset Formula $\U_{0}$
+\end_inset
+
+ can then be defined by 
+\begin_inset Formula $\sum_{\i\in\mathcal{I}}a_{\i}\h_{\i}\mapsto\sum_{\i\in\mathcal{I}}a_{\i}f_{\i}$
+\end_inset
+
+, satisfying 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:U_0-characterizing"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+there's probably a cleaner functional analysis way to prove that.
+ Also, is 
+\begin_inset Formula $\U_{0}$
+\end_inset
+
+  bounded?
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Conversely, suppose 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E_0T_0-consistency"
+
+\end_inset
+
+ holds and 
+\begin_inset Formula $\U_{0}$
+\end_inset
+
+ exists satisfying 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:U_0-characterizing"
+
+\end_inset
+
+.
+ For 
+\begin_inset Formula $\h\in\ker\E_{0}$
+\end_inset
+
+ we have 
+\begin_inset Formula $\T_{0}\left(\U_{0}\h\right)=\h$
+\end_inset
+
+ and 
+\begin_inset Formula $\h\in\im\T_{0}$
+\end_inset
+
+, so 
+\begin_inset Formula $\ker\E_{0}\subseteq\im\T_{0}$
+\end_inset
+
+.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E_0T_0-consistency"
+
+\end_inset
+
+ immediately says that 
+\begin_inset Formula $\im\T_{0}\subseteq\ker\E_{0}$
+\end_inset
+
+, so 
+\begin_inset Formula $\T_{0}$
+\end_inset
+
+ is a characterizing operator.
+\end_layout
+
+\begin_layout Standard
+We'll use 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:U_0-characterizing"
+
+\end_inset
+
+ to give two important examples of characterizing operators.
+\end_layout
+
+\begin_layout Theorem
+Define 
+\begin_inset Formula $T_{\N}$
+\end_inset
+
+ by 
+\begin_inset Formula $T_{\N}f\left(x\right)=f'\left(x\right)-xf\left(x\right)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\cX_{\N}$
+\end_inset
+
+ be the set of integer-valued functions 
+\begin_inset Formula $\h$
+\end_inset
+
+ that satisfy 
+\begin_inset Formula $\E_{\N}\left|\h\right|<\infty$
+\end_inset
+
+ and let 
+\begin_inset Formula $\cF_{\N}$
+\end_inset
+
+ be the set of integer-valued functions 
+\begin_inset Formula $f$
+\end_inset
+
+ such that 
+\begin_inset Formula $\E_{\N}\left|\T_{\N}f\right|<\infty$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\T_{\N}:\cF_{\N}\to\cX_{\N}$
+\end_inset
+
+ is a characterizing operator for 
+\begin_inset Formula $\N\left(0,1\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For any 
+\begin_inset Formula $f\in\cF_{0}$
+\end_inset
+
+, integration by parts gives
+\begin_inset Formula 
+\[
+\E_{\N}\T_{\N}f=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}f'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}f\left(t\right)\d t=0
+\]
+
+\end_inset
+
+so 
+\begin_inset Formula $\E_{\N}\T_{\N}=0$
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E_0T_0-consistency"
+
+\end_inset
+
+ holds.
+ Then, define 
+\begin_inset Formula $\U_{\N}$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\[
+\U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.
+\]
+
+\end_inset
+
+By the product rule and the fundamental theorem of calculus, for all 
+\begin_inset Formula $\h\in\cX_{\N}$
+\end_inset
+
+ we have
+\begin_inset Formula 
+\begin{align*}
+\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h,
+\end{align*}
+
+\end_inset
+
+so 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:U_0-characterizing"
+
+\end_inset
+
+ holds and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:U_0-characterizing"
+
+\end_inset
+
+ completes the proof.
+\end_layout
+
+\begin_layout Example
+Note that 
+\begin_inset Formula $\cH_{\K}\subseteq\cX_{\N}$
+\end_inset
+
+, where 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is as defined in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:special-metrics"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Define 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
+\end_inset
+
+ by 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}f\left(k\right)=\lambda f\left(k+1\right)-kf\left(k\right)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\cX_{\Po\left(\lambda\right)}$
+\end_inset
+
+ be the set of integer-valued functions 
+\begin_inset Formula $\h$
+\end_inset
+
+ that satisfy 
+\begin_inset Formula $\E_{\Po\left(\lambda\right)}\left|\h\right|<\infty$
+\end_inset
+
+ and let 
+\begin_inset Formula $\cF_{\Po\left(\lambda\right)}$
+\end_inset
+
+ be the set of integer-valued functions 
+\begin_inset Formula $f$
+\end_inset
+
+ such that 
+\begin_inset Formula $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}f\right|<\infty$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}:\cF_{\Po\left(\lambda\right)}\to\cX_{\Po\left(\lambda\right)}$
+\end_inset
+
+ is a characterizing operator for 
+\begin_inset Formula $\Po\left(\lambda\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For any 
+\begin_inset Formula $f\in\cF_{0}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}f=\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}f\left(\i+1\right)-\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}f\left(\i\right)=0
+\]
+
+\end_inset
+
+so 
+\begin_inset Formula $\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}=0$
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E_0T_0-consistency"
+
+\end_inset
+
+ holds.
+ Then, define 
+\begin_inset Formula $\U_{\Po\left(\lambda\right)}$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\[
+\U_{\Po\left(\lambda\right)}\h\left(k\right)=\frac{\left(k-1\right)!}{\lambda^{k}}\sum_{\i=0}^{k-1}\frac{\lambda^{\i}}{\i!}\left(\h\left(\i\right)-\E_{\Po\left(\lambda\right)}\h\right).
+\]
+
+\end_inset
+
+Substituting and simplifying gives
+\begin_inset Formula 
+\[
+\T_{\Po\left(\lambda\right)}\U_{\Po\left(\lambda\right)}\h\left(k\right)=\h\left(k\right)-\E_{\Po\left(\lambda\right)}\h,
+\]
+
+\end_inset
+
+so 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:U_0-characterizing"
+
+\end_inset
+
+ holds and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:U_0-characterizing"
+
+\end_inset
+
+ completes the proof.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+ Stein chose 
+\begin_inset Formula $\cX_{0}=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $
+\end_inset
+
+, for both the Poisson and Normal case.
+ I'm not sure why, I'll revisit this after looking at exchangeable pairs.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When we restrict our attention to integer-valued random variables, 
+\begin_inset Formula $\cX_{\Po}$
+\end_inset
+
+ is a determining class, because it contains every function of the form
+ 
+\begin_inset Formula $\one_{\A}$
+\end_inset
+
+, where 
+\begin_inset Formula $\A$
+\end_inset
+
+ is a set of integers.
+ So, 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
+\end_inset
+
+ is a characterizing operator in the sense of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:characterizing"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Exchangeable Pairs
+\end_layout
+
+\begin_layout Subsection
+Size-Bias Coupling
+\end_layout
+
+\begin_layout Part
+Applications
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I'd like to go into a number of small examples (perhaps interspersed in
+ the discussion of Stein's method in Part I), but I'd like to also go through
+ a number of 
+\begin_inset Quotes eld
+\end_inset
+
+big
+\begin_inset Quotes erd
+\end_inset
+
+ examples.
+ I'd like these examples to showcase
+\end_layout
+
+\begin_layout Itemize
+different types of results: most applications give quantitative estimates.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Joh11"
+
+\end_inset
+
+ gives a non-quantitative distributional convergence result that was not
+ previously proved using other methods.
+ There are also results that have no connection with distribution metrics,
+ such as the concentration inequalities in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ros11"
+
+\end_inset
+
+.
+ In particular, the Latin rectangle example in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste86"
+
+\end_inset
+
+ is interesting in that the final result is not probabilistic.
+\end_layout
+
+\begin_layout Itemize
+different types of distributions: definitely at least the Poisson and normal
+ case, perhaps also an example of a more exotic distribution like the one
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FS12"
+
+\end_inset
+
+ or perturbations of Poisson/normal distributions as in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BCX07"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+different ways to apply stein's method: definitely exchangeable pairs and
+ probably size-biasing.
+ Maybe also Zero-bias coupling.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "readings"
+options "amsalpha"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

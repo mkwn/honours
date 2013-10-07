@@ -1,0 +1,954 @@
+%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=3cm,headsep=3cm,footskip=1.5cm}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{esint}
+\setstretch{1.5}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}[section]
+  \theoremstyle{plain}
+  \newtheorem{cor}[thm]{\protect\corollaryname}
+  \theoremstyle{plain}
+  \newtheorem{lem}[thm]{\protect\lemmaname}
+  \theoremstyle{plain}
+  \newtheorem{prop}[thm]{\protect\propositionname}
+  \theoremstyle{plain}
+  \newtheorem{conjecture}[thm]{\protect\conjecturename}
+  \theoremstyle{definition}
+  \newtheorem{defn}[thm]{\protect\definitionname}
+  \theoremstyle{definition}
+  \newtheorem{example}[thm]{\protect\examplename}
+  \theoremstyle{remark}
+  \newtheorem{rem}[thm]{\protect\remarkname}
+  \theoremstyle{remark}
+  \newtheorem{claim}[thm]{\protect\claimname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%clickable links
+\usepackage[bookmarks,hidelinks]{hyperref} 
+
+%\ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
+\usepackage[nameinlink,capitalise]{cleveref}
+\AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
+\theoremstyle{plain}
+\newtheorem{mythm}{\protect\theoremname}[section]
+\renewenvironment{thm}{\begin{mythm}}{\end{mythm}}
+\theoremstyle{definition}
+\newtheorem{mydefn}[mythm]{\protect\definitionname}
+\renewenvironment{defn}{\begin{mydefn}}{\end{mydefn}}
+\theoremstyle{definition}
+\newtheorem{myexample}[mythm]{\protect\examplename}
+\renewenvironment{example}{\begin{myexample}}{\end{myexample}}
+\theoremstyle{plain}
+\newtheorem{myprop}[mythm]{\protect\propositionname}
+\renewenvironment{prop}{\begin{myprop}}{\end{myprop}}
+\theoremstyle{plain}
+\newtheorem{mycor}[mythm]{\protect\corollaryname}
+\renewenvironment{cor}{\begin{mycor}}{\end{mycor}}
+\theoremstyle{plain}
+\newtheorem{mylem}[mythm]{\protect\lemmaname}
+\renewenvironment{lem}{\begin{mylem}}{\end{mylem}}
+\theoremstyle{plain}
+\newtheorem{myconjecture}[mythm]{\protect\conjecturename}
+\renewenvironment{conjecture}{\begin{myconjecture}}{\end{myconjecture}}
+\theoremstyle{remark}
+\newtheorem{myrem}[mythm]{\protect\remarkname}
+\renewenvironment{rem}{\begin{myrem}}{\end{myrem}}
+\theoremstyle{remark}
+\newtheorem{myclaim}[mythm]{\protect\claimname}
+\renewenvironment{claim}{\begin{myclaim}}{\end{myclaim}}
+\crefformat{equation}{#2(#1)#3}
+
+%ordered lists should use parens instead of a point
+%\renewcommand\theenumi{\arabic{enumi}}
+%\renewcommand\labelenumi{(\theenumi)}
+
+%\left(\right) should behave the same as ()
+\let\originalleft\left
+\let\originalright\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+
+%table of contents spacing tweaks
+\usepackage{tocloft}
+\setlength\cftparskip{-2pt}
+\setlength\cftbeforesecskip{1pt}
+\setlength\cftaftertoctitleskip{2pt}
+
+%comment environment
+\usepackage{verbatim}
+
+%mainly for light colours color!percent
+\usepackage{xcolor}
+
+%shaded WIP notes
+\usepackage{framed}
+\usepackage{lipsum}
+\colorlet{shadecolor}{blue!20}
+\newenvironment{note}
+{\colorlet{shadecolor}{blue!20}\begin{shaded}}{\end{shaded}}
+\newenvironment{todo}
+{\colorlet{shadecolor}{red!20}\begin{shaded}}{\end{shaded}}
+
+\makeatother
+
+\usepackage{babel}
+  \providecommand{\claimname}{Claim}
+  \providecommand{\conjecturename}{Conjecture}
+  \providecommand{\corollaryname}{Corollary}
+  \providecommand{\definitionname}{Definition}
+  \providecommand{\examplename}{Example}
+  \providecommand{\lemmaname}{Lemma}
+  \providecommand{\propositionname}{Proposition}
+  \providecommand{\remarkname}{Remark}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+
+\title{Stein's Method}
+
+
+\author{Matthew Kwan}
+
+\maketitle
+\begin{comment}
+\begin{thm}
+t\end{thm}
+\begin{cor}
+c\end{cor}
+\begin{lem}
+l\end{lem}
+\begin{prop}
+p\end{prop}
+\begin{conjecture}
+c\end{conjecture}
+\begin{defn}
+d\end{defn}
+\begin{example}
+e\end{example}
+\begin{rem}
+r\end{rem}
+\begin{claim}
+c
+\end{claim}
+\end{comment}
+
+\global\long\def\floor#1{\left\lfloor #1\right\rfloor }
+
+
+\global\long\def\ceil#1{\left\lceil #1\right\rceil }
+
+
+\global\long\def\i{i}
+
+
+\global\long\def\ii{j}
+
+
+\global\long\def\NN{\mathbb{N}}
+
+
+\global\long\def\ZZ{\mathbb{Z}}
+
+
+\global\long\def\RR{\mathbb{R}}
+
+
+\global\long\def\CC{\mathbb{C}}
+
+
+\global\long\def\F{\mathcal{F}}
+
+
+\global\long\def\d{\operatorname d}
+
+
+\global\long\def\id{\operatorname{id}}
+
+
+\global\long\def\one{\operatorname{1}}
+
+
+\begin{note}Commentary in blue\end{note}\begin{todo}Issues in red\end{todo}
+
+\tableofcontents{}
+
+
+\section{Introduction}
+
+\begin{note}
+
+introduce with limit theorems: Central Limit theorem, Poisson Limit
+theorem. Failure of limit theorems: they provide no understanding
+of speed of convergence, in particular convergence cannot be assumed
+to be uniform as parameters vary.
+
+Stein's method is a technique for bounding the distance between distributions,
+with a variety of different distance metrics. Quantitative bounds
+can be useful in their own right, or can be further applied to prove
+asymptotic results.
+
+\end{note}
+
+
+\subsection{Notation}
+
+For this thesis, the set of natural numbers $\NN$ includes zero.
+We write $\one_{A}$ for the characteristic function of $A$: $\one_{A}\left(x\right)=1$
+if $x\in A$, otherwise $\one_{A}\left(x\right)=0$.
+
+Unless otherwise specified, all asympotics are as $n\to\infty$. Apart
+from standard asymptotic notation, we use two notions of asymptotic
+equivalence: $f\sim g$ means $f=g\left(1+o\left(1\right)\right)$
+and $f\asymp g$ means $f=O\left(g\right)$ and $g=O\left(f\right)$.
+
+
+\part{Theory}
+
+
+\section{General Probability Theory}
+
+\global\long\def\L#1{\mathcal{L}_{#1}}
+
+
+\DeclareRobustCommand{\L}[1]{\ifmmode{\mathcal{L}_{#1}}\else\polishL\fi}
+
+\global\long\def\Om{\Omega}
+
+
+\global\long\def\om{\omega}
+
+
+\global\long\def\cA{\mathcal{A}}
+
+
+\global\long\def\B{\mathcal{B}}
+
+
+\global\long\def\E{\mathbb{E}}
+
+
+\global\long\def\F{F}
+
+
+\global\long\def\N{\mathcal{N}}
+
+
+\global\long\def\Po{\operatorname{Po}}
+
+
+\global\long\def\Var{\operatorname{Var}}
+
+
+\global\long\def\im{\operatorname{im}}
+
+
+\global\long\def\Pr{\mathbb{P}}
+
+
+\global\long\def\m{\mu}
+
+
+\global\long\def\X{X}
+
+
+\global\long\def\bX{\mathbf{X}}
+
+
+\global\long\def\A{A}
+
+
+\global\long\def\P{\mathcal{P}}
+
+
+\begin{comment}
+
+For many combinatorial applications, an informal understanding of
+probability theory will suffice, because probability spaces of combinatorial
+objects are usually finite. However, we will need a more rigorous
+foundation in probability theory. The following is only intended as
+a brief review (cite textbook).
+
+
+\subsection{Measure theory}
+
+Let $\A$ be a collection of subsets of some set $\Om$. We say $\cA$
+is a \emph{$\sigma$-algebra} if it is closed under countable unions
+and complements, and contains the empty set. A \emph{measure} on $\cA$
+is a map $\m:\cA\to\left[0,\infty\right)$ such that for any collection
+of pairwise disjoint sets $\left\{ \A_{\i}\right\} _{\i\in\NN}\subseteq\cA$,
+we have $\sum_{\i\in\NN}\m\left(A_{\i}\right)=\m\left(\bigcup_{i\in\NN}\A_{\i}\right)$.
+
+A \emph{measure space} consists of a set $\Om$, a $\sigma$-algebra
+$\cA$ of subsets of $\Om$ and a measure $\m$ on $\cA$. We represent
+a measure space by the triple $\left(\Om,\cA,\m\right)$.
+\begin{itemize}
+\item define $\sigma$-algebra generated by a set
+\item define Borel $\sigma$-algebra $\B$
+\item if $\Om$ is countable we can choose $\cA=\Om$
+\item define measurable functions $X:\Om_{1}\to\Om_{2}$
+\item define integration
+\end{itemize}
+\end{comment}
+
+
+\subsection{Review of basic concepts}
+
+\begin{note}
+
+I'm a little bit uncertain how much depth to go into for this. At
+the moment, it's written so that someone who's seen measure theory
+but no probability theory (an analyst) can understand. Where possible,
+I've tried to translate things into the discrete case, because it's
+often more intuitive (and since I plan for applications to be combinatorial).
+
+\end{note}
+
+For many combinatorial applications, an informal understanding of
+probability theory will suffice. However, in this thesis a rigorous
+foundation in probability theory will be useful. The following is
+intended only as a brief review.
+\begin{defn}
+A \emph{probability space} is a measure space $\left(\Om,\cA,\Pr\right)$
+with $\Pr\left(\Om\right)=1$. In this case we say $\Pr$ is a \emph{probability
+measure}, and denote the set of all probability measures on $\left(\Om,\cA\right)$
+by $\P\left(\Om,\cA\right)$ or $\P\left(\Om\right)$ if there is
+no ambiguity. An \emph{event} is a measurable set $\A\in\cA$.
+\end{defn}
+
+\begin{defn}
+A \emph{probability space} is a measure space $\left(\Om,\cA,\Pr\right)$
+with $\Pr\left(\Om\right)=1$. In this case we say $\Pr$ is a \emph{probability
+measure}, and denote the set of all probability measures on $\left(\Om,\cA\right)$
+by $\P\left(\Om,\cA\right)$ or $\P\left(\Om\right)$ if there is
+no ambiguity. An \emph{event} is a measurable set $\A\in\cA$.
+\end{defn}
+For our purposes $\Om$ will often be a finite set of combinatorial
+objects, with $\cA$ as the power set of $\Om$. In this case $\Pr$
+is defined by $\Pr\left(\om\right):=\Pr\left(\left\{ \om\right\} \right)$,
+for each $\om\in\Om$. We will discuss specific probability spaces
+on combinatorial objects in \ref{sec:random-structures}, but we include
+a particularly useful definition here:
+\begin{defn}
+In a probability space $\left(\Om,\cA,\Pr\right)$ where $\Om$ is
+finite, if $\Pr\left(\om\right)=1/\left|\Om\right|$ for each $\om\in\Om$,
+then we say $\Pr$ is \emph{uniform}.
+\end{defn}
+For an event $\A$, $\Pr\left(\A\right)$ is interpreted as the ``probability
+that $\A$ occurs''. For combinatorial spaces, events are usually
+of the form $\A=\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} $,
+where $P\left(\om\right)$ is some property of an object $\om$. For
+clarity, we often abuse notation slightly and write $\Pr\left(P\left(\om\right)\mbox{ holds}\right)$
+instead of $\Pr\left(\A\right)$.
+\begin{defn}
+A \emph{random element} $\X:\Om_{1}\to\Om_{2}$ is a measurable function
+from a probability space $\left(\Om_{1},\cA_{1},\Pr\right)$ to some
+measure space $\left(\Om_{2},\cA_{2},\m\right)$. If the target measure
+space is $\RR^{n}$ with the Borel $\sigma$-algebra and the Lebesgue
+measure, then we say $\X$ is a \emph{random vector}; if $n=1$ then
+$\X$ is a \emph{random variable}. If $\X$ only takes countably many
+values then we say $\X$ is \emph{discrete}.
+\end{defn}
+If the underlying probability space $\Om_{1}$ is countable, then
+any function is measurable.
+
+We will often be interested in the probability that a random element
+takes certain values, without regard to the underlying probability
+space.
+\begin{defn}
+Suppose $\X$ is a random element with target measure space $\left(\Om,\cA,\m\right)$.
+The \emph{distribution} (or \emph{law}) $\L{\X}$ of $\X$ is the
+pushforward measure with respect to $\X$. That is, it is a probability
+measure defined by $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)$
+for $\A\subseteq\cA$.
+\end{defn}
+It is worth noting that in fact any probability measure is the distribution
+of some random element. To see this, note that given a probability
+measure $\Pr\in\P\left(\Om\right)$, we can choose $X=\id_{\Om}$
+to have $\L{\X}=\Pr$. So, it is often convenient to specify random
+variables by their distributions, without defining an underlying probability
+space. We can use slightly abusive (but standard) notation like $\Pr\left(\X>1\right)$
+to denote $\L{\X}\left(\left\{ x:x>1\right\} \right)$. This is equal
+to $\Pr\left(\left\{ \om\in\Om:\X\left(\om\right)>1\right\} \right)$
+for any particular realization of $\X$ as a function on a probability
+space $\left(\Om,\cA,\m\right)$.
+\begin{example}
+If $\X$ has the normal distribution with parameters $\mu$ and $\sigma$
+then we say $\L{\X}=\N\left(\mu,\sigma\right)$; this distribution
+is defined by $\L{\X}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x$
+for Borel $B$.
+\end{example}
+If $\X$ is discrete, then $\L{\X}$ is just an assignment of a probability
+to each possible value.
+\begin{example}
+If $\X$ is Poisson distributed with parameter $\lambda$, we write
+$\L{\X}=\Po\left(\lambda\right)$; this is defined by $\Pr\left(\X=k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$.\end{example}
+\begin{defn}
+The \emph{expected value }of a random variable $\X$ is $\E\X=\int x\d\L{\X}\left(x\right)$.
+\end{defn}
+For a random variable $\X$ that takes integer values, this definition
+is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\Pr\left(\X=x\right)$.
+
+If we fix a particular underlying probability space $\left(\Om,\cA,\Pr\right)$,
+we can also equivalently view expectation as a bounded linear functional
+on the space of integrable functions: $\E\X=\int\X\left(\om\right)\d\Pr$.
+So, $\E$ is defined in terms of a particular underlying probability
+space. Sometimes we will define a new probability space $\left(\Om,\cA,\Pr'\right)$
+by changing the measure on the same underlying set. In this case we
+will write $\E_{\Pr'}$ to indicate expecation with respect to the
+measure $\Pr'$, to avoid ambiguity.
+
+In fact, the expectation functional defines its underlying probability
+measure, because $\E\one_{\A}=\Pr\left(\A\right)$. Since the distribution
+of a random variable is specified by a probability measure, the distribution
+$\L{\X}$ of a random variable $\X$ also uniquely defines an expectation
+functional $\E_{\X}:=\E_{\L{\X}}$.
+
+\begin{comment}
+\begin{defn}
+The \emph{variance }of a random variable $\X$ is $\Var\X=\E\left(\X-\E X\right)^{2}$.
+The \emph{$n$th moment} of a random variable $\X$ is $\E\left[\X^{n}\right]$.
+\end{defn}
+conditional variance?
+
+\end{comment}
+\begin{defn}
+For two collections $S,S'\subseteq\cA_{1}$ of events, we say that
+$S$ and $S'$ are \emph{independent} if $\Pr\left(\A\cap\A'\right)=\Pr\left(\A\right)\Pr\left(\A'\right)$
+for each $\A\in S$ and $\A\in S'$. If $S=\left\{ \A\right\} $ contained
+a single set, then we say $\A$ itself is independent of $S'$.
+\end{defn}
+
+\begin{defn}
+Let $\left(\Om_{1},\cA_{1},\Pr\right)$ be a probability space and
+$\left(\Om_{2},\cA_{2},\m\right)$ a measure space. Let $\X$ be a
+random variable $\Om_{1}\to\Om_{2}$, and let $S$ be the set of all
+events of the form $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
+for $\A_{2}\in\cA_{2}$. If $S$ is independent of $S'$ then we say
+$\X$ itself is independent of $S'$.
+\end{defn}
+We can analogously say that two random variables are independent,
+or a random variable and an event are independent, or any similar
+combination.
+\begin{defn}
+If two objects are not independent, then we say they are \emph{dependent}.
+\end{defn}
+
+\begin{defn}
+Suppose $\X:\Om_{1}\to\Om_{2}$ is a random element defined on these
+spaces, and $\A_{1}\in\cA_{1}$ is an event with nonzero probability.
+Then the \emph{distribution of $\X$ conditioned on $\A_{1}$} is
+denoted by $\L{\X|\A_{1}}$ and defined by $\L{\X|\A_{1}}\left(\A_{2}\right)=\Pr\left(\X\in\A_{2}|\A_{1}\right)$
+for $\A_{2}\in\cA_{2}$. The expected value of a random variable with
+distribution $\L{\X|\A_{1}}$ is called the \emph{conditional expected
+value of $\X$ given $\A_{1}$} and is denoted $\E\left[\X|\A_{1}\right]$.
+\end{defn}
+We can also define conditional expectation with respect to another
+random variable. If $\X_{1}$ and $\X_{2}$ are random variables defined
+on the same underlying probability space $\left(\Om,\cA,\Pr\right)$,
+then the sets $\X_{2}^{-1}\left(B\right)$ for Borel $B$ comprise
+a sub-$\sigma$-algebra $\cA'$ of $\cA$. Then, $\m:\A'\mapsto\E\left[\X_{1}\one_{\A'}\right]$
+is a signed measure on $\cA'$ that is absolutely continuous with
+respect to the restriction of $\Pr$ to $\cA'$. By the Radon-Nikodym
+theorem there is an $\cA'$-measurable random variable $\E\left[\X_{1}|\X_{2}\right]$
+that satisfies $\E\left[\X_{1}\one_{\A'}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A'}\right]$
+for all $\A'$ in $\cA'$. This random variable is almost uniquely
+defined: for any two choices of $\E\left[\X_{1}|\X_{2}\right]$, the
+probability that they differ is zero.
+\begin{defn}
+The random variable $\E\left[\X_{1}|\X_{2}\right]$ as defined above
+is called the \emph{conditional expectation of $\X_{1}$ with respect
+to $\X_{2}$}. We can also view conditional expectation as a bounded
+linear operator between functions: we define $\E^{\X_{2}}$ by $\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right]$.
+\end{defn}
+This definition generalizes the previous definition of expectation
+conditioned on an event: if $\om\in\A$ and $\Pr\left(\A\right)>0$
+then $\E\left[\X|\one_{\A}\right]\left(\om\right)=\E\left[\X|\A\right]$.
+
+Note that if $\X_{2}$ is discrete then we do not need to invoke Radon-Nikodym.
+We can define $\E\left[\X_{1}|\X_{2}\right]$ by $\E\left[\X_{1}|\X_{2}\right]\left(\om\right)=\E\left[\X_{1}|\X_{2}=\X_{2}\left(\om\right)\right]$
+whenever $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$.
+
+
+\subsection{Coupling}
+
+Given a finite collection of measure spaces $\left(\Om_{1},\cA_{1},\m_{1}\right),\dots,\left(\Om_{n},\cA_{n},\m_{n}\right)$
+recall the construction of the product measure space $\left(\Om,\cA,\m\right):=\left(\prod_{i=1}^{n}\Om_{i},\bigotimes_{i=1}^{n}\cA_{i},\prod_{i=1}^{n}\m_{i}\right)$.
+If a random element takes values in a product space then each component
+is measurable, and conversely if the components of a random tuple
+are measurable then that tuple is measurable in the product space.
+So, we can make the following definitions:
+\begin{defn}
+Given random elements $\X_{1},\dots,\X_{n}$ on the same underlying
+probability space, $\L{\X_{1},\dots,\X_{n}}:=\L{\left(\X_{1},\dots,\X_{n}\right)}$
+is called the \emph{joint distribution} of $\X_{1},\dots,\X_{n}$.
+Conversely, given a random tuple $\left(\X_{1},\dots,\X_{n}\right)$,
+each $\L{\X_{i}}$ is called a \emph{marginal distribution}.
+\end{defn}
+Suppose we have two distributions of random elements $\L{\X_{1}}$
+and $\L{\X_{1}}$. \emph{Coupling} is the technique of constructing
+a random ordered pair $\left(\X_{1},\X_{2}\right)$ which realizes
+the given distributions as marginal distributions. Usually this is
+done by specifying the joint distribution $\L{\X_{1},\X_{2}}$.
+
+The idea is that coupling creates a particular kind of dependence
+between $\X_{1}$ and $\X_{2}$ that allows us to compare the two
+distributions. Often, we are able to make conclusions about the distributions
+$\L{\X_{i}}$ which are independent of their specific realizations
+as random elements in the coupling.
+
+
+\subsection{Markov Chains}
+
+\begin{note}
+
+I'll need to define Markov Chains, stationary distributions and time-reversibility.
+
+Perhaps I should talk more generally about stochastic processes, because
+applying exchangeable pairs to Stein's method is has connections with
+Ornstein-Uhlenbeck processes and also Stein's method can be applied
+to Poisson processes.
+
+\end{note}
+
+
+\subsection{The Weak Topology on Probability Measures}
+
+\global\long\def\cH{\mathcal{H}}
+
+
+\global\long\def\h{h}
+
+
+\global\long\def\TV{\mathrm{TV}}
+
+
+\global\long\def\K{\mathrm{K}}
+
+
+\global\long\def\W{\mathrm{W}}
+
+
+\begin{note}
+
+The main purpose of this section is to motivate the metrics usually
+used in Stein's method: they are all legitimate topological metrics
+and are consistent with the topology of convergence in distribution
+
+\end{note}
+\begin{defn}
+Let $\left(\X_{n}\right)_{n\in\NN}$ be a sequence of random variables.
+We say $\X_{n}$ \emph{converges in distribution} to a random variable
+$\X$ if $\E f\left(\X_{n}\right)\to\E f\left(\X\right)$ for all
+bounded continuous functions $f$. Alternatively, we say $\L{\X_{n}}$
+converges \emph{weakly} to $\L{\X}$, or simply $\L{\X_{n}}\to\L{\X}$.
+The topology on $\P\left(\RR\right)$ associated with this convergence
+is called the \emph{weak topology} (we will see that it is indeed
+a topology). Convergence in distribution of random vectors is defined
+component-wise.
+\end{defn}
+
+\begin{defn}
+The \emph{distribution function} $\F_{\X}$ of a random variable $\X$
+is defined by $\F_{\X}\left(x\right)=\Pr\left(\X\le x\right)$.\end{defn}
+\begin{thm}
+\label{prop:dist}The following are equivalent.
+
+\begin{enumerate}
+
+\item \label{prop:dist-def}$\L{\X_{n}}\to\L{\X}$
+
+\item \label{prop:dist-F}$\F_{\X_{n}}\left(x\right)\to\F_{\X}\left(x\right)$
+for all $x$ where $\F_{\X}$ is continuous
+
+\item (L\'evy's continuity theorem) $\E e^{it\X_{n}}\to\E e^{it\X}$
+for all $t\in\RR$.
+
+\end{enumerate}
+\end{thm}
+The equivalence of \ref{prop:dist-def,prop:dist-F} is a well-known
+result called the Portmanteau Theorem.
+
+When $\X$ and each $\X_{n}$ are integer random variables, then \ref{prop:dist-F}
+reduces to the condition that $\Pr\left(\X_{n}=k\right)\to\Pr\left(\X=k\right)$
+for all $k$. This characterization is usually used to prove the Poisson
+limit theorem. L\'evy's continuity theorem is classically used to
+prove the central limit theorem, but we will not discuss it in this
+thesis.
+
+For combinatorial applications, convergence in distribution can also
+be proved by the ``method of moments'': if $\X$ is the only random
+variable with the moments $\left(\E\X^{k}\right)_{k\in\NN}$, then
+$\L{\X_{n}}\to\L{\X}$ if $\E\X_{n}^{k}\to\E\X^{k}$. Convergence
+in distribution can also sometimes be inferred from stronger forms
+of convergence when $\X$ and all the $\X_{n}$ are coupled to the
+same underlying space.
+
+A disadvantage of all these approaches is that it is difficult to
+quantify the rate of convergence.
+
+In functional analysis terms, note that expectation operators are
+bounded linear functionals on the space of real bounded continuous
+functions. Then, $\L{\X_{n}}\to\L{\X}$ just means that $\E_{\X_{n}}\to\E_{\X}$
+in the weak-star topology. Although $C_{b}\left(\RR\right)^{*}$ is
+not metrizable, the subspace corresponding to $\P\left(\RR\right)$
+is in fact metrizable, with a metric called the L\'evy metric. For
+Stein's method we will be interested in some slightly stronger metrics.
+\begin{defn}
+\label{def:general-metrics}For two probability measures $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
+and a collection of real measurable ``test'' functions $\cH$, define
+$d_{\cH}$ by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
+For random variables $\X_{1},\X_{2}$, we abuse notation to write
+$d_{\cH}\left(\X_{1},\X_{2}\right)$ instead of $d_{\cH}\left(\L{\X_{1}},\L{\X_{2}}\right)$.
+\end{defn}
+Each $d_{\cH}$ is non-negative, symmetric and satisfies the triangle
+inequality.
+\begin{defn}
+A set of real functions $\cH$ is a \emph{determining class} if $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+for all $\h\in\cH$ implies that $\Pr_{1}=\Pr_{2}$.
+\end{defn}
+To check that $d_{\cH}$ is a metric, we only need to check that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$
+implies that $\Pr_{1}=\Pr_{2}$. That is, we need to check that $\cH$
+is a determining class.
+\begin{defn}
+\label{def:special-metrics}We define some special cases of $d_{\cH}$.\begin{itemize}
+
+\item If $\cH_{\K}=\left\{ \one_{\left(-\infty,x\right]}:x\in\RR\right\} $
+then $d_{\K}:=d_{\cH_{\K}}$ is called the \emph{Kolmogorov metric}.
+
+\item If $\cH_{\W}$ is the set of real functions $\h$ that satisfy
+$\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
+for all $x_{1},x_{2}\in\RR$ (that is, the set of functions with Lipschitz
+constant 1), then $d_{\W}:=d_{\cH_{\W}}$ is called the \emph{Wasserstein
+metric}.
+
+\item If $\cH_{\TV}$ is the set of functions $\one_{B}$ for Borel
+$B$, $d_{\TV}:=d_{\cH_{\TV}}$ is called the \emph{total variation
+metric}.\end{itemize}\end{defn}
+\begin{prop}
+\label{prop:metric}The Kolmogorov, Wasserstein and total variation
+``metrics'' are actually metrics.\end{prop}
+\begin{proof}
+We check that $\cH_{\K}$, $\cH_{\W}$ and $\cH_{\TV}$ are determining
+classes. Let $\cH\in\left\{ \cH_{\K},\cH_{\W},\cH_{\TV}\right\} $,
+and suppose that $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$ for all $\h\in\cH$.
+It suffices to prove that $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
+for all $x\in\RR$, since the sets $\left(-\infty,x\right]$ generate
+the Borel $\sigma$-algebra. For $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $
+this is immediate, because $\Pr_{\i}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$.
+So, consider, $\cH=\cH_{\W}$.
+
+For $\varepsilon>0$ and $x\in\RR$, let $\h_{x,\varepsilon}$ be
+the continuous function which takes the value 1 on the set $\left(-\infty,x\right]$,
+takes the value 0 on the set $\left[x+\varepsilon,\infty\right)$,
+and is linearly interpolated in the range $\left[x,x+\varepsilon\right]$.
+Since $\varepsilon\h_{x,\varepsilon}\in\cH_{\W}$, we have $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
+for each $n\in\NN$. For each $x\in\RR$, $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$
+pointwise and each $\h_{x,1/n}\le1$ so by the dominated convergence
+theorem, $\E_{\Pr_{\i}}\h_{1/n}\to\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
+for each $\i\in\left\{ 1,2\right\} $. We have again proved that $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
+for all $x\in\RR$.
+\end{proof}
+
+\begin{prop}
+\label{prop:stronger-than-weak}The topologies induced by the Kolmogorov,
+Wasserstein and total variation metrics are each stronger than the
+weak topology.\end{prop}
+\begin{proof}
+If $d_{\K}\left(\X_{n},\X\right)\to0$ or $d_{\TV}\left(\X_{n},\X\right)\to0$
+then $\F_{\X_{n}}\to\F_{\X}$ uniformly, so certainly \ref{prop:dist-F}
+of \ref{prop:dist} holds.
+
+Now, suppose $d_{\K}\left(\X_{n},\X\right)\to0$. Let $d_{n}=\sqrt{d_{\K}\left(\X_{n},\X\right)}$
+and recall the definition of $\h_{x,\varepsilon}$ from the proof
+of \ref{prop:metric}. Since $d_{n}\h_{x,d_{n}}\in\cH_{\K}$ for each
+$n\in\NN$, we have $\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\K}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0$
+uniformly for $x\in\RR$. Now, note that $\F_{\X}\left(x-\varepsilon\right)\le\E_{\X}h_{x-\varepsilon,\varepsilon}\le\F_{\X}\left(x\right)\le\E_{\X}h_{x,\varepsilon}\le\F_{\X}\left(x+\varepsilon\right)$
+for any random variable $\X$. If $\F_{\X}$ is continuous at $x$
+then 
+\begin{align*}
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le\left(\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\right)+\left(\F_{\X}\left(x+d_{n}\right)-\F_{\X}\left(x\right)\right)\to0\\
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge\left(\E_{\X_{n}}\h_{x-d_{n},d_{n}}-\E_{\X}\h_{x-d_{n},d_{n}}\right)+\left(\F_{\X}\left(x-d_{n}\right)-\F_{\X}\left(x\right)\right)\to0
+\end{align*}
+so \ref{prop:dist-F} of \ref{prop:dist} holds.
+\end{proof}
+\ref{prop:stronger-than-weak} tells us that we can sensibly use our
+metrics to quantify the distance between random variables, in a way
+that is consistent with distributional (weak) convergence. All three
+metrics are relevant in their own right, but sometimes one may be
+easier to work with. It is sometimes possible to transfer results
+between metrics, though this usually results in worse constants than
+working directly in the desired metric.
+
+\begin{todo}It may be worthwhile to actually characterize the Wasserstein,
+Kolmogorov and Total Variation topologies. In particular, Wikipedia
+says that Wasserstein convergence is just weak convergence plus convergence
+of the first moment.\end{todo}
+\begin{defn}
+If $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
+then $f_{\X}$ is called the \emph{Lebesgue density} of $\X$, and
+$\X$ is called a \emph{continuous} random variable.
+\end{defn}
+If $\X$ is a continuous random variable, then by the Radon-Nikodym
+chain rule $\E_{\X}\h=\int_{\RR}\h\left(x\right)f_{\X}\left(x\right)\d x$.
+\begin{prop}
+Let $\X_{1},\X_{2}$ be random variables.\begin{enumerate}
+
+\item \label{prop:transfer-K/TV}$d_{\K}\left(\X_{1},\X_{2}\right)\le d_{\TV}\left(\X_{1},\X_{2}\right)$
+
+\item \label{prop:transfer-K/W}If $\X_{2}$ has Lebesgue density
+bounded by $C$, then $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\W}\left(\X_{1},\X_{2}\right)}$.
+
+\end{enumerate}\end{prop}
+\begin{proof}
+(Adapted from \cite[Proposition 1.2]{Ros11}). \ref{prop:transfer-K/TV}
+is immediate from the definition. Then, as in the proof of \ref{prop:stronger-than-weak},
+\begin{eqnarray*}
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le & \left(\E_{\X_{n}}\h_{x,\varepsilon}-\E_{\X}\h_{x,\varepsilon}\right)+\left(\E_{\X}\h_{x,\varepsilon}-\F_{\X}\left(x\right)\right)\\
+ & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}f_{\X}\left(x\right)\d x\\
+ & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+C\varepsilon/2
+\end{eqnarray*}
+and similarly
+\begin{eqnarray*}
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge & -d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon-C\varepsilon/2,
+\end{eqnarray*}
+So, we can take $\varepsilon=\sqrt{2d_{\W}\left(\X_{1},\X_{2}\right)/C}$
+to prove \ref{prop:transfer-K/W}.\end{proof}
+\begin{example}
+If $\L{\X_{2}}=\N\left(0,1\right)$ then $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\W}\left(\X_{1},\X_{2}\right)}$.
+\end{example}
+In a combinatorial setting, many of our results are about integer
+random variables. The total variation metric is usually exclusively
+used in this case.
+\begin{prop}
+If $\X_{1},\X_{2}$ are integer-valued random variables, then
+\[
+d_{\TV}\left(\X_{1},\X_{2}\right)=\frac{1}{2}\sum_{k\in\ZZ}\left|\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right|.
+\]
+\end{prop}
+\begin{proof}
+For any Borel set $\A$, let $d_{\A}=\Pr\left(\X_{1}\in\A\right)-\Pr\left(\X_{2}\in\A\right)$,
+so that $d_{\TV}\left(\X_{1},\X_{2}\right)=\sup\left|d_{\A}\right|$.
+Define 
+\begin{align*}
+\A_{<} & =\left\{ k\in\ZZ:\,\Pr\left(\X_{1}=k\right)<\Pr\left(\X_{2}=k\right)\right\} ,\\
+\A_{>} & =\left\{ k\in\ZZ:\,\Pr\left(\X_{1}=k\right)>\Pr\left(\X_{2}=k\right)\right\} .
+\end{align*}
+For any Borel $\A$, we have 
+\begin{align*}
+d_{\A} & =\sum_{k\in\ZZ\cap\A}\left(\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right)\\
+ & \le\sum_{k\in\A_{>}}\left(\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right)\\
+ & =d_{\A_{>}}
+\end{align*}
+and similarly $\Pr\left(\X_{1}\in\A\right)-\Pr\left(\X_{2}\in\A\right)\ge d_{\A_{<}}$.
+Since $d_{\A_{>}}=-d_{\A_{<}}$, we have 
+\[
+d_{\TV}\left(\X_{1},\X_{2}\right)=\left(d_{\A_{>}}-d_{\A_{<}}\right)/2=\frac{1}{2}\sum_{k\in\ZZ}\left|\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right|.
+\]
+
+\end{proof}
+
+\section{Random Combinatorial Structures\label{sec:random-structures}}
+
+\global\long\def\G#1#2{\mathcal{G}_{#1,#2}}
+
+
+\begin{note}
+
+I'll leave this section until I'm sure what applications I'll be looking
+at. Definitely random graph models, probably random permutations and
+random matrices.
+
+\end{note}
+
+
+\section{Stein's Method in the Abstract}
+
+\begin{note}There are a few quite different presentations of Stein's
+method. One thing I'm trying to do here is to unify Stein's functional
+analysis approach for exchangeable pairs \cite{Ste86} with Ross'
+general presentation\cite{Ros11}.\end{note}
+
+\global\long\def\cF{\mathcal{F}}
+
+
+\global\long\def\T{T}
+
+
+\global\long\def\U{U}
+
+
+\global\long\def\cX{\mathcal{X}}
+
+
+Suppose we have a potentially complicated random variable $\X$, and
+we believe the distribution of $\X$ is close to a ``standard''
+distribution $\L 0$. Then, Stein's method allows us to compare the
+operators $\E_{\X}$ and $\E_{0}:=\E_{\L 0}$. This is sometimes directly
+useful for approximating statistics of $\X$ (for example, $\Pr\left(\X\in\A\right)=\E_{\X}\one_{\A}$).
+However, particularly for combinatorical applications, Stein's method
+is most often used to bound the distance $d_{\cH}\left(\L{\X},\L 0\right)$,
+where the metric $d_{\cH}$ from \ref{def:general-metrics} is defined
+in terms of $\E_{\X}$ and $\E_{0}$.
+
+Stein's method is motivated by the idea of a characterizing operator.
+\begin{defn}
+Let $\cF_{0}$ be a vector space and $\cX_{0}$ be a vector space
+of measurable functions. We say a linear operator $\T_{0}:\cF_{0}\to\cX_{0}$
+is a \emph{characterizing operator} for the distribution $\L 0$ if
+$\im\T_{0}=\cX_{0}\cap\ker\E_{0}$. For convenience, where there is
+no ambiguity we will often implicitly restrict $\E_{0}$ to $\cX_{0}$,
+so we can write $\im\T_{0}=\ker\E_{0}$.
+\end{defn}
+The following proposition shows why $\T_{0}$ is called a characterizing
+operator.
+\begin{prop}
+\label{prop:characterizing}If $\cX_{0}$ is a determining class and
+$\im\T_{0}\subseteq\ker\E_{\X}$ then $\L{\X}=\L 0$.\end{prop}
+\begin{proof}
+If $\h\in\cX_{0}$, then $\h-\E_{0}\h\in\ker\E_{0}=\im\T_{0}$ so
+$\E_{\X}\left[\h-\E_{0}\h\right]=0$. That is, $\E_{\X}\h=\E_{0}\h$
+for all $\h\in\cX_{0}$, which means $\L{\X}=\L 0$ by the definition
+of a determining class.\end{proof}
+\begin{prop}
+\label{prop:U_0-characterizing}$\T_{0}:\cF_{0}\to\cX_{0}$ is characterizing
+if and only if there is a linear operator $\U_{0}:\cX_{0}\to\cF_{0}$
+such that the following two equations hold.
+\begin{align}
+\E_{0}\T_{0} & =0_{\cF_{0}},\label{eq:E_0T_0-consistency}\\
+\T_{0}\U_{0}+\E_{0} & =\id_{\cX_{0}}.\label{eq:U_0-characterizing}
+\end{align}
+\end{prop}
+\begin{proof}
+Suppose $\T_{0}$ is a characterizing operator. Equation \ref{eq:E_0T_0-consistency}
+is immediate. Let $\left\{ \h_{\i}\right\} _{\i\in\mathcal{I}}$ be
+a (Hamel) basis of $\cX_{0}$. For each $\i\in\mathcal{I}$ we have
+$\h_{\i}-\E_{0}\h_{\i}\in\ker\E_{0}$ so there is some $f_{\i}$ (not
+necessarily unique) that solves $\T_{0}f_{\i}=\h_{\i}-\E_{0}\h_{\i}$.
+The operator $\U_{0}$ can then be defined by $\sum_{\i\in\mathcal{I}}a_{\i}\h_{\i}\mapsto\sum_{\i\in\mathcal{I}}a_{\i}f_{\i}$,
+satisfying \ref{eq:U_0-characterizing}.
+
+\begin{todo}there's probably a cleaner functional analysis way to
+prove that. Also, is $\U_{0}$  bounded?\end{todo}
+
+Conversely, suppose \ref{eq:E_0T_0-consistency} holds and $\U_{0}$
+exists satisfying \ref{eq:U_0-characterizing}. For $\h\in\ker\E_{0}$
+we have $\T_{0}\left(\U_{0}\h\right)=\h$ and $\h\in\im\T_{0}$, so
+$\ker\E_{0}\subseteq\im\T_{0}$. Equation \ref{eq:E_0T_0-consistency}
+immediately says that $\im\T_{0}\subseteq\ker\E_{0}$, so $\T_{0}$
+is a characterizing operator.
+\end{proof}
+We'll use \ref{eq:U_0-characterizing} to give two important examples
+of characterizing operators.
+\begin{thm}
+Define $T_{\N}$ by $T_{\N}f\left(x\right)=f'\left(x\right)-xf\left(x\right)$.
+Let $\cX_{\N}$ be the set of integer-valued functions $\h$ that
+satisfy $\E_{\N}\left|\h\right|<\infty$ and let $\cF_{\N}$ be the
+set of integer-valued functions $f$ such that $\E_{\N}\left|\T_{\N}f\right|<\infty$.
+Then $\T_{\N}:\cF_{\N}\to\cX_{\N}$ is a characterizing operator for
+$\N\left(0,1\right)$.\end{thm}
+\begin{proof}
+For any $f\in\cF_{0}$, integration by parts gives
+\[
+\E_{\N}\T_{\N}f=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}f'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}f\left(t\right)\d t=0
+\]
+so $\E_{\N}\T_{\N}=0$ and \ref{eq:E_0T_0-consistency} holds. Then,
+define $\U_{\N}$ by 
+\[
+\U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.
+\]
+By the product rule and the fundamental theorem of calculus, for all
+$\h\in\cX_{\N}$ we have
+\begin{align*}
+\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h,
+\end{align*}
+so \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
+completes the proof.\end{proof}
+\begin{example}
+Note that $\cH_{\K}\subseteq\cX_{\N}$, where $\cH$ is as defined
+in \ref{def:special-metrics}
+\end{example}
+
+\begin{thm}
+Define $\T_{\Po\left(\lambda\right)}$ by $\T_{\Po\left(\lambda\right)}f\left(k\right)=\lambda f\left(k+1\right)-kf\left(k\right)$.
+Let $\cX_{\Po\left(\lambda\right)}$ be the set of integer-valued
+functions $\h$ that satisfy $\E_{\Po\left(\lambda\right)}\left|\h\right|<\infty$
+and let $\cF_{\Po\left(\lambda\right)}$ be the set of integer-valued
+functions $f$ such that $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}f\right|<\infty$.
+Then $\T_{\Po\left(\lambda\right)}:\cF_{\Po\left(\lambda\right)}\to\cX_{\Po\left(\lambda\right)}$
+is a characterizing operator for $\Po\left(\lambda\right)$.\end{thm}
+\begin{proof}
+For any $f\in\cF_{0}$, we have
+\[
+\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}f=\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}f\left(\i+1\right)-\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}f\left(\i\right)=0
+\]
+so $\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}=0$ and
+\ref{eq:E_0T_0-consistency} holds. Then, define $\U_{\Po\left(\lambda\right)}$
+by 
+\[
+\U_{\Po\left(\lambda\right)}\h\left(k\right)=\frac{\left(k-1\right)!}{\lambda^{k}}\sum_{\i=0}^{k-1}\frac{\lambda^{\i}}{\i!}\left(\h\left(\i\right)-\E_{\Po\left(\lambda\right)}\h\right).
+\]
+Substituting and simplifying gives
+\[
+\T_{\Po\left(\lambda\right)}\U_{\Po\left(\lambda\right)}\h\left(k\right)=\h\left(k\right)-\E_{\Po\left(\lambda\right)}\h,
+\]
+so \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
+completes the proof.
+\end{proof}
+\begin{todo} Stein chose $\cX_{0}=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $,
+for both the Poisson and Normal case. I'm not sure why, I'll revisit
+this after looking at exchangeable pairs.\end{todo}
+
+When we restrict our attention to integer-valued random variables,
+$\cX_{\Po}$ is a determining class, because it contains every function
+of the form $\one_{\A}$, where $\A$ is a set of integers. So, $\T_{\Po\left(\lambda\right)}$
+is a characterizing operator in the sense of \ref{prop:characterizing}.
+
+
+\subsection{Exchangeable Pairs}
+
+
+\subsection{Size-Bias Coupling}
+
+
+\part{Applications}
+
+\begin{note}
+
+I'd like to go into a number of small examples (perhaps interspersed
+in the discussion of Stein's method in Part I), but I'd like to also
+go through a number of ``big'' examples. I'd like these examples
+to showcase
+\begin{itemize}
+\item different types of results: most applications give quantitative estimates.
+\cite{Joh11} gives a non-quantitative distributional convergence
+result that was not previously proved using other methods. There are
+also results that have no connection with distribution metrics, such
+as the concentration inequalities in \cite{Ros11}. In particular,
+the Latin rectangle example in \cite{Ste86} is interesting in that
+the final result is not probabilistic.
+\item different types of distributions: definitely at least the Poisson
+and normal case, perhaps also an example of a more exotic distribution
+like the one in \cite{FS12} or perturbations of Poisson/normal distributions
+as in \cite{BCX07}.
+\item different ways to apply stein's method: definitely exchangeable pairs
+and probably size-biasing. Maybe also Zero-bias coupling.
+\end{itemize}
+\end{note}
+
+\bibliographystyle{amsalpha}
+\bibliography{readings}
+
+\end{document}
