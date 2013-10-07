@@ -20,6 +20,11 @@
 %\addtolength\belowdisplayskip{-5pt}
 %}
 
+\usepackage{letltxmacro}
+%\LetLtxMacro{\polishL}{\L{}}
+
+\usepackage[bookmarks]{hyperref}
+
 \renewcommand\theenumi{\arabic{enumi}}
 \renewcommand\labelenumi{(\theenumi)}
 
@@ -33,12 +38,15 @@
 \setlength\cftbeforesecskip{1pt}
 \setlength\cftaftertoctitleskip{2pt}
 
+\LetLtxMacro\polishL\L
+\DeclareRobustCommand{\L}{\ifmmode{\mathcal{L}}\else\polishL\fi}
+
 \makeatother
 
 \usepackage{babel}
 \begin{document}
 
-\title{Honours Readings}
+\title{Readings}
 
 
 \author{Matthew Kwan}
@@ -53,7 +61,39 @@
 \global\long\def\NN{\mathbb{N}}
 
 
+\global\long\def\ZZ{\mathbb{Z}}
+
+
+\global\long\def\RR{\mathbb{R}}
+
+
+\global\long\def\CC{\mathbb{C}}
+
+
 \global\long\def\E{\mathbb{E}}
+
+
+\global\long\def\Pr{\mathbb{P}}
+
+
+\global\long\def\L{\mathcal{L}}
+
+
+\DeclareRobustCommand{\L}{\ifmmode{\mathcal{L}}\else\polishL\fi}
+
+\global\long\def\GBin#1#2{\mathbb{G}\left(#1,#2\right)}
+
+
+\global\long\def\I{\boldsymbol{1}}
+
+
+\global\long\def\d{\operatorname d}
+
+
+\global\long\def\Be{\operatorname{Ber}}
+
+
+\global\long\def\Po{\operatorname{Po}}
 
 
 \tableofcontents{}
@@ -143,6 +183,10 @@ where there are multiple different ``colours'' of switchings that
 operate on the same set of objects. By slightly loosening the bound,
 this generalized model can be reduced to an instance of the single-switching
 model.
+
+The purpose of the generalized method is to make it tractable to generalize
+an earlier paper \cite{MW91} which counted the number of graphs with
+a given degree sequence. The result was generalized to multigraphs.
 
 
 \subsection{Remarks}
@@ -293,6 +337,58 @@ sharp. Also, we also hope that bounding $\left|\mathbb{E}\mathcal{A}f\left(X\rig
 is easier than directly bounding $\left|\mathbb{E}h\left(X\right)-\mathbb{E}h\left(Z\right)\right|$.
 
 
+\subsubsection{Size-Bias Coupling}
+
+For a nonnegative integrable random variable $X$, we say $X^{s}$
+has the size-bias distribution with respect to $X$ if for all $f$
+so that $Xf\left(X\right)$ is integrable, we have $\E\left[Xf\left(X\right)\right]=\E X\E f\left(X^{s}\right)$.
+For example, if $X$ is a Bernoulli random variable then we can choose
+$X^{s}=1$. The size-bias distribution always exists, with $\d\left(\L X^{s}\right)\left(x\right)=\frac{x}{\E X}\d\left(\L X\right)\left(x\right)$;
+that is $\left(\L X^{s}\right)\left(A\right)=\E\left[X\I_{A}\circ X\right]/\E X$.
+The size-bias distribution can be seen as weighting (biasing) the
+probability of $X$ taking some value $x$ by the size of $x$.
+
+The idea is that we can perturb a nonnegative random variable $X$
+to obtain $X^{s}$ in such a way that $X-X^{s}$ has low variance.
+If $X$ has mean $\mu$ and variance $\sigma^{2}$, then $\E\left[X^{s}-X\right]=\frac{1}{\mu}\E\left[X^{2}\right]-\mu=\frac{\sigma^{2}}{\mu}$.
+If $X$ is approximately Poisson, then this is equal to 1, so if $X-X^{s}$
+has low variance then $\E\left[Xf\left(X\right)-\lambda f\left(X+1\right)\right]=\lambda\E\left[f\left(X^{s}\right)-f\left(X+1\right)\right]\approx0$
+
+For the normal case, define $W=\frac{X-\mu}{\sigma}$. If $X^{s}-X$
+has low variance then 
+\begin{align*}
+\E\left[Wf\left(W\right)\right] & =\frac{\mu}{\sigma}\E\left[f\left(\frac{X^{s}-\mu}{\sigma}\right)-f\left(\frac{X-\mu}{\sigma}\right)\right]\\
+ & \approx\frac{\mu}{\sigma}\E\left[f'\left(X\right)\left(\frac{X^{s}-X}{\sigma}\right)\right]\\
+ & \approx\frac{\mu}{\sigma^{2}}\E\left[f'\left(X\right)\right]\E\left[X^{s}-X\right]\\
+ & =\E\left[f'\left(X\right)\right].
+\end{align*}
+Here's an often-useful description of the size-bias distribution of
+a sum of random variables: If $\mathbf{X}=\left(X_{i}\right)_{i=1}^{n}$
+is a sequence of random variables, define $\mathbf{X}^{\left(i\right)}$
+by $\d\left(\L\mathbf{X}^{\left(i\right)}\right)\left(\mathbf{x}\right)=\frac{x_{i}}{\E X_{i}}\d\left(\L\mathbf{X}\right)\left(\mathbf{x}\right)$,
+so that for any $f$, we have $\E\left[f\left(\mathbf{X}^{\left(i\right)}\right)\right]=\E\left[X_{i}f\left(\mathbf{X}\right)\right]/\E\left[X_{i}\right]$.
+Let $X=\sum_{i=1}^{n}X_{i}$ and let $I$ satisfy $\Pr\left(I=i\right)=\E\left[X_{i}\right]/\E\left[X\right]$.
+Then $\L X^{s}=\L\sum_{i=1}^{n}X_{i}^{\left(I\right)}$.
+
+An interpretation of $\d\left(\L\mathbf{X}^{\left(i\right)}\right)\left(\mathbf{x}\right)=\frac{x_{i}}{\E X_{i}}\d\left(\L\mathbf{X}\right)\left(\mathbf{x}\right)$
+for discrete random variables is that the $i$th component of $X^{\left(i\right)}$
+has the size-bias distribution of $X_{i}$ and given $X_{i}^{\left(i\right)}=x$,
+the other components of $\mathbf{X}^{\left(i\right)}$ have the distribution
+of the corresponding components of $\mathbf{X}$, conditioned on $X_{i}=x$.
+
+In practice, we can often represent $X$ as a sum of indicator variables
+(which have size-bias distribution 1), each representing some local
+property of an underlying space of combinatorial objects. For example,
+$X$ might be the number of isolated vertices in a random graph $G\in\GBin np$,
+so we would have an indicator for each vertex. For each $G$ we choose
+a location at random and force the local property to hold there; this
+creates a new object $G'$. Provided we have made the local adjustment
+in the right way, we will have $\L X\left(\cdot'\right)=\L X^{s}$
+in such a way that $X$ is close to $X^{s}$. For the isolated vertex
+example, we can create $G'$ by deleting all the edges incident to
+a randomly chosen vertex.
+
+
 \subsubsection{Exchangeable Pairs for Poisson Approximation}
 
 A pair of random variables $\left(X,X'\right)$ is exchangable if
@@ -337,20 +433,67 @@ is used.
 is used.
 \end{itemize}
 
-\section{Exchangeable Pairs and Poisson Approximation \cite{CDM05}}
+\section{Approximate Computation of Expectations \cite{Ste86}}
 
 
 \subsection{Summary}
 
-This paper gives a higher-level overview of Stein's method with exchangeable
-pairs. If we think $X$ is ``near'' $Z$, then the operators $\mathbb{E}:f\mapsto\mathbb{E}\left[f\left(X\right)\right]$
-and $\mathbb{E}_{0}:f\mapsto\mathbb{E}\left[f\left(Z\right)\right]$
-should also be close. An exchangeable pair $\left(X,X'\right)$ is
-in correspondence with a symmetric measure $\mathbb{Q}$ with $\mathbb{Q}\left(A,A'\right)=\Pr\left(X\in A,X'\in A'\right)$
-and margins $\mathbb{Q}\left(A,\Omega\right)=\Pr\left(X\in A\right)$.
-Let $T_{0}$ ($\mathcal{A}$ from before) be the characterizing operator
-of $Z$. (unfinished)
+I also draw from \cite{Ste92} and the first section of \cite{CDM05},
+which provide similar explanations of the abstraction behind Stein's
+method for exchangeable pairs.
 
+Stein's method was originally conceived by Stein as a method of approximately
+computing expectations. The common use of Stein's method to bound
+the distances between distributions follows naturally from this, but
+this paper gives insight as to why the methods for exchangeable pairs
+in \cite{Ros11} work.
+
+We redefine some notation from the discussion on \cite{Ros11}. $\E_{0}$
+is the expectation operator with respect to an approximating distribution
+(for example, Poisson). $T_{0}:\mathcal{F}\mapsto\mathcal{H}$ is
+the characterizing operator of that distribution (for example, $f\mapsto\left(k\mapsto\lambda f\left(k+1\right)-kf\left(k\right)\right)$).
+For $T_{0}$ to be characterizing means $\mbox{im}T_{0}=\ker\E_{0}$.
+We also want an operator $U_{0}$ which captures the idea in \cite{Ros11}
+of solving for $f_{h}$: $U_{0}$ must satisfy $T_{0}U_{0}h=h-\E_{0}h$.
+
+From an exchangeable pair $\left(X,X'\right)$ we can construct an
+operator $T:F\mapsto\E^{X}\left[F\left(X,X'\right)\right]$ from the
+set of antisymmetric functions $\mathcal{F}$. Under some trivially
+satisfied conditions, we have $\mbox{im}T=\ker\E$. That is, $T$
+is a ``characterizing operator'' for $\E$. We then choose a connection
+operator $\alpha:\mathcal{F}_{0}\to\mathcal{F}$.
+
+With this data, Stein's lemma says that $\E_{X}=\E_{0}+\E\circ R$
+for some ``remainder'' operator $R$. If our choices were good then
+$R$ is provably small. From here we can estimate distance metrics,
+or try to estimate specific expectations $\E_{X}h$.
+
+
+\subsection{Remarks}
+\begin{itemize}
+\item We frequently use spaces of functions like $\mathcal{X}$ and $\mathcal{F}$.
+I think ``space'' means vector space
+\end{itemize}
+
+\section{A way of Using Auxiliary Randomization\cite{Ste92}}
+
+
+\subsection{Remarks}
+\begin{itemize}
+\item Page 14 says that a characterizing operator should satisfy $\ker\E_{0}=\mbox{im}T_{0}$,
+but i think this should really read $\mathcal{X}_{0}\cap\ker\E_{0}=\mbox{im}T_{0}$
+or $\E_{0}$ should be restricted somewhere (maybe it's implied, it's
+not very clear).
+\end{itemize}
+
+\section{Exchangeable pairs and Poisson approximation\cite{CDM05}}
+
+
+\subsection{Remarks}
+\begin{itemize}
+\item The ``top row'' and ``bottom row'' of the diagram seem to be mixed
+up.
+\end{itemize}
 
 \section{Exchangeable Pairs, Switchings and Random Regular Graphs \cite{Joh11}}
 
@@ -381,6 +524,30 @@ in asymptotics than explicit quantitative bounds between distributions,
 so there are undetermined constants. I'm not sure whether it's feasible
 or useful to obtain these.
 \end{itemize}
+
+\section{Stein's method and the rank distribution of random matrices over
+finite fields \cite{FS12}}
+
+
+\subsection{Summary}
+
+This paper uses the techniques of Poisson approximation in a more
+general context. If $X\sim\Po\left(\lambda\right)$ then $\lambda\Pr\left(X=k-1\right)=k\Pr\left(X=k\right)$.
+The methods are extended to the case where $a\left(k\right)\Pr\left(X=k-1\right)=b\left(k\right)\Pr\left(X=k\right)$.
+In particular, the limiting distribution of the rank of a random matrix
+over a finite field is known to have this form.
+
+
+\section{On Stein's method and perturbations \cite{BCX07}}
+
+
+\subsection{Summary}
+
+This paper uses Stein's method to compare distributions to ``perturbations''
+of the Poisson and Normal distributions. Perturbations are defined
+in terms of ``generators'' of measures, which I probably need to
+learn about before tackling this paper properly.
+
 \bibliographystyle{amsalpha}
 \addcontentsline{toc}{section}{\refname}\bibliography{readings}
 

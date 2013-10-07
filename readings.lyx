@@ -9,6 +9,11 @@
 %\addtolength\belowdisplayskip{-5pt}
 %}
 
+\usepackage{letltxmacro}
+%\LetLtxMacro{\polishL}{\L{}}
+
+\usepackage[bookmarks]{hyperref}
+
 \renewcommand\theenumi{\arabic{enumi}}
 \renewcommand\labelenumi{(\theenumi)}
 
@@ -21,6 +26,9 @@
 \setlength\cftparskip{-2pt}
 \setlength\cftbeforesecskip{1pt}
 \setlength\cftaftertoctitleskip{2pt}
+
+\LetLtxMacro\polishL\L
+\DeclareRobustCommand{\L}{\ifmmode{\mathcal{L}}\else\polishL\fi}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -90,7 +98,7 @@ theorems-ams
 \begin_body
 
 \begin_layout Title
-Honours Readings
+Readings
 \end_layout
 
 \begin_layout Author
@@ -126,8 +134,126 @@ Matthew Kwan
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\ZZ}{\mathbb{Z}}
+{\boldsymbol{\mathbb{Z}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\RR}{\mathbb{R}}
+{\boldsymbol{\mathbb{R}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\CC}{\mathbb{C}}
+{\boldsymbol{\mathbb{C}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\E}{\mathbb{E}}
 {\boldsymbol{\mathbb{E}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Pr}{\mathbb{P}}
+{\boldsymbol{\mathbb{P}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\L}{\mathcal{L}}
+{\boldsymbol{\mathcal{L}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+DeclareRobustCommand{
+\backslash
+L}{
+\backslash
+ifmmode{
+\backslash
+mathcal{L}}
+\backslash
+else
+\backslash
+polishL
+\backslash
+fi}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\GBin}[2]{\mathbb{G}\left(#1,#2\right)}
+{\boldsymbol{\mathbb{G}\left(#1,#2\right)}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\I}{\boldsymbol{1}}
+{\boldsymbol{\boldsymbol{1}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\d}{\operatorname d}
+{\mathbf{d}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Be}{\operatorname{Ber}}
+{\mathbf{Be}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Po}{\operatorname{Po}}
+{\mathbf{Po}}
 \end_inset
 
 
@@ -478,6 +604,19 @@ colours
  of switchings that operate on the same set of objects.
  By slightly loosening the bound, this generalized model can be reduced
  to an instance of the single-switching model.
+\end_layout
+
+\begin_layout Standard
+The purpose of the generalized method is to make it tractable to generalize
+ an earlier paper 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MW91"
+
+\end_inset
+
+ which counted the number of graphs with a given degree sequence.
+ The result was generalized to multigraphs.
 \end_layout
 
 \begin_layout Subsection
@@ -1077,6 +1216,263 @@ For all
 \end_layout
 
 \begin_layout Subsubsection
+Size-Bias Coupling
+\end_layout
+
+\begin_layout Standard
+For a nonnegative integrable random variable 
+\begin_inset Formula $X$
+\end_inset
+
+, we say 
+\begin_inset Formula $X^{s}$
+\end_inset
+
+ has the size-bias distribution with respect to 
+\begin_inset Formula $X$
+\end_inset
+
+ if for all 
+\begin_inset Formula $f$
+\end_inset
+
+ so that 
+\begin_inset Formula $Xf\left(X\right)$
+\end_inset
+
+ is integrable, we have 
+\begin_inset Formula $\E\left[Xf\left(X\right)\right]=\E X\E f\left(X^{s}\right)$
+\end_inset
+
+.
+ For example, if 
+\begin_inset Formula $X$
+\end_inset
+
+ is a Bernoulli random variable then we can choose 
+\begin_inset Formula $X^{s}=1$
+\end_inset
+
+.
+ The size-bias distribution always exists, with 
+\begin_inset Formula $\d\left(\L X^{s}\right)\left(x\right)=\frac{x}{\E X}\d\left(\L X\right)\left(x\right)$
+\end_inset
+
+; that is 
+\begin_inset Formula $\left(\L X^{s}\right)\left(A\right)=\E\left[X\I_{A}\circ X\right]/\E X$
+\end_inset
+
+.
+ The size-bias distribution can be seen as weighting (biasing) the probability
+ of 
+\begin_inset Formula $X$
+\end_inset
+
+ taking some value 
+\begin_inset Formula $x$
+\end_inset
+
+ by the size of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The idea is that we can perturb a nonnegative random variable 
+\begin_inset Formula $X$
+\end_inset
+
+ to obtain 
+\begin_inset Formula $X^{s}$
+\end_inset
+
+ in such a way that 
+\begin_inset Formula $X-X^{s}$
+\end_inset
+
+ has low variance.
+ If 
+\begin_inset Formula $X$
+\end_inset
+
+ has mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and variance 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+, then 
+\begin_inset Formula $\E\left[X^{s}-X\right]=\frac{1}{\mu}\E\left[X^{2}\right]-\mu=\frac{\sigma^{2}}{\mu}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $X$
+\end_inset
+
+ is approximately Poisson, then this is equal to 1, so if 
+\begin_inset Formula $X-X^{s}$
+\end_inset
+
+ has low variance then 
+\begin_inset Formula $\E\left[Xf\left(X\right)-\lambda f\left(X+1\right)\right]=\lambda\E\left[f\left(X^{s}\right)-f\left(X+1\right)\right]\approx0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the normal case, define 
+\begin_inset Formula $W=\frac{X-\mu}{\sigma}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $X^{s}-X$
+\end_inset
+
+ has low variance then 
+\begin_inset Formula 
+\begin{align*}
+\E\left[Wf\left(W\right)\right] & =\frac{\mu}{\sigma}\E\left[f\left(\frac{X^{s}-\mu}{\sigma}\right)-f\left(\frac{X-\mu}{\sigma}\right)\right]\\
+ & \approx\frac{\mu}{\sigma}\E\left[f'\left(X\right)\left(\frac{X^{s}-X}{\sigma}\right)\right]\\
+ & \approx\frac{\mu}{\sigma^{2}}\E\left[f'\left(X\right)\right]\E\left[X^{s}-X\right]\\
+ & =\E\left[f'\left(X\right)\right].
+\end{align*}
+
+\end_inset
+
+Here's an often-useful description of the size-bias distribution of a sum
+ of random variables: If 
+\begin_inset Formula $\mathbf{X}=\left(X_{i}\right)_{i=1}^{n}$
+\end_inset
+
+ is a sequence of random variables, define 
+\begin_inset Formula $\mathbf{X}^{\left(i\right)}$
+\end_inset
+
+ by 
+\begin_inset Formula $\d\left(\L\mathbf{X}^{\left(i\right)}\right)\left(\mathbf{x}\right)=\frac{x_{i}}{\E X_{i}}\d\left(\L\mathbf{X}\right)\left(\mathbf{x}\right)$
+\end_inset
+
+, so that for any 
+\begin_inset Formula $f$
+\end_inset
+
+, we have 
+\begin_inset Formula $\E\left[f\left(\mathbf{X}^{\left(i\right)}\right)\right]=\E\left[X_{i}f\left(\mathbf{X}\right)\right]/\E\left[X_{i}\right]$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $X=\sum_{i=1}^{n}X_{i}$
+\end_inset
+
+ and let 
+\begin_inset Formula $I$
+\end_inset
+
+ satisfy 
+\begin_inset Formula $\Pr\left(I=i\right)=\E\left[X_{i}\right]/\E\left[X\right]$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\L X^{s}=\L\sum_{i=1}^{n}X_{i}^{\left(I\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+An interpretation of 
+\begin_inset Formula $\d\left(\L\mathbf{X}^{\left(i\right)}\right)\left(\mathbf{x}\right)=\frac{x_{i}}{\E X_{i}}\d\left(\L\mathbf{X}\right)\left(\mathbf{x}\right)$
+\end_inset
+
+ for discrete random variables is that the 
+\begin_inset Formula $i$
+\end_inset
+
+th component of 
+\begin_inset Formula $X^{\left(i\right)}$
+\end_inset
+
+ has the size-bias distribution of 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ and given 
+\begin_inset Formula $X_{i}^{\left(i\right)}=x$
+\end_inset
+
+, the other components of 
+\begin_inset Formula $\mathbf{X}^{\left(i\right)}$
+\end_inset
+
+ have the distribution of the corresponding components of 
+\begin_inset Formula $\mathbf{X}$
+\end_inset
+
+, conditioned on 
+\begin_inset Formula $X_{i}=x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In practice, we can often represent 
+\begin_inset Formula $X$
+\end_inset
+
+ as a sum of indicator variables (which have size-bias distribution 1),
+ each representing some local property of an underlying space of combinatorial
+ objects.
+ For example, 
+\begin_inset Formula $X$
+\end_inset
+
+ might be the number of isolated vertices in a random graph 
+\begin_inset Formula $G\in\GBin np$
+\end_inset
+
+, so we would have an indicator for each vertex.
+ For each 
+\begin_inset Formula $G$
+\end_inset
+
+ we choose a location at random and force the local property to hold there;
+ this creates a new object 
+\begin_inset Formula $G'$
+\end_inset
+
+.
+ Provided we have made the local adjustment in the right way, we will have
+ 
+\begin_inset Formula $\L X\left(\cdot'\right)=\L X^{s}$
+\end_inset
+
+ in such a way that 
+\begin_inset Formula $X$
+\end_inset
+
+ is close to 
+\begin_inset Formula $X^{s}$
+\end_inset
+
+.
+ For the isolated vertex example, we can create 
+\begin_inset Formula $G'$
+\end_inset
+
+ by deleting all the edges incident to a randomly chosen vertex.
+\end_layout
+
+\begin_layout Subsubsection
 Exchangeable Pairs for Poisson Approximation
 \end_layout
 
@@ -1297,10 +1693,10 @@ For the proof of Theorem 3.5, the fact
 \end_layout
 
 \begin_layout Section
-Exchangeable Pairs and Poisson Approximation 
+Approximate Computation of Expectations 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "CDM05"
+key "Ste86"
 
 \end_inset
 
@@ -1312,64 +1708,261 @@ Summary
 \end_layout
 
 \begin_layout Standard
-This paper gives a higher-level overview of Stein's method with exchangeable
- pairs.
- If we think 
-\begin_inset Formula $X$
+I also draw from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste92"
+
 \end_inset
 
- is 
-\begin_inset Quotes eld
+ and the first section of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CDM05"
+
 \end_inset
 
-near
-\begin_inset Quotes erd
+, which provide similar explanations of the abstraction behind Stein's method
+ for exchangeable pairs.
+\end_layout
+
+\begin_layout Standard
+Stein's method was originally conceived by Stein as a method of approximately
+ computing expectations.
+ The common use of Stein's method to bound the distances between distributions
+ follows naturally from this, but this paper gives insight as to why the
+ methods for exchangeable pairs in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ros11"
+
 \end_inset
 
- 
-\begin_inset Formula $Z$
-\end_inset
+ work.
+\end_layout
 
-, then the operators 
-\begin_inset Formula $\mathbb{E}:f\mapsto\mathbb{E}\left[f\left(X\right)\right]$
-\end_inset
+\begin_layout Standard
+We redefine some notation from the discussion on 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ros11"
 
- and 
-\begin_inset Formula $\mathbb{E}_{0}:f\mapsto\mathbb{E}\left[f\left(Z\right)\right]$
-\end_inset
-
- should also be close.
- An exchangeable pair 
-\begin_inset Formula $\left(X,X'\right)$
-\end_inset
-
- is in correspondence with a symmetric measure 
-\begin_inset Formula $\mathbb{Q}$
-\end_inset
-
- with 
-\begin_inset Formula $\mathbb{Q}\left(A,A'\right)=\Pr\left(X\in A,X'\in A'\right)$
-\end_inset
-
- and margins 
-\begin_inset Formula $\mathbb{Q}\left(A,\Omega\right)=\Pr\left(X\in A\right)$
 \end_inset
 
 .
- Let 
+ 
+\begin_inset Formula $\E_{0}$
+\end_inset
+
+ is the expectation operator with respect to an approximating distribution
+ (for example, Poisson).
+ 
+\begin_inset Formula $T_{0}:\mathcal{F}\mapsto\mathcal{H}$
+\end_inset
+
+ is the characterizing operator of that distribution (for example, 
+\begin_inset Formula $f\mapsto\left(k\mapsto\lambda f\left(k+1\right)-kf\left(k\right)\right)$
+\end_inset
+
+).
+ For 
 \begin_inset Formula $T_{0}$
 \end_inset
 
- (
-\begin_inset Formula $\mathcal{A}$
-\end_inset
-
- from before) be the characterizing operator of 
-\begin_inset Formula $Z$
+ to be characterizing means 
+\begin_inset Formula $\mbox{im}T_{0}=\ker\E_{0}$
 \end_inset
 
 .
- (unfinished)
+ We also want an operator 
+\begin_inset Formula $U_{0}$
+\end_inset
+
+ which captures the idea in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ros11"
+
+\end_inset
+
+ of solving for 
+\begin_inset Formula $f_{h}$
+\end_inset
+
+: 
+\begin_inset Formula $U_{0}$
+\end_inset
+
+ must satisfy 
+\begin_inset Formula $T_{0}U_{0}h=h-\E_{0}h$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+From an exchangeable pair 
+\begin_inset Formula $\left(X,X'\right)$
+\end_inset
+
+ we can construct an operator 
+\begin_inset Formula $T:F\mapsto\E^{X}\left[F\left(X,X'\right)\right]$
+\end_inset
+
+ from the set of antisymmetric functions 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+.
+ Under some trivially satisfied conditions, we have 
+\begin_inset Formula $\mbox{im}T=\ker\E$
+\end_inset
+
+.
+ That is, 
+\begin_inset Formula $T$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+characterizing operator
+\begin_inset Quotes erd
+\end_inset
+
+ for 
+\begin_inset Formula $\E$
+\end_inset
+
+.
+ We then choose a connection operator 
+\begin_inset Formula $\alpha:\mathcal{F}_{0}\to\mathcal{F}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+With this data, Stein's lemma says that 
+\begin_inset Formula $\E_{X}=\E_{0}+\E\circ R$
+\end_inset
+
+ for some 
+\begin_inset Quotes eld
+\end_inset
+
+remainder
+\begin_inset Quotes erd
+\end_inset
+
+ operator 
+\begin_inset Formula $R$
+\end_inset
+
+.
+ If our choices were good then 
+\begin_inset Formula $R$
+\end_inset
+
+ is provably small.
+ From here we can estimate distance metrics, or try to estimate specific
+ expectations 
+\begin_inset Formula $\E_{X}h$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Remarks
+\end_layout
+
+\begin_layout Itemize
+We frequently use spaces of functions like 
+\begin_inset Formula $\mathcal{X}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+.
+ I think 
+\begin_inset Quotes eld
+\end_inset
+
+space
+\begin_inset Quotes erd
+\end_inset
+
+ means vector space
+\end_layout
+
+\begin_layout Section
+A way of Using Auxiliary Randomization
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste92"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Remarks
+\end_layout
+
+\begin_layout Itemize
+Page 14 says that a characterizing operator should satisfy 
+\begin_inset Formula $\ker\E_{0}=\mbox{im}T_{0}$
+\end_inset
+
+, but i think this should really read 
+\begin_inset Formula $\mathcal{X}_{0}\cap\ker\E_{0}=\mbox{im}T_{0}$
+\end_inset
+
+ or 
+\begin_inset Formula $\E_{0}$
+\end_inset
+
+ should be restricted somewhere (maybe it's implied, it's not very clear).
+\end_layout
+
+\begin_layout Section
+Exchangeable pairs and Poisson approximation
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CDM05"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Remarks
+\end_layout
+
+\begin_layout Itemize
+The 
+\begin_inset Quotes eld
+\end_inset
+
+top row
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+bottom row
+\begin_inset Quotes erd
+\end_inset
+
+ of the diagram seem to be mixed up.
 \end_layout
 
 \begin_layout Section
@@ -1447,6 +2040,80 @@ Unlike most (?) applications of Stein's method, Johnson is more interested
  in asymptotics than explicit quantitative bounds between distributions,
  so there are undetermined constants.
  I'm not sure whether it's feasible or useful to obtain these.
+\end_layout
+
+\begin_layout Section
+Stein's method and the rank distribution of random matrices over finite
+ fields 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FS12"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary
+\end_layout
+
+\begin_layout Standard
+This paper uses the techniques of Poisson approximation in a more general
+ context.
+ If 
+\begin_inset Formula $X\sim\Po\left(\lambda\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $\lambda\Pr\left(X=k-1\right)=k\Pr\left(X=k\right)$
+\end_inset
+
+.
+ The methods are extended to the case where 
+\begin_inset Formula $a\left(k\right)\Pr\left(X=k-1\right)=b\left(k\right)\Pr\left(X=k\right)$
+\end_inset
+
+.
+ In particular, the limiting distribution of the rank of a random matrix
+ over a finite field is known to have this form.
+\end_layout
+
+\begin_layout Section
+On Stein's method and perturbations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BCX07"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary
+\end_layout
+
+\begin_layout Standard
+This paper uses Stein's method to compare distributions to 
+\begin_inset Quotes eld
+\end_inset
+
+perturbations
+\begin_inset Quotes erd
+\end_inset
+
+ of the Poisson and Normal distributions.
+ Perturbations are defined in terms of 
+\begin_inset Quotes eld
+\end_inset
+
+generators
+\begin_inset Quotes erd
+\end_inset
+
+ of measures, which I probably need to learn about before tackling this
+ paper properly.
 \end_layout
 
 \begin_layout Standard
