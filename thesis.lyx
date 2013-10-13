@@ -7,7 +7,8 @@
 %clickable links
 \usepackage[bookmarks,hidelinks]{hyperref} 
 
-%\ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
+%cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
+%LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
 \usepackage[nameinlink,capitalise]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 \theoremstyle{plain}
@@ -62,18 +63,21 @@
 \usepackage{xcolor}
 
 %shaded WIP notes
+\theoremstyle{definition}
+\newtheorem{commentthm}{Comment}[section]
+\newtheorem{todothm}[commentthm]{Issue}
 \usepackage{framed}
 \usepackage{lipsum}
-\colorlet{shadecolor}{blue!20}
 \newenvironment{note}
-{\colorlet{shadecolor}{blue!20}\begin{shaded}}{\end{shaded}}
+{\colorlet{shadecolor}{blue!5}\begin{shaded}\begin{commentthm}}{\end{commentthm}\end{shaded}}
 \newenvironment{todo}
-{\colorlet{shadecolor}{red!20}\begin{shaded}}{\end{shaded}}
+{\colorlet{shadecolor}{red!5}\begin{shaded}\begin{todothm}}{\end{todothm}\end{shaded}}
 \end_preamble
 \use_default_options true
 \begin_modules
 theorems-ams
 theorems-sec
+eqs-within-sections
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -153,7 +157,7 @@ Matthew Kwan
 
 \begin_layout Standard
 \begin_inset Branch Folded
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset ERT
@@ -344,6 +348,8 @@ status open
 
 
 \backslash
+begin{comment}
+\backslash
 begin{note}
 \end_layout
 
@@ -373,6 +379,8 @@ status open
 
 \backslash
 end{todo}
+\backslash
+end{comment}
 \end_layout
 
 \end_inset
@@ -410,10 +418,11 @@ begin{note}
 \end_layout
 
 \begin_layout Standard
-introduce with limit theorems: Central Limit theorem, Poisson Limit theorem.
- Failure of limit theorems: they provide no understanding of speed of convergenc
-e, in particular convergence cannot be assumed to be uniform as parameters
- vary.
+The plan is to introduce with limit theorems: Central Limit theorem, Poisson
+ Limit theorem.
+ The failure of limit theorems is that they provide no understanding of
+ speed of convergence, in particular convergence cannot be assumed to be
+ uniform as parameters vary.
 \end_layout
 
 \begin_layout Standard
@@ -542,6 +551,15 @@ polishL
 fi}
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Lb}[1]{\mathcal{L}\left(#1\right)}
+{\boldsymbol{\mathcal{L}}\left(#1\right)}
 \end_inset
 
 
@@ -1272,6 +1290,11 @@ law
 \end_inset
 
 .
+ We also occasionally use the notation 
+\begin_inset Formula $\Lb{\X}:=\L{\X}$
+\end_inset
+
+ for ease of reading.
 \end_layout
 
 \begin_layout Standard
@@ -1410,8 +1433,8 @@ If we fix a particular underlying probability space
 \begin_inset Formula $\left(\Om,\cA,\Pr\right)$
 \end_inset
 
-, we can also equivalently view expectation as a bounded linear functional
- on the space of integrable functions: 
+, we can also equivalently view expectation as a linear functional on the
+ space of integrable functions: 
 \begin_inset Formula $\E\X=\int\X\left(\om\right)\d\Pr$
 \end_inset
 
@@ -1446,7 +1469,7 @@ In fact, the expectation functional defines its underlying probability measure,
 .
  Since the distribution of a random variable is specified by a probability
  measure, the distribution 
-\begin_inset Formula $\L{\X}$
+\begin_inset Formula $\Lb{\X}$
 \end_inset
 
  of a random variable 
@@ -1454,7 +1477,7 @@ In fact, the expectation functional defines its underlying probability measure,
 \end_inset
 
  also uniquely defines an expectation functional 
-\begin_inset Formula $\E_{\X}:=\E_{\L{\X}}$
+\begin_inset Formula $\E_{\X}:=\E_{\Lb{\X}}$
 \end_inset
 
 .
@@ -1821,8 +1844,8 @@ conditional expectation of
 
 \emph default
 .
- We can also view conditional expectation as a bounded linear operator between
- functions: we define 
+ We can also view conditional expectation as a linear operator between functions
+: we define 
 \begin_inset Formula $\E^{\X_{2}}$
 \end_inset
 
@@ -1871,6 +1894,43 @@ Note that if
 .
 \end_layout
 
+\begin_layout Standard
+We finally present a simple consequence of the definition of conditional
+ expectation.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Tower Law of Expectation]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:tower-law"
+
+\end_inset
+
+
+\begin_inset Formula $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right]$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Coupling
 \end_layout
@@ -1897,7 +1957,7 @@ Given random elements
 \end_inset
 
  on the same underlying probability space, 
-\begin_inset Formula $\L{\X_{1},\dots,\X_{n}}:=\L{\left(\X_{1},\dots,\X_{n}\right)}$
+\begin_inset Formula $\Lb{\X_{1},\dots,\X_{n}}:=\Lb{\left(\X_{1},\dots,\X_{n}\right)}$
 \end_inset
 
  is called the 
@@ -1914,7 +1974,7 @@ joint distribution
 \end_inset
 
 , each 
-\begin_inset Formula $\L{\X_{i}}$
+\begin_inset Formula $\Lb{\X_{\i}}$
 \end_inset
 
  is called a 
@@ -1926,11 +1986,11 @@ marginal distribution
 
 \begin_layout Standard
 Suppose we have two distributions of random elements 
-\begin_inset Formula $\L{\X_{1}}$
+\begin_inset Formula $\Lb{\X_{1}}$
 \end_inset
 
  and 
-\begin_inset Formula $\L{\X_{1}}$
+\begin_inset Formula $\Lb{\X_{2}}$
 \end_inset
 
 .
@@ -1944,7 +2004,7 @@ Coupling
 
  which realizes the given distributions as marginal distributions.
  Usually this is done by specifying the joint distribution 
-\begin_inset Formula $\L{\X_{1},\X_{2}}$
+\begin_inset Formula $\Lb{\X_{1},\X_{2}}$
 \end_inset
 
 .
@@ -1962,7 +2022,7 @@ The idea is that coupling creates a particular kind of dependence between
 
  that allows us to compare the two distributions.
  Often, we are able to make conclusions about the distributions 
-\begin_inset Formula $\L{\X_{i}}$
+\begin_inset Formula $\Lb{\X_{\i}}$
 \end_inset
 
  which are independent of their specific realizations as random elements
@@ -1990,8 +2050,8 @@ begin{note}
 \end_layout
 
 \begin_layout Standard
-I'll need to define Markov Chains, stationary distributions and time-reversibili
-ty.
+I'll need to define Markov Chains, stationary distributions, irreducibility
+ and time-reversibility.
 \end_layout
 
 \begin_layout Standard
@@ -2084,7 +2144,23 @@ begin{note}
 \begin_layout Standard
 The main purpose of this section is to motivate the metrics usually used
  in Stein's method: they are all legitimate topological metrics and are
- consistent with the topology of convergence in distribution
+ consistent with the topology of convergence in distribution.
+ In particular, if we can show 
+\begin_inset Formula $\d_{\cH}\left(\X_{n},\X\right)\to0$
+\end_inset
+
+ we have shown that 
+\begin_inset Formula $\X_{n}\xrightarrow{d}\X$
+\end_inset
+
+, as Toby does 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Joh11"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2155,7 +2231,7 @@ converges in distribution
 \noun default
 \color inherit
 
-\begin_inset Formula $\L{\X_{n}}$
+\begin_inset Formula $\Lb{\X_{n}}$
 \end_inset
 
  converges 
@@ -2163,11 +2239,11 @@ converges in distribution
 weakly
 \emph default
  to 
-\begin_inset Formula $\L{\X}$
+\begin_inset Formula $\Lb{\X}$
 \end_inset
 
 , or simply 
-\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\begin_inset Formula $\Lb{\X_{n}}\to\Lb{\X}$
 \end_inset
 
 .
@@ -2263,7 +2339,7 @@ name "prop:dist-def"
 \end_inset
 
 
-\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\begin_inset Formula $\Lb{\X_{n}}\to\Lb{\X}$
 \end_inset
 
 
@@ -2436,7 +2512,7 @@ method of moments
 \end_inset
 
 , then 
-\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\begin_inset Formula $\Lb{\X_{n}}\to\Lb{\X}$
 \end_inset
 
  if 
@@ -2489,7 +2565,7 @@ In functional analysis terms, note that
 \noun default
 \color inherit
 
-\begin_inset Formula $\L{\X_{n}}\to\L{\X}$
+\begin_inset Formula $\Lb{\X_{n}}\to\Lb{\X}$
 \end_inset
 
  just means that 
@@ -2558,7 +2634,7 @@ test
 \begin_inset Formula $\X_{1},\X_{2}$
 \end_inset
 
-, we abuse notation to write 
+, we write 
 \begin_inset Formula $d_{\cH}\left(\X_{1},\X_{2}\right)$
 \end_inset
 
@@ -2575,7 +2651,7 @@ test
 \noun off
 \color none
  instead of 
-\begin_inset Formula $d_{\cH}\left(\L{\X_{1}},\L{\X_{2}}\right)$
+\begin_inset Formula $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$
 \end_inset
 
 .
@@ -3568,6 +3644,13 @@ key "Ros11"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+The reason I want to look at Stein's original, more abstract presentation
+ is that I think it does a better job motivating why things work.
+ Before I read that, the steps taken to apply Stein's method seemed like
+ blindly doing things and it turns out they work.
 \begin_inset ERT
 status open
 
@@ -3585,8 +3668,80 @@ end{note}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\Lo}{\L 0}
+{\boldsymbol{\L 0}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Eo}{\E_{0}}
+{\boldsymbol{\E_{0}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\cF}{\mathcal{F}}
 {\boldsymbol{\mathcal{F}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Fo}{\cF_{0}}
+{\boldsymbol{\cF_{0}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\FX}{\cF_{\X}}
+{\boldsymbol{\cF_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cY}{\mathcal{Y}}
+{\boldsymbol{\mathcal{Y}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\fo}{f}
+{\boldsymbol{f}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\fX}{f}
+{\boldsymbol{f}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\hX}{\h}
+{\boldsymbol{\h}}
 \end_inset
 
 
@@ -3603,6 +3758,46 @@ end{note}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\To}{\T_{0}}
+{\boldsymbol{\T_{0}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\TX}{\T_{\X}}
+{\boldsymbol{\T_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+TX[1][
+\backslash
+X]{
+\backslash
+T_{#1}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\U}{U}
 {\boldsymbol{U}}
 \end_inset
@@ -3612,8 +3807,66 @@ end{note}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\Uo}{\U_{0}}
+{\boldsymbol{\U_{0}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\cX}{\mathcal{X}}
 {\boldsymbol{\mathcal{X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Xo}{\cX_{0}}
+{\boldsymbol{\cX_{0}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\XX}{\cX_{\X}}
+{\boldsymbol{\cX_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\OmX}{\RR_{\X}}
+{\boldsymbol{\RR_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+OmX[1][
+\backslash
+X]{
+\backslash
+Om_{#1}}
+\end_layout
+
 \end_inset
 
 
@@ -3637,7 +3890,7 @@ standard
 \end_inset
 
  distribution 
-\begin_inset Formula $\L 0$
+\begin_inset Formula $\Lo$
 \end_inset
 
 .
@@ -3646,7 +3899,7 @@ standard
 \end_inset
 
  and 
-\begin_inset Formula $\E_{0}:=\E_{\L 0}$
+\begin_inset Formula $\Eo:=\E_{\Lo}$
 \end_inset
 
 .
@@ -3661,7 +3914,7 @@ standard
 ).
  However, particularly for combinatorical applications, Stein's method is
  most often used to bound the distance 
-\begin_inset Formula $d_{\cH}\left(\L{\X},\L 0\right)$
+\begin_inset Formula $d_{\cH}\left(\L{\X},\Lo\right)$
 \end_inset
 
 , where the metric 
@@ -3680,7 +3933,7 @@ reference "def:general-metrics"
 \end_inset
 
  and 
-\begin_inset Formula $\E_{0}$
+\begin_inset Formula $\Eo$
 \end_inset
 
 .
@@ -3692,16 +3945,16 @@ Stein's method is motivated by the idea of a characterizing operator.
 
 \begin_layout Definition
 Let 
-\begin_inset Formula $\cF_{0}$
+\begin_inset Formula $\Fo$
 \end_inset
 
  be a vector space and 
-\begin_inset Formula $\cX_{0}$
+\begin_inset Formula $\Xo$
 \end_inset
 
  be a vector space of measurable functions.
  We say a linear operator 
-\begin_inset Formula $\T_{0}:\cF_{0}\to\cX_{0}$
+\begin_inset Formula $\To:\Fo\to\Xo$
 \end_inset
 
  is a 
@@ -3709,25 +3962,25 @@ Let
 characterizing operator
 \emph default
  for the distribution 
-\begin_inset Formula $\L 0$
+\begin_inset Formula $\Lo$
 \end_inset
 
  if 
-\begin_inset Formula $\im\T_{0}=\cX_{0}\cap\ker\E_{0}$
+\begin_inset Formula $\im\To=\Xo\cap\ker\Eo$
 \end_inset
 
 .
  For convenience, where there is no ambiguity we will often implicitly restrict
  
-\begin_inset Formula $\E_{0}$
+\begin_inset Formula $\Eo$
 \end_inset
 
  to 
-\begin_inset Formula $\cX_{0}$
+\begin_inset Formula $\Xo$
 \end_inset
 
 , so we can write 
-\begin_inset Formula $\im\T_{0}=\ker\E_{0}$
+\begin_inset Formula $\im\To=\ker\Eo$
 \end_inset
 
 .
@@ -3735,7 +3988,7 @@ characterizing operator
 
 \begin_layout Standard
 The following proposition shows why 
-\begin_inset Formula $\T_{0}$
+\begin_inset Formula $\To$
 \end_inset
 
  is called a characterizing operator.
@@ -3749,15 +4002,19 @@ name "prop:characterizing"
 \end_inset
 
 If 
-\begin_inset Formula $\cX_{0}$
+\begin_inset Formula $\To:\Fo\to\Xo$
 \end_inset
 
- is a determining class and 
-\begin_inset Formula $\im\T_{0}\subseteq\ker\E_{\X}$
+ is a characterizing operator and 
+\begin_inset Formula $\Xo$
 \end_inset
 
- then 
-\begin_inset Formula $\L{\X}=\L 0$
+ is a determining class then 
+\begin_inset Formula $\im\To\subseteq\ker\E_{\X}$
+\end_inset
+
+ implies 
+\begin_inset Formula $\L{\X}=\Lo$
 \end_inset
 
 .
@@ -3765,31 +4022,78 @@ If
 
 \begin_layout Proof
 If 
-\begin_inset Formula $\h\in\cX_{0}$
+\begin_inset Formula $\h\in\Xo$
 \end_inset
 
 , then 
-\begin_inset Formula $\h-\E_{0}\h\in\ker\E_{0}=\im\T_{0}$
+\begin_inset Formula $\h-\Eo\h\in\ker\Eo=\im\To$
 \end_inset
 
  so 
-\begin_inset Formula $\E_{\X}\left[\h-\E_{0}\h\right]=0$
+\begin_inset Formula $\E_{\X}\left[\h-\Eo\h\right]=0$
 \end_inset
 
 .
  That is, 
-\begin_inset Formula $\E_{\X}\h=\E_{0}\h$
+\begin_inset Formula $\E_{\X}\h=\Eo\h$
 \end_inset
 
  for all 
-\begin_inset Formula $\h\in\cX_{0}$
+\begin_inset Formula $\h\in\Xo$
 \end_inset
 
 , which means 
-\begin_inset Formula $\L{\X}=\L 0$
+\begin_inset Formula $\L{\X}=\Lo$
 \end_inset
 
  by the definition of a determining class.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "todo:characterizing"
+
+\end_inset
+
+Ross 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ros11"
+
+\end_inset
+
+ and others use this weaker condition as the definition of a characterizing
+ operator.
+ I'll have to look at examples of operators that satisfy the weaker but
+ not the stronger condition to see if the stronger definition is warranted
+ (my guess is yes, if Stein decided to originally define it the way I did).
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proposition
@@ -3800,18 +4104,18 @@ name "prop:U_0-characterizing"
 \end_inset
 
 
-\begin_inset Formula $\T_{0}:\cF_{0}\to\cX_{0}$
+\begin_inset Formula $\To:\Fo\to\Xo$
 \end_inset
 
  is characterizing if and only if there is a linear operator 
-\begin_inset Formula $\U_{0}:\cX_{0}\to\cF_{0}$
+\begin_inset Formula $\Uo:\Xo\to\Fo$
 \end_inset
 
  such that the following two equations hold.
 \begin_inset Formula 
 \begin{align}
-\E_{0}\T_{0} & =0_{\cF_{0}},\label{eq:E_0T_0-consistency}\\
-\T_{0}\U_{0}+\E_{0} & =\id_{\cX_{0}}.\label{eq:U_0-characterizing}
+\Eo\To & =0_{\Fo},\label{eq:E_0T_0-consistency}\\
+\To\Uo+\Eo & =\id_{\Xo}.\label{eq:U_0-characterizing}
 \end{align}
 
 \end_inset
@@ -3821,7 +4125,7 @@ name "prop:U_0-characterizing"
 
 \begin_layout Proof
 Suppose 
-\begin_inset Formula $\T_{0}$
+\begin_inset Formula $\To$
 \end_inset
 
  is a characterizing operator.
@@ -3838,7 +4142,7 @@ reference "eq:E_0T_0-consistency"
 \end_inset
 
  be a (Hamel) basis of 
-\begin_inset Formula $\cX_{0}$
+\begin_inset Formula $\Xo$
 \end_inset
 
 .
@@ -3847,24 +4151,24 @@ reference "eq:E_0T_0-consistency"
 \end_inset
 
  we have 
-\begin_inset Formula $\h_{\i}-\E_{0}\h_{\i}\in\ker\E_{0}$
+\begin_inset Formula $\h_{\i}-\Eo\h_{\i}\in\ker\Eo$
 \end_inset
 
  so there is some 
-\begin_inset Formula $f_{\i}$
+\begin_inset Formula $\fo_{\i}$
 \end_inset
 
  (not necessarily unique) that solves 
-\begin_inset Formula $\T_{0}f_{\i}=\h_{\i}-\E_{0}\h_{\i}$
+\begin_inset Formula $\To\fo_{\i}=\h_{\i}-\Eo\h_{\i}$
 \end_inset
 
 .
  The operator 
-\begin_inset Formula $\U_{0}$
+\begin_inset Formula $\Uo$
 \end_inset
 
  can then be defined by 
-\begin_inset Formula $\sum_{\i\in\mathcal{I}}a_{\i}\h_{\i}\mapsto\sum_{\i\in\mathcal{I}}a_{\i}f_{\i}$
+\begin_inset Formula $\sum_{\i\in\mathcal{I}}a_{\i}\h_{\i}\mapsto\sum_{\i\in\mathcal{I}}a_{\i}\fo_{\i}$
 \end_inset
 
 , satisfying 
@@ -3892,7 +4196,7 @@ begin{todo}
 
 there's probably a cleaner functional analysis way to prove that.
  Also, is 
-\begin_inset Formula $\U_{0}$
+\begin_inset Formula $\Uo$
 \end_inset
 
   bounded?
@@ -3920,7 +4224,7 @@ reference "eq:E_0T_0-consistency"
 \end_inset
 
  holds and 
-\begin_inset Formula $\U_{0}$
+\begin_inset Formula $\Uo$
 \end_inset
 
  exists satisfying 
@@ -3932,19 +4236,19 @@ reference "eq:U_0-characterizing"
 
 .
  For 
-\begin_inset Formula $\h\in\ker\E_{0}$
+\begin_inset Formula $\h\in\ker\Eo$
 \end_inset
 
  we have 
-\begin_inset Formula $\T_{0}\left(\U_{0}\h\right)=\h$
+\begin_inset Formula $\To\left(\Uo\h\right)=\h$
 \end_inset
 
  and 
-\begin_inset Formula $\h\in\im\T_{0}$
+\begin_inset Formula $\h\in\im\To$
 \end_inset
 
 , so 
-\begin_inset Formula $\ker\E_{0}\subseteq\im\T_{0}$
+\begin_inset Formula $\ker\Eo\subseteq\im\To$
 \end_inset
 
 .
@@ -3956,11 +4260,11 @@ reference "eq:E_0T_0-consistency"
 \end_inset
 
  immediately says that 
-\begin_inset Formula $\im\T_{0}\subseteq\ker\E_{0}$
+\begin_inset Formula $\im\To\subseteq\ker\Eo$
 \end_inset
 
 , so 
-\begin_inset Formula $\T_{0}$
+\begin_inset Formula $\To$
 \end_inset
 
  is a characterizing operator.
@@ -3970,7 +4274,7 @@ reference "eq:E_0T_0-consistency"
 We'll use 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:U_0-characterizing"
+reference "prop:U_0-characterizing"
 
 \end_inset
 
@@ -3983,7 +4287,7 @@ Define
 \end_inset
 
  by 
-\begin_inset Formula $T_{\N}f\left(x\right)=f'\left(x\right)-xf\left(x\right)$
+\begin_inset Formula $T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$
 \end_inset
 
 .
@@ -4004,11 +4308,11 @@ Define
 \end_inset
 
  be the set of integer-valued functions 
-\begin_inset Formula $f$
+\begin_inset Formula $\fo$
 \end_inset
 
  such that 
-\begin_inset Formula $\E_{\N}\left|\T_{\N}f\right|<\infty$
+\begin_inset Formula $\E_{\N}\left|\T_{\N}\fo\right|<\infty$
 \end_inset
 
 .
@@ -4025,13 +4329,13 @@ Define
 
 \begin_layout Proof
 For any 
-\begin_inset Formula $f\in\cF_{0}$
+\begin_inset Formula $f\in\Fo$
 \end_inset
 
 , integration by parts gives
 \begin_inset Formula 
 \[
-\E_{\N}\T_{\N}f=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}f'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}f\left(t\right)\d t=0
+\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0
 \]
 
 \end_inset
@@ -4089,25 +4393,6 @@ reference "prop:U_0-characterizing"
  completes the proof.
 \end_layout
 
-\begin_layout Example
-Note that 
-\begin_inset Formula $\cH_{\K}\subseteq\cX_{\N}$
-\end_inset
-
-, where 
-\begin_inset Formula $\cH$
-\end_inset
-
- is as defined in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "def:special-metrics"
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 \begin_inset ERT
 status open
@@ -4127,7 +4412,7 @@ Define
 \end_inset
 
  by 
-\begin_inset Formula $\T_{\Po\left(\lambda\right)}f\left(k\right)=\lambda f\left(k+1\right)-kf\left(k\right)$
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$
 \end_inset
 
 .
@@ -4148,11 +4433,11 @@ Define
 \end_inset
 
  be the set of integer-valued functions 
-\begin_inset Formula $f$
+\begin_inset Formula $\fo$
 \end_inset
 
  such that 
-\begin_inset Formula $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}f\right|<\infty$
+\begin_inset Formula $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}\fo\right|<\infty$
 \end_inset
 
 .
@@ -4169,13 +4454,13 @@ Define
 
 \begin_layout Proof
 For any 
-\begin_inset Formula $f\in\cF_{0}$
+\begin_inset Formula $f\in\Fo$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \[
-\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}f=\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}f\left(\i+1\right)-\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}f\left(\i\right)=0
+\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}\fo=e^{-\lambda}\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}\fo\left(\i+1\right)-e^{-\lambda}\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}\fo\left(\i\right)=0
 \]
 
 \end_inset
@@ -4230,6 +4515,45 @@ reference "prop:U_0-characterizing"
 \end_layout
 
 \begin_layout Standard
+Note that 
+\begin_inset Formula $\cH_{\K}\subseteq\cX_{\N}\cap\cX_{\Po\left(\lambda\right)}$
+\end_inset
+
+, where 
+\begin_inset Formula $\cH_{\K}$
+\end_inset
+
+ is as defined in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:special-metrics"
+
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\cH_{\K}$
+\end_inset
+
+ is a determining class, 
+\begin_inset Formula $\T_{\N}$
+\end_inset
+
+ and each 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
+\end_inset
+
+ are also characterizing operators in the sense of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:characterizing"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -4243,10 +4567,10 @@ begin{todo}
 \end_inset
 
  Stein chose 
-\begin_inset Formula $\cX_{0}=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $
+\begin_inset Formula $\Xo=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $
 \end_inset
 
-, for both the Poisson and Normal case.
+, for both the Poisson and normal case.
  I'm not sure why, I'll revisit this after looking at exchangeable pairs.
 \begin_inset ERT
 status open
@@ -4264,36 +4588,1108 @@ end{todo}
 \end_layout
 
 \begin_layout Standard
-When we restrict our attention to integer-valued random variables, 
-\begin_inset Formula $\cX_{\Po}$
+The utility of the introduction of a characterizing operator is that for
+ each 
+\begin_inset Formula $\h\in\Xo$
 \end_inset
 
- is a determining class, because it contains every function of the form
- 
-\begin_inset Formula $\one_{\A}$
-\end_inset
-
-, where 
-\begin_inset Formula $\A$
-\end_inset
-
- is a set of integers.
- So, 
-\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
-\end_inset
-
- is a characterizing operator in the sense of 
+, Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prop:characterizing"
+reference "eq:U_0-characterizing"
+
+\end_inset
+
+ allows us to to make the transformation
+\begin_inset Formula 
+\begin{equation}
+\E_{\X}\h=\Eo\h+\E_{\X}\To\Uo\h.\label{eq:stein-transformation}
+\end{equation}
+
+\end_inset
+
+The original purpose of Stein's method was to estimate some particular 
+\begin_inset Formula $\E_{\X}\h$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\Lo$
+\end_inset
+
+ was chosen to be a 
+\begin_inset Quotes eld
+\end_inset
+
+simple
+\begin_inset Quotes erd
+\end_inset
+
+, well-understood distribution then the term 
+\begin_inset Formula $\Eo\h$
+\end_inset
+
+ should be easy to compute or estimate, and if the distribution of 
+\begin_inset Formula $\X$
+\end_inset
+
+ was 
+\begin_inset Quotes eld
+\end_inset
+
+close
+\begin_inset Quotes erd
+\end_inset
+
+ to 
+\begin_inset Formula $\Lo$
+\end_inset
+
+, then it should be possible to show that the remainder 
+\begin_inset Formula $\E_{\X}\To\Uo\h$
+\end_inset
+
+ is small.
+\end_layout
+
+\begin_layout Standard
+For our purposes, the main use of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stein-transformation"
+
+\end_inset
+
+ is to bound 
+\begin_inset Formula $d_{\cH}\left(\X,\Lo\right)$
+\end_inset
+
+ for some 
+\begin_inset Formula $\cH\subseteq\Xo$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\cY\subseteq\Fo$
+\end_inset
+
+ is chosen so that 
+\begin_inset Formula $\Uo\h\in\cY$
+\end_inset
+
+ for all 
+\begin_inset Formula $\h\in\cH$
+\end_inset
+
+, then we have 
+\begin_inset Formula 
+\[
+d_{\cH}\left(\X,\Lo\right)=\sup_{\h\in\cH}\left|\E_{\X}\To\Uo\h\right|\le\sup_{\fo\in\cY}\left|\E_{\X}\To\fo\right|.
+\]
+
+\end_inset
+
+We have reduced the problem of bounding 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $d_{\cH}\left(\X,\Lo\right)$
+\end_inset
+
+ to that of bounding
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $\left|\E_{\X}\To\fo\right|$
+\end_inset
+
+ (uniformly over 
+\begin_inset Formula $\fo\in\cY$
+\end_inset
+
+).
+ Especially in the cases where 
+\begin_inset Formula $\Lo$
+\end_inset
+
+ is normal or Poisson and 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is one of the standard choices in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:special-metrics"
+
+\end_inset
+
+, there are a number of known convenient choices of 
+\begin_inset Formula $\cY$
+\end_inset
+
+, and a number of methods that are known to be effective to bound 
+\begin_inset Formula $\left|\E_{\X}\To\fo\right|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I should have a toy example here that is amenable to several methods.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The method of Exchangeable Pairs
+\end_layout
+
+\begin_layout Standard
+This is Stein's original approach, and is effective in wide generality for
+ combinatorial random variables.
+ In what follows, we assume 
+\begin_inset Formula $\Om=\cA$
+\end_inset
+
+ is a finite set (presumably of combinatorial objects) and 
+\begin_inset Formula $\X:\Om\to\RR$
+\end_inset
+
+ is a random variable that represents some statistic of the objects in 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+ The set 
+\begin_inset Formula $\OmX=\left\{ x\in\RR:\Pr\left(\X=x\right)>0\right\} $
+\end_inset
+
+ is then finite.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This finiteness condition is ugly.
+ Stein's book 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste86"
+
+\end_inset
+
+ says 
+\begin_inset Quotes eld
+\end_inset
+
+presumably an analogous result holds even if 
+\begin_inset Formula $\Om$
+\end_inset
+
+ is infinite
+\begin_inset Quotes erd
+\end_inset
+
+, but his later paper 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste92"
+
+\end_inset
+
+ makes no mention of this.
+ Here's what needs to be adjusted to let 
+\begin_inset Formula $\Om$
+\end_inset
+
+ be infinite:
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $\Om$
+\end_inset
+
+ is uncountable, the definition 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\T_{\X}\fX\left(x\right)=\E\left[\fX\left(\X,\X'\right)|\X=x\right]$
+\end_inset
+
+ is no longer appropriate.
+ There are ugly fixes, possibly something neater can be done with Radon-Nikodym.
+ Stuff can be reformulated to define 
+\begin_inset Formula $\T_{\X}=\E^{\X}$
+\end_inset
+
+ but this would obscure the motivation of 
+\begin_inset Formula $\T_{\X}$
+\end_inset
+
+ as an approximation to 
+\begin_inset Formula $\To$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\cF$
+\end_inset
+
+ and 
+\begin_inset Formula $\cX$
+\end_inset
+
+ need to be adjusted.
+ This is probably not a big deal.
+\end_layout
+
+\begin_layout Enumerate
+The proof that 
+\begin_inset Formula $\im\T_{\X}=\ker\E^{\X}$
+\end_inset
+
+ would no longer work.
+ Apparently the result is related to homology, so I might look into that.
+ The problem might go away if I use the alternative definition of a characterizi
+ng operator as in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "todo:characterizing"
 
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Subsection
-Exchangeable Pairs
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We first introduce the concept of an exchangeable pair.
+ 
+\end_layout
+
+\begin_layout Definition
+A 2-dimensional random vector 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+ is an 
+\emph on
+exchangeable pair
+\emph default
+ if 
+\begin_inset Formula $\Lb{\X_{1},\X_{2}}=\Lb{\X_{2},\X_{1}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+That is, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+a pair 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+ is exchangeable if exchanging the components of the pair does not change
+ their joint distribution.
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ In particular, the marginal distribution of 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ must be the same.
+ We will be interested in the case when 
+\begin_inset Formula $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All presentations of Stein's method I've seen use the notation 
+\begin_inset Formula $\left(\X,\X'\right)$
+\end_inset
+
+ but I think that has the potential to be confusing because the 
+\begin_inset Formula $\X$
+\end_inset
+
+ in that pair is defined on 
+\begin_inset Formula $\Om^{2}$
+\end_inset
+
+ whereas the original random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ is defined on 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An exchangeable pair with margins 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+ naturally induces a time-homogeneous reversible Markov chain taking values
+ in 
+\begin_inset Formula $\OmX$
+\end_inset
+
+.
+ The transition probabilities are given by 
+\begin_inset Formula $p_{\i\ii}=\Pr\left(\X_{2}=x_{\ii}|\X_{1}=x_{\i}\right)$
+\end_inset
+
+ and the steady-state distribution is given by 
+\begin_inset Formula $\pi_{\i}=\Pr\left(\X_{1}=x_{\i}\right)$
+\end_inset
+
+.
+ To see that this Markov chain is time reversible, we can simply observe
+ that
+\begin_inset Formula 
+\[
+\pi_{\i}p_{\i\ii}=\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x_{\i},x_{\ii}\right)\right)=\pi_{\ii}p_{\ii\i}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+We say an exchangeable pair is 
+\emph on
+connected
+\emph default
+ if its induced Markov chain is irreducible.
+\end_layout
+
+\begin_layout Standard
+Especially when 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ is a uniform probability on a set of combinatorial objects, it is often
+ useful to construct an exchangeable pair from a reversible Markov chain
+ on 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+ Specifically, if we choose a reversible Markov chain with steady-state
+ distribution given by 
+\begin_inset Formula $p_{\i}=\Pr\left(\om_{\i}\right)$
+\end_inset
+
+, then the vector 
+\begin_inset Formula $\left(\X\left(W_{1}\right),\X\left(W_{2}\right)\right)$
+\end_inset
+
+ is an exchangeable pair with margins 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+.
+ Further, if the underlying Markov chain is irreducible, then the constructed
+ exchangeable pair is connected.
+ We will frequently make use of this construction in applications.
+\end_layout
+
+\begin_layout Standard
+Now, given a connected exchangeable pair with margins 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+, we can construct a characterizing operator 
+\begin_inset Formula $\TX$
+\end_inset
+
+ of 
+\begin_inset Formula $\X$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\FX$
+\end_inset
+
+ be the set of functions 
+\begin_inset Formula $\OmX^{2}\to\RR$
+\end_inset
+
+ that are antisymmetric in the sense that 
+\begin_inset Formula $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
+\end_inset
+
+, and let 
+\begin_inset Formula $\XX$
+\end_inset
+
+ be the set of functions 
+\begin_inset Formula $\OmX\to\RR$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $\FX$
+\end_inset
+
+ and 
+\begin_inset Formula $\XX$
+\end_inset
+
+ be defined as above.
+ Suppose
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+is a connected exchangeable pair with margins 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $\TX:\FX\to\XX$
+\end_inset
+
+ by 
+\begin_inset Formula $\TX\fX\left(x\right)=\E\left[\fX\left(\X_{1},\X_{2}\right)|\X_{1}=x\right]$
+\end_inset
+
+, so that 
+\begin_inset Formula $\TX\X=\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\TX$
+\end_inset
+
+ is a characterizing operator for 
+\begin_inset Formula $\X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+(Adapted from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 1"
+key "Ste92"
+
+\end_inset
+
+).
+ To see that 
+\begin_inset Formula $\im\TX\subseteq\ker\E_{\X}$
+\end_inset
+
+, fix 
+\begin_inset Formula $\fX\in\cF$
+\end_inset
+
+ and note that by the tower law of expectation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:tower-law"
+
+\end_inset
+
+), 
+\begin_inset Formula 
+\[
+\E_{\X}\TX\fX=\E\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{1},\X_{2}\right).
+\]
+
+\end_inset
+
+By exchangeability and antisymmetry, 
+\begin_inset Formula $\E\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{2},\X_{1}\right)=-\E\fX\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+, so 
+\begin_inset Formula $\E\fX\left(\X_{1},\X_{2}\right)=\E_{\X}\TX\fX=0$
+\end_inset
+
+.
+ This did not require the connectedness condition.
+\end_layout
+
+\begin_layout Proof
+We next prove 
+\begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
+\end_inset
+
+ by homology theory.
+ Let 
+\begin_inset Formula $F_{1}=\left\{ \left\{ x_{1},x_{2}\right\} :\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x_{1},x_{2}\right)\right)>0\right\} $
+\end_inset
+
+.
+ That is, 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ is the set of all edges in the Markov chain associated with the exchangeable
+ pair 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $F_{0}=\OmX$
+\end_inset
+
+, so that 
+\begin_inset Formula $F_{1}\cup\OmX$
+\end_inset
+
+ is an (abstract) connected one-dimensional simplicial complex, with chain
+ complex
+\begin_inset Formula 
+\[
+0\to\RR^{F_{1}}\xrightarrow{\partial_{1}}\RR^{F_{0}}\xrightarrow{\partial_{0}}\RR\to0.
+\]
+
+\end_inset
+
+.
+ The Let 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+ Arbitrarily choosing a total order on 
+\begin_inset Formula $\OmX$
+\end_inset
+
+, we define the map 
+\begin_inset Formula $\phi:C_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+An antisymmetric function can be viewed as a linear combination of 
+\end_layout
+
+\begin_layout Proof
+We next prove 
+\begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
+\end_inset
+
+ by induction on 
+\begin_inset Formula $\left|\OmX\right|$
+\end_inset
+
+.
+ First, note that if 
+\begin_inset Formula $\left|\OmX\right|=1$
+\end_inset
+
+ then each 
+\begin_inset Formula $\hX\in\XX$
+\end_inset
+
+ is a constant function.
+ So, to have 
+\begin_inset Formula $\hX\in\ker\E_{\X}$
+\end_inset
+
+ we must have 
+\begin_inset Formula $\OmX=\left\{ 0\right\} $
+\end_inset
+
+ and 
+\begin_inset Formula $\hX\equiv0$
+\end_inset
+
+.
+ The function 
+\begin_inset Formula $\fX\equiv0$
+\end_inset
+
+ is trivially antisymmetric so 
+\begin_inset Formula $\fX\in\FX$
+\end_inset
+
+; since 
+\begin_inset Formula $\TX\fX=h$
+\end_inset
+
+ we have proved the present theorem for the case 
+\begin_inset Formula $\left|\OmX\right|=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, fix 
+\begin_inset Formula $n\in\NN$
+\end_inset
+
+.
+ Suppose 
+\begin_inset Formula $\left|\OmX\right|=n+1$
+\end_inset
+
+ and assume the present theorem is true whenever 
+\begin_inset Formula $\left|\OmX\right|=n$
+\end_inset
+
+.
+ Suppose 
+\begin_inset Formula $\left|\OmX\right|=n$
+\end_inset
+
+ and 
+\begin_inset Formula $\TX$
+\end_inset
+
+ is defined by a connected exchangeable pair.
+ Consider the transition graph 
+\begin_inset Formula $G$
+\end_inset
+
+ of the Markov chain induced by 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+; by assumption 
+\begin_inset Formula $G$
+\end_inset
+
+ is connected.
+ Let 
+\begin_inset Formula $T$
+\end_inset
+
+ be a spanning tree of 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ Choose a leaf vertex 
+\begin_inset Formula $x^{*}\in\OmX$
+\end_inset
+
+ of 
+\begin_inset Formula $T$
+\end_inset
+
+ and let 
+\begin_inset Formula $x'\in\OmX$
+\end_inset
+
+ be its only neighbour in 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ The subgraph of 
+\begin_inset Formula $G$
+\end_inset
+
+ induced by 
+\begin_inset Formula $\OmX\backslash x^{*}$
+\end_inset
+
+ is connected...
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula 
+\[
+\X^{*}\left(\om\right)=\begin{cases}
+x' & \mbox{if }\X\left(\om\right)=x^{*}\\
+\X\left(\om\right) & \mbox{otherwise.}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We have 
+\begin_inset Formula $\OmX[\X^{*}]=\OmX\backslash\left\{ x^{*}\right\} $
+\end_inset
+
+.
+ Similarly, let 
+\begin_inset Formula $\left(\X_{1}^{*},\X_{2}^{*}\right)$
+\end_inset
+
+ be defined by substituting 
+\begin_inset Formula $x'$
+\end_inset
+
+ for 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ in 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+.
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+The vector 
+\begin_inset Formula $\left(\X_{1}^{*},\X_{2}^{*}\right)$
+\end_inset
+
+ is then an exchangeable pair with margins 
+\begin_inset Formula $\L{\X^{*}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, fix 
+\begin_inset Formula $\hX\in\ker\E_{\X}$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $\hX^{*}:\OmX[X^{*}]\to\RR$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\[
+\hX^{*}\left(x\right)=\begin{cases}
+{\displaystyle \frac{\hX\left(x'\right)\Pr\left(\X=x'\right)+\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}} & \mbox{if }x=x'\\
+\hX\left(x\right) & \mbox{otherwise.}
+\end{cases}
+\]
+
+\end_inset
+
+We have 
+\begin_inset Formula $\E_{\X^{*}}\hX^{*}=\E_{\X}\hX=0$
+\end_inset
+
+ so by the inductive assumption, 
+\begin_inset Formula $\TX[\X^{*}]\fX^{*}=\hX$
+\end_inset
+
+ for some antisymmetric 
+\begin_inset Formula $\fX:\OmX[X^{*}]^{2}\to\RR$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We can then define 
+\begin_inset Formula $\fX:\OmX^{2}\to\RR\in\FX$
+\end_inset
+
+ by
+\begin_inset Formula 
+\[
+\fX\left(x_{1},x_{2}\right)=\begin{cases}
+{\displaystyle \frac{\hX\left(x^{*}\right)}{\Pr\left(\X=x'|\X=x^{*}\right)}} & \mbox{if }\left(x_{1},x_{2}\right)=\left(x',x^{*}\right)\\
+{\displaystyle \frac{\hX\left(x^{*}\right)\Pr\left(\X=x'\right)+\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}} & \mbox{if }\left(x_{1},x_{2}\right)=\left(x^{*},x'\right)\\
+0 & \mbox{if }\left\{ x^{*},x'\right\} \cap\left\{ x_{1},x_{2}\right\} \ne\varnothing\mbox{ apart from the above cases}\\
+\fX^{*}\left(x_{1},x_{2}\right) & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\fX\left(x,x'\right)+=\fX^{*}\left(x,x'\right)\Pr\left(\X_{2}=x^{*}|\X_{1}=x\right)/\left(\X_{2}=x'|\X_{1}=x\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray*}
+\TX\fX^{*}\left(x\right) & = & \sum_{x_{2}\in\OmX}\fX^{*}\left(x,x_{2}\right)\Pr\left(\X_{2}^{*}=x_{2}|\X_{1}^{*}=x\right)-\fX^{*}\left(x,x'\right)\Pr\left(\X_{2}=x^{*}|\X_{1}=x\right)\\
+ & = & \hX\left(x\right)-\fX^{*}\left(x',x_{2}\right)\Pr\left(\X_{2}^{*}=x^{*}|\X_{1}^{*}=x\right)
+\end{eqnarray*}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{eqnarray*}
+\TX\fX^{*}\left(x'\right) & = & \frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\X_{2}^{*}=x_{2}|\X_{1}^{*}=x'\right)-\frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x^{*},x_{2}\right)\right)\\
+ & = & \hX\left(x'\right)+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X_{1}=x'\right)}-\frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x^{*},x_{2}\right)\right)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\TX\fX\left(x\right)=\sum_{x_{2}\in\OmX}\fX\left(x,x_{2}\right)\Pr\left(\X_{2}=x_{2}|\X_{1}=x\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, fix 
+\begin_inset Formula $\hX\in\ker\E_{\X}$
+\end_inset
+
+ and let 
+\begin_inset Formula $\hX^{*}$
+\end_inset
+
+ be the function 
+\begin_inset Formula 
+\[
+\hX+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{n\Pr\left(\X\ne x^{*}\right)},
+\]
+
+\end_inset
+
+restricted to 
+\begin_inset Formula $\OmX[\X^{*}]$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\begin{align*}
+\E_{\X^{*}}\hX^{*} & =\sum_{x\in\OmX[\X^{*}]}\hX\left(x\right)\frac{\Pr\left(\X=x\right)}{\Pr\left(\X\ne x^{*}\right)}+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\ne x^{*}\right)}=\frac{\E_{\X}\hX}{\Pr\left(\X\ne x^{*}\right)}=0
+\end{align*}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

@@ -16,6 +16,7 @@
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
 \theoremstyle{plain}
 \newtheorem{thm}{\protect\theoremname}[section]
   \theoremstyle{plain}
@@ -39,7 +40,8 @@
 %clickable links
 \usepackage[bookmarks,hidelinks]{hyperref} 
 
-%\ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
+%cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
+%LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
 \usepackage[nameinlink,capitalise]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 \theoremstyle{plain}
@@ -94,13 +96,15 @@
 \usepackage{xcolor}
 
 %shaded WIP notes
+\theoremstyle{definition}
+\newtheorem{commentthm}{Comment}[section]
+\newtheorem{todothm}[commentthm]{Issue}
 \usepackage{framed}
 \usepackage{lipsum}
-\colorlet{shadecolor}{blue!20}
 \newenvironment{note}
-{\colorlet{shadecolor}{blue!20}\begin{shaded}}{\end{shaded}}
+{\colorlet{shadecolor}{blue!5}\begin{shaded}\begin{commentthm}}{\end{commentthm}\end{shaded}}
 \newenvironment{todo}
-{\colorlet{shadecolor}{red!20}\begin{shaded}}{\end{shaded}}
+{\colorlet{shadecolor}{red!5}\begin{shaded}\begin{todothm}}{\end{todothm}\end{shaded}}
 
 \makeatother
 
@@ -181,7 +185,8 @@ c
 \global\long\def\one{\operatorname{1}}
 
 
-\begin{note}Commentary in blue\end{note}\begin{todo}Issues in red\end{todo}
+\begin{comment}\begin{note}Commentary in blue\end{note}\begin{todo}Issues
+in red\end{todo}\end{comment}
 
 \tableofcontents{}
 
@@ -190,10 +195,10 @@ c
 
 \begin{note}
 
-introduce with limit theorems: Central Limit theorem, Poisson Limit
-theorem. Failure of limit theorems: they provide no understanding
-of speed of convergence, in particular convergence cannot be assumed
-to be uniform as parameters vary.
+The plan is to introduce with limit theorems: Central Limit theorem,
+Poisson Limit theorem. The failure of limit theorems is that they
+provide no understanding of speed of convergence, in particular convergence
+cannot be assumed to be uniform as parameters vary.
 
 Stein's method is a technique for bounding the distance between distributions,
 with a variety of different distance metrics. Quantitative bounds
@@ -224,6 +229,9 @@ and $f\asymp g$ means $f=O\left(g\right)$ and $g=O\left(f\right)$.
 
 
 \DeclareRobustCommand{\L}[1]{\ifmmode{\mathcal{L}_{#1}}\else\polishL\fi}
+
+\global\long\def\Lb#1{\mathcal{L}\left(#1\right)}
+
 
 \global\long\def\Om{\Omega}
 
@@ -372,7 +380,8 @@ Suppose $\X$ is a random element with target measure space $\left(\Om,\cA,\m\rig
 The \emph{distribution} (or \emph{law}) $\L{\X}$ of $\X$ is the
 pushforward measure with respect to $\X$. That is, it is a probability
 measure defined by $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)$
-for $\A\subseteq\cA$.
+for $\A\subseteq\cA$. We also occasionally use the notation $\Lb{\X}:=\L{\X}$
+for ease of reading.
 \end{defn}
 It is worth noting that in fact any probability measure is the distribution
 of some random element. To see this, note that given a probability
@@ -402,8 +411,8 @@ For a random variable $\X$ that takes integer values, this definition
 is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\Pr\left(\X=x\right)$.
 
 If we fix a particular underlying probability space $\left(\Om,\cA,\Pr\right)$,
-we can also equivalently view expectation as a bounded linear functional
-on the space of integrable functions: $\E\X=\int\X\left(\om\right)\d\Pr$.
+we can also equivalently view expectation as a linear functional on
+the space of integrable functions: $\E\X=\int\X\left(\om\right)\d\Pr$.
 So, $\E$ is defined in terms of a particular underlying probability
 space. Sometimes we will define a new probability space $\left(\Om,\cA,\Pr'\right)$
 by changing the measure on the same underlying set. In this case we
@@ -413,8 +422,8 @@ measure $\Pr'$, to avoid ambiguity.
 In fact, the expectation functional defines its underlying probability
 measure, because $\E\one_{\A}=\Pr\left(\A\right)$. Since the distribution
 of a random variable is specified by a probability measure, the distribution
-$\L{\X}$ of a random variable $\X$ also uniquely defines an expectation
-functional $\E_{\X}:=\E_{\L{\X}}$.
+$\Lb{\X}$ of a random variable $\X$ also uniquely defines an expectation
+functional $\E_{\X}:=\E_{\Lb{\X}}$.
 
 \begin{comment}
 \begin{defn}
@@ -470,8 +479,8 @@ probability that they differ is zero.
 \begin{defn}
 The random variable $\E\left[\X_{1}|\X_{2}\right]$ as defined above
 is called the \emph{conditional expectation of $\X_{1}$ with respect
-to $\X_{2}$}. We can also view conditional expectation as a bounded
-linear operator between functions: we define $\E^{\X_{2}}$ by $\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right]$.
+to $\X_{2}$}. We can also view conditional expectation as a linear
+operator between functions: we define $\E^{\X_{2}}$ by $\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right]$.
 \end{defn}
 This definition generalizes the previous definition of expectation
 conditioned on an event: if $\om\in\A$ and $\Pr\left(\A\right)>0$
@@ -481,6 +490,13 @@ Note that if $\X_{2}$ is discrete then we do not need to invoke Radon-Nikodym.
 We can define $\E\left[\X_{1}|\X_{2}\right]$ by $\E\left[\X_{1}|\X_{2}\right]\left(\om\right)=\E\left[\X_{1}|\X_{2}=\X_{2}\left(\om\right)\right]$
 whenever $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$.
 
+We finally present a simple consequence of the definition of conditional
+expectation.
+\begin{prop}
+[Tower Law of Expectation]\label{prop:tower-law}$\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$\end{prop}
+\begin{proof}
+$\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right]$
+\end{proof}
 
 \subsection{Coupling}
 
@@ -492,21 +508,21 @@ are measurable then that tuple is measurable in the product space.
 So, we can make the following definitions:
 \begin{defn}
 Given random elements $\X_{1},\dots,\X_{n}$ on the same underlying
-probability space, $\L{\X_{1},\dots,\X_{n}}:=\L{\left(\X_{1},\dots,\X_{n}\right)}$
+probability space, $\Lb{\X_{1},\dots,\X_{n}}:=\Lb{\left(\X_{1},\dots,\X_{n}\right)}$
 is called the \emph{joint distribution} of $\X_{1},\dots,\X_{n}$.
 Conversely, given a random tuple $\left(\X_{1},\dots,\X_{n}\right)$,
-each $\L{\X_{i}}$ is called a \emph{marginal distribution}.
+each $\Lb{\X_{\i}}$ is called a \emph{marginal distribution}.
 \end{defn}
-Suppose we have two distributions of random elements $\L{\X_{1}}$
-and $\L{\X_{1}}$. \emph{Coupling} is the technique of constructing
+Suppose we have two distributions of random elements $\Lb{\X_{1}}$
+and $\Lb{\X_{2}}$. \emph{Coupling} is the technique of constructing
 a random ordered pair $\left(\X_{1},\X_{2}\right)$ which realizes
 the given distributions as marginal distributions. Usually this is
-done by specifying the joint distribution $\L{\X_{1},\X_{2}}$.
+done by specifying the joint distribution $\Lb{\X_{1},\X_{2}}$.
 
 The idea is that coupling creates a particular kind of dependence
 between $\X_{1}$ and $\X_{2}$ that allows us to compare the two
 distributions. Often, we are able to make conclusions about the distributions
-$\L{\X_{i}}$ which are independent of their specific realizations
+$\Lb{\X_{\i}}$ which are independent of their specific realizations
 as random elements in the coupling.
 
 
@@ -514,7 +530,8 @@ as random elements in the coupling.
 
 \begin{note}
 
-I'll need to define Markov Chains, stationary distributions and time-reversibility.
+I'll need to define Markov Chains, stationary distributions, irreducibility
+and time-reversibility.
 
 Perhaps I should talk more generally about stochastic processes, because
 applying exchangeable pairs to Stein's method is has connections with
@@ -545,15 +562,17 @@ to Poisson processes.
 
 The main purpose of this section is to motivate the metrics usually
 used in Stein's method: they are all legitimate topological metrics
-and are consistent with the topology of convergence in distribution
+and are consistent with the topology of convergence in distribution.
+In particular, if we can show $\d_{\cH}\left(\X_{n},\X\right)\to0$
+we have shown that $\X_{n}\xrightarrow{d}\X$, as Toby does \cite{Joh11}.
 
 \end{note}
 \begin{defn}
 Let $\left(\X_{n}\right)_{n\in\NN}$ be a sequence of random variables.
 We say $\X_{n}$ \emph{converges in distribution} to a random variable
 $\X$ if $\E f\left(\X_{n}\right)\to\E f\left(\X\right)$ for all
-bounded continuous functions $f$. Alternatively, we say $\L{\X_{n}}$
-converges \emph{weakly} to $\L{\X}$, or simply $\L{\X_{n}}\to\L{\X}$.
+bounded continuous functions $f$. Alternatively, we say $\Lb{\X_{n}}$
+converges \emph{weakly} to $\Lb{\X}$, or simply $\Lb{\X_{n}}\to\Lb{\X}$.
 The topology on $\P\left(\RR\right)$ associated with this convergence
 is called the \emph{weak topology} (we will see that it is indeed
 a topology). Convergence in distribution of random vectors is defined
@@ -568,7 +587,7 @@ is defined by $\F_{\X}\left(x\right)=\Pr\left(\X\le x\right)$.\end{defn}
 
 \begin{enumerate}
 
-\item \label{prop:dist-def}$\L{\X_{n}}\to\L{\X}$
+\item \label{prop:dist-def}$\Lb{\X_{n}}\to\Lb{\X}$
 
 \item \label{prop:dist-F}$\F_{\X_{n}}\left(x\right)\to\F_{\X}\left(x\right)$
 for all $x$ where $\F_{\X}$ is continuous
@@ -591,7 +610,7 @@ thesis.
 For combinatorial applications, convergence in distribution can also
 be proved by the ``method of moments'': if $\X$ is the only random
 variable with the moments $\left(\E\X^{k}\right)_{k\in\NN}$, then
-$\L{\X_{n}}\to\L{\X}$ if $\E\X_{n}^{k}\to\E\X^{k}$. Convergence
+$\Lb{\X_{n}}\to\Lb{\X}$ if $\E\X_{n}^{k}\to\E\X^{k}$. Convergence
 in distribution can also sometimes be inferred from stronger forms
 of convergence when $\X$ and all the $\X_{n}$ are coupled to the
 same underlying space.
@@ -601,7 +620,7 @@ quantify the rate of convergence.
 
 In functional analysis terms, note that expectation operators are
 bounded linear functionals on the space of real bounded continuous
-functions. Then, $\L{\X_{n}}\to\L{\X}$ just means that $\E_{\X_{n}}\to\E_{\X}$
+functions. Then, $\Lb{\X_{n}}\to\Lb{\X}$ just means that $\E_{\X_{n}}\to\E_{\X}$
 in the weak-star topology. Although $C_{b}\left(\RR\right)^{*}$ is
 not metrizable, the subspace corresponding to $\P\left(\RR\right)$
 is in fact metrizable, with a metric called the L\'evy metric. For
@@ -610,8 +629,8 @@ Stein's method we will be interested in some slightly stronger metrics.
 \label{def:general-metrics}For two probability measures $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
 and a collection of real measurable ``test'' functions $\cH$, define
 $d_{\cH}$ by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
-For random variables $\X_{1},\X_{2}$, we abuse notation to write
-$d_{\cH}\left(\X_{1},\X_{2}\right)$ instead of $d_{\cH}\left(\L{\X_{1}},\L{\X_{2}}\right)$.
+For random variables $\X_{1},\X_{2}$, we write $d_{\cH}\left(\X_{1},\X_{2}\right)$
+instead of $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$.
 \end{defn}
 Each $d_{\cH}$ is non-negative, symmetric and satisfies the triangle
 inequality.
@@ -779,90 +798,146 @@ random matrices.
 \begin{note}There are a few quite different presentations of Stein's
 method. One thing I'm trying to do here is to unify Stein's functional
 analysis approach for exchangeable pairs \cite{Ste86} with Ross'
-general presentation\cite{Ros11}.\end{note}
+general presentation\cite{Ros11}.
+
+The reason I want to look at Stein's original, more abstract presentation
+is that I think it does a better job motivating why things work. Before
+I read that, the steps taken to apply Stein's method seemed like blindly
+doing things and it turns out they work.\end{note}
+
+\global\long\def\Lo{\L 0}
+
+
+\global\long\def\Eo{\E_{0}}
+
 
 \global\long\def\cF{\mathcal{F}}
+
+
+\global\long\def\Fo{\cF_{0}}
+
+
+\global\long\def\FX{\cF_{\X}}
+
+
+\global\long\def\cY{\mathcal{Y}}
+
+
+\global\long\def\fo{f}
+
+
+\global\long\def\fX{f}
+
+
+\global\long\def\hX{\h}
 
 
 \global\long\def\T{T}
 
 
+\global\long\def\To{\T_{0}}
+
+
+\global\long\def\TX{\T_{\X}}
+
+
+\renewcommand\TX[1][\X]{\T_{#1}}
+
 \global\long\def\U{U}
+
+
+\global\long\def\Uo{\U_{0}}
 
 
 \global\long\def\cX{\mathcal{X}}
 
 
+\global\long\def\Xo{\cX_{0}}
+
+
+\global\long\def\XX{\cX_{\X}}
+
+
+\global\long\def\OmX{\RR_{\X}}
+
+
+\renewcommand\OmX[1][\X]{\Om_{#1}}
+
 Suppose we have a potentially complicated random variable $\X$, and
 we believe the distribution of $\X$ is close to a ``standard''
-distribution $\L 0$. Then, Stein's method allows us to compare the
-operators $\E_{\X}$ and $\E_{0}:=\E_{\L 0}$. This is sometimes directly
+distribution $\Lo$. Then, Stein's method allows us to compare the
+operators $\E_{\X}$ and $\Eo:=\E_{\Lo}$. This is sometimes directly
 useful for approximating statistics of $\X$ (for example, $\Pr\left(\X\in\A\right)=\E_{\X}\one_{\A}$).
 However, particularly for combinatorical applications, Stein's method
-is most often used to bound the distance $d_{\cH}\left(\L{\X},\L 0\right)$,
+is most often used to bound the distance $d_{\cH}\left(\L{\X},\Lo\right)$,
 where the metric $d_{\cH}$ from \ref{def:general-metrics} is defined
-in terms of $\E_{\X}$ and $\E_{0}$.
+in terms of $\E_{\X}$ and $\Eo$.
 
 Stein's method is motivated by the idea of a characterizing operator.
 \begin{defn}
-Let $\cF_{0}$ be a vector space and $\cX_{0}$ be a vector space
-of measurable functions. We say a linear operator $\T_{0}:\cF_{0}\to\cX_{0}$
-is a \emph{characterizing operator} for the distribution $\L 0$ if
-$\im\T_{0}=\cX_{0}\cap\ker\E_{0}$. For convenience, where there is
-no ambiguity we will often implicitly restrict $\E_{0}$ to $\cX_{0}$,
-so we can write $\im\T_{0}=\ker\E_{0}$.
+Let $\Fo$ be a vector space and $\Xo$ be a vector space of measurable
+functions. We say a linear operator $\To:\Fo\to\Xo$ is a \emph{characterizing
+operator} for the distribution $\Lo$ if $\im\To=\Xo\cap\ker\Eo$.
+For convenience, where there is no ambiguity we will often implicitly
+restrict $\Eo$ to $\Xo$, so we can write $\im\To=\ker\Eo$.
 \end{defn}
-The following proposition shows why $\T_{0}$ is called a characterizing
+The following proposition shows why $\To$ is called a characterizing
 operator.
 \begin{prop}
-\label{prop:characterizing}If $\cX_{0}$ is a determining class and
-$\im\T_{0}\subseteq\ker\E_{\X}$ then $\L{\X}=\L 0$.\end{prop}
+\label{prop:characterizing}If $\To:\Fo\to\Xo$ is a characterizing
+operator and $\Xo$ is a determining class then $\im\To\subseteq\ker\E_{\X}$
+implies $\L{\X}=\Lo$.\end{prop}
 \begin{proof}
-If $\h\in\cX_{0}$, then $\h-\E_{0}\h\in\ker\E_{0}=\im\T_{0}$ so
-$\E_{\X}\left[\h-\E_{0}\h\right]=0$. That is, $\E_{\X}\h=\E_{0}\h$
-for all $\h\in\cX_{0}$, which means $\L{\X}=\L 0$ by the definition
-of a determining class.\end{proof}
+If $\h\in\Xo$, then $\h-\Eo\h\in\ker\Eo=\im\To$ so $\E_{\X}\left[\h-\Eo\h\right]=0$.
+That is, $\E_{\X}\h=\Eo\h$ for all $\h\in\Xo$, which means $\L{\X}=\Lo$
+by the definition of a determining class.
+\end{proof}
+\begin{todo}\label{todo:characterizing}Ross \cite{Ros11} and others
+use this weaker condition as the definition of a characterizing operator.
+I'll have to look at examples of operators that satisfy the weaker
+but not the stronger condition to see if the stronger definition is
+warranted (my guess is yes, if Stein decided to originally define
+it the way I did).\end{todo}
 \begin{prop}
-\label{prop:U_0-characterizing}$\T_{0}:\cF_{0}\to\cX_{0}$ is characterizing
-if and only if there is a linear operator $\U_{0}:\cX_{0}\to\cF_{0}$
-such that the following two equations hold.
+\label{prop:U_0-characterizing}$\To:\Fo\to\Xo$ is characterizing
+if and only if there is a linear operator $\Uo:\Xo\to\Fo$ such that
+the following two equations hold.
 \begin{align}
-\E_{0}\T_{0} & =0_{\cF_{0}},\label{eq:E_0T_0-consistency}\\
-\T_{0}\U_{0}+\E_{0} & =\id_{\cX_{0}}.\label{eq:U_0-characterizing}
+\Eo\To & =0_{\Fo},\label{eq:E_0T_0-consistency}\\
+\To\Uo+\Eo & =\id_{\Xo}.\label{eq:U_0-characterizing}
 \end{align}
 \end{prop}
 \begin{proof}
-Suppose $\T_{0}$ is a characterizing operator. Equation \ref{eq:E_0T_0-consistency}
+Suppose $\To$ is a characterizing operator. Equation \ref{eq:E_0T_0-consistency}
 is immediate. Let $\left\{ \h_{\i}\right\} _{\i\in\mathcal{I}}$ be
-a (Hamel) basis of $\cX_{0}$. For each $\i\in\mathcal{I}$ we have
-$\h_{\i}-\E_{0}\h_{\i}\in\ker\E_{0}$ so there is some $f_{\i}$ (not
-necessarily unique) that solves $\T_{0}f_{\i}=\h_{\i}-\E_{0}\h_{\i}$.
-The operator $\U_{0}$ can then be defined by $\sum_{\i\in\mathcal{I}}a_{\i}\h_{\i}\mapsto\sum_{\i\in\mathcal{I}}a_{\i}f_{\i}$,
+a (Hamel) basis of $\Xo$. For each $\i\in\mathcal{I}$ we have $\h_{\i}-\Eo\h_{\i}\in\ker\Eo$
+so there is some $\fo_{\i}$ (not necessarily unique) that solves
+$\To\fo_{\i}=\h_{\i}-\Eo\h_{\i}$. The operator $\Uo$ can then be
+defined by $\sum_{\i\in\mathcal{I}}a_{\i}\h_{\i}\mapsto\sum_{\i\in\mathcal{I}}a_{\i}\fo_{\i}$,
 satisfying \ref{eq:U_0-characterizing}.
 
 \begin{todo}there's probably a cleaner functional analysis way to
-prove that. Also, is $\U_{0}$  bounded?\end{todo}
+prove that. Also, is $\Uo$  bounded?\end{todo}
 
-Conversely, suppose \ref{eq:E_0T_0-consistency} holds and $\U_{0}$
-exists satisfying \ref{eq:U_0-characterizing}. For $\h\in\ker\E_{0}$
-we have $\T_{0}\left(\U_{0}\h\right)=\h$ and $\h\in\im\T_{0}$, so
-$\ker\E_{0}\subseteq\im\T_{0}$. Equation \ref{eq:E_0T_0-consistency}
-immediately says that $\im\T_{0}\subseteq\ker\E_{0}$, so $\T_{0}$
-is a characterizing operator.
+Conversely, suppose \ref{eq:E_0T_0-consistency} holds and $\Uo$
+exists satisfying \ref{eq:U_0-characterizing}. For $\h\in\ker\Eo$
+we have $\To\left(\Uo\h\right)=\h$ and $\h\in\im\To$, so $\ker\Eo\subseteq\im\To$.
+Equation \ref{eq:E_0T_0-consistency} immediately says that $\im\To\subseteq\ker\Eo$,
+so $\To$ is a characterizing operator.
 \end{proof}
-We'll use \ref{eq:U_0-characterizing} to give two important examples
+We'll use \ref{prop:U_0-characterizing} to give two important examples
 of characterizing operators.
 \begin{thm}
-Define $T_{\N}$ by $T_{\N}f\left(x\right)=f'\left(x\right)-xf\left(x\right)$.
+Define $T_{\N}$ by $T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$.
 Let $\cX_{\N}$ be the set of integer-valued functions $\h$ that
 satisfy $\E_{\N}\left|\h\right|<\infty$ and let $\cF_{\N}$ be the
-set of integer-valued functions $f$ such that $\E_{\N}\left|\T_{\N}f\right|<\infty$.
+set of integer-valued functions $\fo$ such that $\E_{\N}\left|\T_{\N}\fo\right|<\infty$.
 Then $\T_{\N}:\cF_{\N}\to\cX_{\N}$ is a characterizing operator for
 $\N\left(0,1\right)$.\end{thm}
 \begin{proof}
-For any $f\in\cF_{0}$, integration by parts gives
+For any $f\in\Fo$, integration by parts gives
 \[
-\E_{\N}\T_{\N}f=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}f'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}f\left(t\right)\d t=0
+\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0
 \]
 so $\E_{\N}\T_{\N}=0$ and \ref{eq:E_0T_0-consistency} holds. Then,
 define $\U_{\N}$ by 
@@ -875,24 +950,21 @@ $\h\in\cX_{\N}$ we have
 \T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h,
 \end{align*}
 so \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
-completes the proof.\end{proof}
-\begin{example}
-Note that $\cH_{\K}\subseteq\cX_{\N}$, where $\cH$ is as defined
-in \ref{def:special-metrics}
-\end{example}
+completes the proof.
+\end{proof}
 
 \begin{thm}
-Define $\T_{\Po\left(\lambda\right)}$ by $\T_{\Po\left(\lambda\right)}f\left(k\right)=\lambda f\left(k+1\right)-kf\left(k\right)$.
+Define $\T_{\Po\left(\lambda\right)}$ by $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$.
 Let $\cX_{\Po\left(\lambda\right)}$ be the set of integer-valued
 functions $\h$ that satisfy $\E_{\Po\left(\lambda\right)}\left|\h\right|<\infty$
 and let $\cF_{\Po\left(\lambda\right)}$ be the set of integer-valued
-functions $f$ such that $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}f\right|<\infty$.
+functions $\fo$ such that $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}\fo\right|<\infty$.
 Then $\T_{\Po\left(\lambda\right)}:\cF_{\Po\left(\lambda\right)}\to\cX_{\Po\left(\lambda\right)}$
 is a characterizing operator for $\Po\left(\lambda\right)$.\end{thm}
 \begin{proof}
-For any $f\in\cF_{0}$, we have
+For any $f\in\Fo$, we have
 \[
-\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}f=\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}f\left(\i+1\right)-\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}f\left(\i\right)=0
+\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}\fo=e^{-\lambda}\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}\fo\left(\i+1\right)-e^{-\lambda}\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}\fo\left(\i\right)=0
 \]
 so $\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}=0$ and
 \ref{eq:E_0T_0-consistency} holds. Then, define $\U_{\Po\left(\lambda\right)}$
@@ -907,18 +979,235 @@ Substituting and simplifying gives
 so \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
 completes the proof.
 \end{proof}
-\begin{todo} Stein chose $\cX_{0}=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $,
-for both the Poisson and Normal case. I'm not sure why, I'll revisit
+Note that $\cH_{\K}\subseteq\cX_{\N}\cap\cX_{\Po\left(\lambda\right)}$,
+where $\cH_{\K}$ is as defined in \ref{def:special-metrics}. Since
+$\cH_{\K}$ is a determining class, $\T_{\N}$ and each $\T_{\Po\left(\lambda\right)}$
+are also characterizing operators in the sense of \ref{prop:characterizing}.
+
+\begin{todo} Stein chose $\Xo=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $,
+for both the Poisson and normal case. I'm not sure why, I'll revisit
 this after looking at exchangeable pairs.\end{todo}
 
-When we restrict our attention to integer-valued random variables,
-$\cX_{\Po}$ is a determining class, because it contains every function
-of the form $\one_{\A}$, where $\A$ is a set of integers. So, $\T_{\Po\left(\lambda\right)}$
-is a characterizing operator in the sense of \ref{prop:characterizing}.
+The utility of the introduction of a characterizing operator is that
+for each $\h\in\Xo$, Equation \ref{eq:U_0-characterizing} allows
+us to to make the transformation
+\begin{equation}
+\E_{\X}\h=\Eo\h+\E_{\X}\To\Uo\h.\label{eq:stein-transformation}
+\end{equation}
+The original purpose of Stein's method was to estimate some particular
+$\E_{\X}\h$. If $\Lo$ was chosen to be a ``simple'', well-understood
+distribution then the term $\Eo\h$ should be easy to compute or estimate,
+and if the distribution of $\X$ was ``close'' to $\Lo$, then it
+should be possible to show that the remainder $\E_{\X}\To\Uo\h$ is
+small.
+
+For our purposes, the main use of \ref{eq:stein-transformation} is
+to bound $d_{\cH}\left(\X,\Lo\right)$ for some $\cH\subseteq\Xo$.
+If $\cY\subseteq\Fo$ is chosen so that $\Uo\h\in\cY$ for all $\h\in\cH$,
+then we have 
+\[
+d_{\cH}\left(\X,\Lo\right)=\sup_{\h\in\cH}\left|\E_{\X}\To\Uo\h\right|\le\sup_{\fo\in\cY}\left|\E_{\X}\To\fo\right|.
+\]
+We have reduced the problem of bounding $d_{\cH}\left(\X,\Lo\right)$
+to that of bounding $\left|\E_{\X}\To\fo\right|$ (uniformly over
+$\fo\in\cY$). Especially in the cases where $\Lo$ is normal or Poisson
+and $\cH$ is one of the standard choices in \ref{def:special-metrics},
+there are a number of known convenient choices of $\cY$, and a number
+of methods that are known to be effective to bound $\left|\E_{\X}\To\fo\right|$.
+
+\begin{todo}
+
+I should have a toy example here that is amenable to several methods.
+
+\end{todo}
 
 
-\subsection{Exchangeable Pairs}
+\subsection{The method of Exchangeable Pairs}
 
+This is Stein's original approach, and is effective in wide generality
+for combinatorial random variables. In what follows, we assume $\Om=\cA$
+is a finite set (presumably of combinatorial objects) and $\X:\Om\to\RR$
+is a random variable that represents some statistic of the objects
+in $\Om$. The set $\OmX=\left\{ x\in\RR:\Pr\left(\X=x\right)>0\right\} $
+is then finite.
+
+\begin{todo}
+
+This finiteness condition is ugly. Stein's book \cite{Ste86} says
+``presumably an analogous result holds even if $\Om$ is infinite'',
+but his later paper \cite{Ste92} makes no mention of this. Here's
+what needs to be adjusted to let $\Om$ be infinite:
+\begin{enumerate}
+\item If $\Om$ is uncountable, the definition $\T_{\X}\fX\left(x\right)=\E\left[\fX\left(\X,\X'\right)|\X=x\right]$
+is no longer appropriate. There are ugly fixes, possibly something
+neater can be done with Radon-Nikodym. Stuff can be reformulated to
+define $\T_{\X}=\E^{\X}$ but this would obscure the motivation of
+$\T_{\X}$ as an approximation to $\To$.
+\item $\cF$ and $\cX$ need to be adjusted. This is probably not a big
+deal.
+\item The proof that $\im\T_{\X}=\ker\E^{\X}$ would no longer work. Apparently
+the result is related to homology, so I might look into that. The
+problem might go away if I use the alternative definition of a characterizing
+operator as in \ref{todo:characterizing}.
+\end{enumerate}
+\end{todo}
+
+We first introduce the concept of an exchangeable pair. 
+\begin{defn}
+A 2-dimensional random vector $\left(\X_{1},\X_{2}\right)$ is an
+\emph{exchangeable pair} if $\Lb{\X_{1},\X_{2}}=\Lb{\X_{2},\X_{1}}$.
+\end{defn}
+That is, a pair $\left(\X_{1},\X_{2}\right)$ is exchangeable if exchanging
+the components of the pair does not change their joint distribution.
+In particular, the marginal distribution of $\X_{1}$ and $\X_{2}$
+must be the same. We will be interested in the case when $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$.
+
+\begin{note}
+
+All presentations of Stein's method I've seen use the notation $\left(\X,\X'\right)$
+but I think that has the potential to be confusing because the $\X$
+in that pair is defined on $\Om^{2}$ whereas the original random
+variable $\X$ is defined on $\Om$.
+
+\end{note}
+
+An exchangeable pair with margins $\L{\X}$ naturally induces a time-homogeneous
+reversible Markov chain taking values in $\OmX$. The transition probabilities
+are given by $p_{\i\ii}=\Pr\left(\X_{2}=x_{\ii}|\X_{1}=x_{\i}\right)$
+and the steady-state distribution is given by $\pi_{\i}=\Pr\left(\X_{1}=x_{\i}\right)$.
+To see that this Markov chain is time reversible, we can simply observe
+that
+\[
+\pi_{\i}p_{\i\ii}=\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x_{\i},x_{\ii}\right)\right)=\pi_{\ii}p_{\ii\i}.
+\]
+
+\begin{defn}
+We say an exchangeable pair is \emph{connected} if its induced Markov
+chain is irreducible.
+\end{defn}
+Especially when $\Pr$ is a uniform probability on a set of combinatorial
+objects, it is often useful to construct an exchangeable pair from
+a reversible Markov chain on $\Om$. Specifically, if we choose a
+reversible Markov chain with steady-state distribution given by $p_{\i}=\Pr\left(\om_{\i}\right)$,
+then the vector $\left(\X\left(W_{1}\right),\X\left(W_{2}\right)\right)$
+is an exchangeable pair with margins $\L{\X}$. Further, if the underlying
+Markov chain is irreducible, then the constructed exchangeable pair
+is connected. We will frequently make use of this construction in
+applications.
+
+Now, given a connected exchangeable pair with margins $\L{\X}$, we
+can construct a characterizing operator $\TX$ of $\X$. Let $\FX$
+be the set of functions $\OmX^{2}\to\RR$ that are antisymmetric in
+the sense that $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$,
+and let $\XX$ be the set of functions $\OmX\to\RR$. 
+\begin{thm}
+Let $\FX$ and $\XX$ be defined as above. Suppose\textup{ $\left(\X_{1},\X_{2}\right)$
+}is a connected exchangeable pair with margins $\L{\X}$. Define $\TX:\FX\to\XX$
+by $\TX\fX\left(x\right)=\E\left[\fX\left(\X_{1},\X_{2}\right)|\X_{1}=x\right]$,
+so that $\TX\X=\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)$. Then $\TX$
+is a characterizing operator for $\X$.\end{thm}
+\begin{proof}
+(Adapted from \cite[Theorem 1]{Ste92}). To see that $\im\TX\subseteq\ker\E_{\X}$,
+fix $\fX\in\cF$ and note that by the tower law of expectation (\ref{prop:tower-law}),
+\[
+\E_{\X}\TX\fX=\E\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{1},\X_{2}\right).
+\]
+By exchangeability and antisymmetry, $\E\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{2},\X_{1}\right)=-\E\fX\left(\X_{1},\X_{2}\right)$,
+so $\E\fX\left(\X_{1},\X_{2}\right)=\E_{\X}\TX\fX=0$. This did not
+require the connectedness condition.
+
+We next prove $\ker\E_{\X}\subseteq\im\TX$ by homology theory. Let
+$F_{1}=\left\{ \left\{ x_{1},x_{2}\right\} :\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x_{1},x_{2}\right)\right)>0\right\} $.
+That is, $F_{1}$ is the set of all edges in the Markov chain associated
+with the exchangeable pair $\left(\X_{1},\X_{2}\right)$. Let $F_{0}=\OmX$,
+so that $F_{1}\cup\OmX$ is an (abstract) connected one-dimensional
+simplicial complex, with chain complex
+\[
+0\to\RR^{F_{1}}\xrightarrow{\partial_{1}}\RR^{F_{0}}\xrightarrow{\partial_{0}}\RR\to0.
+\]
+. The Let $C_{i}$ Arbitrarily choosing a total order on $\OmX$,
+we define the map $\phi:C_{1}$
+
+An antisymmetric function can be viewed as a linear combination of 
+
+We next prove $\ker\E_{\X}\subseteq\im\TX$ by induction on $\left|\OmX\right|$.
+First, note that if $\left|\OmX\right|=1$ then each $\hX\in\XX$
+is a constant function. So, to have $\hX\in\ker\E_{\X}$ we must have
+$\OmX=\left\{ 0\right\} $ and $\hX\equiv0$. The function $\fX\equiv0$
+is trivially antisymmetric so $\fX\in\FX$; since $\TX\fX=h$ we have
+proved the present theorem for the case $\left|\OmX\right|=1$.
+
+Now, fix $n\in\NN$. Suppose $\left|\OmX\right|=n+1$ and assume the
+present theorem is true whenever $\left|\OmX\right|=n$. Suppose $\left|\OmX\right|=n$
+and $\TX$ is defined by a connected exchangeable pair. Consider the
+transition graph $G$ of the Markov chain induced by $\left(\X_{1},\X_{2}\right)$;
+by assumption $G$ is connected. Let $T$ be a spanning tree of $G$.
+Choose a leaf vertex $x^{*}\in\OmX$ of $T$ and let $x'\in\OmX$
+be its only neighbour in $T$. The subgraph of $G$ induced by $\OmX\backslash x^{*}$
+is connected...\begin{comment} Let 
+\[
+\X^{*}\left(\om\right)=\begin{cases}
+x' & \mbox{if }\X\left(\om\right)=x^{*}\\
+\X\left(\om\right) & \mbox{otherwise.}
+\end{cases}
+\]
+
+
+We have $\OmX[\X^{*}]=\OmX\backslash\left\{ x^{*}\right\} $. Similarly,
+let $\left(\X_{1}^{*},\X_{2}^{*}\right)$ be defined by substituting
+$x'$ for $x^{*}$ in $\left(\X_{1},\X_{2}\right)$. The vector $\left(\X_{1}^{*},\X_{2}^{*}\right)$
+is then an exchangeable pair with margins $\L{\X^{*}}$.
+
+Now, fix $\hX\in\ker\E_{\X}$. Define $\hX^{*}:\OmX[X^{*}]\to\RR$
+by 
+\[
+\hX^{*}\left(x\right)=\begin{cases}
+{\displaystyle \frac{\hX\left(x'\right)\Pr\left(\X=x'\right)+\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}} & \mbox{if }x=x'\\
+\hX\left(x\right) & \mbox{otherwise.}
+\end{cases}
+\]
+We have $\E_{\X^{*}}\hX^{*}=\E_{\X}\hX=0$ so by the inductive assumption,
+$\TX[\X^{*}]\fX^{*}=\hX$ for some antisymmetric $\fX:\OmX[X^{*}]^{2}\to\RR$.
+
+We can then define $\fX:\OmX^{2}\to\RR\in\FX$ by
+\[
+\fX\left(x_{1},x_{2}\right)=\begin{cases}
+{\displaystyle \frac{\hX\left(x^{*}\right)}{\Pr\left(\X=x'|\X=x^{*}\right)}} & \mbox{if }\left(x_{1},x_{2}\right)=\left(x',x^{*}\right)\\
+{\displaystyle \frac{\hX\left(x^{*}\right)\Pr\left(\X=x'\right)+\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}} & \mbox{if }\left(x_{1},x_{2}\right)=\left(x^{*},x'\right)\\
+0 & \mbox{if }\left\{ x^{*},x'\right\} \cap\left\{ x_{1},x_{2}\right\} \ne\varnothing\mbox{ apart from the above cases}\\
+\fX^{*}\left(x_{1},x_{2}\right) & \mbox{otherwise}
+\end{cases}
+\]
+\[
+\fX\left(x,x'\right)+=\fX^{*}\left(x,x'\right)\Pr\left(\X_{2}=x^{*}|\X_{1}=x\right)/\left(\X_{2}=x'|\X_{1}=x\right)
+\]
+
+
+\begin{eqnarray*}
+\TX\fX^{*}\left(x\right) & = & \sum_{x_{2}\in\OmX}\fX^{*}\left(x,x_{2}\right)\Pr\left(\X_{2}^{*}=x_{2}|\X_{1}^{*}=x\right)-\fX^{*}\left(x,x'\right)\Pr\left(\X_{2}=x^{*}|\X_{1}=x\right)\\
+ & = & \hX\left(x\right)-\fX^{*}\left(x',x_{2}\right)\Pr\left(\X_{2}^{*}=x^{*}|\X_{1}^{*}=x\right)
+\end{eqnarray*}
+\begin{eqnarray*}
+\TX\fX^{*}\left(x'\right) & = & \frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\X_{2}^{*}=x_{2}|\X_{1}^{*}=x'\right)-\frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x^{*},x_{2}\right)\right)\\
+ & = & \hX\left(x'\right)+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X_{1}=x'\right)}-\frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x^{*},x_{2}\right)\right)
+\end{eqnarray*}
+
+
+\[
+\TX\fX\left(x\right)=\sum_{x_{2}\in\OmX}\fX\left(x,x_{2}\right)\Pr\left(\X_{2}=x_{2}|\X_{1}=x\right)
+\]
+
+
+Now, fix $\hX\in\ker\E_{\X}$ and let $\hX^{*}$ be the function 
+\[
+\hX+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{n\Pr\left(\X\ne x^{*}\right)},
+\]
+restricted to $\OmX[\X^{*}]$. Then, 
+\begin{align*}
+\E_{\X^{*}}\hX^{*} & =\sum_{x\in\OmX[\X^{*}]}\hX\left(x\right)\frac{\Pr\left(\X=x\right)}{\Pr\left(\X\ne x^{*}\right)}+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\ne x^{*}\right)}=\frac{\E_{\X}\hX}{\Pr\left(\X\ne x^{*}\right)}=0
+\end{align*}
+\end{comment}
+\end{proof}
 
 \subsection{Size-Bias Coupling}
 
