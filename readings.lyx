@@ -1472,6 +1472,17 @@ In practice, we can often represent
  by deleting all the edges incident to a randomly chosen vertex.
 \end_layout
 
+\begin_layout Standard
+Apparently, size-bias coupling is extensively used in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BHJ92"
+
+\end_inset
+
+, but not by name.
+\end_layout
+
 \begin_layout Subsubsection
 Exchangeable Pairs for Poisson Approximation
 \end_layout

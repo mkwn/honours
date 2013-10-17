@@ -157,7 +157,7 @@ Matthew Kwan
 
 \begin_layout Standard
 \begin_inset Branch Folded
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset ERT
@@ -308,6 +308,15 @@ end{comment}
 \begin_inset FormulaMacro
 \newcommand{\F}{\mathcal{F}}
 {\boldsymbol{\mathcal{F}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\range}[1]{\left[#1\right]}
+{\boldsymbol{\left[#1\right]}}
 \end_inset
 
 
@@ -476,6 +485,15 @@ For this thesis, the set of natural numbers
 
 , otherwise 
 \begin_inset Formula $\one_{A}\left(x\right)=0$
+\end_inset
+
+.
+ Also, 
+\begin_inset Formula $\range k$
+\end_inset
+
+ denotes the set 
+\begin_inset Formula $\left\{ 1,\dots,k\right\} $
 \end_inset
 
 .
@@ -650,6 +668,15 @@ fi}
 \begin_inset FormulaMacro
 \newcommand{\im}{\operatorname{im}}
 {\mathbf{im}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\sgn}{\operatorname{sign}}
+{\mathbf{sign}}
 \end_inset
 
 
@@ -1389,7 +1416,7 @@ If
 \end_inset
 
 , we write 
-\begin_inset Formula $\L{\X}=\Po\left(\lambda\right)$
+\begin_inset Formula $\L{\X}=\Po\left(\lambda\right)=\Po_{\lambda}$
 \end_inset
 
 ; this is defined by 
@@ -3704,15 +3731,6 @@ end{note}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\FX}{\cF_{\X}}
-{\boldsymbol{\cF_{\X}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
 \newcommand{\cY}{\mathcal{Y}}
 {\boldsymbol{\mathcal{Y}}}
 \end_inset
@@ -3731,24 +3749,6 @@ end{note}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\fX}{f}
-{\boldsymbol{f}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\hX}{\h}
-{\boldsymbol{\h}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
 \newcommand{\T}{T}
 {\boldsymbol{T}}
 \end_inset
@@ -3760,37 +3760,6 @@ end{note}
 \begin_inset FormulaMacro
 \newcommand{\To}{\T_{0}}
 {\boldsymbol{\T_{0}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\TX}{\T_{\X}}
-{\boldsymbol{\T_{\X}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand
-\backslash
-TX[1][
-\backslash
-X]{
-\backslash
-T_{#1}}
-\end_layout
-
 \end_inset
 
 
@@ -3827,46 +3796,6 @@ T_{#1}}
 \begin_inset FormulaMacro
 \newcommand{\Xo}{\cX_{0}}
 {\boldsymbol{\cX_{0}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\XX}{\cX_{\X}}
-{\boldsymbol{\cX_{\X}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\OmX}{\RR_{\X}}
-{\boldsymbol{\RR_{\X}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-renewcommand
-\backslash
-OmX[1][
-\backslash
-X]{
-\backslash
-Om_{#1}}
-\end_layout
-
 \end_inset
 
 
@@ -4295,8 +4224,8 @@ Define
 \begin_inset Formula $\cX_{\N}$
 \end_inset
 
- be the set of integer-valued functions 
-\begin_inset Formula $\h$
+ be the set of functions 
+\begin_inset Formula $\h:\RR\to\RR$
 \end_inset
 
  that satisfy 
@@ -4307,8 +4236,8 @@ Define
 \begin_inset Formula $\cF_{\N}$
 \end_inset
 
- be the set of integer-valued functions 
-\begin_inset Formula $\fo$
+ be the set of functions 
+\begin_inset Formula $\fo:\RR\to\RR$
 \end_inset
 
  such that 
@@ -4329,7 +4258,7 @@ Define
 
 \begin_layout Proof
 For any 
-\begin_inset Formula $f\in\Fo$
+\begin_inset Formula $f\in\cF_{\N}$
 \end_inset
 
 , integration by parts gives
@@ -4421,7 +4350,7 @@ Define
 \end_inset
 
  be the set of integer-valued functions 
-\begin_inset Formula $\h$
+\begin_inset Formula $\h:\NN\to\ZZ$
 \end_inset
 
  that satisfy 
@@ -4432,8 +4361,8 @@ Define
 \begin_inset Formula $\cF_{\Po\left(\lambda\right)}$
 \end_inset
 
- be the set of integer-valued functions 
-\begin_inset Formula $\fo$
+ be the set of functions 
+\begin_inset Formula $\fo:\NN\to\ZZ$
 \end_inset
 
  such that 
@@ -4454,7 +4383,7 @@ Define
 
 \begin_layout Proof
 For any 
-\begin_inset Formula $f\in\Fo$
+\begin_inset Formula $f\in\cF_{\Po\left(\lambda\right)}$
 \end_inset
 
 , we have
@@ -4484,12 +4413,17 @@ reference "eq:E_0T_0-consistency"
  by 
 \begin_inset Formula 
 \[
-\U_{\Po\left(\lambda\right)}\h\left(k\right)=\frac{\left(k-1\right)!}{\lambda^{k}}\sum_{\i=0}^{k-1}\frac{\lambda^{\i}}{\i!}\left(\h\left(\i\right)-\E_{\Po\left(\lambda\right)}\h\right).
+\U_{\Po\left(\lambda\right)}\h\left(k\right)=\frac{\left(k-1\right)!}{\lambda^{k}}\sum_{\i=0}^{k-1}\frac{\lambda^{\i}}{\i!}\left(\h\left(\i\right)-\E_{\Po\left(\lambda\right)}\h\right)
 \]
 
 \end_inset
 
-Substituting and simplifying gives
+for 
+\begin_inset Formula $k\ge1$
+\end_inset
+
+.
+ Substituting and simplifying gives
 \begin_inset Formula 
 \[
 \T_{\Po\left(\lambda\right)}\U_{\Po\left(\lambda\right)}\h\left(k\right)=\h\left(k\right)-\E_{\Po\left(\lambda\right)}\h,
@@ -4516,11 +4450,11 @@ reference "prop:U_0-characterizing"
 
 \begin_layout Standard
 Note that 
-\begin_inset Formula $\cH_{\K}\subseteq\cX_{\N}\cap\cX_{\Po\left(\lambda\right)}$
+\begin_inset Formula $\cH_{\TV}\subseteq\cX_{\N}$
 \end_inset
 
 , where 
-\begin_inset Formula $\cH_{\K}$
+\begin_inset Formula $\cH_{\TV}$
 \end_inset
 
  is as defined in 
@@ -4532,18 +4466,14 @@ reference "def:special-metrics"
 
 .
  Since 
-\begin_inset Formula $\cH_{\K}$
+\begin_inset Formula $\cH_{\TV}$
 \end_inset
 
  is a determining class, 
 \begin_inset Formula $\T_{\N}$
 \end_inset
 
- and each 
-\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
-\end_inset
-
- are also characterizing operators in the sense of 
+ is a characterizing operator in the sense of 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "prop:characterizing"
@@ -4551,6 +4481,11 @@ reference "prop:characterizing"
 \end_inset
 
 .
+ We can say the same about 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
+\end_inset
+
+ if we restrict our attention to integer-valued random variables.
 \end_layout
 
 \begin_layout Standard
@@ -4752,6 +4687,196 @@ reference "def:special-metrics"
 .
 \end_layout
 
+\begin_layout Example
+If 
+\begin_inset Formula $\cH=\cH_{\TV}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Lo=\Po\left(\lambda\right)$
+\end_inset
+
+, then we can choose 
+\begin_inset Formula $\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} \right\} $
+\end_inset
+
+.
+ This choice is sharp in the sense that 
+\begin_inset Formula $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1/2}$
+\end_inset
+
+ as 
+\begin_inset Formula $\lambda\to\infty$
+\end_inset
+
+ and 
+\begin_inset Formula $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1$
+\end_inset
+
+ as 
+\begin_inset Formula $\lambda\to0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+(Adapted from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Lemma 1.1.1"
+key "BHJ92"
+
+\end_inset
+
+)...
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+ First, note that 
+\begin_inset Formula $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\range{k-1}}\right\Vert _{\infty}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For any Borel 
+\begin_inset Formula $\A$
+\end_inset
+
+,
+\begin_inset Formula 
+\begin{align*}
+\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right) & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\Po_{\lambda}\left(\A\cap\range{k-1}\right)-\Po_{\lambda}\left(\A\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
+ & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\int}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\left(\vphantom{\sum}1-\Po_{\lambda}\left(\range{k-1}\right)\right)\right.\\
+ & \qquad\qquad\qquad-\left.\vphantom{\int}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\right)-\Po_{\lambda}\left(\A\cap\range{k-1}\right)\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
+ & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right)
+\end{align*}
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\Po_{\lambda}\left(\A\cap\range{k-1}\right)$
+\end_inset
+
+ is bounded above by 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\Po_{\lambda}\left(\range{k-1}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\Po_{\lambda}\left(\A\backslash\range{k-1}\right)$
+\end_inset
+
+ is bounded above by 
+\begin_inset Formula $\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)$
+\end_inset
+
+, so
+\begin_inset Formula 
+\[
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\range{k-1}\right).
+\]
+
+\end_inset
+
+We have equ
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Remark 10.2.4"
+key "BHJ92"
+
+\end_inset
+
+ gives a proof that 
+\begin_inset Formula $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1/2}\right\} $
+\end_inset
+
+ will suffice, but it's complicated.
+ Maybe I'll revisit this later.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status open
@@ -4793,6 +4918,96 @@ The method of Exchangeable Pairs
 \end_layout
 
 \begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\fX}{f}
+{\boldsymbol{f}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\hX}{\h}
+{\boldsymbol{\h}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\XX}{\cX_{\X}}
+{\boldsymbol{\cX_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\eX}{\mathbf{X}}
+{\boldsymbol{\mathbf{X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\FX}{\cF_{\X}}
+{\boldsymbol{\cF_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\GX}{G_{\eX}}
+{\boldsymbol{G_{\eX}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\TX}{\T_{\eX}}
+{\boldsymbol{\T_{\eX}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\OmX}{\RR_{\X}}
+{\boldsymbol{\RR_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\conn}{\alpha}
+{\boldsymbol{\alpha}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\x}[1]{x^{\left(#1\right)}}
+{\boldsymbol{x^{\left(#1\right)}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 This is Stein's original approach, and is effective in wide generality for
  combinatorial random variables.
  In what follows, we assume 
@@ -4813,6 +5028,65 @@ This is Stein's original approach, and is effective in wide generality for
 \end_inset
 
  is then finite.
+ We write its elements as 
+\begin_inset Formula $\x 1<\dots<\x k$
+\end_inset
+
+ for 
+\begin_inset Formula $k=\left|\OmX\right|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The general idea is that we can use an object 
+\begin_inset Formula $\eX$
+\end_inset
+
+ called an exchangeable pair to construct a characterizing operator 
+\begin_inset Formula $\TX$
+\end_inset
+
+ for 
+\begin_inset Formula $\X$
+\end_inset
+
+.
+ We then use an operator 
+\begin_inset Formula $\conn$
+\end_inset
+
+ to connect the domains of 
+\begin_inset Formula $\TX$
+\end_inset
+
+ and 
+\begin_inset Formula $\To$
+\end_inset
+
+ in such a way that 
+\begin_inset Formula $\TX\conn$
+\end_inset
+
+ approximates 
+\begin_inset Formula $\To$
+\end_inset
+
+.
+ We then have 
+\begin_inset Formula $\E_{\X}\To=\E_{\X}\left(\To-\TX\conn\right)$
+\end_inset
+
+, so we can use the fact that 
+\begin_inset Formula $\To-\TX\conn$
+\end_inset
+
+ is small to bound 
+\begin_inset Formula $\E_{\X}\To\fo$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -4951,14 +5225,9 @@ end{todo}
 
 \end_layout
 
-\begin_layout Standard
-We first introduce the concept of an exchangeable pair.
- 
-\end_layout
-
 \begin_layout Definition
 A 2-dimensional random vector 
-\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\begin_inset Formula $\eX=\left(\X_{1},\X_{2}\right)$
 \end_inset
 
  is an 
@@ -4986,7 +5255,7 @@ That is,
 \noun off
 \color none
 a pair 
-\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\begin_inset Formula $\eX$
 \end_inset
 
  is exchangeable if exchanging the components of the pair does not change
@@ -5075,31 +5344,83 @@ end{note}
 
 \end_layout
 
-\begin_layout Standard
-An exchangeable pair with margins 
+\begin_layout Proposition
+There is a natural equivalence between time-homogeneous reversible Markov
+ chains with steady-state distribution 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
- naturally induces a time-homogeneous reversible Markov chain taking values
- in 
-\begin_inset Formula $\OmX$
+, and exchangeable pairs with margins 
+\begin_inset Formula $\L{\X}$
 \end_inset
 
 .
- The transition probabilities are given by 
-\begin_inset Formula $p_{\i\ii}=\Pr\left(\X_{2}=x_{\ii}|\X_{1}=x_{\i}\right)$
+\end_layout
+
+\begin_layout Proof
+Given an exchangeable pair 
+\begin_inset Formula $\eX$
 \end_inset
 
- and the steady-state distribution is given by 
-\begin_inset Formula $\pi_{\i}=\Pr\left(\X_{1}=x_{\i}\right)$
+ with margins 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+, we can define a time-homogenous Markov chain 
+\begin_inset Formula $M$
+\end_inset
+
+ with transition probabilities 
+\begin_inset Formula $p_{\i\ii}=\Pr\left(\X_{2}=\x{\ii}|\X_{1}=\x{\i}\right)$
 \end_inset
 
 .
- To see that this Markov chain is time reversible, we can simply observe
- that
+ With 
+\begin_inset Formula $\pi_{\i}=\Pr\left(\X_{1}=\x{\i}\right)$
+\end_inset
+
+, we then have
 \begin_inset Formula 
 \[
-\pi_{\i}p_{\i\ii}=\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x_{\i},x_{\ii}\right)\right)=\pi_{\ii}p_{\ii\i}.
+\pi_{\i}p_{\i\ii}=\Pr\left(\eX=\left(x_{\i},x_{\ii}\right)\right)=\pi_{\ii}p_{\ii\i},
+\]
+
+\end_inset
+
+so 
+\begin_inset Formula $M$
+\end_inset
+
+ is reversible with steady-state distribution 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Conversely, suppose a time-homogeneous Markov chain with transition probabilitie
+s 
+\begin_inset Formula $p_{\i\ii}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $\pi_{\i}p_{\i\ii}=\pi_{\ii}p_{\ii\i}$
+\end_inset
+
+ for 
+\begin_inset Formula $\pi_{\i}=\Pr\left(\X_{1}=\x{\i}\right)$
+\end_inset
+
+.
+ We can then define an exchangeable pair 
+\begin_inset Formula $\eX$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\[
+\Pr\left(\eX=\left(\x{\i},\x{\ii}\right)\right)=\pi_{\i}p_{\i\ii}=\pi_{\ii}p_{\ii\i}=\Pr\left(\eX=\left(\x{\ii},\x{\i}\right)\right).
 \]
 
 \end_inset
@@ -5107,12 +5428,71 @@ An exchangeable pair with margins
 
 \end_layout
 
+\begin_layout Standard
+For any exchangeable pair 
+\begin_inset Formula $\eX$
+\end_inset
+
+, we can also define its graph 
+\begin_inset Formula $\GX$
+\end_inset
+
+ in a natural way: the vertex set 
+\begin_inset Formula $\range k$
+\end_inset
+
+ corresponds to 
+\begin_inset Formula $\OmX=\left\{ \x 1,\dots,\x k\right\} $
+\end_inset
+
+, and there is an edge for each possible transition in the Markov chain
+ of 
+\begin_inset Formula $\eX$
+\end_inset
+
+.
+ We will be particularly interested in the interpretation of 
+\begin_inset Formula $\GX$
+\end_inset
+
+ as an (abstract) simplicial complex.
+ That is, the set of one-dimensional faces 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ is the edge set of 
+\begin_inset Formula $\GX$
+\end_inset
+
+ and the set of zero-dimensional faces 
+\begin_inset Formula $F_{0}$
+\end_inset
+
+ is the vertex set 
+\begin_inset Formula $\range k$
+\end_inset
+
+ of 
+\begin_inset Formula $\GX$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Definition
-We say an exchangeable pair is 
+We say an exchangeable pair 
+\begin_inset Formula $\eX$
+\end_inset
+
+ is 
 \emph on
 connected
 \emph default
- if its induced Markov chain is irreducible.
+ if its Markov chain is irreducible, or equivalently 
+\begin_inset Formula $\GX$
+\end_inset
+
+ is connected.
 \end_layout
 
 \begin_layout Standard
@@ -5129,7 +5509,7 @@ Especially when
 .
  Specifically, if we choose a reversible Markov chain with steady-state
  distribution given by 
-\begin_inset Formula $p_{\i}=\Pr\left(\om_{\i}\right)$
+\begin_inset Formula $\pi=\Pr\left(\om_{\i}\right)$
 \end_inset
 
 , then the vector 
@@ -5147,20 +5527,49 @@ Especially when
 \end_layout
 
 \begin_layout Standard
-Now, given a connected exchangeable pair with margins 
+Now, if 
+\begin_inset Formula $\eX$
+\end_inset
+
+ is a connected exchangeable pair with margins 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
-, we can construct a characterizing operator 
-\begin_inset Formula $\TX$
+, consider the augmented chain complex of 
+\begin_inset Formula $\GX$
 \end_inset
 
- of 
+ over 
+\begin_inset Formula $\RR$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+0\to\RR^{F_{1}}\xrightarrow{\partial_{1}}\RR^{F_{0}}\xrightarrow{\partial_{0}}\RR\to0.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $\GX$
+\end_inset
+
+ is connected, its zeroth homology group has dimension zero.
+ That is, 
+\begin_inset Formula $\im\partial_{1}=\ker\partial_{0}$
+\end_inset
+
+.
+ This motivates the construction of a characterizing operator for 
 \begin_inset Formula $\X$
 \end_inset
 
 .
- Let 
+\end_layout
+
+\begin_layout Standard
+Let 
 \begin_inset Formula $\FX$
 \end_inset
 
@@ -5181,7 +5590,6 @@ Now, given a connected exchangeable pair with margins
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Theorem
@@ -5207,7 +5615,7 @@ Let
 \noun off
 \color none
  
-\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\begin_inset Formula $\eX$
 \end_inset
 
  
@@ -5252,16 +5660,7 @@ is a connected exchangeable pair with margins
 \end_layout
 
 \begin_layout Proof
-(Adapted from 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Theorem 1"
-key "Ste92"
-
-\end_inset
-
-).
- To see that 
+To see that 
 \begin_inset Formula $\im\TX\subseteq\ker\E_{\X}$
 \end_inset
 
@@ -5301,395 +5700,107 @@ We next prove
 \begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
 \end_inset
 
- by homology theory.
- Let 
-\begin_inset Formula $F_{1}=\left\{ \left\{ x_{1},x_{2}\right\} :\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x_{1},x_{2}\right)\right)>0\right\} $
+ using the fact that 
+\begin_inset Formula $\im\partial_{1}=\ker\partial_{0}$
+\end_inset
+
+.
+ A chain in 
+\begin_inset Formula $\RR^{F_{\i}}$
+\end_inset
+
+ will be represented as a function 
+\begin_inset Formula $F_{\i}\to\RR$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\hX\in\ker\E_{\X}$
 \end_inset
 
 .
  That is, 
-\begin_inset Formula $F_{1}$
+\begin_inset Formula $\sum_{\i=1}^{k}\hX\left(\x{\i}\right)\pi_{\i}=0$
 \end_inset
 
- is the set of all edges in the Markov chain associated with the exchangeable
- pair 
-\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+, so if we define 
+\begin_inset Formula $\hX^{*}:\i\mapsto\hX\left(\x{\i}\right)\pi_{\i}$
+\end_inset
+
+, then 
+\begin_inset Formula $\hX^{*}\in\ker\partial_{0}=\im\partial_{1}$
 \end_inset
 
 .
- Let 
-\begin_inset Formula $F_{0}=\OmX$
+ This means there is 
+\begin_inset Formula $\fX^{*}\in\RR^{F_{1}}$
 \end_inset
 
-, so that 
-\begin_inset Formula $F_{1}\cup\OmX$
+ with 
+\begin_inset Formula $\partial_{1}\fX^{*}=\hX^{*}$
 \end_inset
 
- is an (abstract) connected one-dimensional simplicial complex, with chain
- complex
+, or equivalently
 \begin_inset Formula 
 \[
-0\to\RR^{F_{1}}\xrightarrow{\partial_{1}}\RR^{F_{0}}\xrightarrow{\partial_{0}}\RR\to0.
+\hX^{*}\left(\i\right)=\sum_{\ii\in\range k\backslash\left\{ \i\right\} }\fX^{*}\left(\left\{ \i,\ii\right\} \right)\sgn\left(\i-\ii\right)
 \]
 
 \end_inset
 
-.
- The Let 
-\begin_inset Formula $C_{i}$
-\end_inset
-
- Arbitrarily choosing a total order on 
-\begin_inset Formula $\OmX$
-\end_inset
-
-, we define the map 
-\begin_inset Formula $\phi:C_{1}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-An antisymmetric function can be viewed as a linear combination of 
-\end_layout
-
-\begin_layout Proof
-We next prove 
-\begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
-\end_inset
-
- by induction on 
-\begin_inset Formula $\left|\OmX\right|$
+for each 
+\begin_inset Formula $\i$
 \end_inset
 
 .
- First, note that if 
-\begin_inset Formula $\left|\OmX\right|=1$
-\end_inset
-
- then each 
-\begin_inset Formula $\hX\in\XX$
-\end_inset
-
- is a constant function.
- So, to have 
-\begin_inset Formula $\hX\in\ker\E_{\X}$
-\end_inset
-
- we must have 
-\begin_inset Formula $\OmX=\left\{ 0\right\} $
-\end_inset
-
- and 
-\begin_inset Formula $\hX\equiv0$
-\end_inset
-
-.
- The function 
-\begin_inset Formula $\fX\equiv0$
-\end_inset
-
- is trivially antisymmetric so 
-\begin_inset Formula $\fX\in\FX$
-\end_inset
-
-; since 
-\begin_inset Formula $\TX\fX=h$
-\end_inset
-
- we have proved the present theorem for the case 
-\begin_inset Formula $\left|\OmX\right|=1$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Now, fix 
-\begin_inset Formula $n\in\NN$
-\end_inset
-
-.
- Suppose 
-\begin_inset Formula $\left|\OmX\right|=n+1$
-\end_inset
-
- and assume the present theorem is true whenever 
-\begin_inset Formula $\left|\OmX\right|=n$
-\end_inset
-
-.
- Suppose 
-\begin_inset Formula $\left|\OmX\right|=n$
-\end_inset
-
- and 
-\begin_inset Formula $\TX$
-\end_inset
-
- is defined by a connected exchangeable pair.
- Consider the transition graph 
-\begin_inset Formula $G$
-\end_inset
-
- of the Markov chain induced by 
-\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
-\end_inset
-
-; by assumption 
-\begin_inset Formula $G$
-\end_inset
-
- is connected.
- Let 
-\begin_inset Formula $T$
-\end_inset
-
- be a spanning tree of 
-\begin_inset Formula $G$
-\end_inset
-
-.
- Choose a leaf vertex 
-\begin_inset Formula $x^{*}\in\OmX$
-\end_inset
-
- of 
-\begin_inset Formula $T$
-\end_inset
-
- and let 
-\begin_inset Formula $x'\in\OmX$
-\end_inset
-
- be its only neighbour in 
-\begin_inset Formula $T$
-\end_inset
-
-.
- The subgraph of 
-\begin_inset Formula $G$
-\end_inset
-
- induced by 
-\begin_inset Formula $\OmX\backslash x^{*}$
-\end_inset
-
- is connected...
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\end_layout
-
-\end_inset
-
- Let 
-\begin_inset Formula 
-\[
-\X^{*}\left(\om\right)=\begin{cases}
-x' & \mbox{if }\X\left(\om\right)=x^{*}\\
-\X\left(\om\right) & \mbox{otherwise.}
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We have 
-\begin_inset Formula $\OmX[\X^{*}]=\OmX\backslash\left\{ x^{*}\right\} $
-\end_inset
-
-.
- Similarly, let 
-\begin_inset Formula $\left(\X_{1}^{*},\X_{2}^{*}\right)$
-\end_inset
-
- be defined by substituting 
-\begin_inset Formula $x'$
-\end_inset
-
- for 
-\begin_inset Formula $x^{*}$
-\end_inset
-
- in 
-\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
-\end_inset
-
-.
- 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-The vector 
-\begin_inset Formula $\left(\X_{1}^{*},\X_{2}^{*}\right)$
-\end_inset
-
- is then an exchangeable pair with margins 
-\begin_inset Formula $\L{\X^{*}}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Now, fix 
-\begin_inset Formula $\hX\in\ker\E_{\X}$
-\end_inset
-
-.
- Define 
-\begin_inset Formula $\hX^{*}:\OmX[X^{*}]\to\RR$
+ Now, define 
+\begin_inset Formula $\fX:\OmX^{2}\to\RR$
 \end_inset
 
  by 
 \begin_inset Formula 
 \[
-\hX^{*}\left(x\right)=\begin{cases}
-{\displaystyle \frac{\hX\left(x'\right)\Pr\left(\X=x'\right)+\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}} & \mbox{if }x=x'\\
-\hX\left(x\right) & \mbox{otherwise.}
+\fX\left(\x{\i},\x{\ii}\right)=\begin{cases}
+{\displaystyle \frac{\fX^{*}\left(\left\{ \i,\ii\right\} \right)\sgn\left(\i-\ii\right)}{\pi_{\i}p_{\i\ii}}} & \mbox{if }\left\{ \i,\ii\right\} \in F_{1}\\
+0 & \mbox{otherwise}.
 \end{cases}
 \]
 
 \end_inset
 
-We have 
-\begin_inset Formula $\E_{\X^{*}}\hX^{*}=\E_{\X}\hX=0$
+By the reversibility of the Markov chain of 
+\begin_inset Formula $\eX$
 \end_inset
 
- so by the inductive assumption, 
-\begin_inset Formula $\TX[\X^{*}]\fX^{*}=\hX$
+, the function 
+\begin_inset Formula $\fX$
 \end_inset
 
- for some antisymmetric 
-\begin_inset Formula $\fX:\OmX[X^{*}]^{2}\to\RR$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-We can then define 
-\begin_inset Formula $\fX:\OmX^{2}\to\RR\in\FX$
-\end_inset
-
- by
-\begin_inset Formula 
-\[
-\fX\left(x_{1},x_{2}\right)=\begin{cases}
-{\displaystyle \frac{\hX\left(x^{*}\right)}{\Pr\left(\X=x'|\X=x^{*}\right)}} & \mbox{if }\left(x_{1},x_{2}\right)=\left(x',x^{*}\right)\\
-{\displaystyle \frac{\hX\left(x^{*}\right)\Pr\left(\X=x'\right)+\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}} & \mbox{if }\left(x_{1},x_{2}\right)=\left(x^{*},x'\right)\\
-0 & \mbox{if }\left\{ x^{*},x'\right\} \cap\left\{ x_{1},x_{2}\right\} \ne\varnothing\mbox{ apart from the above cases}\\
-\fX^{*}\left(x_{1},x_{2}\right) & \mbox{otherwise}
-\end{cases}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\fX\left(x,x'\right)+=\fX^{*}\left(x,x'\right)\Pr\left(\X_{2}=x^{*}|\X_{1}=x\right)/\left(\X_{2}=x'|\X_{1}=x\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula 
-\begin{eqnarray*}
-\TX\fX^{*}\left(x\right) & = & \sum_{x_{2}\in\OmX}\fX^{*}\left(x,x_{2}\right)\Pr\left(\X_{2}^{*}=x_{2}|\X_{1}^{*}=x\right)-\fX^{*}\left(x,x'\right)\Pr\left(\X_{2}=x^{*}|\X_{1}=x\right)\\
- & = & \hX\left(x\right)-\fX^{*}\left(x',x_{2}\right)\Pr\left(\X_{2}^{*}=x^{*}|\X_{1}^{*}=x\right)
-\end{eqnarray*}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{eqnarray*}
-\TX\fX^{*}\left(x'\right) & = & \frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\X_{2}^{*}=x_{2}|\X_{1}^{*}=x'\right)-\frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x^{*},x_{2}\right)\right)\\
- & = & \hX\left(x'\right)+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X_{1}=x'\right)}-\frac{\Pr\left(\X\in\left\{ x',x^{*}\right\} \right)}{\Pr\left(\X_{1}=x'\right)}\sum_{x_{2}\in\OmX}\fX^{*}\left(x',x_{2}\right)\Pr\left(\left(\X_{1},\X_{2}\right)=\left(x^{*},x_{2}\right)\right)
-\end{eqnarray*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula 
-\[
-\TX\fX\left(x\right)=\sum_{x_{2}\in\OmX}\fX\left(x,x_{2}\right)\Pr\left(\X_{2}=x_{2}|\X_{1}=x\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Now, fix 
-\begin_inset Formula $\hX\in\ker\E_{\X}$
-\end_inset
-
- and let 
-\begin_inset Formula $\hX^{*}$
-\end_inset
-
- be the function 
-\begin_inset Formula 
-\[
-\hX+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{n\Pr\left(\X\ne x^{*}\right)},
-\]
-
-\end_inset
-
-restricted to 
-\begin_inset Formula $\OmX[\X^{*}]$
+ is antisymmetric so 
+\begin_inset Formula $\fX\in\FX$
 \end_inset
 
 .
- Then, 
+ By construction, we have
 \begin_inset Formula 
-\begin{align*}
-\E_{\X^{*}}\hX^{*} & =\sum_{x\in\OmX[\X^{*}]}\hX\left(x\right)\frac{\Pr\left(\X=x\right)}{\Pr\left(\X\ne x^{*}\right)}+\frac{\hX\left(x^{*}\right)\Pr\left(\X=x^{*}\right)}{\Pr\left(\X\ne x^{*}\right)}=\frac{\E_{\X}\hX}{\Pr\left(\X\ne x^{*}\right)}=0
-\end{align*}
+\[
+\hX\left(\i\right)=\sum_{\ii\in\range k\backslash\left\{ \i\right\} }\fX\left(\x{\i},\x{\ii}\right)p_{\i\ii}=\TX\fX\left(\i\right)
+\]
 
 \end_inset
 
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{comment}
-\end_layout
-
+for each 
+\begin_inset Formula $\i$
 \end_inset
 
+, so 
+\begin_inset Formula $\hX\in\im\TX$
+\end_inset
 
+.
 \end_layout
 
 \begin_layout Subsection
