@@ -270,6 +270,9 @@ and $f\asymp g$ means $f=O\left(g\right)$ and $g=O\left(f\right)$.
 \global\long\def\sgn{\operatorname{sign}}
 
 
+\global\long\def\supp{\operatorname{supp}}
+
+
 \global\long\def\Pr{\mathbb{P}}
 
 
@@ -400,6 +403,9 @@ to denote $\L{\X}\left(\left\{ x:x>1\right\} \right)$. This is equal
 to $\Pr\left(\left\{ \om\in\Om:\X\left(\om\right)>1\right\} \right)$
 for any particular realization of $\X$ as a function on a probability
 space $\left(\Om,\cA,\m\right)$.
+\begin{defn}
+The \emph{support} $\supp\left(\X\right)$ of a discrete random element
+$\X$ is the set $\left\{ k\in\Om:\Pr\left(\X=k\right)>0\right\} $.\end{defn}
 \begin{example}
 If $\X$ has the normal distribution with parameters $\mu$ and $\sigma$
 then we say $\L{\X}=\N\left(\mu,\sigma\right)$; this distribution
@@ -914,12 +920,12 @@ so $\To$ is a characterizing operator.
 We'll use \ref{prop:U_0-characterizing} to give two important examples
 of characterizing operators.
 \begin{thm}
-Define $T_{\N}$ by $T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$.
-Let $\cX_{\N}$ be the set of functions $\h:\RR\to\RR$ that satisfy
-$\E_{\N}\left|\h\right|<\infty$ and let $\cF_{\N}$ be the set of
-functions $\fo:\RR\to\RR$ such that $\E_{\N}\left|\T_{\N}\fo\right|<\infty$.
-Then $\T_{\N}:\cF_{\N}\to\cX_{\N}$ is a characterizing operator for
-$\N\left(0,1\right)$.\end{thm}
+\label{thm:normal-characterizing}Define $T_{\N}$ by $T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$.
+Let $\cX_{\N}=L^{1}\left(\RR,\N\left(0,1\right)\right)$ be the set
+of functions $\h:\RR\to\RR$ that satisfy $\E_{\N}\left|\h\right|<\infty$
+and let $\cF_{\N}=\T_{\N}^{-1}\cX_{\N}$ be the set of functions $\fo:\RR\to\RR$
+such that $\E_{\N}\left|\T_{\N}\fo\right|<\infty$. Then $\T_{\N}:\cF_{\N}\to\cX_{\N}$
+is a characterizing operator for $\N\left(0,1\right)$.\end{thm}
 \begin{proof}
 For any $f\in\cF_{\N}$, integration by parts gives
 \[
@@ -940,11 +946,12 @@ completes the proof.
 \end{proof}
 
 \begin{thm}
-Define $\T_{\Po\left(\lambda\right)}$ by $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$.
+\label{thm:poisson-characterizing}Define $\T_{\Po\left(\lambda\right)}$
+by $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$.
 Let $\cX_{\Po\left(\lambda\right)}$ be the set of integer-valued
 functions $\h:\NN\to\ZZ$ that satisfy $\E_{\Po\left(\lambda\right)}\left|\h\right|<\infty$
-and let $\cF_{\Po\left(\lambda\right)}$ be the set of functions $\fo:\NN\to\ZZ$
-such that $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}\fo\right|<\infty$.
+and let $\cF_{\Po\left(\lambda\right)}=\T_{\Po\left(\lambda\right)}^{-1}\cX_{\Po\left(\lambda\right)}$
+be the set of functions $\fo:\NN\to\ZZ$ such that $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}\fo\right|<\infty$.
 Then $\T_{\Po\left(\lambda\right)}:\cF_{\Po\left(\lambda\right)}\to\cX_{\Po\left(\lambda\right)}$
 is a characterizing operator for $\Po\left(\lambda\right)$.\end{thm}
 \begin{proof}
@@ -1002,14 +1009,13 @@ and $\cH$ is one of the standard choices in \ref{def:special-metrics},
 there are a number of known convenient choices of $\cY$, and a number
 of methods that are known to be effective to bound $\left|\E_{\X}\To\fo\right|$.
 \begin{example}
-If $\cH=\cH_{\TV}$ and $\Lo=\Po\left(\lambda\right)$, then we can
-choose $\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} \right\} $.
+\label{example:poisson-bound}If $\cH=\cH_{\TV}$ and $\Lo=\Po\left(\lambda\right)$,
+then we can choose $\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} \right\} $.
 This choice is sharp in the sense that $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1/2}$
 as $\lambda\to\infty$ and $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1$
 as $\lambda\to0$.\end{example}
 \begin{proof}
-(Adapted from \cite[Lemma 1.1.1]{BHJ92})...\begin{comment} First,
-note that $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\range{k-1}}\right\Vert _{\infty}$
+(Adapted from \cite[Lemma 1.1.1]{BHJ92}) First, note that $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\range{k-1}}\right\Vert _{\infty}$
 
 For any Borel $\A$,
 \begin{align*}
@@ -1023,9 +1029,9 @@ above by $\Po_{\lambda}\left(\range{k-1}\right)$ and $\Po_{\lambda}\left(\A\back
 is bounded above by $\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)$,
 so
 \[
-\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\range{k-1}\right).
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right).
 \]
-We have equ\end{comment}
+Note that we have equality when $\A=\range{k-1}$. (unfinished...)
 \end{proof}
 \begin{todo}
 
@@ -1058,13 +1064,13 @@ I should have a toy example here that is amenable to several methods.
 \global\long\def\FX{\cF_{\X}}
 
 
-\global\long\def\GX{G_{\eX}}
-
-
 \global\long\def\TX{\T_{\eX}}
 
 
-\global\long\def\OmX{\RR_{\X}}
+\global\long\def\OmX{\Om_{\X}}
+
+
+\global\long\def\OmeX{\Om_{\eX}^{\left(2\right)}}
 
 
 \global\long\def\conn{\alpha}
@@ -1074,46 +1080,22 @@ I should have a toy example here that is amenable to several methods.
 
 
 This is Stein's original approach, and is effective in wide generality
-for combinatorial random variables. In what follows, we assume $\Om=\cA$
-is a finite set (presumably of combinatorial objects) and $\X:\Om\to\RR$
-is a random variable that represents some statistic of the objects
-in $\Om$. The set $\OmX=\left\{ x\in\RR:\Pr\left(\X=x\right)>0\right\} $
-is then finite. We write its elements as $\x 1<\dots<\x k$ for $k=\left|\OmX\right|$.
+for discrete random variables. In what follows, we assume $\X$ is
+discrete. Let $\OmX$ be the support of $\X$.
 
 The general idea is that we can use an object $\eX$ called an exchangeable
 pair to construct a characterizing operator $\TX$ for $\X$. We then
 use an operator $\conn$ to connect the domains of $\TX$ and $\To$
 in such a way that $\TX\conn$ approximates $\To$. We then have $\E_{\X}\To=\E_{\X}\left(\To-\TX\conn\right)$,
 so we can use the fact that $\To-\TX\conn$ is small to bound $\E_{\X}\To\fo$.
-
-\begin{todo}
-
-This finiteness condition is ugly. Stein's book \cite{Ste86} says
-``presumably an analogous result holds even if $\Om$ is infinite'',
-but his later paper \cite{Ste92} makes no mention of this. Here's
-what needs to be adjusted to let $\Om$ be infinite:
-\begin{enumerate}
-\item If $\Om$ is uncountable, the definition $\T_{\X}\fX\left(x\right)=\E\left[\fX\left(\X,\X'\right)|\X=x\right]$
-is no longer appropriate. There are ugly fixes, possibly something
-neater can be done with Radon-Nikodym. Stuff can be reformulated to
-define $\T_{\X}=\E^{\X}$ but this would obscure the motivation of
-$\T_{\X}$ as an approximation to $\To$.
-\item $\cF$ and $\cX$ need to be adjusted. This is probably not a big
-deal.
-\item The proof that $\im\T_{\X}=\ker\E^{\X}$ would no longer work. Apparently
-the result is related to homology, so I might look into that. The
-problem might go away if I use the alternative definition of a characterizing
-operator as in \ref{todo:characterizing}.
-\end{enumerate}
-\end{todo}
 \begin{defn}
-A 2-dimensional random vector $\eX=\left(\X_{1},\X_{2}\right)$ is
-an \emph{exchangeable pair} if $\Lb{\X_{1},\X_{2}}=\Lb{\X_{2},\X_{1}}$.
+A 2-dimensional random pair $\eX=\left(\X_{1},\X_{2}\right)$ is an
+\emph{exchangeable pair} if $\Lb{\X_{1},\X_{2}}=\Lb{\X_{2},\X_{1}}$.
+We will denote the support of $\eX$ by $\OmeX$.
 \end{defn}
 That is, a pair $\eX$ is exchangeable if exchanging the components
 of the pair does not change their joint distribution. In particular,
 the marginal distribution of $\X_{1}$ and $\X_{2}$ must be the same.
-We will be interested in the case when $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$.
 
 \begin{note}
 
@@ -1130,97 +1112,140 @@ pairs with margins $\L{\X}$.\end{prop}
 \begin{proof}
 Given an exchangeable pair $\eX$ with margins $\L{\X}$, we can define
 a time-homogenous Markov chain $M$ with transition probabilities
-$p_{\i\ii}=\Pr\left(\X_{2}=\x{\ii}|\X_{1}=\x{\i}\right)$. With $\pi_{\i}=\Pr\left(\X_{1}=\x{\i}\right)$,
+$p\left(x,x'\right)=\Pr\left(\X_{2}=x|\X_{1}=x'\right)$. With $\pi\left(x\right)=\Pr\left(\X=x\right)$,
 we then have
 \[
-\pi_{\i}p_{\i\ii}=\Pr\left(\eX=\left(x_{\i},x_{\ii}\right)\right)=\pi_{\ii}p_{\ii\i},
+\pi\left(x\right)p\left(x,x'\right)=\Pr\left(\eX=\left(x_{\i},x_{\ii}\right)\right)=\pi\left(x'\right)p\left(x',x\right)
 \]
-so $M$ is reversible with steady-state distribution $\L{\X}$.
+for any $x,x'\in\OmX$. So, $M$ is reversible with steady-state distribution
+$\L{\X}$.
 
-Conversely, suppose a time-homogeneous Markov chain with transition
-probabilities $p_{\i\ii}$ satisfies $\pi_{\i}p_{\i\ii}=\pi_{\ii}p_{\ii\i}$
-for $\pi_{\i}=\Pr\left(\X_{1}=\x{\i}\right)$. We can then define
-an exchangeable pair $\eX$ by 
+Conversely, suppose we have a time-homogeneous reversible Markov chain
+with steady-state distribution $\L{\X}$. Let the transition probability
+between $x$ and $x'$ be $p\left(x,x'\right)$ and let the probability
+of state $x$ in the steady-state distribution be $\pi\left(x\right)$.
+We can then define an exchangeable pair $\eX$ by 
 \[
-\Pr\left(\eX=\left(\x{\i},\x{\ii}\right)\right)=\pi_{\i}p_{\i\ii}=\pi_{\ii}p_{\ii\i}=\Pr\left(\eX=\left(\x{\ii},\x{\i}\right)\right).
+\Pr\left(\eX=\left(\x{\i},\x{\ii}\right)\right)=\pi\left(x\right)p\left(x,x'\right)=\pi\left(x'\right)p\left(x',x\right)=\Pr\left(\eX=\left(\x{\ii},\x{\i}\right)\right)
 \]
-
-\end{proof}
-For any exchangeable pair $\eX$, we can also define its graph $\GX$
-in a natural way: the vertex set $\range k$ corresponds to $\OmX=\left\{ \x 1,\dots,\x k\right\} $,
-and there is an edge for each possible transition in the Markov chain
-of $\eX$. We will be particularly interested in the interpretation
-of $\GX$ as an (abstract) simplicial complex. That is, the set of
-one-dimensional faces $F_{1}$ is the edge set of $\GX$ and the set
-of zero-dimensional faces $F_{0}$ is the vertex set $\range k$ of
-$\GX$.
+and the proposition is proved.\end{proof}
 \begin{defn}
 We say an exchangeable pair $\eX$ is \emph{connected} if its Markov
-chain is irreducible, or equivalently $\GX$ is connected.
-\end{defn}
-Especially when $\Pr$ is a uniform probability on a set of combinatorial
-objects, it is often useful to construct an exchangeable pair from
-a reversible Markov chain on $\Om$. Specifically, if we choose a
-reversible Markov chain with steady-state distribution given by $\pi=\Pr\left(\om_{\i}\right)$,
-then the vector $\left(\X\left(W_{1}\right),\X\left(W_{2}\right)\right)$
-is an exchangeable pair with margins $\L{\X}$. Further, if the underlying
-Markov chain is irreducible, then the constructed exchangeable pair
-is connected. We will frequently make use of this construction in
-applications.
-
-Now, if $\eX$ is a connected exchangeable pair with margins $\L{\X}$,
-consider the augmented chain complex of $\GX$ over $\RR$:
-\[
-0\to\RR^{F_{1}}\xrightarrow{\partial_{1}}\RR^{F_{0}}\xrightarrow{\partial_{0}}\RR\to0.
-\]
-Since $\GX$ is connected, its zeroth homology group has dimension
-zero. That is, $\im\partial_{1}=\ker\partial_{0}$. This motivates
-the construction of a characterizing operator for $\X$.
-
-Let $\FX$ be the set of functions $\OmX^{2}\to\RR$ that are antisymmetric
-in the sense that $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$,
-and let $\XX$ be the set of functions $\OmX\to\RR$.
+chain is irreducible.\end{defn}
+\begin{rem}
+\label{rem:underlying-pair}We are particularly interested in exchangeable
+pairs $\eX$ with marginal distributions $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$.
+If $\X$ is defined on an underlying combinatorial probability space
+$\left(\Om,\Om,\Pr\right)$, it is often convenient to first construct
+an exchangeable pair $\mathbf{W}=\left(W_{1},W_{2}\right)$ with margins
+$\Pr$, so that the vector $\eX_{\mathbf{W}}=\left(\X\left(W_{1}\right),\X\left(W_{2}\right)\right)$
+is an exchangeable pair with margins $\L{\X}$. If $\left(W_{1},W_{2}\right)$
+is connected, then $\eX_{\mathbf{W}}$ is connected also.
+\end{rem}
+The Markov chain underlying a connected exchangeable pair can be naturally
+viewed as a connected one-dimensional simplicial complex. The zeroth
+reduced homology group $\ker\partial_{0}/\im\partial_{1}$ of a connected
+simplicial complex has dimension zero, and this motivates the construction
+of a characterizing operator in a natural way. (The following theorem
+is self-contained and requires no knowledge of homology theory).
 \begin{thm}
-Let $\FX$ and $\XX$ be defined as above. Suppose\textup{ $\eX$
-}is a connected exchangeable pair with margins $\L{\X}$. Define $\TX:\FX\to\XX$
-by $\TX\fX\left(x\right)=\E\left[\fX\left(\X_{1},\X_{2}\right)|\X_{1}=x\right]$,
-so that $\TX\X=\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)$. Then $\TX$
-is a characterizing operator for $\X$.\end{thm}
+Suppose\textup{ $\eX$ }is a connected exchangeable pair with margins
+$\L{\X}$. Let $\FX\subseteq L^{1}\left(\OmX^{2},\L{\eX}\right)$
+be the set of functions $\fX:\OmX^{2}\to\RR$ that are antisymmetric
+in the sense that $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
+and satisfy $\E\left|\fX\left(\eX\right)\right|<\infty$. Let $\XX=L^{1}\left(\OmX,\L{\X}\right)$
+be the set of functions $\hX:\OmX\to\RR$ that satisfy $\E_{\X}\left|\hX\right|<\infty$.
+
+Define $\TX:\FX\to\XX$ by $\TX\fX\left(x\right)=\sum_{x'\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$,
+so that $\TX\X=\E^{\X_{1}}\fX\left(\eX\right)$. Then $\TX$ is a
+characterizing operator for $\X$.\end{thm}
 \begin{proof}
 To see that $\im\TX\subseteq\ker\E_{\X}$, fix $\fX\in\cF$ and note
 that by the tower law of expectation (\ref{prop:tower-law}), 
 \[
-\E_{\X}\TX\fX=\E\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{1},\X_{2}\right).
+\E_{\X}\TX\fX=\E\E^{\X_{1}}\fX\left(\eX\right)=\E\fX\left(\eX\right).
 \]
-By exchangeability and antisymmetry, $\E\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{2},\X_{1}\right)=-\E\fX\left(\X_{1},\X_{2}\right)$,
+By exchangeability and antisymmetry, $\E\fX\left(\eX\right)=\E\fX\left(\X_{2},\X_{1}\right)=-\E\fX\left(\eX\right)$,
 so $\E\fX\left(\X_{1},\X_{2}\right)=\E_{\X}\TX\fX=0$. This did not
-require the connectedness condition.
+require the connectedness condition. We can similarly prove that $\TX$
+is well-defined as an operator from $\FX$ to $\XX$: note that $\E_{\X}\left|\TX\fX\right|=\E\left|\fX\left(\eX\right)\right|$
+so $\TX\FX\subseteq\XX$.
 
-We next prove $\ker\E_{\X}\subseteq\im\TX$ using the fact that $\im\partial_{1}=\ker\partial_{0}$.
-A chain in $\RR^{F_{\i}}$ will be represented as a function $F_{\i}\to\RR$.
+We will next prove $\ker\E_{\X}\subseteq\im\TX$, but first we make
+some definitions. For each $x\in\OmX$, let $\hX_{x}$ be the function
+that takes the value $\pi\left(x\right)^{-1}$ on $x$ and is zero
+elsewhere, so that $\hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\hX_{x}$for
+each $\hX\in\XX$. For each $\left(x_{1},x_{2}\right)\in\OmeX$, define
+$\fX_{x_{1},x_{2}}\in\FX$ as the function that takes the value ${\displaystyle \left(\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)\right)^{-1}}$
+on $\left(x_{1},x_{2}\right)$, takes the value $-\left(\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)\right)^{-1}$
+on $\left(x_{2},x_{1}\right)$, and takes the value zero elsewhere.
+Note that this function is antisymmetric by the reversibility of the
+Markov chain of $\eX$. We have $\TX\fX_{x_{1},x_{2}}=\hX_{x_{2}}-\hX_{x_{1}}$.
 
-Let $\hX\in\ker\E_{\X}$. That is, $\sum_{\i=1}^{k}\hX\left(\x{\i}\right)\pi_{\i}=0$,
-so if we define $\hX^{*}:\i\mapsto\hX\left(\x{\i}\right)\pi_{\i}$,
-then $\hX^{*}\in\ker\partial_{0}=\im\partial_{1}$. This means there
-is $\fX^{*}\in\RR^{F_{1}}$ with $\partial_{1}\fX^{*}=\hX^{*}$, or
-equivalently
+Let $\hX\in\ker\E_{\X}$, and fix arbitrary $x^{*}\in\OmX$. By the
+connectedness assumption, for each $x\in\OmX$ there is a sequence
 \[
-\hX^{*}\left(\i\right)=\sum_{\ii\in\range k\backslash\left\{ \i\right\} }\fX^{*}\left(\left\{ \i,\ii\right\} \right)\sgn\left(\i-\ii\right)
+x=\x 0,\x 1,\dots,\x{k-1},\x k=x^{*}
 \]
-for each $\i$. Now, define $\fX:\OmX^{2}\to\RR$ by 
+ with $\left(\x{\i-1},\x{\i}\right)\in\OmeX$ for $\i=1,\dots k$.
+Note that 
 \[
-\fX\left(\x{\i},\x{\ii}\right)=\begin{cases}
-{\displaystyle \frac{\fX^{*}\left(\left\{ \i,\ii\right\} \right)\sgn\left(\i-\ii\right)}{\pi_{\i}p_{\i\ii}}} & \mbox{if }\left\{ \i,\ii\right\} \in F_{1}\\
-0 & \mbox{otherwise}.
-\end{cases}
+\hX_{x^{*}}-\hX_{x}=\TX\sum_{\i=1}^{k}\fX_{\x{\i-1},\x{\i}}=:\TX\fX_{x}^{*},
 \]
-By the reversibility of the Markov chain of $\eX$, the function $\fX$
-is antisymmetric so $\fX\in\FX$. By construction, we have
+and it follows that
 \[
-\hX\left(\i\right)=\sum_{\ii\in\range k\backslash\left\{ \i\right\} }\fX\left(\x{\i},\x{\ii}\right)p_{\i\ii}=\TX\fX\left(\i\right)
+\hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\left(\hX_{x^{*}}-\TX\fX_{x}^{*}\right)=\left(\E_{\X}\hX\right)\hX_{x^{*}}-\sum_{x\in\OmX}\TX\hX\left(x\right)\pi\left(x\right)\fX_{x}^{*}.
 \]
-for each $\i$, so $\hX\in\im\TX$.
+By assumption $\left(\E_{\X}\hX\right)=0$. If $\OmX$ is finite,
+as it will be in our applications, then it would immediately follow
+that $\hX\in\im\TX$. Otherwise we will need some functional analysis.
+Note that $\TX$ is actually an isometry between a subspace $\FX$
+of $L^{1}\left(\OmX^{2},\L{\eX}\right)$ and $L^{1}\left(\OmX,\L{\X}\right)$
+. First we prove that $\FX$ is closed and therefore a Banach space.
+For any $\fX\in L^{1}\left(\OmX^{2},\L{\eX}\right)$, let $\bar{\fX}$
+be defined by $\left(x_{1},x_{2}\right)\mapsto-\fX\left(x_{2},x_{1}\right)$,
+so that $\fX\in\FX$ implies that $\fX=\bar{\fX}$. Suppose $\fX_{n}\to\fX$,
+with $\fX_{n}\in\FX$ for all $n\in\NN$. By exchangeability we have
+\[
+\left\Vert \fX_{n}-\fX\right\Vert =\E\left|\fX_{n}\left(\eX\right)-\fX\left(\eX\right)\right|=\E\left|\fX_{n}\left(\X_{2},\X_{1}\right)-\bar{\fX}\left(\X_{2},\X_{1}\right)\right|=\left\Vert \fX_{n}-\bar{\fX}\right\Vert 
+\]
+so $\fX=\bar{\fX}$ and $\fX\in\FX$. Finally, it is a simple fact
+that an isometry between Banach spaces has a closed range. For, if
+$\left(\TX\fX_{n}\right)_{n\in\NN}$ is a Cauchy sequence in $\im\TX$,
+then $\left(\fX_{n}\right)_{n\in\NN}$ is a Cauchy sequence in $\FX$
+and converges to some $\fX\in\FX$. It follows that $\TX\fX_{n}\to\TX\fX\in\im\TX$.
+
+We have proved that $\hX\in\im\TX$, completing the proof that $\ker\E_{\X}\subseteq\im\TX$.
 \end{proof}
+The final step is to choose an operator $\conn:\Fo\to\FX$ in such
+a way that $\TX$ can be easily compared with $\To\conn$.
+\begin{example}
+For the Poisson case in \ref{thm:poisson-characterizing}, we need
+to compare $\lambda\fo\left(\X+1\right)$ with $\X\fo\left(\X\right)$.
+It is often fruitful to define $\conn$ by 
+\[
+\conn\fo\left(x_{1},x_{2}\right)=c\fo\left(x_{2}\right)\one\left\{ x_{2}=x_{1}+1\right\} -c\fo\left(x_{1}\right)\one\left\{ x_{1}=x_{2}+1\right\} 
+\]
+for some $c\in\RR$. We will then have
+\[
+\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
+\]
+Using the triangle inequality and the definition of $\cY$ from \ref{example:poisson-bound},
+\[
+\E_{\X}\To\fo\le2\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\]
+This approximation is effective when 
+\begin{align*}
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & \approx\lambda/c,\\
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right) & \approx\X_{1}/c.
+\end{align*}
+The interpretation of these approximate equalities is that the Markov
+chain associated with $\eX$ is approximately an immigration-death
+process. This is likely to happen when $\X\left(\om\right)$ is in
+some sense a statistic of the amount of local structure over the object
+$\om$, and $\eX$ is defined by a Markov chain on $\Om$ (as in \ref{rem:underlying-pair})
+that (uniformly) randomly disturbs local structure.
+\end{example}
 
 \subsection{Size-Bias Coupling}
 

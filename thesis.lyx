@@ -684,6 +684,15 @@ fi}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\supp}{\operatorname{supp}}
+{\mathbf{supp}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\Pr}{\mathbb{P}}
 {\boldsymbol{\mathbb{P}}}
 \end_inset
@@ -1361,6 +1370,26 @@ It is worth noting that in fact any probability measure is the distribution
 
  as a function on a probability space 
 \begin_inset Formula $\left(\Om,\cA,\m\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+support
+\emph default
+ 
+\begin_inset Formula $\supp\left(\X\right)$
+\end_inset
+
+ of a discrete random element 
+\begin_inset Formula $\X$
+\end_inset
+
+ is the set 
+\begin_inset Formula $\left\{ k\in\Om:\Pr\left(\X=k\right)>0\right\} $
 \end_inset
 
 .
@@ -4211,6 +4240,12 @@ reference "prop:U_0-characterizing"
 \end_layout
 
 \begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:normal-characterizing"
+
+\end_inset
+
 Define 
 \begin_inset Formula $T_{\N}$
 \end_inset
@@ -4221,7 +4256,7 @@ Define
 
 .
  Let 
-\begin_inset Formula $\cX_{\N}$
+\begin_inset Formula $\cX_{\N}=L^{1}\left(\RR,\N\left(0,1\right)\right)$
 \end_inset
 
  be the set of functions 
@@ -4233,7 +4268,7 @@ Define
 \end_inset
 
  and let 
-\begin_inset Formula $\cF_{\N}$
+\begin_inset Formula $\cF_{\N}=\T_{\N}^{-1}\cX_{\N}$
 \end_inset
 
  be the set of functions 
@@ -4336,6 +4371,12 @@ status open
 \end_layout
 
 \begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:poisson-characterizing"
+
+\end_inset
+
 Define 
 \begin_inset Formula $\T_{\Po\left(\lambda\right)}$
 \end_inset
@@ -4358,7 +4399,7 @@ Define
 \end_inset
 
  and let 
-\begin_inset Formula $\cF_{\Po\left(\lambda\right)}$
+\begin_inset Formula $\cF_{\Po\left(\lambda\right)}=\T_{\Po\left(\lambda\right)}^{-1}\cX_{\Po\left(\lambda\right)}$
 \end_inset
 
  be the set of functions 
@@ -4688,6 +4729,12 @@ reference "def:special-metrics"
 \end_layout
 
 \begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "example:poisson-bound"
+
+\end_inset
+
 If 
 \begin_inset Formula $\cH=\cH_{\TV}$
 \end_inset
@@ -4729,20 +4776,7 @@ key "BHJ92"
 
 \end_inset
 
-)...
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\end_layout
-
-\end_inset
-
- First, note that 
+) First, note that 
 \begin_inset Formula $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\range{k-1}}\right\Vert _{\infty}$
 \end_inset
 
@@ -4796,37 +4830,17 @@ Note that
 , so
 \begin_inset Formula 
 \[
-\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\range{k-1}\right).
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right).
 \]
 
 \end_inset
 
-We have equ
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{comment}
-\end_layout
-
+Note that we have equality when 
+\begin_inset Formula $\A=\range{k-1}$
 \end_inset
 
-
+.
+ (unfinished...)
 \end_layout
 
 \begin_layout Standard
@@ -4964,15 +4978,6 @@ The method of Exchangeable Pairs
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\GX}{G_{\eX}}
-{\boldsymbol{G_{\eX}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
 \newcommand{\TX}{\T_{\eX}}
 {\boldsymbol{\T_{\eX}}}
 \end_inset
@@ -4982,8 +4987,17 @@ The method of Exchangeable Pairs
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\OmX}{\RR_{\X}}
-{\boldsymbol{\RR_{\X}}}
+\newcommand{\OmX}{\Om_{\X}}
+{\boldsymbol{\Om_{\X}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\OmeX}{\Om_{\eX}^{\left(2\right)}}
+{\boldsymbol{\Om_{\eX}^{\left(2\right)}}}
 \end_inset
 
 
@@ -5009,31 +5023,18 @@ The method of Exchangeable Pairs
 
 \begin_layout Standard
 This is Stein's original approach, and is effective in wide generality for
- combinatorial random variables.
+ discrete random variables.
  In what follows, we assume 
-\begin_inset Formula $\Om=\cA$
+\begin_inset Formula $\X$
 \end_inset
 
- is a finite set (presumably of combinatorial objects) and 
-\begin_inset Formula $\X:\Om\to\RR$
+ is discrete.
+ Let 
+\begin_inset Formula $\OmX$
 \end_inset
 
- is a random variable that represents some statistic of the objects in 
-\begin_inset Formula $\Om$
-\end_inset
-
-.
- The set 
-\begin_inset Formula $\OmX=\left\{ x\in\RR:\Pr\left(\X=x\right)>0\right\} $
-\end_inset
-
- is then finite.
- We write its elements as 
-\begin_inset Formula $\x 1<\dots<\x k$
-\end_inset
-
- for 
-\begin_inset Formula $k=\left|\OmX\right|$
+ be the support of 
+\begin_inset Formula $\X$
 \end_inset
 
 .
@@ -5089,144 +5090,8 @@ The general idea is that we can use an object
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This finiteness condition is ugly.
- Stein's book 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Ste86"
-
-\end_inset
-
- says 
-\begin_inset Quotes eld
-\end_inset
-
-presumably an analogous result holds even if 
-\begin_inset Formula $\Om$
-\end_inset
-
- is infinite
-\begin_inset Quotes erd
-\end_inset
-
-, but his later paper 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Ste92"
-
-\end_inset
-
- makes no mention of this.
- Here's what needs to be adjusted to let 
-\begin_inset Formula $\Om$
-\end_inset
-
- be infinite:
-\end_layout
-
-\begin_layout Enumerate
-If 
-\begin_inset Formula $\Om$
-\end_inset
-
- is uncountable, the definition 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\begin_inset Formula $\T_{\X}\fX\left(x\right)=\E\left[\fX\left(\X,\X'\right)|\X=x\right]$
-\end_inset
-
- is no longer appropriate.
- There are ugly fixes, possibly something neater can be done with Radon-Nikodym.
- Stuff can be reformulated to define 
-\begin_inset Formula $\T_{\X}=\E^{\X}$
-\end_inset
-
- but this would obscure the motivation of 
-\begin_inset Formula $\T_{\X}$
-\end_inset
-
- as an approximation to 
-\begin_inset Formula $\To$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\cF$
-\end_inset
-
- and 
-\begin_inset Formula $\cX$
-\end_inset
-
- need to be adjusted.
- This is probably not a big deal.
-\end_layout
-
-\begin_layout Enumerate
-The proof that 
-\begin_inset Formula $\im\T_{\X}=\ker\E^{\X}$
-\end_inset
-
- would no longer work.
- Apparently the result is related to homology, so I might look into that.
- The problem might go away if I use the alternative definition of a characterizi
-ng operator as in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "todo:characterizing"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Definition
-A 2-dimensional random vector 
+A 2-dimensional random pair 
 \begin_inset Formula $\eX=\left(\X_{1},\X_{2}\right)$
 \end_inset
 
@@ -5236,6 +5101,15 @@ exchangeable pair
 \emph default
  if 
 \begin_inset Formula $\Lb{\X_{1},\X_{2}}=\Lb{\X_{2},\X_{1}}$
+\end_inset
+
+.
+ We will denote the support of 
+\begin_inset Formula $\eX$
+\end_inset
+
+ by 
+\begin_inset Formula $\OmeX$
 \end_inset
 
 .
@@ -5281,11 +5155,6 @@ a pair
 \end_inset
 
  must be the same.
- We will be interested in the case when 
-\begin_inset Formula $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -5371,23 +5240,28 @@ Given an exchangeable pair
 \end_inset
 
  with transition probabilities 
-\begin_inset Formula $p_{\i\ii}=\Pr\left(\X_{2}=\x{\ii}|\X_{1}=\x{\i}\right)$
+\begin_inset Formula $p\left(x,x'\right)=\Pr\left(\X_{2}=x|\X_{1}=x'\right)$
 \end_inset
 
 .
  With 
-\begin_inset Formula $\pi_{\i}=\Pr\left(\X_{1}=\x{\i}\right)$
+\begin_inset Formula $\pi\left(x\right)=\Pr\left(\X=x\right)$
 \end_inset
 
 , we then have
 \begin_inset Formula 
 \[
-\pi_{\i}p_{\i\ii}=\Pr\left(\eX=\left(x_{\i},x_{\ii}\right)\right)=\pi_{\ii}p_{\ii\i},
+\pi\left(x\right)p\left(x,x'\right)=\Pr\left(\eX=\left(x_{\i},x_{\ii}\right)\right)=\pi\left(x'\right)p\left(x',x\right)
 \]
 
 \end_inset
 
-so 
+for any 
+\begin_inset Formula $x,x'\in\OmX$
+\end_inset
+
+.
+ So, 
 \begin_inset Formula $M$
 \end_inset
 
@@ -5399,17 +5273,30 @@ so
 \end_layout
 
 \begin_layout Proof
-Conversely, suppose a time-homogeneous Markov chain with transition probabilitie
-s 
-\begin_inset Formula $p_{\i\ii}$
+Conversely, suppose we have a time-homogeneous reversible Markov chain with
+ steady-state distribution 
+\begin_inset Formula $\L{\X}$
 \end_inset
 
- satisfies 
-\begin_inset Formula $\pi_{\i}p_{\i\ii}=\pi_{\ii}p_{\ii\i}$
+.
+ Let the transition probability between 
+\begin_inset Formula $x$
 \end_inset
 
- for 
-\begin_inset Formula $\pi_{\i}=\Pr\left(\X_{1}=\x{\i}\right)$
+ and 
+\begin_inset Formula $x'$
+\end_inset
+
+ be 
+\begin_inset Formula $p\left(x,x'\right)$
+\end_inset
+
+ and let the probability of state 
+\begin_inset Formula $x$
+\end_inset
+
+ in the steady-state distribution be 
+\begin_inset Formula $\pi\left(x\right)$
 \end_inset
 
 .
@@ -5420,63 +5307,12 @@ s
  by 
 \begin_inset Formula 
 \[
-\Pr\left(\eX=\left(\x{\i},\x{\ii}\right)\right)=\pi_{\i}p_{\i\ii}=\pi_{\ii}p_{\ii\i}=\Pr\left(\eX=\left(\x{\ii},\x{\i}\right)\right).
+\Pr\left(\eX=\left(\x{\i},\x{\ii}\right)\right)=\pi\left(x\right)p\left(x,x'\right)=\pi\left(x'\right)p\left(x',x\right)=\Pr\left(\eX=\left(\x{\ii},\x{\i}\right)\right)
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-For any exchangeable pair 
-\begin_inset Formula $\eX$
-\end_inset
-
-, we can also define its graph 
-\begin_inset Formula $\GX$
-\end_inset
-
- in a natural way: the vertex set 
-\begin_inset Formula $\range k$
-\end_inset
-
- corresponds to 
-\begin_inset Formula $\OmX=\left\{ \x 1,\dots,\x k\right\} $
-\end_inset
-
-, and there is an edge for each possible transition in the Markov chain
- of 
-\begin_inset Formula $\eX$
-\end_inset
-
-.
- We will be particularly interested in the interpretation of 
-\begin_inset Formula $\GX$
-\end_inset
-
- as an (abstract) simplicial complex.
- That is, the set of one-dimensional faces 
-\begin_inset Formula $F_{1}$
-\end_inset
-
- is the edge set of 
-\begin_inset Formula $\GX$
-\end_inset
-
- and the set of zero-dimensional faces 
-\begin_inset Formula $F_{0}$
-\end_inset
-
- is the vertex set 
-\begin_inset Formula $\range k$
-\end_inset
-
- of 
-\begin_inset Formula $\GX$
-\end_inset
-
-.
+and the proposition is proved.
 \end_layout
 
 \begin_layout Definition
@@ -5488,32 +5324,43 @@ We say an exchangeable pair
 \emph on
 connected
 \emph default
- if its Markov chain is irreducible, or equivalently 
-\begin_inset Formula $\GX$
-\end_inset
-
- is connected.
+ if its Markov chain is irreducible.
 \end_layout
 
-\begin_layout Standard
-Especially when 
-\begin_inset Formula $\Pr$
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:underlying-pair"
+
 \end_inset
 
- is a uniform probability on a set of combinatorial objects, it is often
- useful to construct an exchangeable pair from a reversible Markov chain
- on 
-\begin_inset Formula $\Om$
+We are particularly interested in exchangeable pairs 
+\begin_inset Formula $\eX$
+\end_inset
+
+ with marginal distributions 
+\begin_inset Formula $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$
 \end_inset
 
 .
- Specifically, if we choose a reversible Markov chain with steady-state
- distribution given by 
-\begin_inset Formula $\pi=\Pr\left(\om_{\i}\right)$
+ If 
+\begin_inset Formula $\X$
 \end_inset
 
-, then the vector 
-\begin_inset Formula $\left(\X\left(W_{1}\right),\X\left(W_{2}\right)\right)$
+ is defined on an underlying combinatorial probability space 
+\begin_inset Formula $\left(\Om,\Om,\Pr\right)$
+\end_inset
+
+, it is often convenient to first construct an exchangeable pair 
+\begin_inset Formula $\mathbf{W}=\left(W_{1},W_{2}\right)$
+\end_inset
+
+ with margins 
+\begin_inset Formula $\Pr$
+\end_inset
+
+, so that the vector 
+\begin_inset Formula $\eX_{\mathbf{W}}=\left(\X\left(W_{1}\right),\X\left(W_{2}\right)\right)$
 \end_inset
 
  is an exchangeable pair with margins 
@@ -5521,88 +5368,44 @@ Especially when
 \end_inset
 
 .
- Further, if the underlying Markov chain is irreducible, then the constructed
- exchangeable pair is connected.
- We will frequently make use of this construction in applications.
+ If 
+\begin_inset Formula $\left(W_{1},W_{2}\right)$
+\end_inset
+
+ is connected, then 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\eX_{\mathbf{W}}$
+\end_inset
+
+ is connected also.
 \end_layout
 
 \begin_layout Standard
-Now, if 
-\begin_inset Formula $\eX$
+The Markov chain underlying a connected exchangeable pair can be naturally
+ viewed as a connected one-dimensional simplicial complex.
+ The zeroth reduced homology group 
+\begin_inset Formula $\ker\partial_{0}/\im\partial_{1}$
 \end_inset
 
- is a connected exchangeable pair with margins 
-\begin_inset Formula $\L{\X}$
-\end_inset
-
-, consider the augmented chain complex of 
-\begin_inset Formula $\GX$
-\end_inset
-
- over 
-\begin_inset Formula $\RR$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-0\to\RR^{F_{1}}\xrightarrow{\partial_{1}}\RR^{F_{0}}\xrightarrow{\partial_{0}}\RR\to0.
-\]
-
-\end_inset
-
-Since 
-\begin_inset Formula $\GX$
-\end_inset
-
- is connected, its zeroth homology group has dimension zero.
- That is, 
-\begin_inset Formula $\im\partial_{1}=\ker\partial_{0}$
-\end_inset
-
-.
- This motivates the construction of a characterizing operator for 
-\begin_inset Formula $\X$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $\FX$
-\end_inset
-
- be the set of functions 
-\begin_inset Formula $\OmX^{2}\to\RR$
-\end_inset
-
- that are antisymmetric in the sense that 
-\begin_inset Formula $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
-\end_inset
-
-, and let 
-\begin_inset Formula $\XX$
-\end_inset
-
- be the set of functions 
-\begin_inset Formula $\OmX\to\RR$
-\end_inset
-
-.
+ of a connected simplicial complex has dimension zero, and this motivates
+ the construction of a characterizing operator in a natural way.
+ (The following theorem is self-contained and requires no knowledge of homology
+ theory).
 \end_layout
 
 \begin_layout Theorem
-Let 
-\begin_inset Formula $\FX$
-\end_inset
-
- and 
-\begin_inset Formula $\XX$
-\end_inset
-
- be defined as above.
- Suppose
+Suppose
 \family roman
 \series medium
 \shape up
@@ -5635,16 +5438,49 @@ is a connected exchangeable pair with margins
 \end_inset
 
 .
- Define 
+ Let 
+\begin_inset Formula $\FX\subseteq L^{1}\left(\OmX^{2},\L{\eX}\right)$
+\end_inset
+
+ be the set of functions 
+\begin_inset Formula $\fX:\OmX^{2}\to\RR$
+\end_inset
+
+ that are antisymmetric in the sense that 
+\begin_inset Formula $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
+\end_inset
+
+ and satisfy 
+\begin_inset Formula $\E\left|\fX\left(\eX\right)\right|<\infty$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\XX=L^{1}\left(\OmX,\L{\X}\right)$
+\end_inset
+
+ be the set of functions 
+\begin_inset Formula $\hX:\OmX\to\RR$
+\end_inset
+
+ that satisfy 
+\begin_inset Formula $\E_{\X}\left|\hX\right|<\infty$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+Define 
 \begin_inset Formula $\TX:\FX\to\XX$
 \end_inset
 
  by 
-\begin_inset Formula $\TX\fX\left(x\right)=\E\left[\fX\left(\X_{1},\X_{2}\right)|\X_{1}=x\right]$
+\begin_inset Formula $\TX\fX\left(x\right)=\sum_{x'\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$
 \end_inset
 
 , so that 
-\begin_inset Formula $\TX\X=\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)$
+\begin_inset Formula $\TX\X=\E^{\X_{1}}\fX\left(\eX\right)$
 \end_inset
 
 .
@@ -5678,13 +5514,13 @@ reference "prop:tower-law"
 ), 
 \begin_inset Formula 
 \[
-\E_{\X}\TX\fX=\E\E^{\X_{1}}\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{1},\X_{2}\right).
+\E_{\X}\TX\fX=\E\E^{\X_{1}}\fX\left(\eX\right)=\E\fX\left(\eX\right).
 \]
 
 \end_inset
 
 By exchangeability and antisymmetry, 
-\begin_inset Formula $\E\fX\left(\X_{1},\X_{2}\right)=\E\fX\left(\X_{2},\X_{1}\right)=-\E\fX\left(\X_{1},\X_{2}\right)$
+\begin_inset Formula $\E\fX\left(\eX\right)=\E\fX\left(\X_{2},\X_{1}\right)=-\E\fX\left(\eX\right)$
 \end_inset
 
 , so 
@@ -5693,24 +5529,93 @@ By exchangeability and antisymmetry,
 
 .
  This did not require the connectedness condition.
-\end_layout
-
-\begin_layout Proof
-We next prove 
-\begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
+ We can similarly prove that 
+\begin_inset Formula $\TX$
 \end_inset
 
- using the fact that 
-\begin_inset Formula $\im\partial_{1}=\ker\partial_{0}$
+ is well-defined as an operator from 
+\begin_inset Formula $\FX$
+\end_inset
+
+ to 
+\begin_inset Formula $\XX$
+\end_inset
+
+: note that 
+\begin_inset Formula $\E_{\X}\left|\TX\fX\right|=\E\left|\fX\left(\eX\right)\right|$
+\end_inset
+
+ so 
+\begin_inset Formula $\TX\FX\subseteq\XX$
 \end_inset
 
 .
- A chain in 
-\begin_inset Formula $\RR^{F_{\i}}$
+\end_layout
+
+\begin_layout Proof
+We will next prove 
+\begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
 \end_inset
 
- will be represented as a function 
-\begin_inset Formula $F_{\i}\to\RR$
+, but first we make some definitions.
+ For each 
+\begin_inset Formula $x\in\OmX$
+\end_inset
+
+, let 
+\begin_inset Formula $\hX_{x}$
+\end_inset
+
+ be the function that takes the value 
+\begin_inset Formula $\pi\left(x\right)^{-1}$
+\end_inset
+
+ on 
+\begin_inset Formula $x$
+\end_inset
+
+ and is zero elsewhere, so that 
+\begin_inset Formula $\hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\hX_{x}$
+\end_inset
+
+for each 
+\begin_inset Formula $\hX\in\XX$
+\end_inset
+
+.
+ For each 
+\begin_inset Formula $\left(x_{1},x_{2}\right)\in\OmeX$
+\end_inset
+
+, define 
+\begin_inset Formula $\fX_{x_{1},x_{2}}\in\FX$
+\end_inset
+
+ as the function that takes the value 
+\begin_inset Formula ${\displaystyle \left(\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)\right)^{-1}}$
+\end_inset
+
+ on 
+\begin_inset Formula $\left(x_{1},x_{2}\right)$
+\end_inset
+
+, takes the value 
+\begin_inset Formula $-\left(\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)\right)^{-1}$
+\end_inset
+
+ on 
+\begin_inset Formula $\left(x_{2},x_{1}\right)$
+\end_inset
+
+, and takes the value zero elsewhere.
+ Note that this function is antisymmetric by the reversibility of the Markov
+ chain of 
+\begin_inset Formula $\eX$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula $\TX\fX_{x_{1},x_{2}}=\hX_{x_{2}}-\hX_{x_{1}}$
 \end_inset
 
 .
@@ -5721,86 +5626,308 @@ Let
 \begin_inset Formula $\hX\in\ker\E_{\X}$
 \end_inset
 
-.
- That is, 
-\begin_inset Formula $\sum_{\i=1}^{k}\hX\left(\x{\i}\right)\pi_{\i}=0$
-\end_inset
-
-, so if we define 
-\begin_inset Formula $\hX^{*}:\i\mapsto\hX\left(\x{\i}\right)\pi_{\i}$
-\end_inset
-
-, then 
-\begin_inset Formula $\hX^{*}\in\ker\partial_{0}=\im\partial_{1}$
+, and fix arbitrary 
+\begin_inset Formula $x^{*}\in\OmX$
 \end_inset
 
 .
- This means there is 
-\begin_inset Formula $\fX^{*}\in\RR^{F_{1}}$
+ By the connectedness assumption, for each 
+\begin_inset Formula $x\in\OmX$
 \end_inset
 
- with 
-\begin_inset Formula $\partial_{1}\fX^{*}=\hX^{*}$
-\end_inset
-
-, or equivalently
+ there is a sequence 
 \begin_inset Formula 
 \[
-\hX^{*}\left(\i\right)=\sum_{\ii\in\range k\backslash\left\{ \i\right\} }\fX^{*}\left(\left\{ \i,\ii\right\} \right)\sgn\left(\i-\ii\right)
+x=\x 0,\x 1,\dots,\x{k-1},\x k=x^{*}
 \]
 
 \end_inset
 
-for each 
-\begin_inset Formula $\i$
+ with 
+\begin_inset Formula $\left(\x{\i-1},\x{\i}\right)\in\OmeX$
+\end_inset
+
+ for 
+\begin_inset Formula $\i=1,\dots k$
 \end_inset
 
 .
- Now, define 
-\begin_inset Formula $\fX:\OmX^{2}\to\RR$
+ Note that 
+\begin_inset Formula 
+\[
+\hX_{x^{*}}-\hX_{x}=\TX\sum_{\i=1}^{k}\fX_{\x{\i-1},\x{\i}}=:\TX\fX_{x}^{*},
+\]
+
+\end_inset
+
+and it follows that
+\begin_inset Formula 
+\[
+\hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\left(\hX_{x^{*}}-\TX\fX_{x}^{*}\right)=\left(\E_{\X}\hX\right)\hX_{x^{*}}-\sum_{x\in\OmX}\TX\hX\left(x\right)\pi\left(x\right)\fX_{x}^{*}.
+\]
+
+\end_inset
+
+By assumption 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left(\E_{\X}\hX\right)=0$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\OmX$
+\end_inset
+
+ is finite, as it will be in our applications, then it would immediately
+ follow that 
+\begin_inset Formula $\hX\in\im\TX$
+\end_inset
+
+.
+ Otherwise we will need some functional analysis.
+ Note that 
+\begin_inset Formula $\TX$
+\end_inset
+
+ is actually an isometry between a subspace 
+\begin_inset Formula $\FX$
+\end_inset
+
+ of 
+\begin_inset Formula $L^{1}\left(\OmX^{2},\L{\eX}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $L^{1}\left(\OmX,\L{\X}\right)$
+\end_inset
+
+ .
+ First we prove that 
+\begin_inset Formula $\FX$
+\end_inset
+
+ is closed and therefore a Banach space.
+ For any 
+\begin_inset Formula $\fX\in L^{1}\left(\OmX^{2},\L{\eX}\right)$
+\end_inset
+
+, let 
+\begin_inset Formula $\bar{\fX}$
+\end_inset
+
+ be defined by 
+\begin_inset Formula $\left(x_{1},x_{2}\right)\mapsto-\fX\left(x_{2},x_{1}\right)$
+\end_inset
+
+, so that 
+\begin_inset Formula $\fX\in\FX$
+\end_inset
+
+ implies that 
+\begin_inset Formula $\fX=\bar{\fX}$
+\end_inset
+
+.
+ Suppose 
+\begin_inset Formula $\fX_{n}\to\fX$
+\end_inset
+
+, with 
+\begin_inset Formula $\fX_{n}\in\FX$
+\end_inset
+
+ for all 
+\begin_inset Formula $n\in\NN$
+\end_inset
+
+.
+ By exchangeability we have 
+\begin_inset Formula 
+\[
+\left\Vert \fX_{n}-\fX\right\Vert =\E\left|\fX_{n}\left(\eX\right)-\fX\left(\eX\right)\right|=\E\left|\fX_{n}\left(\X_{2},\X_{1}\right)-\bar{\fX}\left(\X_{2},\X_{1}\right)\right|=\left\Vert \fX_{n}-\bar{\fX}\right\Vert 
+\]
+
+\end_inset
+
+so 
+\begin_inset Formula $\fX=\bar{\fX}$
+\end_inset
+
+ and 
+\begin_inset Formula $\fX\in\FX$
+\end_inset
+
+.
+ Finally, it is a simple fact that an isometry between Banach spaces has
+ a closed range.
+ For, if 
+\begin_inset Formula $\left(\TX\fX_{n}\right)_{n\in\NN}$
+\end_inset
+
+ is a Cauchy sequence in 
+\begin_inset Formula $\im\TX$
+\end_inset
+
+, then 
+\begin_inset Formula $\left(\fX_{n}\right)_{n\in\NN}$
+\end_inset
+
+ is a Cauchy sequence in 
+\begin_inset Formula $\FX$
+\end_inset
+
+ and converges to some 
+\begin_inset Formula $\fX\in\FX$
+\end_inset
+
+.
+ It follows that 
+\begin_inset Formula $\TX\fX_{n}\to\TX\fX\in\im\TX$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We have proved that 
+\begin_inset Formula $\hX\in\im\TX$
+\end_inset
+
+, completing the proof that 
+\begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The final step is to choose an operator 
+\begin_inset Formula $\conn:\Fo\to\FX$
+\end_inset
+
+ in such a way that 
+\begin_inset Formula $\TX$
+\end_inset
+
+ can be easily compared with 
+\begin_inset Formula $\To\conn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+For the Poisson case in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:poisson-characterizing"
+
+\end_inset
+
+, we need to compare 
+\begin_inset Formula $\lambda\fo\left(\X+1\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $\X\fo\left(\X\right)$
+\end_inset
+
+.
+ It is often fruitful to define 
+\begin_inset Formula $\conn$
 \end_inset
 
  by 
 \begin_inset Formula 
 \[
-\fX\left(\x{\i},\x{\ii}\right)=\begin{cases}
-{\displaystyle \frac{\fX^{*}\left(\left\{ \i,\ii\right\} \right)\sgn\left(\i-\ii\right)}{\pi_{\i}p_{\i\ii}}} & \mbox{if }\left\{ \i,\ii\right\} \in F_{1}\\
-0 & \mbox{otherwise}.
-\end{cases}
+\conn\fo\left(x_{1},x_{2}\right)=c\fo\left(x_{2}\right)\one\left\{ x_{2}=x_{1}+1\right\} -c\fo\left(x_{1}\right)\one\left\{ x_{1}=x_{2}+1\right\} 
 \]
 
 \end_inset
 
-By the reversibility of the Markov chain of 
+for some 
+\begin_inset Formula $c\in\RR$
+\end_inset
+
+.
+ We will then have
+\begin_inset Formula 
+\[
+\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
+\]
+
+\end_inset
+
+Using the triangle inequality and the definition of 
+\begin_inset Formula $\cY$
+\end_inset
+
+ from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:poisson-bound"
+
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+\E_{\X}\To\fo\le2\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\]
+
+\end_inset
+
+This approximation is effective when 
+\begin_inset Formula 
+\begin{align*}
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & \approx\lambda/c,\\
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right) & \approx\X_{1}/c.
+\end{align*}
+
+\end_inset
+
+The interpretation of these approximate equalities is that the Markov chain
+ associated with 
 \begin_inset Formula $\eX$
 \end_inset
 
-, the function 
-\begin_inset Formula $\fX$
+ is approximately an immigration-death process.
+ This is likely to happen when 
+\begin_inset Formula $\X\left(\om\right)$
 \end_inset
 
- is antisymmetric so 
-\begin_inset Formula $\fX\in\FX$
+ is in some sense a statistic of the amount of local structure over the
+ object 
+\begin_inset Formula $\om$
 \end_inset
 
-.
- By construction, we have
-\begin_inset Formula 
-\[
-\hX\left(\i\right)=\sum_{\ii\in\range k\backslash\left\{ \i\right\} }\fX\left(\x{\i},\x{\ii}\right)p_{\i\ii}=\TX\fX\left(\i\right)
-\]
+, and 
+\begin_inset Formula $\eX$
+\end_inset
+
+ is defined by a Markov chain on 
+\begin_inset Formula $\Om$
+\end_inset
+
+ (as in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:underlying-pair"
 
 \end_inset
 
-for each 
-\begin_inset Formula $\i$
-\end_inset
-
-, so 
-\begin_inset Formula $\hX\in\im\TX$
-\end_inset
-
-.
+) that (uniformly) randomly disturbs local structure.
 \end_layout
 
 \begin_layout Subsection
