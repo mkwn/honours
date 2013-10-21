@@ -640,12 +640,18 @@ not metrizable, the subspace corresponding to $\P\left(\RR\right)$
 is in fact metrizable, with a metric called the L\'evy metric. For
 Stein's method we will be interested in some slightly stronger metrics.
 \begin{defn}
-\label{def:general-metrics}For two probability measures $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
-and a collection of real measurable ``test'' functions $\cH$, define
-$d_{\cH}$ by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
+\label{def:general-metrics}Let $\cH$ be a collection of real measurable
+``test'' functions. Define $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$
+by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
 For random variables $\X_{1},\X_{2}$, we write $d_{\cH}\left(\X_{1},\X_{2}\right)$
 instead of $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$.
 \end{defn}
+\begin{todo}
+
+What if there is no supremum or $\E_{\Pr_{1}}\h=\infty$?
+
+\end{todo}
+
 Each $d_{\cH}$ is non-negative, symmetric and satisfies the triangle
 inequality.
 \begin{defn}
@@ -997,8 +1003,7 @@ small.
 
 For our purposes, the main use of \ref{eq:stein-transformation} is
 to bound $d_{\cH}\left(\X,\Lo\right)$ for some $\cH\subseteq\Xo$.
-If $\cY\subseteq\Fo$ is chosen so that $\Uo\h\in\cY$ for all $\h\in\cH$,
-then we have 
+For any $\cY\supseteq\Uo\cH$, we have 
 \[
 d_{\cH}\left(\X,\Lo\right)=\sup_{\h\in\cH}\left|\E_{\X}\To\Uo\h\right|\le\sup_{\fo\in\cY}\left|\E_{\X}\To\fo\right|.
 \]
@@ -1010,19 +1015,40 @@ there are a number of known convenient choices of $\cY$, and a number
 of methods that are known to be effective to bound $\left|\E_{\X}\To\fo\right|$.
 \begin{example}
 \label{example:poisson-bound}If $\cH=\cH_{\TV}$ and $\Lo=\Po\left(\lambda\right)$,
-then we can choose $\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} \right\} $.
-This choice is sharp in the sense that $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1/2}$
-as $\lambda\to\infty$ and $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1$
-as $\lambda\to0$.\end{example}
-\begin{proof}
-(Adapted from \cite[Lemma 1.1.1]{BHJ92}) First, note that $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\range{k-1}}\right\Vert _{\infty}$
+using the characterizing operator in \ref{thm:poisson-characterizing},
+then we generally choose 
+\[
+\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1/2}\right\} ,\,\left\Vert \Delta\fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1}\right\} \right\} ,
+\]
+where $\Delta\fo\left(k\right)=\fo\left(k+1\right)-\fo\left(k\right)$.
+\end{example}
+Proving that this choice of $\cY$ satisfies $\cY\supseteq\U_{\Po\left(\lambda\right)}\cH$
+is nontrivial. But, we can prove that the constraints are of the ``correct''
+order of magnitude.
 
-For any Borel $\A$,
+\begin{todo}\label{todo:poisson-norm-bound}
+
+The proof is in \cite[Remark 10.2.4]{BHJ92}. There's also a simpler
+proof in \cite[Lemma 1.1.1]{BHJ92} that $\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} $
+suffices. I'll revisit this later.
+
+\end{todo}
+\begin{prop}
+With $\U_{\Po\left(\lambda\right)}$ as in \ref{thm:poisson-characterizing},
+we have
+\begin{align*}
+\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1/2}\mbox{ as }\lambda\to\infty,\quad & \sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1\mbox{ as }\lambda\to0,\\
+\sup_{\A}\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1}\mbox{ as }\lambda\to\infty,\quad & \sup_{\A}\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1\mbox{ as }\lambda\to0,
+\end{align*}
+\end{prop}
+\begin{proof}
+(Adapted from \cite[Lemma 1.1.1]{BHJ92}) For any Borel $\A$ and
+any $k\in\NN$,
 \begin{align*}
 \U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right) & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\Po_{\lambda}\left(\A\cap\range{k-1}\right)-\Po_{\lambda}\left(\A\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
  & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\int}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\left(\vphantom{\sum}1-\Po_{\lambda}\left(\range{k-1}\right)\right)\right.\\
  & \qquad\qquad\qquad-\left.\vphantom{\int}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\right)-\Po_{\lambda}\left(\A\cap\range{k-1}\right)\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
- & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right)
+ & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right).
 \end{align*}
 Note that $\Po_{\lambda}\left(\A\cap\range{k-1}\right)$ is bounded
 above by $\Po_{\lambda}\left(\range{k-1}\right)$ and $\Po_{\lambda}\left(\A\backslash\range{k-1}\right)$
@@ -1031,12 +1057,18 @@ so
 \[
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right).
 \]
-Note that we have equality when $\A=\range{k-1}$. (unfinished...)
+Note that we have equality when $\A=\range{k-1}$. If $k\asymp\lambda$
+as $\lambda\to\infty$ then Stirling's approximation (unfinished...)
 \end{proof}
 \begin{todo}
 
-\cite[Remark 10.2.4]{BHJ92} gives a proof that $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1/2}\right\} $
-will suffice, but it's complicated. Maybe I'll revisit this later.
+I need a way to show $\Po_{\lambda}\left(\range{k-1}\right)\asymp1$
+when $k$ is close to $\lambda$. I imagine the typical approach would
+be to show that $\left(\Po\left(\lambda\right)-\lambda\right)/\lambda\to\N\left(0,1\right)$
+with L\'evy's continuity theorem, but that would require me to introduce
+more stuff in the probability revision section. Maybe I can use Stein's
+method itself for this! In any case I'll think about this more when
+I've decided on my approach to \ref{todo:poisson-norm-bound}.
 
 \end{todo}
 
@@ -1112,13 +1144,13 @@ pairs with margins $\L{\X}$.\end{prop}
 \begin{proof}
 Given an exchangeable pair $\eX$ with margins $\L{\X}$, we can define
 a time-homogenous Markov chain $M$ with transition probabilities
-$p\left(x,x'\right)=\Pr\left(\X_{2}=x|\X_{1}=x'\right)$. With $\pi\left(x\right)=\Pr\left(\X=x\right)$,
-we then have
+$p\left(x_{1},x_{2}\right)=\Pr\left(\X_{2}=x_{2}|\X_{1}=x_{1}\right)$.
+With $\pi\left(x\right)=\Pr\left(\X=x\right)$, we then have
 \[
-\pi\left(x\right)p\left(x,x'\right)=\Pr\left(\eX=\left(x_{\i},x_{\ii}\right)\right)=\pi\left(x'\right)p\left(x',x\right)
+\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)
 \]
-for any $x,x'\in\OmX$. So, $M$ is reversible with steady-state distribution
-$\L{\X}$.
+for any $x_{1},x_{2}\in\OmX$. So, $M$ is reversible with steady-state
+distribution $\L{\X}$.
 
 Conversely, suppose we have a time-homogeneous reversible Markov chain
 with steady-state distribution $\L{\X}$. Let the transition probability
@@ -1126,7 +1158,7 @@ between $x$ and $x'$ be $p\left(x,x'\right)$ and let the probability
 of state $x$ in the steady-state distribution be $\pi\left(x\right)$.
 We can then define an exchangeable pair $\eX$ by 
 \[
-\Pr\left(\eX=\left(\x{\i},\x{\ii}\right)\right)=\pi\left(x\right)p\left(x,x'\right)=\pi\left(x'\right)p\left(x',x\right)=\Pr\left(\eX=\left(\x{\ii},\x{\i}\right)\right)
+\Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)=\Pr\left(\eX=\left(x_{2},x_{1}\right)\right)
 \]
 and the proposition is proved.\end{proof}
 \begin{defn}
@@ -1230,9 +1262,10 @@ for some $c\in\RR$. We will then have
 \[
 \To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
 \]
-Using the triangle inequality and the definition of $\cY$ from \ref{example:poisson-bound},
+Using the triangle inequality and the choice of $\cY$ in \ref{example:poisson-bound},
+for all $\fo\in\cY$: 
 \[
-\E_{\X}\To\fo\le2\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
 \]
 This approximation is effective when 
 \begin{align*}
@@ -1246,6 +1279,15 @@ some sense a statistic of the amount of local structure over the object
 $\om$, and $\eX$ is defined by a Markov chain on $\Om$ (as in \ref{rem:underlying-pair})
 that (uniformly) randomly disturbs local structure.
 \end{example}
+\begin{note}
+
+The ``generator method'' \cite{BC05} says that the Poisson characterizing
+operator can be obtained with the generator of an immigration-death
+process and the Normal characterizing operator can be obtained with
+the generator of an O-U process. Investigate the link here?
+
+\end{note}
+
 
 \subsection{Size-Bias Coupling}
 

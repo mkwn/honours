@@ -2661,11 +2661,11 @@ name "def:general-metrics"
 
 \end_inset
 
-For two probability measures 
-\begin_inset Formula $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
+Let 
+\begin_inset Formula $\cH$
 \end_inset
 
- and a collection of real measurable 
+ be a collection of real measurable 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2673,12 +2673,9 @@ test
 \begin_inset Quotes erd
 \end_inset
 
- functions 
-\begin_inset Formula $\cH$
-\end_inset
-
-, define 
-\begin_inset Formula $d_{\cH}$
+ functions.
+ Define 
+\begin_inset Formula $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$
 \end_inset
 
  by 
@@ -2711,6 +2708,46 @@ test
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+What if there is no supremum or 
+\begin_inset Formula $\E_{\Pr_{1}}\h=\infty$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4645,19 +4682,11 @@ reference "eq:stein-transformation"
 \end_inset
 
 .
- If 
-\begin_inset Formula $\cY\subseteq\Fo$
+ For any 
+\begin_inset Formula $\cY\supseteq\Uo\cH$
 \end_inset
 
- is chosen so that 
-\begin_inset Formula $\Uo\h\in\cY$
-\end_inset
-
- for all 
-\begin_inset Formula $\h\in\cH$
-\end_inset
-
-, then we have 
+, we have 
 \begin_inset Formula 
 \[
 d_{\cH}\left(\X,\Lo\right)=\sup_{\h\in\cH}\left|\E_{\X}\To\Uo\h\right|\le\sup_{\fo\in\cY}\left|\E_{\X}\To\fo\right|.
@@ -4743,28 +4772,136 @@ If
 \begin_inset Formula $\Lo=\Po\left(\lambda\right)$
 \end_inset
 
-, then we can choose 
-\begin_inset Formula $\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} \right\} $
+, using the characterizing operator in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:poisson-characterizing"
+
+\end_inset
+
+, then we generally choose 
+\begin_inset Formula 
+\[
+\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1/2}\right\} ,\,\left\Vert \Delta\fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1}\right\} \right\} ,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\Delta\fo\left(k\right)=\fo\left(k+1\right)-\fo\left(k\right)$
 \end_inset
 
 .
- This choice is sharp in the sense that 
-\begin_inset Formula $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1/2}$
+\end_layout
+
+\begin_layout Standard
+Proving that this choice of 
+\begin_inset Formula $\cY$
 \end_inset
 
- as 
-\begin_inset Formula $\lambda\to\infty$
+ satisfies 
+\begin_inset Formula $\cY\supseteq\U_{\Po\left(\lambda\right)}\cH$
 \end_inset
 
- and 
-\begin_inset Formula $\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1$
+ is nontrivial.
+ But, we can prove that the constraints are of the 
+\begin_inset Quotes eld
 \end_inset
 
- as 
-\begin_inset Formula $\lambda\to0$
+correct
+\begin_inset Quotes erd
+\end_inset
+
+ order of magnitude.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "todo:poisson-norm-bound"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The proof is in 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Remark 10.2.4"
+key "BHJ92"
+
 \end_inset
 
 .
+ There's also a simpler proof in 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Lemma 1.1.1"
+key "BHJ92"
+
+\end_inset
+
+ that 
+\begin_inset Formula $\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} $
+\end_inset
+
+ suffices.
+ I'll revisit this later.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+With 
+\begin_inset Formula $\U_{\Po\left(\lambda\right)}$
+\end_inset
+
+ as in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:poisson-characterizing"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1/2}\mbox{ as }\lambda\to\infty,\quad & \sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1\mbox{ as }\lambda\to0,\\
+\sup_{\A}\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1}\mbox{ as }\lambda\to\infty,\quad & \sup_{\A}\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1\mbox{ as }\lambda\to0,
+\end{align*}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
@@ -4776,16 +4913,12 @@ key "BHJ92"
 
 \end_inset
 
-) First, note that 
-\begin_inset Formula $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\range{k-1}}\right\Vert _{\infty}$
+) For any Borel 
+\begin_inset Formula $\A$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
-For any Borel 
-\begin_inset Formula $\A$
+ and any 
+\begin_inset Formula $k\in\NN$
 \end_inset
 
 ,
@@ -4794,7 +4927,7 @@ For any Borel
 \U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right) & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\Po_{\lambda}\left(\A\cap\range{k-1}\right)-\Po_{\lambda}\left(\A\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
  & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\int}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\left(\vphantom{\sum}1-\Po_{\lambda}\left(\range{k-1}\right)\right)\right.\\
  & \qquad\qquad\qquad-\left.\vphantom{\int}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\right)-\Po_{\lambda}\left(\A\cap\range{k-1}\right)\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
- & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right)
+ & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right).
 \end{align*}
 
 \end_inset
@@ -4840,7 +4973,15 @@ Note that we have equality when
 \end_inset
 
 .
- (unfinished...)
+ If 
+\begin_inset Formula $k\asymp\lambda$
+\end_inset
+
+ as 
+\begin_inset Formula $\lambda\to\infty$
+\end_inset
+
+ then Stirling's approximation (unfinished...)
 \end_layout
 
 \begin_layout Standard
@@ -4860,19 +5001,71 @@ begin{todo}
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Remark 10.2.4"
-key "BHJ92"
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+I need a way to show 
+\begin_inset Formula $\Po_{\lambda}\left(\range{k-1}\right)\asymp1$
+\end_inset
+
+ when 
+\begin_inset Formula $k$
+\end_inset
+
+ is close to 
+\begin_inset Formula $\lambda$
+\end_inset
+
+.
+ I imagine the typical approach would be to show that 
+\begin_inset Formula $\left(\Po\left(\lambda\right)-\lambda\right)/\lambda\to\N\left(0,1\right)$
+\end_inset
+
+ with
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ L
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
 
 \end_inset
 
- gives a proof that 
-\begin_inset Formula $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1/2}\right\} $
+vy's continuity theorem, but that would require me to introduce more stuff
+ in the probability revision section.
+ Maybe I can use Stein's method itself for this! In any case I'll think
+ about this more when I've decided on my approach to 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "todo:poisson-norm-bound"
+
 \end_inset
 
- will suffice, but it's complicated.
- Maybe I'll revisit this later.
+.
 \end_layout
 
 \begin_layout Standard
@@ -5240,7 +5433,7 @@ Given an exchangeable pair
 \end_inset
 
  with transition probabilities 
-\begin_inset Formula $p\left(x,x'\right)=\Pr\left(\X_{2}=x|\X_{1}=x'\right)$
+\begin_inset Formula $p\left(x_{1},x_{2}\right)=\Pr\left(\X_{2}=x_{2}|\X_{1}=x_{1}\right)$
 \end_inset
 
 .
@@ -5251,13 +5444,13 @@ Given an exchangeable pair
 , we then have
 \begin_inset Formula 
 \[
-\pi\left(x\right)p\left(x,x'\right)=\Pr\left(\eX=\left(x_{\i},x_{\ii}\right)\right)=\pi\left(x'\right)p\left(x',x\right)
+\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)
 \]
 
 \end_inset
 
 for any 
-\begin_inset Formula $x,x'\in\OmX$
+\begin_inset Formula $x_{1},x_{2}\in\OmX$
 \end_inset
 
 .
@@ -5307,7 +5500,7 @@ Conversely, suppose we have a time-homogeneous reversible Markov chain with
  by 
 \begin_inset Formula 
 \[
-\Pr\left(\eX=\left(\x{\i},\x{\ii}\right)\right)=\pi\left(x\right)p\left(x,x'\right)=\pi\left(x'\right)p\left(x',x\right)=\Pr\left(\eX=\left(\x{\ii},\x{\i}\right)\right)
+\Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)=\Pr\left(\eX=\left(x_{2},x_{1}\right)\right)
 \]
 
 \end_inset
@@ -5869,21 +6062,25 @@ for some
 
 \end_inset
 
-Using the triangle inequality and the definition of 
+Using the triangle inequality and the choice of 
 \begin_inset Formula $\cY$
 \end_inset
 
- from 
+ in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "example:poisson-bound"
 
 \end_inset
 
-, 
+, for all 
+\begin_inset Formula $\fo\in\cY$
+\end_inset
+
+: 
 \begin_inset Formula 
 \[
-\E_{\X}\To\fo\le2\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
 \]
 
 \end_inset
@@ -5928,6 +6125,60 @@ reference "rem:underlying-pair"
 \end_inset
 
 ) that (uniformly) randomly disturbs local structure.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+generator method
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BC05"
+
+\end_inset
+
+ says that the Poisson characterizing operator can be obtained with the
+ generator of an immigration-death process and the Normal characterizing
+ operator can be obtained with the generator of an O-U process.
+ Investigate the link here?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

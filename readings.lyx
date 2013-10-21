@@ -2125,6 +2125,14 @@ generators
 
  of measures, which I probably need to learn about before tackling this
  paper properly.
+ (The generator approach is discussed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BC05"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
