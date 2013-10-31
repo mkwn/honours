@@ -223,6 +223,14 @@ from standard asymptotic notation, we use two notions of asymptotic
 equivalence: $f\sim g$ means $f=g\left(1+o\left(1\right)\right)$
 and $f\asymp g$ means $f=O\left(g\right)$ and $g=O\left(f\right)$.
 
+In this thesis, unless stated otherwise, graphs are labelled. That
+is, they are distinguished even within isomorphism classes. A graph
+may not have loops or multiple edges; an object which is allowed to
+have loops and/or multiple edges will be called a multigraph.
+
+The phrase ``randomly choose'' is taken to mean a uniformly random
+choice. That means, each possible option is chosen with equal probability.
+
 
 \part{Theory}
 
@@ -343,7 +351,10 @@ A \emph{probability space} is a measure space $\left(\Om,\cA,\Pr\right)$
 with $\Pr\left(\Om\right)=1$. In this case we say $\Pr$ is a \emph{probability
 measure}, and denote the set of all probability measures on $\left(\Om,\cA\right)$
 by $\P\left(\Om,\cA\right)$ or $\P\left(\Om\right)$ if there is
-no ambiguity. An \emph{event} is a measurable set $\A\in\cA$.
+no ambiguity. An \emph{event} is a measurable set $\A\in\cA$. When
+we have only defined one measure on the set $\Om$, we will sometimes
+abuse notation and write $\Pr$ to mean$\left(\Om,\cA,\Pr\right)$,
+and vice versa.
 \end{defn}
 
 \begin{defn}
@@ -357,13 +368,8 @@ For our purposes $\Om$ will often be a finite set of combinatorial
 objects, with $\cA$ as the power set of $\Om$. In this case $\Pr$
 is defined by $\Pr\left(\om\right):=\Pr\left(\left\{ \om\right\} \right)$,
 for each $\om\in\Om$. We will discuss specific probability spaces
-on combinatorial objects in \ref{sec:random-structures}, but we include
-a particularly useful definition here:
-\begin{defn}
-In a probability space $\left(\Om,\cA,\Pr\right)$ where $\Om$ is
-finite, if $\Pr\left(\om\right)=1/\left|\Om\right|$ for each $\om\in\Om$,
-then we say $\Pr$ is \emph{uniform}.
-\end{defn}
+on combinatorial objects in \ref{sec:random-structures}.
+
 For an event $\A$, $\Pr\left(\A\right)$ is interpreted as the ``probability
 that $\A$ occurs''. For combinatorial spaces, events are usually
 of the form $\A=\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} $,
@@ -398,11 +404,15 @@ of some random element. To see this, note that given a probability
 measure $\Pr\in\P\left(\Om\right)$, we can choose $X=\id_{\Om}$
 to have $\L{\X}=\Pr$. So, it is often convenient to specify random
 variables by their distributions, without defining an underlying probability
-space. We can use slightly abusive (but standard) notation like $\Pr\left(\X>1\right)$
+space.
+\begin{defn}
+The notation $\X\in\L{}$ means $\L{\X}=\L{}$.
+\end{defn}
+We can use slightly abusive (but standard) notation like $\Pr\left(\X>1\right)$
 to denote $\L{\X}\left(\left\{ x:x>1\right\} \right)$. This is equal
 to $\Pr\left(\left\{ \om\in\Om:\X\left(\om\right)>1\right\} \right)$
 for any particular realization of $\X$ as a function on a probability
-space $\left(\Om,\cA,\m\right)$.
+space $\left(\Om,\cA,\Pr\right)$.
 \begin{defn}
 The \emph{support} $\supp\left(\X\right)$ of a discrete random element
 $\X$ is the set $\left\{ k\in\Om:\Pr\left(\X=k\right)>0\right\} $.\end{defn}
@@ -417,13 +427,23 @@ to each possible value.
 \begin{example}
 If $\X$ is Poisson distributed with parameter $\lambda$, we write
 $\L{\X}=\Po\left(\lambda\right)=\Po_{\lambda}$; this is defined by
-$\Pr\left(\X=k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$.\end{example}
+$\Pr\left(\X=k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$.
+\end{example}
+
 \begin{defn}
 The \emph{expected value }of a random variable $\X$ is $\E\X=\int x\d\L{\X}\left(x\right)$.
 \end{defn}
 For a random variable $\X$ that takes integer values, this definition
 is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\Pr\left(\X=x\right)$.
-
+\begin{rem}
+\label{rem:indicator-expectation}If $\X$ is a random variable that
+can be interpreted as counting the number of objects that satisfy
+some property, then we can express $\X$ as a sum of indicator variables
+$\sum_{\i}\one_{\A_{\i}}$, where $\A_{\i}$ is the event that the
+$\i$th object satisfies our property. We have $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$.
+So, in order to compute the expectation of $\X$ we just need to compute
+the probability that each object satisfies our required property.
+\end{rem}
 If we fix a particular underlying probability space $\left(\Om,\cA,\Pr\right)$,
 we can also equivalently view expectation as a linear functional on
 the space of integrable functions: $\E\X=\int\X\left(\om\right)\d\Pr$.
@@ -801,14 +821,57 @@ d_{\TV}\left(\X_{1},\X_{2}\right)=\left(d_{\A_{>}}-d_{\A_{<}}\right)/2=\frac{1}{
 
 \section{Random Combinatorial Structures\label{sec:random-structures}}
 
-\global\long\def\G#1#2{\mathcal{G}_{#1,#2}}
+\global\long\def\rG#1#2{\mathcal{G}_{#1,#2}}
 
+
+\global\long\def\rS#1{\mathcal{S}_{#1}}
+
+\begin{defn}
+Given a finite space of combinatorial objects $\Om$, a probability
+space $\left(\Om,2^{\Om},\Pr\right)$ is often called a \emph{model}
+of $\Om$.
+\end{defn}
+
+\begin{defn}
+In a probability space $\left(\Om,2^{\Om},\Pr\right)$ where $\Om$
+is finite, if $\Pr\left(\om\right)=1/\left|\Om\right|$ for each $\om\in\Om$,
+then we say the space is \emph{uniform}.
+\end{defn}
+Uniform models are the simplest examples of random structures. For
+example, the uniform space $\rS n$ of permutations on $n$ elements
+has $\Pr\left(\sigma\right)=1/n!$ for each $\sigma\in S_{n}$. The
+uniform random graph model $\rG nM$ has $\Pr\left(G\right)={{n \choose 2} \choose M}^{-1}$
+for each graph $G$ on the vertex set $\range n$ which has $M$ edges.
+The uniform random regular graph model $\rG nd$ is uniform on the
+set of all $d$-regular graphs on the vertex set $\range n$, though
+an explicit formula for the number of such graphs is not known.
+
+As an important example of a (generally) non-uniform model, the (Erd\H{o}s-R\'enyi)
+binomial random graph model $\rG np$ has
+\[
+\Pr\left(G\right)=p^{\left|E\left(G\right)\right|}\left(1-p\right)^{{n \choose 2}-\left|E\left(G\right)\right|}
+\]
+for each graph $G$ on the vertex set $\range n$. When $p=1/2$,
+we obtain the uniform model on all graphs on the vertex set $\range n$.
+
+One way to conceptualize the binomial model is to consider a sequence
+of independent coin tosses, where the coin is biased to land heads
+with probability $p$. Each coin toss corresponds to a particular
+potential edge, and determines whether that edge is present in the
+final random graph. When we define more complicated random models,
+we will often use this kind of informal description rather than giving
+an explicit formula for each $\Pr\left(\om\right)$.
+
+As another example, the uniform model $\rG nM$ can be alternatively
+defined recursively: $\rG n0$ is always the trivial graph with no
+edges, and for each $M>0$, to obtain $\rG nM$ we choose $G\in\rG n{M-1}$
+and add one of the ${n \choose 2}-\left(M-1\right)$ possible edges
+at random.
 
 \begin{note}
 
-I'll leave this section until I'm sure what applications I'll be looking
-at. Definitely random graph models, probably random permutations and
-random matrices.
+This section is unfinished, I'll probably want random matrices and
+maybe the pairing model on random regular graphs
 
 \end{note}
 
@@ -1114,7 +1177,22 @@ I should have a toy example here that is amenable to several methods.
 This is Stein's original approach, and is effective in wide generality
 for discrete random variables. In what follows, we assume $\X$ is
 discrete. Let $\OmX$ be the support of $\X$.
+\begin{example}
+[adapted from {\cite[Example 4.21]{Ros11}}]\label{example:fixed-points}We
+will use an example problem to illustrate the principles in this section.
+We will say a \emph{fixed point} of a permutation $\sigma\in S_{n}$
+is an index $k\in\left[n\right]$ that satisfies $\sigma\left(k\right)=k$.
+Let $\X:S_{n}\to\left\{ 0\right\} \cup\range n$ give the number of
+fixed points in each permutation from $S_{n}$. We interpret $\X$
+as a random variable on the underlying space $\rS n$.
 
+Now, if $n$ is large then fixed points are largely independent of
+each other, and each of $n$ indices has a probability of $1/n$ to
+be a fixed point. So (recalling \ref{rem:indicator-expectation}),
+we might expect $\L{\X}$ to be ``close'' to $\Po\left(1\right)$.
+We will attempt to bound $d_{\TV}\left(\X,\Po\left(1\right)\right)$
+to quantify this intuition.
+\end{example}
 The general idea is that we can use an object $\eX$ called an exchangeable
 pair to construct a characterizing operator $\TX$ for $\X$. We then
 use an operator $\conn$ to connect the domains of $\TX$ and $\To$
@@ -1168,12 +1246,30 @@ chain is irreducible.\end{defn}
 \label{rem:underlying-pair}We are particularly interested in exchangeable
 pairs $\eX$ with marginal distributions $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$.
 If $\X$ is defined on an underlying combinatorial probability space
-$\left(\Om,\Om,\Pr\right)$, it is often convenient to first construct
+$\left(\Om,2^{\Om},\Pr\right)$, it is often convenient to first construct
 an exchangeable pair $\mathbf{W}=\left(W_{1},W_{2}\right)$ with margins
 $\Pr$, so that the vector $\eX_{\mathbf{W}}=\left(\X\left(W_{1}\right),\X\left(W_{2}\right)\right)$
 is an exchangeable pair with margins $\L{\X}$. If $\left(W_{1},W_{2}\right)$
-is connected, then $\eX_{\mathbf{W}}$ is connected also.
-\end{rem}
+is connected, then $\eX_{\mathbf{W}}$ is connected also.\end{rem}
+\begin{example}
+\label{example:fixed-points-exchangeable-pair}We continue \ref{example:fixed-points}.
+We will define a specific exchangeable pair $\mathbf{W}=\left(W_{1},W_{2}\right)$
+with margins $\rS n$ by 
+\[
+\Pr\left(\left(W_{1},W_{2}\right)=\left(\sigma_{1},\sigma_{2}\right)\right)=\begin{cases}
+\left(n!{n \choose 2}\right)^{-1} & \mbox{if }\sigma_{1}=\sigma_{2}\left(\i\,\ii\right)\mbox{ for some transposition \ensuremath{\left(\i\,\ii\right)}}\\
+0 & \mbox{otherwise}.
+\end{cases}
+\]
+The relation of differing by a transposition is symmetric, so $\mathbf{W}$
+is indeed an exchangeable pair. The Markov chain associated with $\mathbf{W}$
+has a simple interpretation. Given a random permutation $\sigma$,
+to make a transition in the Markov chain we just randomly choose one
+of the ${n \choose 2}$ possible transpositions and compose it with
+$\sigma$. Because the transpositions generate $S_{n}$, the pair
+$\mathbf{W}$ is connected, so we can use the construction from \ref{rem:underlying-pair}
+to produce a connected exchangeable pair $\eX$ with margins $\mathbf{W}$.
+\end{example}
 The Markov chain underlying a connected exchangeable pair can be naturally
 viewed as a connected one-dimensional simplicial complex. The zeroth
 reduced homology group $\ker\partial_{0}/\im\partial_{1}$ of a connected
@@ -1268,16 +1364,79 @@ for all $\fo\in\cY$:
 \E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
 \]
 This approximation is effective when 
-\begin{align*}
-\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & \approx\lambda/c,\\
-\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right) & \approx\X_{1}/c.
-\end{align*}
+\begin{align}
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & \approx\lambda/c,\label{eq:immigration-death}\\
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right) & \approx\X_{1}/c.\nonumber 
+\end{align}
 The interpretation of these approximate equalities is that the Markov
 chain associated with $\eX$ is approximately an immigration-death
 process. This is likely to happen when $\X\left(\om\right)$ is in
 some sense a statistic of the amount of local structure over the object
 $\om$, and $\eX$ is defined by a Markov chain on $\Om$ (as in \ref{rem:underlying-pair})
-that (uniformly) randomly disturbs local structure.
+that (uniformly) randomly disturbs local structure. The conclusion
+to \ref{example:fixed-points} should make this clear:
+\end{example}
+
+\begin{example}
+We continue \ref{example:fixed-points}, recalling the exchangeable
+pairs $\mathbf{W}$ and $\eX$ from \ref{example:fixed-points-exchangeable-pair}.
+The interpretation of 
+\[
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)=\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)
+\]
+ is the probability of a transposition destroying exactly one out
+of an existing $\X_{1}$ fixed points. In order to destroy exactly
+one fixed point, we have to choose a fixed point to destroy, and swap
+it with a non-fixed-point. There are $\X_{1}\left(n-\X_{1}\right)$
+out of ${n \choose 2}$ transpositions that do this, so
+\[
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)=\frac{\X_{1}\left(n-\X_{1}\right)}{{n \choose 2}}.
+\]
+Next, we will find a formula for $\Pr\left(\X\left(W_{2}\right)=\X\left(W_{1}\right)+1|W_{1}\right)$,
+noting that 
+\[
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)=\E\left[\Pr\left(\X\left(W_{2}\right)=\X\left(W_{1}\right)+1|W_{1}\right)|\X_{1}\right].
+\]
+In order to create exactly one fixed point, we have to choose an index
+$k$ that is not fixed in $W_{1}$ (there are $n-\X_{1}$ such) and
+compose $W_{1}$ with $\left(k\,\sigma\left(k\right)\right)$. This
+creates exactly one fixed point unless $\sigma^{-1}\left(k\right)=k$,
+in which case it creates two. We have counted this second case twice
+for every transposition in the cycle decomposition of $W_{1}$. Let
+$Y$ be the number of transpositions in the cycle decomposition of
+$W_{1}$. We have 
+\[
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)=\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{{n \choose 2}}.
+\]
+In order to satisfy \ref{eq:immigration-death} as closely as possible,
+we choose $c={n \choose 2}/n$. Recalling that $\E\X_{1}=1$, we then
+have
+\begin{align*}
+\E\left|1-c\Pr\left(X_{2}=X_{1}+1|X_{1}\right)\right| & =\E\left[1-\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{n}\right]\\
+ & =1/n+2\E Y/n,\\
+\E\left|X_{1}-c\Pr\left(X_{2}=X_{1}-1|X_{1}\right)\right| & =\E\left[\X_{1}-\frac{\X_{1}\left(n-\X_{1}\right)}{n}\right]\\
+ & =\E\left[\X_{1}^{2}\right]/n.
+\end{align*}
+Now, the probability that a transposition $\left(\i\,\ii\right)$
+is in the cycle decomposition of $W_{1}$ is $\left(n\left(n-1\right)\right)^{-1}$
+because $\i$ must map to $\ii$ out of the $n$ possible options
+in $\range n$, then $\ii$ must map to $\i$ out of the $n-1$ possible
+options in $\range n\backslash\left\{ \ii\right\} $. There are ${n \choose 2}=n\left(n-1\right)/2$
+possible transpositions so by \ref{rem:indicator-expectation} it
+follows that $\E Y=1/2$.
+
+Now, $\E\left[\X_{1}\left(\X_{1}-1\right)/2\right]$ is the expected
+number of unordered pairs of distinct fixed points in a permutation
+$\sigma\in\rS n$. For any unordered pair of distinct indices $\left\{ \i,\ii\right\} $,
+the probability that both are fixed is $\left(n\left(n-1\right)\right)^{-1}$
+because $\i$ must map to $\i$ out of the $n$ possible options in
+$\range n$, then $\ii$ must map to $\ii$ out of the $n-1$ possible
+options in $\range n\backslash\left\{ \i\right\} $. The total number
+of unordered pairs is ${n \choose 2}=n\left(n-1\right)/2$, so again
+applying \ref{rem:indicator-expectation}, we have $\E\left[\X_{1}\left(\X_{1}-1\right)/2\right]=1/2$
+and $\E\left[\X_{1}^{2}\right]=2$.
+
+We conclude that $d_{\TV}\left(\X,\Po\left(1\right)\right)\le4/n$.
 \end{example}
 \begin{note}
 

@@ -529,6 +529,26 @@ Unless otherwise specified, all asympotics are as
 .
 \end_layout
 
+\begin_layout Standard
+In this thesis, unless stated otherwise, graphs are labelled.
+ That is, they are distinguished even within isomorphism classes.
+ A graph may not have loops or multiple edges; an object which is allowed
+ to have loops and/or multiple edges will be called a multigraph.
+\end_layout
+
+\begin_layout Standard
+The phrase 
+\begin_inset Quotes eld
+\end_inset
+
+randomly choose
+\begin_inset Quotes erd
+\end_inset
+
+ is taken to mean a uniformly random choice.
+ That means, each possible option is chosen with equal probability.
+\end_layout
+
 \begin_layout Part
 Theory
 \end_layout
@@ -1014,6 +1034,19 @@ event
 \end_inset
 
 .
+ When we have only defined one measure on the set 
+\begin_inset Formula $\Om$
+\end_inset
+
+, we will sometimes abuse notation and write 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ to mean
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\end_inset
+
+, and vice versa.
 \end_layout
 
 \begin_layout Standard
@@ -1110,34 +1143,6 @@ reference "sec:random-structures"
 
 \end_inset
 
-, but we include a particularly useful definition here:
-\end_layout
-
-\begin_layout Definition
-In a probability space 
-\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
-\end_inset
-
- where 
-\begin_inset Formula $\Om$
-\end_inset
-
- is finite, if 
-\begin_inset Formula $\Pr\left(\om\right)=1/\left|\Om\right|$
-\end_inset
-
- for each 
-\begin_inset Formula $\om\in\Om$
-\end_inset
-
-, then we say 
-\begin_inset Formula $\Pr$
-\end_inset
-
- is 
-\emph on
-uniform
-\emph default
 .
 \end_layout
 
@@ -1351,7 +1356,22 @@ It is worth noting that in fact any probability measure is the distribution
 .
  So, it is often convenient to specify random variables by their distributions,
  without defining an underlying probability space.
- We can use slightly abusive (but standard) notation like 
+\end_layout
+
+\begin_layout Definition
+The notation 
+\begin_inset Formula $\X\in\L{}$
+\end_inset
+
+ means 
+\begin_inset Formula $\L{\X}=\L{}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can use slightly abusive (but standard) notation like 
 \begin_inset Formula $\Pr\left(\X>1\right)$
 \end_inset
 
@@ -1369,7 +1389,7 @@ It is worth noting that in fact any probability measure is the distribution
 \end_inset
 
  as a function on a probability space 
-\begin_inset Formula $\left(\Om,\cA,\m\right)$
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
 \end_inset
 
 .
@@ -1455,6 +1475,19 @@ If
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Definition
 The 
 \emph on
@@ -1482,6 +1515,48 @@ For a random variable
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:indicator-expectation"
+
+\end_inset
+
+If 
+\begin_inset Formula $\X$
+\end_inset
+
+ is a random variable that can be interpreted as counting the number of
+ objects that satisfy some property, then we can express 
+\begin_inset Formula $\X$
+\end_inset
+
+ as a sum of indicator variables 
+\begin_inset Formula $\sum_{\i}\one_{\A_{\i}}$
+\end_inset
+
+, where 
+\begin_inset Formula $\A_{\i}$
+\end_inset
+
+ is the event that the 
+\begin_inset Formula $\i$
+\end_inset
+
+th object satisfies our property.
+ We have 
+\begin_inset Formula $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$
+\end_inset
+
+.
+ So, in order to compute the expectation of 
+\begin_inset Formula $\X$
+\end_inset
+
+ we just need to compute the probability that each object satisfies our
+ required property.
 \end_layout
 
 \begin_layout Standard
@@ -3657,11 +3732,238 @@ name "sec:random-structures"
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\G}[2]{\mathcal{G}_{#1,#2}}
+\newcommand{\rG}[2]{\mathcal{G}_{#1,#2}}
 {\boldsymbol{\mathcal{G}_{#1,#2}}}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\rS}[1]{\mathcal{S}_{#1}}
+{\boldsymbol{\mathcal{S}_{#1}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Given a finite space of combinatorial objects 
+\begin_inset Formula $\Om$
+\end_inset
+
+, a probability space 
+\begin_inset Formula $\left(\Om,2^{\Om},\Pr\right)$
+\end_inset
+
+ is often called a 
+\emph on
+model
+\emph default
+ of 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+In a probability space 
+\begin_inset Formula $\left(\Om,2^{\Om},\Pr\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $\Om$
+\end_inset
+
+ is finite, if 
+\begin_inset Formula $\Pr\left(\om\right)=1/\left|\Om\right|$
+\end_inset
+
+ for each 
+\begin_inset Formula $\om\in\Om$
+\end_inset
+
+, then we say the space is 
+\emph on
+uniform
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Uniform models are the simplest examples of random structures.
+ For example, the uniform space 
+\begin_inset Formula $\rS n$
+\end_inset
+
+ of permutations on 
+\begin_inset Formula $n$
+\end_inset
+
+ elements has 
+\begin_inset Formula $\Pr\left(\sigma\right)=1/n!$
+\end_inset
+
+ for each 
+\begin_inset Formula $\sigma\in S_{n}$
+\end_inset
+
+.
+ The uniform random graph model 
+\begin_inset Formula $\rG nM$
+\end_inset
+
+ has 
+\begin_inset Formula $\Pr\left(G\right)={{n \choose 2} \choose M}^{-1}$
+\end_inset
+
+ for each graph 
+\begin_inset Formula $G$
+\end_inset
+
+ on the vertex set 
+\begin_inset Formula $\range n$
+\end_inset
+
+ which has 
+\begin_inset Formula $M$
+\end_inset
+
+ edges.
+ The uniform random regular graph model 
+\begin_inset Formula $\rG nd$
+\end_inset
+
+ is uniform on the set of all 
+\begin_inset Formula $d$
+\end_inset
+
+-regular graphs on the vertex set 
+\begin_inset Formula $\range n$
+\end_inset
+
+, though an explicit formula for the number of such graphs is not known.
+\end_layout
+
+\begin_layout Standard
+As an important example of a (generally) non-uniform model, the (Erd
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+H{o}
+\end_layout
+
+\end_inset
+
+s-R
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+nyi) binomial random graph model 
+\begin_inset Formula $\rG np$
+\end_inset
+
+ has
+\begin_inset Formula 
+\[
+\Pr\left(G\right)=p^{\left|E\left(G\right)\right|}\left(1-p\right)^{{n \choose 2}-\left|E\left(G\right)\right|}
+\]
+
+\end_inset
+
+for each graph 
+\begin_inset Formula $G$
+\end_inset
+
+ on the vertex set 
+\begin_inset Formula $\range n$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $p=1/2$
+\end_inset
+
+, we obtain the uniform model on all graphs on the vertex set 
+\begin_inset Formula $\range n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+One way to conceptualize the binomial model is to consider a sequence of
+ independent coin tosses, where the coin is biased to land heads with probabilit
+y 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Each coin toss corresponds to a particular potential edge, and determines
+ whether that edge is present in the final random graph.
+ When we define more complicated random models, we will often use this kind
+ of informal description rather than giving an explicit formula for each
+ 
+\begin_inset Formula $\Pr\left(\om\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As another example, the uniform model 
+\begin_inset Formula $\rG nM$
+\end_inset
+
+ can be alternatively defined recursively: 
+\begin_inset Formula $\rG n0$
+\end_inset
+
+ is always the trivial graph with no edges, and for each 
+\begin_inset Formula $M>0$
+\end_inset
+
+, to obtain 
+\begin_inset Formula $\rG nM$
+\end_inset
+
+ we choose 
+\begin_inset Formula $G\in\rG n{M-1}$
+\end_inset
+
+ and add one of the 
+\begin_inset Formula ${n \choose 2}-\left(M-1\right)$
+\end_inset
+
+ possible edges at random.
 \end_layout
 
 \begin_layout Standard
@@ -3681,10 +3983,8 @@ begin{note}
 \end_layout
 
 \begin_layout Standard
-I'll leave this section until I'm sure what applications I'll be looking
- at.
- Definitely random graph models, probably random permutations and random
- matrices.
+This section is unfinished, I'll probably want random matrices and maybe
+ the pairing model on random regular graphs
 \end_layout
 
 \begin_layout Standard
@@ -5233,6 +5533,110 @@ This is Stein's original approach, and is effective in wide generality for
 .
 \end_layout
 
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[adapted from {
+\backslash
+cite[Example 4.21]{Ros11}}]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "example:fixed-points"
+
+\end_inset
+
+We will use an example problem to illustrate the principles in this section.
+ We will say a 
+\emph on
+fixed point
+\emph default
+ of a permutation 
+\begin_inset Formula $\sigma\in S_{n}$
+\end_inset
+
+ is an index 
+\begin_inset Formula $k\in\left[n\right]$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\sigma\left(k\right)=k$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\X:S_{n}\to\left\{ 0\right\} \cup\range n$
+\end_inset
+
+ give the number of fixed points in each permutation from 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+.
+ We interpret 
+\begin_inset Formula $\X$
+\end_inset
+
+ as a random variable on the underlying space 
+\begin_inset Formula $\rS n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Now, if 
+\begin_inset Formula $n$
+\end_inset
+
+ is large then fixed points are largely independent of each other, and each
+ of 
+\begin_inset Formula $n$
+\end_inset
+
+ indices has a probability of 
+\begin_inset Formula $1/n$
+\end_inset
+
+ to be a fixed point.
+ So (recalling 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:indicator-expectation"
+
+\end_inset
+
+), we might expect 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+ to be 
+\begin_inset Quotes eld
+\end_inset
+
+close
+\begin_inset Quotes erd
+\end_inset
+
+ to 
+\begin_inset Formula $\Po\left(1\right)$
+\end_inset
+
+.
+ We will attempt to bound 
+\begin_inset Formula $d_{\TV}\left(\X,\Po\left(1\right)\right)$
+\end_inset
+
+ to quantify this intuition.
+\end_layout
+
 \begin_layout Standard
 The general idea is that we can use an object 
 \begin_inset Formula $\eX$
@@ -5541,7 +5945,7 @@ We are particularly interested in exchangeable pairs
 \end_inset
 
  is defined on an underlying combinatorial probability space 
-\begin_inset Formula $\left(\Om,\Om,\Pr\right)$
+\begin_inset Formula $\left(\Om,2^{\Om},\Pr\right)$
 \end_inset
 
 , it is often convenient to first construct an exchangeable pair 
@@ -5582,6 +5986,90 @@ We are particularly interested in exchangeable pairs
 \end_inset
 
  is connected also.
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "example:fixed-points-exchangeable-pair"
+
+\end_inset
+
+We continue 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:fixed-points"
+
+\end_inset
+
+.
+ We will define a specific exchangeable pair 
+\begin_inset Formula $\mathbf{W}=\left(W_{1},W_{2}\right)$
+\end_inset
+
+ with margins 
+\begin_inset Formula $\rS n$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\[
+\Pr\left(\left(W_{1},W_{2}\right)=\left(\sigma_{1},\sigma_{2}\right)\right)=\begin{cases}
+\left(n!{n \choose 2}\right)^{-1} & \mbox{if }\sigma_{1}=\sigma_{2}\left(\i\,\ii\right)\mbox{ for some transposition \ensuremath{\left(\i\,\ii\right)}}\\
+0 & \mbox{otherwise}.
+\end{cases}
+\]
+
+\end_inset
+
+The relation of differing by a transposition is symmetric, so 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+ is indeed an exchangeable pair.
+ The Markov chain associated with 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+ has a simple interpretation.
+ Given a random permutation 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, to make a transition in the Markov chain we just randomly choose one of
+ the 
+\begin_inset Formula ${n \choose 2}$
+\end_inset
+
+ possible transpositions and compose it with 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ Because the transpositions generate 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+, the pair 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+ is connected, so we can use the construction from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:underlying-pair"
+
+\end_inset
+
+ to produce a connected exchangeable pair 
+\begin_inset Formula $\eX$
+\end_inset
+
+ with margins 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -6087,10 +6575,10 @@ reference "example:poisson-bound"
 
 This approximation is effective when 
 \begin_inset Formula 
-\begin{align*}
-\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & \approx\lambda/c,\\
-\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right) & \approx\X_{1}/c.
-\end{align*}
+\begin{align}
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & \approx\lambda/c,\label{eq:immigration-death}\\
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right) & \approx\X_{1}/c.\nonumber 
+\end{align}
 
 \end_inset
 
@@ -6125,6 +6613,436 @@ reference "rem:underlying-pair"
 \end_inset
 
 ) that (uniformly) randomly disturbs local structure.
+ The conclusion to 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:fixed-points"
+
+\end_inset
+
+ should make this clear:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+We continue 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:fixed-points"
+
+\end_inset
+
+, recalling the exchangeable pairs 
+\begin_inset Formula $\mathbf{W}$
+\end_inset
+
+ and 
+\begin_inset Formula $\eX$
+\end_inset
+
+ from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:fixed-points-exchangeable-pair"
+
+\end_inset
+
+.
+ The interpretation of 
+\begin_inset Formula 
+\[
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)=\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)
+\]
+
+\end_inset
+
+ is the probability of a transposition destroying exactly one out of an
+ existing 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ fixed points.
+ In order to destroy exactly one fixed point, we have to choose a fixed
+ point to destroy, and swap it with a non-fixed-point.
+ There are 
+\begin_inset Formula $\X_{1}\left(n-\X_{1}\right)$
+\end_inset
+
+ out of 
+\begin_inset Formula ${n \choose 2}$
+\end_inset
+
+ transpositions that do this, so
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)=\frac{\X_{1}\left(n-\X_{1}\right)}{{n \choose 2}}.
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+Next, we will find a formula for 
+\begin_inset Formula $\Pr\left(\X\left(W_{2}\right)=\X\left(W_{1}\right)+1|W_{1}\right)$
+\end_inset
+
+, noting that 
+\begin_inset Formula 
+\[
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)=\E\left[\Pr\left(\X\left(W_{2}\right)=\X\left(W_{1}\right)+1|W_{1}\right)|\X_{1}\right].
+\]
+
+\end_inset
+
+In order to create exactly one fixed point, we have to choose an index 
+\begin_inset Formula $k$
+\end_inset
+
+ that is not fixed in 
+\begin_inset Formula $W_{1}$
+\end_inset
+
+ (there are 
+\begin_inset Formula $n-\X_{1}$
+\end_inset
+
+ such) and compose 
+\begin_inset Formula $W_{1}$
+\end_inset
+
+ with 
+\begin_inset Formula $\left(k\,\sigma\left(k\right)\right)$
+\end_inset
+
+.
+ This creates exactly one fixed point unless 
+\begin_inset Formula $\sigma^{-1}\left(k\right)=k$
+\end_inset
+
+, in which case it creates two.
+ We have counted this second case twice for every transposition in the cycle
+ decomposition of 
+\begin_inset Formula $W_{1}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $Y$
+\end_inset
+
+ be the number of transpositions in the cycle decomposition of 
+\begin_inset Formula $W_{1}$
+\end_inset
+
+.
+ We have 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)=\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{{n \choose 2}}.
+\]
+
+\end_inset
+
+In order to satisfy 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:immigration-death"
+
+\end_inset
+
+ as closely as possible, we choose
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $c={n \choose 2}/n$
+\end_inset
+
+.
+ Recalling that 
+\begin_inset Formula $\E\X_{1}=1$
+\end_inset
+
+, we then have
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\begin{align*}
+\E\left|1-c\Pr\left(X_{2}=X_{1}+1|X_{1}\right)\right| & =\E\left[1-\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{n}\right]\\
+ & =1/n+2\E Y/n,\\
+\E\left|X_{1}-c\Pr\left(X_{2}=X_{1}-1|X_{1}\right)\right| & =\E\left[\X_{1}-\frac{\X_{1}\left(n-\X_{1}\right)}{n}\right]\\
+ & =\E\left[\X_{1}^{2}\right]/n.
+\end{align*}
+
+\end_inset
+
+Now, the probability that a transposition 
+\begin_inset Formula $\left(\i\,\ii\right)$
+\end_inset
+
+ is in the cycle decomposition of 
+\begin_inset Formula $W_{1}$
+\end_inset
+
+ is 
+\begin_inset Formula $\left(n\left(n-1\right)\right)^{-1}$
+\end_inset
+
+ because 
+\begin_inset Formula $\i$
+\end_inset
+
+ must map to 
+\begin_inset Formula $\ii$
+\end_inset
+
+ out of the 
+\begin_inset Formula $n$
+\end_inset
+
+ possible options in 
+\begin_inset Formula $\range n$
+\end_inset
+
+, then 
+\begin_inset Formula $\ii$
+\end_inset
+
+ must map to 
+\begin_inset Formula $\i$
+\end_inset
+
+ out of the 
+\begin_inset Formula $n-1$
+\end_inset
+
+ possible options in 
+\begin_inset Formula $\range n\backslash\left\{ \ii\right\} $
+\end_inset
+
+.
+ There are 
+\begin_inset Formula ${n \choose 2}=n\left(n-1\right)/2$
+\end_inset
+
+ possible transpositions so by
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:indicator-expectation"
+
+\end_inset
+
+ it follows that
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\begin_inset Formula $\E Y=1/2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Now, 
+\begin_inset Formula $\E\left[\X_{1}\left(\X_{1}-1\right)/2\right]$
+\end_inset
+
+ is the expected number of unordered pairs of distinct fixed points in a
+ permutation 
+\begin_inset Formula $\sigma\in\rS n$
+\end_inset
+
+.
+ For any unordered pair of distinct indices 
+\begin_inset Formula $\left\{ \i,\ii\right\} $
+\end_inset
+
+, the probability that both are fixed is 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\left(n\left(n-1\right)\right)^{-1}$
+\end_inset
+
+ because 
+\begin_inset Formula $\i$
+\end_inset
+
+ must map to 
+\begin_inset Formula $\i$
+\end_inset
+
+ out of the 
+\begin_inset Formula $n$
+\end_inset
+
+ possible options in 
+\begin_inset Formula $\range n$
+\end_inset
+
+, then 
+\begin_inset Formula $\ii$
+\end_inset
+
+ must map to 
+\begin_inset Formula $\ii$
+\end_inset
+
+ out of the 
+\begin_inset Formula $n-1$
+\end_inset
+
+ possible options in 
+\begin_inset Formula $\range n\backslash\left\{ \i\right\} $
+\end_inset
+
+.
+ The total number of unordered pairs is 
+\begin_inset Formula ${n \choose 2}=n\left(n-1\right)/2$
+\end_inset
+
+, so again applying 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:indicator-expectation"
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+, we have 
+\begin_inset Formula $\E\left[\X_{1}\left(\X_{1}-1\right)/2\right]=1/2$
+\end_inset
+
+ and 
+\begin_inset Formula $\E\left[\X_{1}^{2}\right]=2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+We conclude that 
+\begin_inset Formula $d_{\TV}\left(\X,\Po\left(1\right)\right)\le4/n$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
