@@ -4,13 +4,19 @@
 \begin_header
 \textclass article
 \begin_preamble
-%clickable links
+% clickable links
 \usepackage[bookmarks,hidelinks]{hyperref} 
 
-%cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
-%LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
+% list hackery
+\usepackage{enumitem}
+\setlist[enumerate]{label=\textup{(\roman*)},topsep=-5pt}
+\setlist[itemize]{topsep=-5pt}
+
+% cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
 \usepackage[nameinlink,capitalise]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
+
+% LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
 \theoremstyle{plain}
 \newtheorem{mythm}{\protect\theoremname}[section]
 \renewenvironment{thm}{\begin{mythm}}{\end{mythm}}
@@ -38,31 +44,45 @@
 \theoremstyle{remark}
 \newtheorem{myclaim}[mythm]{\protect\claimname}
 \renewenvironment{claim}{\begin{myclaim}}{\end{myclaim}}
+
+% equation cref format
 \crefformat{equation}{#2(#1)#3}
 
-%ordered lists should use parens instead of a point
+% make cref play nicely with different kinds of lists
+\newlist{conditions}{enumerate}{3}
+\setlist[conditions]{label=\textup{(\roman*)},topsep=-5pt}
+\if@cref@capitalise
+  \crefname{conditions}{Condition}{Conditions}
+\else
+  \crefname{conditions}{Condition}{Conditions}
+\fi
+\crefalias{conditionsi}{conditions}
+\crefalias{conditionsii}{conditions}
+\crefalias{conditionsiii}{conditions}
+
+% ordered lists should use parens instead of a point
 %\renewcommand\theenumi{\arabic{enumi}}
 %\renewcommand\labelenumi{(\theenumi)}
 
-%\left(\right) should behave the same as ()
+% \left(\right) should behave the same as ()
 \let\originalleft\left
 \let\originalright\right
 \renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
 \renewcommand{\right}{\aftergroup\egroup\originalright}
 
-%table of contents spacing tweaks
+% table of contents spacing tweaks
 \usepackage{tocloft}
 \setlength\cftparskip{-2pt}
 \setlength\cftbeforesecskip{1pt}
 \setlength\cftaftertoctitleskip{2pt}
 
-%comment environment
+% comment environment
 \usepackage{verbatim}
 
-%mainly for light colours color!percent
+% mainly for light colours color!percent
 \usepackage{xcolor}
 
-%shaded WIP notes
+% shaded WIP notes
 \theoremstyle{definition}
 \newtheorem{commentthm}{Comment}[section]
 \newtheorem{todothm}[commentthm]{Issue}
@@ -157,7 +177,7 @@ Matthew Kwan
 
 \begin_layout Standard
 \begin_inset Branch Folded
-status collapsed
+status open
 
 \begin_layout Standard
 \begin_inset ERT
@@ -471,7 +491,7 @@ For this thesis, the set of natural numbers
 \begin_inset Formula $\one_{A}$
 \end_inset
 
- for the characteristic function of 
+ for the characteristic function of a set 
 \begin_inset Formula $A$
 \end_inset
 
@@ -519,11 +539,7 @@ Unless otherwise specified, all asympotics are as
 \end_inset
 
  means 
-\begin_inset Formula $f=O\left(g\right)$
-\end_inset
-
- and 
-\begin_inset Formula $g=O\left(f\right)$
+\begin_inset Formula $f=\Theta\left(g\right)$
 \end_inset
 
 .
@@ -1055,6 +1071,9 @@ status open
 
 \begin_layout Plain Layout
 
+
+\backslash
+begin{todo}
 \end_layout
 
 \end_inset
@@ -1062,50 +1081,24 @@ status open
 
 \end_layout
 
-\begin_layout Definition
-A 
-\emph on
-probability space
-\emph default
- is a measure space 
-\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\begin_layout Standard
+abuse?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
 \end_inset
 
- with 
-\begin_inset Formula $\Pr\left(\Om\right)=1$
-\end_inset
 
-.
- In this case we say 
-\begin_inset Formula $\Pr$
-\end_inset
-
- is a 
-\emph on
-probability measure
-\emph default
-, and denote the set of all probability measures on 
-\begin_inset Formula $\left(\Om,\cA\right)$
-\end_inset
-
- by 
-\begin_inset Formula $\P\left(\Om,\cA\right)$
-\end_inset
-
- or 
-\begin_inset Formula $\P\left(\Om\right)$
-\end_inset
-
- if there is no ambiguity.
- An 
-\emph on
-event
-\emph default
- is a measurable set 
-\begin_inset Formula $\A\in\cA$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -1197,28 +1190,28 @@ A
 \emph on
 random element
 \emph default
- 
-\begin_inset Formula $\X:\Om_{1}\to\Om_{2}$
-\end_inset
-
- is a measurable function from a probability space 
-\begin_inset Formula $\left(\Om_{1},\cA_{1},\Pr\right)$
-\end_inset
-
- to some measure space 
-\begin_inset Formula $\left(\Om_{2},\cA_{2},\m\right)$
+ is a measurable function 
+\begin_inset Formula $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$
 \end_inset
 
 .
- If the target measure space is 
-\begin_inset Formula $\RR^{n}$
+ If 
+\begin_inset Formula $\Om_{2}=\RR^{n}$
 \end_inset
 
- with the Borel 
+ and 
+\begin_inset Formula $\cA_{2}$
+\end_inset
+
+ is the Borel 
 \begin_inset Formula $\sigma$
 \end_inset
 
--algebra and the Lebesgue measure, then we say 
+-algebra on 
+\begin_inset Formula $\RR^{n}$
+\end_inset
+
+, then we say 
 \begin_inset Formula $\X$
 \end_inset
 
@@ -1240,10 +1233,10 @@ random variable
 \emph default
 .
  If 
-\begin_inset Formula $\X$
+\begin_inset Formula $\Om_{2}$
 \end_inset
 
- only takes countably many values then we say 
+ is countable then we say 
 \begin_inset Formula $\X$
 \end_inset
 
@@ -1255,7 +1248,7 @@ discrete
 \end_layout
 
 \begin_layout Standard
-If the underlying probability space 
+Note that if 
 \family roman
 \series medium
 \shape up
@@ -1275,7 +1268,49 @@ If the underlying probability space
 \end_layout
 
 \begin_layout Standard
+If 
+\begin_inset Formula $\left(\Om_{1},\cA_{1}\right)$
+\end_inset
 
+ is equipped with a probability measure 
+\begin_inset Formula $\Pr$
+\end_inset
+
+, we will use slightly abusive (but standard) notation like 
+\begin_inset Formula $\Pr\left(\X\in\A\right)$
+\end_inset
+
+ to denote 
+\begin_inset Formula $\Pr\left(\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A\right\} \right)$
+\end_inset
+
+, and interpret this as 
+\begin_inset Quotes eld
+\end_inset
+
+the probability that 
+\begin_inset Formula $\X$
+\end_inset
+
+ falls in the set 
+\begin_inset Formula $\A$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that such probabilities depend on an the underlying probability space
+ 
+\begin_inset Formula $\left(\Om_{1},\cA_{1},\Pr\right)$
+\end_inset
+
+.
+ 
 \family roman
 \series medium
 \shape up
@@ -1288,7 +1323,8 @@ If the underlying probability space
 \noun off
 \color none
 We will often be interested in the probability that a random element takes
- certain values, without regard to the underlying probability space.
+ certain values, without regard to any particular underlying probability
+ space.
 \end_layout
 
 \begin_layout Definition
@@ -1296,8 +1332,8 @@ Suppose
 \begin_inset Formula $\X$
 \end_inset
 
- is a random element with target measure space 
-\begin_inset Formula $\left(\Om,\cA,\m\right)$
+ is a random element which takes values in the measurable space 
+\begin_inset Formula $\left(\Om,\cA\right)$
 \end_inset
 
 .
@@ -1317,6 +1353,10 @@ law
 \begin_inset Formula $\X$
 \end_inset
 
+ with respect to an underlying probability 
+\begin_inset Formula $\Pr$
+\end_inset
+
  is the pushforward measure with respect to 
 \begin_inset Formula $\X$
 \end_inset
@@ -1331,7 +1371,21 @@ law
 \end_inset
 
 .
- We also occasionally use the notation 
+ Usually, 
+\begin_inset Formula $\X$
+\end_inset
+
+ will have been implicitly defined with respect to a particular underlying
+ probability measure, so we will omit mention of 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ and just write 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+.
+ Also, we occasionally use the notation 
 \begin_inset Formula $\Lb{\X}:=\L{\X}$
 \end_inset
 
@@ -1346,16 +1400,20 @@ It is worth noting that in fact any probability measure is the distribution
 \end_inset
 
 , we can choose 
-\begin_inset Formula $X=\id_{\Om}$
+\begin_inset Formula $\X=\id_{\Om}$
 \end_inset
 
  to have 
 \begin_inset Formula $\L{\X}=\Pr$
 \end_inset
 
+ with respect to the underlying probability measure 
+\begin_inset Formula $\Pr$
+\end_inset
+
 .
- So, it is often convenient to specify random variables by their distributions,
- without defining an underlying probability space.
+ So, it is often convenient to define a probability distribution before
+ specifying a random variable with that distribution.
 \end_layout
 
 \begin_layout Definition
@@ -1368,59 +1426,23 @@ The notation
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-We can use slightly abusive (but standard) notation like 
-\begin_inset Formula $\Pr\left(\X>1\right)$
-\end_inset
-
- to denote 
-\begin_inset Formula $\L{\X}\left(\left\{ x:x>1\right\} \right)$
-\end_inset
-
-.
- This is equal to 
-\begin_inset Formula $\Pr\left(\left\{ \om\in\Om:\X\left(\om\right)>1\right\} \right)$
-\end_inset
-
- for any particular realization of 
+ We say 
 \begin_inset Formula $\X$
 \end_inset
 
- as a function on a probability space 
-\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Definition
-The 
-\emph on
-support
-\emph default
  
-\begin_inset Formula $\supp\left(\X\right)$
-\end_inset
+\emph on
+is distributed as 
+\emph default
 
- of a discrete random element 
-\begin_inset Formula $\X$
-\end_inset
-
- is the set 
-\begin_inset Formula $\left\{ k\in\Om:\Pr\left(\X=k\right)>0\right\} $
+\begin_inset Formula $\L{}$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Example
-If 
-\begin_inset Formula $\X$
-\end_inset
-
- has the normal distribution with parameters 
+The normal distribution with parameters 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -1428,15 +1450,19 @@ If
 \begin_inset Formula $\sigma$
 \end_inset
 
- then we say 
-\begin_inset Formula $\L{\X}=\N\left(\mu,\sigma\right)$
+ is denoted 
+\begin_inset Formula $\N\left(\mu,\sigma\right)$
 \end_inset
 
-; this distribution is defined by 
-\begin_inset Formula $\L{\X}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x$
+ or 
+\begin_inset Formula $\N_{\mu,\sigma}$
 \end_inset
 
- for Borel 
+ and is defined by 
+\begin_inset Formula $\N_{\mu,\sigma}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x$
+\end_inset
+
+ for any Borel set 
 \begin_inset Formula $B$
 \end_inset
 
@@ -1444,48 +1470,60 @@ If
 \end_layout
 
 \begin_layout Standard
-If 
+For a discrete random variable, we can naturally define the set of values
+ on which it is supported.
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+support
+\emph default
+ of a discrete random element 
 \begin_inset Formula $\X$
 \end_inset
 
- is discrete, then 
+ is the set 
+\begin_inset Formula 
+\[
+\supp\left(\X\right)=\left\{ k\in\Om:\Pr\left(\X=k\right)>0\right\} .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
- is just an assignment of a probability to each possible value.
-\end_layout
-
-\begin_layout Example
-If 
-\begin_inset Formula $\X$
-\end_inset
-
- is Poisson distributed with parameter 
-\begin_inset Formula $\lambda$
-\end_inset
-
-, we write 
-\begin_inset Formula $\L{\X}=\Po\left(\lambda\right)=\Po_{\lambda}$
-\end_inset
-
-; this is defined by 
-\begin_inset Formula $\Pr\left(\X=k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
+ is just an assignment of a probability to each value in 
+\begin_inset Formula $\supp\left(\X\right)$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
+\begin_layout Example
+The Poisson distribution with parameter 
+\begin_inset Formula $\lambda$
 \end_inset
 
+ is denoted 
+\begin_inset Formula $\Po\left(\lambda\right)=\Po_{\lambda}$
+\end_inset
 
+; this is defined by 
+\begin_inset Formula $\Po_{\lambda}\left(k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
+\end_inset
+
+ for all 
+\begin_inset Formula $k\in\NN$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Definition
@@ -1511,7 +1549,7 @@ For a random variable
 
  that takes integer values, this definition is equivalent to the well-known
  formula 
-\begin_inset Formula $\E\X=\sum_{x\in\ZZ}x\Pr\left(\X=x\right)$
+\begin_inset Formula $\E\X=\sum_{x\in\ZZ}x\,\Pr\left(\X=x\right)$
 \end_inset
 
 .
@@ -1546,7 +1584,11 @@ If
 \end_inset
 
 th object satisfies our property.
- We have 
+ Noting that 
+\begin_inset Formula $\E$
+\end_inset
+
+ is linear, we have 
 \begin_inset Formula $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$
 \end_inset
 
@@ -1566,20 +1608,15 @@ If we fix a particular underlying probability space
 
 , we can also equivalently view expectation as a linear functional on the
  space of integrable functions: 
-\begin_inset Formula $\E\X=\int\X\left(\om\right)\d\Pr$
+\begin_inset Formula $\E f=\int f\left(\om\right)\d\Pr$
 \end_inset
 
 .
- So, 
-\begin_inset Formula $\E$
-\end_inset
-
- is defined in terms of a particular underlying probability space.
  Sometimes we will define a new probability space 
 \begin_inset Formula $\left(\Om,\cA,\Pr'\right)$
 \end_inset
 
- by changing the measure on the same underlying set.
+ on an existing measurable space.
  In this case we will write 
 \begin_inset Formula $\E_{\Pr'}$
 \end_inset
@@ -1595,6 +1632,10 @@ If we fix a particular underlying probability space
 In fact, the expectation functional defines its underlying probability measure,
  because 
 \begin_inset Formula $\E\one_{\A}=\Pr\left(\A\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $\A$
 \end_inset
 
 .
@@ -1713,11 +1754,18 @@ independent
 \end_inset
 
 .
- If 
-\begin_inset Formula $S=\left\{ \A\right\} $
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\left\{ \A\right\} $
 \end_inset
 
- contained a single set, then we say 
+ is independent of 
+\begin_inset Formula $S'$
+\end_inset
+
+, we also say that 
 \begin_inset Formula $\A$
 \end_inset
 
@@ -1726,74 +1774,29 @@ independent
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-Let 
-\begin_inset Formula $\left(\Om_{1},\cA_{1},\Pr\right)$
-\end_inset
-
- be a probability space and 
-\begin_inset Formula $\left(\Om_{2},\cA_{2},\m\right)$
-\end_inset
-
- a measure space.
- Let 
-\begin_inset Formula $\X$
-\end_inset
-
- be a random variable 
-\begin_inset Formula $\Om_{1}\to\Om_{2}$
-\end_inset
-
-, and let 
-\begin_inset Formula $S$
-\end_inset
-
- be the set of all events of the form 
-\begin_inset Formula $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
-\end_inset
-
- for 
-\begin_inset Formula $\A_{2}\in\cA_{2}$
-\end_inset
-
-.
  If 
-\begin_inset Formula $S$
+\begin_inset Formula $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
 \end_inset
 
  is independent of 
 \begin_inset Formula $S'$
 \end_inset
 
- then we say 
+ for some random element 
+\begin_inset Formula $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$
+\end_inset
+
+, then we say 
 \begin_inset Formula $\X$
 \end_inset
 
- itself is independent of 
+ is independent of 
 \begin_inset Formula $S'$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-We can analogously say that two random variables are independent, or a random
- variable and an event are independent, or any similar combination.
+ We can analogously say that two random variables are independent, or a
+ random variable and an event are independent, or any similar combination.
 \end_layout
 
 \begin_layout Definition
@@ -2018,11 +2021,19 @@ Note that if
 \begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]\left(\om\right)=\E\left[\X_{1}|\X_{2}=\X_{2}\left(\om\right)\right]$
 \end_inset
 
- whenever 
+ for all 
+\begin_inset Formula $\om\in\Om$
+\end_inset
+
+ with 
 \begin_inset Formula $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$
 \end_inset
 
-.
+; this defines 
+\begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]$
+\end_inset
+
+ up to a set of probability zero.
 \end_layout
 
 \begin_layout Standard
@@ -2048,11 +2059,24 @@ name "prop:tower-law"
 
 \end_inset
 
+Suppose 
+\begin_inset Formula $\X_{1}$
+\end_inset
 
+ and 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ are random variables defined on the same underlying probability space 
+\begin_inset Formula $\left(\Om,\cA\right)$
+\end_inset
+
+.
+ Then 
 \begin_inset Formula $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Proof
@@ -2441,7 +2465,7 @@ status open
 
 
 \backslash
-begin{enumerate}
+begin{conditions}
 \end_layout
 
 \end_inset
@@ -2556,7 +2580,7 @@ status open
 
 
 \backslash
-end{enumerate}
+end{conditions}
 \end_layout
 
 \end_inset
@@ -2607,7 +2631,10 @@ reference "prop:dist-F"
 
 .
  This characterization is usually used to prove the Poisson limit theorem.
- L
+\end_layout
+
+\begin_layout Standard
+Classically, distributional convergence results are often proved by L
 \begin_inset ERT
 status open
 
@@ -2620,12 +2647,9 @@ status open
 
 \end_inset
 
-vy's continuity theorem is classically used to prove the central limit theorem,
- but we will not discuss it in this thesis.
-\end_layout
-
-\begin_layout Standard
-For combinatorial applications, convergence in distribution can also be
+vy's continuity theorem.
+ For example, this approach is usually used to prove the central limit theorem.
+ For combinatorial applications, convergence in distribution can also be
  proved by the 
 \begin_inset Quotes eld
 \end_inset
@@ -2664,8 +2688,8 @@ method of moments
 \end_layout
 
 \begin_layout Standard
-A disadvantage of all these approaches is that it is difficult to quantify
- the rate of convergence.
+A disadvantage of all these approaches is that they provide little information
+ about the rate of convergence.
 \end_layout
 
 \begin_layout Standard
@@ -2726,7 +2750,8 @@ status open
 \end_inset
 
 vy metric.
- For Stein's method we will be interested in some slightly stronger metrics.
+ For Stein's method we will be interested in some slightly stronger metrics,
+ which we will now define.
 \end_layout
 
 \begin_layout Definition
@@ -2825,14 +2850,6 @@ end{todo}
 
 \end_layout
 
-\begin_layout Standard
-Each 
-\begin_inset Formula $d_{\cH}$
-\end_inset
-
- is non-negative, symmetric and satisfies the triangle inequality.
-\end_layout
-
 \begin_layout Definition
 A set of real functions 
 \begin_inset Formula $\cH$
@@ -2858,7 +2875,12 @@ determining class
 \end_layout
 
 \begin_layout Standard
-To check that 
+Each 
+\begin_inset Formula $d_{\cH}$
+\end_inset
+
+ is non-negative, symmetric and satisfies the triangle inequality.
+ Hence, to check that 
 \begin_inset Formula $d_{\cH}$
 \end_inset
 
@@ -3022,7 +3044,7 @@ If
 \begin_inset Formula $B$
 \end_inset
 
-, 
+, then 
 \begin_inset Formula $d_{\TV}:=d_{\cH_{\TV}}$
 \end_inset
 
@@ -3159,7 +3181,7 @@ For
 \end_inset
 
  for each 
-\begin_inset Formula $n\in\NN$
+\begin_inset Formula $\varepsilon>0$
 \end_inset
 
 .
@@ -3184,7 +3206,7 @@ For
 \end_inset
 
 .
- We have again proved that 
+ We have proved that 
 \begin_inset Formula $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
 \end_inset
 
@@ -3251,12 +3273,12 @@ reference "prop:dist"
 
 \begin_layout Proof
 Now, suppose 
-\begin_inset Formula $d_{\K}\left(\X_{n},\X\right)\to0$
+\begin_inset Formula $d_{\W}\left(\X_{n},\X\right)\to0$
 \end_inset
 
 .
  Let 
-\begin_inset Formula $d_{n}=\sqrt{d_{\K}\left(\X_{n},\X\right)}$
+\begin_inset Formula $d_{n}=\sqrt{d_{\W}\left(\X_{n},\X\right)}$
 \end_inset
 
  and recall the definition of 
@@ -3272,7 +3294,7 @@ reference "prop:metric"
 
 .
  Since 
-\begin_inset Formula $d_{n}\h_{x,d_{n}}\in\cH_{\K}$
+\begin_inset Formula $d_{n}\h_{x,d_{n}}\in\cH_{\W}$
 \end_inset
 
  for each 
@@ -3280,7 +3302,11 @@ reference "prop:metric"
 \end_inset
 
 , we have 
-\begin_inset Formula $\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\K}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0$
+\begin_inset Formula 
+\[
+\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\W}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0
+\]
+
 \end_inset
 
  uniformly for 
@@ -3289,7 +3315,11 @@ reference "prop:metric"
 
 .
  Now, note that 
-\begin_inset Formula $\F_{\X}\left(x-\varepsilon\right)\le\E_{\X}h_{x-\varepsilon,\varepsilon}\le\F_{\X}\left(x\right)\le\E_{\X}h_{x,\varepsilon}\le\F_{\X}\left(x+\varepsilon\right)$
+\begin_inset Formula 
+\[
+\F_{\X}\left(x-\varepsilon\right)\le\E_{\X}h_{x-\varepsilon,\varepsilon}\le\F_{\X}\left(x\right)\le\E_{\X}h_{x,\varepsilon}\le\F_{\X}\left(x+\varepsilon\right)
+\]
+
 \end_inset
 
  for any random variable 
@@ -3346,6 +3376,7 @@ reference "prop:stronger-than-weak"
  It is sometimes possible to transfer results between metrics, though this
  usually results in worse constants than working directly in the desired
  metric.
+ We now prove some transfer results.
 \end_layout
 
 \begin_layout Standard
@@ -3397,7 +3428,11 @@ If
 \begin_inset Formula $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
 \end_inset
 
- then 
+ for some 
+\begin_inset Formula $f_{\X}$
+\end_inset
+
+, then 
 \begin_inset Formula $f_{\X}$
 \end_inset
 
@@ -3541,11 +3576,11 @@ name "prop:transfer-K/W"
 \end_inset
 
 If 
-\begin_inset Formula $\X_{2}$
+\begin_inset Formula $\left|f_{\X_{2}}\left(x\right)\right|\le C$
 \end_inset
 
- has Lebesgue density bounded by 
-\begin_inset Formula $C$
+ for all 
+\begin_inset Formula $x$
 \end_inset
 
 , then 
@@ -3597,16 +3632,24 @@ reference "prop:stronger-than-weak"
 \end_inset
 
 ,
+\begin_inset VSpace -10pt
+\end_inset
+
+
 \begin_inset Formula 
 \begin{eqnarray*}
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le & \left(\E_{\X_{n}}\h_{x,\varepsilon}-\E_{\X}\h_{x,\varepsilon}\right)+\left(\E_{\X}\h_{x,\varepsilon}-\F_{\X}\left(x\right)\right)\\
- & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}f_{\X}\left(x\right)\d x\\
+ & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}\, f_{\X}\left(x\right)\d x\\
  & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+C\varepsilon/2
 \end{eqnarray*}
 
 \end_inset
 
 and similarly
+\begin_inset VSpace -10pt
+\end_inset
+
+
 \begin_inset Formula 
 \begin{eqnarray*}
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge & -d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon-C\varepsilon/2,
@@ -3634,6 +3677,14 @@ If
 \end_inset
 
  then 
+\begin_inset Formula $f_{\X_{2}}\left(x\right)=\left(2\pi\right)^{-1/2}e^{-x^{2}/2}$
+\end_inset
+
+ so we can take 
+\begin_inset Formula $C=\left(2\pi\right)^{-1/2}$
+\end_inset
+
+ to obtain 
 \begin_inset Formula $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\W}\left(\X_{1},\X_{2}\right)}$
 \end_inset
 
@@ -4538,7 +4589,7 @@ reference "eq:U_0-characterizing"
 \begin_inset Formula $\To\left(\Uo\h\right)=\h$
 \end_inset
 
- and 
+ and hence 
 \begin_inset Formula $\h\in\im\To$
 \end_inset
 
@@ -4636,7 +4687,7 @@ For any
 , integration by parts gives
 \begin_inset Formula 
 \[
-\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0
+\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)\d t-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0
 \]
 
 \end_inset
@@ -4665,19 +4716,19 @@ reference "eq:E_0T_0-consistency"
 
 \end_inset
 
-By the product rule and the fundamental theorem of calculus, for all 
+By the product rule and the Fundamental Theorem of Calculus, for all 
 \begin_inset Formula $\h\in\cX_{\N}$
 \end_inset
 
  we have
 \begin_inset Formula 
 \begin{align*}
-\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h,
+\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h.
 \end{align*}
 
 \end_inset
 
-so 
+Hence, 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:U_0-characterizing"
@@ -5421,7 +5472,7 @@ end{todo}
 \end_layout
 
 \begin_layout Subsection
-The method of Exchangeable Pairs
+The method of exchangeable pairs
 \end_layout
 
 \begin_layout Standard
@@ -5921,7 +5972,7 @@ We say an exchangeable pair
 \emph on
 connected
 \emph default
- if its Markov chain is irreducible.
+ if the corresponding Markov chain is irreducible.
 \end_layout
 
 \begin_layout Remark
@@ -6127,12 +6178,12 @@ is a connected exchangeable pair with margins
 \begin_inset Formula $\fX:\OmX^{2}\to\RR$
 \end_inset
 
- that are antisymmetric in the sense that 
-\begin_inset Formula $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
+ which satisfy 
+\begin_inset Formula $\E\left|\fX\left(\eX\right)\right|<\infty$
 \end_inset
 
- and satisfy 
-\begin_inset Formula $\E\left|\fX\left(\eX\right)\right|<\infty$
+, and are antisymmetric in the sense that 
+\begin_inset Formula $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
 \end_inset
 
 .
@@ -6157,7 +6208,7 @@ Define
 \end_inset
 
  by 
-\begin_inset Formula $\TX\fX\left(x\right)=\sum_{x'\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$
+\begin_inset Formula $\TX\fX\left(x\right)=\sum_{x_{2}\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$
 \end_inset
 
 , so that 
@@ -6259,7 +6310,7 @@ We will next prove
 \begin_inset Formula $\hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\hX_{x}$
 \end_inset
 
-for each 
+ for each 
 \begin_inset Formula $\hX\in\XX$
 \end_inset
 
@@ -6307,7 +6358,7 @@ Let
 \begin_inset Formula $\hX\in\ker\E_{\X}$
 \end_inset
 
-, and fix arbitrary 
+, and fix an arbitrary 
 \begin_inset Formula $x^{*}\in\OmX$
 \end_inset
 
@@ -6468,7 +6519,7 @@ so
 \begin_inset Formula $\FX$
 \end_inset
 
- and converges to some 
+ which converges to some 
 \begin_inset Formula $\fX\in\FX$
 \end_inset
 
@@ -6545,7 +6596,7 @@ for some
  We will then have
 \begin_inset Formula 
 \[
-\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
+\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
 \]
 
 \end_inset
@@ -6568,7 +6619,7 @@ reference "example:poisson-bound"
 : 
 \begin_inset Formula 
 \[
-\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
 \]
 
 \end_inset

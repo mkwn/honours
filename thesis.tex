@@ -1,4 +1,4 @@
-%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,english]{article}
 \usepackage[T1]{fontenc}
@@ -37,13 +37,19 @@
   \newtheorem{claim}[thm]{\protect\claimname}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
-%clickable links
+% clickable links
 \usepackage[bookmarks,hidelinks]{hyperref} 
 
-%cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
-%LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
+% list hackery
+\usepackage{enumitem}
+\setlist[enumerate]{label=\textup{(\roman*)},topsep=-5pt}
+\setlist[itemize]{topsep=-5pt}
+
+% cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
 \usepackage[nameinlink,capitalise]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
+
+% LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
 \theoremstyle{plain}
 \newtheorem{mythm}{\protect\theoremname}[section]
 \renewenvironment{thm}{\begin{mythm}}{\end{mythm}}
@@ -71,31 +77,45 @@
 \theoremstyle{remark}
 \newtheorem{myclaim}[mythm]{\protect\claimname}
 \renewenvironment{claim}{\begin{myclaim}}{\end{myclaim}}
+
+% equation cref format
 \crefformat{equation}{#2(#1)#3}
 
-%ordered lists should use parens instead of a point
+% make cref play nicely with different kinds of lists
+\newlist{conditions}{enumerate}{3}
+\setlist[conditions]{label=\textup{(\roman*)},topsep=-5pt}
+\if@cref@capitalise
+  \crefname{conditions}{Condition}{Conditions}
+\else
+  \crefname{conditions}{Condition}{Conditions}
+\fi
+\crefalias{conditionsi}{conditions}
+\crefalias{conditionsii}{conditions}
+\crefalias{conditionsiii}{conditions}
+
+% ordered lists should use parens instead of a point
 %\renewcommand\theenumi{\arabic{enumi}}
 %\renewcommand\labelenumi{(\theenumi)}
 
-%\left(\right) should behave the same as ()
+% \left(\right) should behave the same as ()
 \let\originalleft\left
 \let\originalright\right
 \renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
 \renewcommand{\right}{\aftergroup\egroup\originalright}
 
-%table of contents spacing tweaks
+% table of contents spacing tweaks
 \usepackage{tocloft}
 \setlength\cftparskip{-2pt}
 \setlength\cftbeforesecskip{1pt}
 \setlength\cftaftertoctitleskip{2pt}
 
-%comment environment
+% comment environment
 \usepackage{verbatim}
 
-%mainly for light colours color!percent
+% mainly for light colours color!percent
 \usepackage{xcolor}
 
-%shaded WIP notes
+% shaded WIP notes
 \theoremstyle{definition}
 \newtheorem{commentthm}{Comment}[section]
 \newtheorem{todothm}[commentthm]{Issue}
@@ -214,14 +234,14 @@ asymptotic results.
 \subsection{Notation}
 
 For this thesis, the set of natural numbers $\NN$ includes zero.
-We write $\one_{A}$ for the characteristic function of $A$: $\one_{A}\left(x\right)=1$
-if $x\in A$, otherwise $\one_{A}\left(x\right)=0$. Also, $\range k$
-denotes the set $\left\{ 1,\dots,k\right\} $.
+We write $\one_{A}$ for the characteristic function of a set $A$:
+$\one_{A}\left(x\right)=1$ if $x\in A$, otherwise $\one_{A}\left(x\right)=0$.
+Also, $\range k$ denotes the set $\left\{ 1,\dots,k\right\} $.
 
 Unless otherwise specified, all asympotics are as $n\to\infty$. Apart
 from standard asymptotic notation, we use two notions of asymptotic
 equivalence: $f\sim g$ means $f=g\left(1+o\left(1\right)\right)$
-and $f\asymp g$ means $f=O\left(g\right)$ and $g=O\left(f\right)$.
+and $f\asymp g$ means $f=\Theta\left(g\right)$.
 
 In this thesis, unless stated otherwise, graphs are labelled. That
 is, they are distinguished even within isomorphism classes. A graph
@@ -356,14 +376,12 @@ we have only defined one measure on the set $\Om$, we will sometimes
 abuse notation and write $\Pr$ to mean$\left(\Om,\cA,\Pr\right)$,
 and vice versa.
 \end{defn}
+\begin{todo}
 
-\begin{defn}
-A \emph{probability space} is a measure space $\left(\Om,\cA,\Pr\right)$
-with $\Pr\left(\Om\right)=1$. In this case we say $\Pr$ is a \emph{probability
-measure}, and denote the set of all probability measures on $\left(\Om,\cA\right)$
-by $\P\left(\Om,\cA\right)$ or $\P\left(\Om\right)$ if there is
-no ambiguity. An \emph{event} is a measurable set $\A\in\cA$.
-\end{defn}
+abuse?
+
+\end{todo}
+
 For our purposes $\Om$ will often be a finite set of combinatorial
 objects, with $\cA$ as the power set of $\Om$. In this case $\Pr$
 is defined by $\Pr\left(\om\right):=\Pr\left(\left\{ \om\right\} \right)$,
@@ -377,87 +395,93 @@ where $P\left(\om\right)$ is some property of an object $\om$. For
 clarity, we often abuse notation slightly and write $\Pr\left(P\left(\om\right)\mbox{ holds}\right)$
 instead of $\Pr\left(\A\right)$.
 \begin{defn}
-A \emph{random element} $\X:\Om_{1}\to\Om_{2}$ is a measurable function
-from a probability space $\left(\Om_{1},\cA_{1},\Pr\right)$ to some
-measure space $\left(\Om_{2},\cA_{2},\m\right)$. If the target measure
-space is $\RR^{n}$ with the Borel $\sigma$-algebra and the Lebesgue
-measure, then we say $\X$ is a \emph{random vector}; if $n=1$ then
-$\X$ is a \emph{random variable}. If $\X$ only takes countably many
-values then we say $\X$ is \emph{discrete}.
+A \emph{random element} is a measurable function $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$.
+If $\Om_{2}=\RR^{n}$ and $\cA_{2}$ is the Borel $\sigma$-algebra
+on $\RR^{n}$, then we say $\X$ is a \emph{random vector}; if $n=1$
+then $\X$ is a \emph{random variable}. If $\Om_{2}$ is countable
+then we say $\X$ is \emph{discrete}.
 \end{defn}
-If the underlying probability space $\Om_{1}$ is countable, then
-any function is measurable.
+Note that if $\Om_{1}$ is countable, then any function is measurable.
 
-We will often be interested in the probability that a random element
-takes certain values, without regard to the underlying probability
-space.
+If $\left(\Om_{1},\cA_{1}\right)$ is equipped with a probability
+measure $\Pr$, we will use slightly abusive (but standard) notation
+like $\Pr\left(\X\in\A\right)$ to denote $\Pr\left(\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A\right\} \right)$,
+and interpret this as ``the probability that $\X$ falls in the set
+$\A$''.
+
+Note that such probabilities depend on an the underlying probability
+space $\left(\Om_{1},\cA_{1},\Pr\right)$. We will often be interested
+in the probability that a random element takes certain values, without
+regard to any particular underlying probability space.
 \begin{defn}
-Suppose $\X$ is a random element with target measure space $\left(\Om,\cA,\m\right)$.
-The \emph{distribution} (or \emph{law}) $\L{\X}$ of $\X$ is the
-pushforward measure with respect to $\X$. That is, it is a probability
-measure defined by $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)$
-for $\A\subseteq\cA$. We also occasionally use the notation $\Lb{\X}:=\L{\X}$
-for ease of reading.
+Suppose $\X$ is a random element which takes values in the measurable
+space $\left(\Om,\cA\right)$. The \emph{distribution} (or \emph{law})
+$\L{\X}$ of $\X$ with respect to an underlying probability $\Pr$
+is the pushforward measure with respect to $\X$. That is, it is a
+probability measure defined by $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)$
+for $\A\subseteq\cA$. Usually, $\X$ will have been implicitly defined
+with respect to a particular underlying probability measure, so we
+will omit mention of $\Pr$ and just write $\L{\X}$. Also, we occasionally
+use the notation $\Lb{\X}:=\L{\X}$ for ease of reading.
 \end{defn}
 It is worth noting that in fact any probability measure is the distribution
 of some random element. To see this, note that given a probability
-measure $\Pr\in\P\left(\Om\right)$, we can choose $X=\id_{\Om}$
-to have $\L{\X}=\Pr$. So, it is often convenient to specify random
-variables by their distributions, without defining an underlying probability
-space.
+measure $\Pr\in\P\left(\Om\right)$, we can choose $\X=\id_{\Om}$
+to have $\L{\X}=\Pr$ with respect to the underlying probability measure
+$\Pr$. So, it is often convenient to define a probability distribution
+before specifying a random variable with that distribution.
 \begin{defn}
-The notation $\X\in\L{}$ means $\L{\X}=\L{}$.
-\end{defn}
-We can use slightly abusive (but standard) notation like $\Pr\left(\X>1\right)$
-to denote $\L{\X}\left(\left\{ x:x>1\right\} \right)$. This is equal
-to $\Pr\left(\left\{ \om\in\Om:\X\left(\om\right)>1\right\} \right)$
-for any particular realization of $\X$ as a function on a probability
-space $\left(\Om,\cA,\Pr\right)$.
+The notation $\X\in\L{}$ means $\L{\X}=\L{}$. We say $\X$ \emph{is
+distributed as }$\L{}$.\end{defn}
+\begin{example}
+The normal distribution with parameters $\mu$ and $\sigma$ is denoted
+$\N\left(\mu,\sigma\right)$ or $\N_{\mu,\sigma}$ and is defined
+by $\N_{\mu,\sigma}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x$
+for any Borel set $B$.
+\end{example}
+For a discrete random variable, we can naturally define the set of
+values on which it is supported.
 \begin{defn}
-The \emph{support} $\supp\left(\X\right)$ of a discrete random element
-$\X$ is the set $\left\{ k\in\Om:\Pr\left(\X=k\right)>0\right\} $.\end{defn}
-\begin{example}
-If $\X$ has the normal distribution with parameters $\mu$ and $\sigma$
-then we say $\L{\X}=\N\left(\mu,\sigma\right)$; this distribution
-is defined by $\L{\X}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x$
-for Borel $B$.
-\end{example}
-If $\X$ is discrete, then $\L{\X}$ is just an assignment of a probability
-to each possible value.
-\begin{example}
-If $\X$ is Poisson distributed with parameter $\lambda$, we write
-$\L{\X}=\Po\left(\lambda\right)=\Po_{\lambda}$; this is defined by
-$\Pr\left(\X=k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$.
-\end{example}
+The \emph{support} of a discrete random element $\X$ is the set 
+\[
+\supp\left(\X\right)=\left\{ k\in\Om:\Pr\left(\X=k\right)>0\right\} .
+\]
 
+\end{defn}
+Then, $\L{\X}$ is just an assignment of a probability to each value
+in $\supp\left(\X\right)$.
+\begin{example}
+The Poisson distribution with parameter $\lambda$ is denoted $\Po\left(\lambda\right)=\Po_{\lambda}$;
+this is defined by $\Po_{\lambda}\left(k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
+for all $k\in\NN$.\end{example}
 \begin{defn}
 The \emph{expected value }of a random variable $\X$ is $\E\X=\int x\d\L{\X}\left(x\right)$.
 \end{defn}
 For a random variable $\X$ that takes integer values, this definition
-is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\Pr\left(\X=x\right)$.
+is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\,\Pr\left(\X=x\right)$.
 \begin{rem}
 \label{rem:indicator-expectation}If $\X$ is a random variable that
 can be interpreted as counting the number of objects that satisfy
 some property, then we can express $\X$ as a sum of indicator variables
 $\sum_{\i}\one_{\A_{\i}}$, where $\A_{\i}$ is the event that the
-$\i$th object satisfies our property. We have $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$.
-So, in order to compute the expectation of $\X$ we just need to compute
+$\i$th object satisfies our property. Noting that $\E$ is linear,
+we have $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$. So,
+in order to compute the expectation of $\X$ we just need to compute
 the probability that each object satisfies our required property.
 \end{rem}
 If we fix a particular underlying probability space $\left(\Om,\cA,\Pr\right)$,
 we can also equivalently view expectation as a linear functional on
-the space of integrable functions: $\E\X=\int\X\left(\om\right)\d\Pr$.
-So, $\E$ is defined in terms of a particular underlying probability
-space. Sometimes we will define a new probability space $\left(\Om,\cA,\Pr'\right)$
-by changing the measure on the same underlying set. In this case we
-will write $\E_{\Pr'}$ to indicate expecation with respect to the
-measure $\Pr'$, to avoid ambiguity.
+the space of integrable functions: $\E f=\int f\left(\om\right)\d\Pr$.
+Sometimes we will define a new probability space $\left(\Om,\cA,\Pr'\right)$
+on an existing measurable space. In this case we will write $\E_{\Pr'}$
+to indicate expecation with respect to the measure $\Pr'$, to avoid
+ambiguity.
 
 In fact, the expectation functional defines its underlying probability
-measure, because $\E\one_{\A}=\Pr\left(\A\right)$. Since the distribution
-of a random variable is specified by a probability measure, the distribution
-$\Lb{\X}$ of a random variable $\X$ also uniquely defines an expectation
-functional $\E_{\X}:=\E_{\Lb{\X}}$.
+measure, because $\E\one_{\A}=\Pr\left(\A\right)$ for all $\A$.
+Since the distribution of a random variable is specified by a probability
+measure, the distribution $\Lb{\X}$ of a random variable $\X$ also
+uniquely defines an expectation functional $\E_{\X}:=\E_{\Lb{\X}}$.
 
 \begin{comment}
 \begin{defn}
@@ -470,21 +494,14 @@ conditional variance?
 \begin{defn}
 For two collections $S,S'\subseteq\cA_{1}$ of events, we say that
 $S$ and $S'$ are \emph{independent} if $\Pr\left(\A\cap\A'\right)=\Pr\left(\A\right)\Pr\left(\A'\right)$
-for each $\A\in S$ and $\A\in S'$. If $S=\left\{ \A\right\} $ contained
-a single set, then we say $\A$ itself is independent of $S'$.
+for each $\A\in S$ and $\A\in S'$.
 \end{defn}
-
-\begin{defn}
-Let $\left(\Om_{1},\cA_{1},\Pr\right)$ be a probability space and
-$\left(\Om_{2},\cA_{2},\m\right)$ a measure space. Let $\X$ be a
-random variable $\Om_{1}\to\Om_{2}$, and let $S$ be the set of all
-events of the form $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
-for $\A_{2}\in\cA_{2}$. If $S$ is independent of $S'$ then we say
-$\X$ itself is independent of $S'$.
-\end{defn}
-We can analogously say that two random variables are independent,
-or a random variable and an event are independent, or any similar
-combination.
+If $\left\{ \A\right\} $ is independent of $S'$, we also say that
+$\A$ itself is independent of $S'$. If $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
+is independent of $S'$ for some random element $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$,
+then we say $\X$ is independent of $S'$. We can analogously say
+that two random variables are independent, or a random variable and
+an event are independent, or any similar combination.
 \begin{defn}
 If two objects are not independent, then we say they are \emph{dependent}.
 \end{defn}
@@ -522,12 +539,16 @@ then $\E\left[\X|\one_{\A}\right]\left(\om\right)=\E\left[\X|\A\right]$.
 
 Note that if $\X_{2}$ is discrete then we do not need to invoke Radon-Nikodym.
 We can define $\E\left[\X_{1}|\X_{2}\right]$ by $\E\left[\X_{1}|\X_{2}\right]\left(\om\right)=\E\left[\X_{1}|\X_{2}=\X_{2}\left(\om\right)\right]$
-whenever $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$.
+for all $\om\in\Om$ with $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$;
+this defines $\E\left[\X_{1}|\X_{2}\right]$ up to a set of probability
+zero.
 
 We finally present a simple consequence of the definition of conditional
 expectation.
 \begin{prop}
-[Tower Law of Expectation]\label{prop:tower-law}$\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$\end{prop}
+[Tower Law of Expectation]\label{prop:tower-law}Suppose $\X_{1}$
+and $\X_{2}$ are random variables defined on the same underlying
+probability space $\left(\Om,\cA\right)$. Then $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$.\end{prop}
 \begin{proof}
 $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right]$
 \end{proof}
@@ -619,7 +640,7 @@ is defined by $\F_{\X}\left(x\right)=\Pr\left(\X\le x\right)$.\end{defn}
 \begin{thm}
 \label{prop:dist}The following are equivalent.
 
-\begin{enumerate}
+\begin{conditions}
 
 \item \label{prop:dist-def}$\Lb{\X_{n}}\to\Lb{\X}$
 
@@ -629,7 +650,7 @@ for all $x$ where $\F_{\X}$ is continuous
 \item (L\'evy's continuity theorem) $\E e^{it\X_{n}}\to\E e^{it\X}$
 for all $t\in\RR$.
 
-\end{enumerate}
+\end{conditions}
 \end{thm}
 The equivalence of \ref{prop:dist-def,prop:dist-F} is a well-known
 result called the Portmanteau Theorem.
@@ -637,20 +658,20 @@ result called the Portmanteau Theorem.
 When $\X$ and each $\X_{n}$ are integer random variables, then \ref{prop:dist-F}
 reduces to the condition that $\Pr\left(\X_{n}=k\right)\to\Pr\left(\X=k\right)$
 for all $k$. This characterization is usually used to prove the Poisson
-limit theorem. L\'evy's continuity theorem is classically used to
-prove the central limit theorem, but we will not discuss it in this
-thesis.
+limit theorem.
 
-For combinatorial applications, convergence in distribution can also
-be proved by the ``method of moments'': if $\X$ is the only random
-variable with the moments $\left(\E\X^{k}\right)_{k\in\NN}$, then
-$\Lb{\X_{n}}\to\Lb{\X}$ if $\E\X_{n}^{k}\to\E\X^{k}$. Convergence
-in distribution can also sometimes be inferred from stronger forms
-of convergence when $\X$ and all the $\X_{n}$ are coupled to the
-same underlying space.
+Classically, distributional convergence results are often proved by
+L\'evy's continuity theorem. For example, this approach is usually
+used to prove the central limit theorem. For combinatorial applications,
+convergence in distribution can also be proved by the ``method of
+moments'': if $\X$ is the only random variable with the moments
+$\left(\E\X^{k}\right)_{k\in\NN}$, then $\Lb{\X_{n}}\to\Lb{\X}$
+if $\E\X_{n}^{k}\to\E\X^{k}$. Convergence in distribution can also
+sometimes be inferred from stronger forms of convergence when $\X$
+and all the $\X_{n}$ are coupled to the same underlying space.
 
-A disadvantage of all these approaches is that it is difficult to
-quantify the rate of convergence.
+A disadvantage of all these approaches is that they provide little
+information about the rate of convergence.
 
 In functional analysis terms, note that expectation operators are
 bounded linear functionals on the space of real bounded continuous
@@ -658,7 +679,8 @@ functions. Then, $\Lb{\X_{n}}\to\Lb{\X}$ just means that $\E_{\X_{n}}\to\E_{\X}$
 in the weak-star topology. Although $C_{b}\left(\RR\right)^{*}$ is
 not metrizable, the subspace corresponding to $\P\left(\RR\right)$
 is in fact metrizable, with a metric called the L\'evy metric. For
-Stein's method we will be interested in some slightly stronger metrics.
+Stein's method we will be interested in some slightly stronger metrics,
+which we will now define.
 \begin{defn}
 \label{def:general-metrics}Let $\cH$ be a collection of real measurable
 ``test'' functions. Define $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$
@@ -671,16 +693,15 @@ instead of $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$.
 What if there is no supremum or $\E_{\Pr_{1}}\h=\infty$?
 
 \end{todo}
-
-Each $d_{\cH}$ is non-negative, symmetric and satisfies the triangle
-inequality.
 \begin{defn}
 A set of real functions $\cH$ is a \emph{determining class} if $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
 for all $\h\in\cH$ implies that $\Pr_{1}=\Pr_{2}$.
 \end{defn}
-To check that $d_{\cH}$ is a metric, we only need to check that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$
-implies that $\Pr_{1}=\Pr_{2}$. That is, we need to check that $\cH$
-is a determining class.
+Each $d_{\cH}$ is non-negative, symmetric and satisfies the triangle
+inequality. Hence, to check that $d_{\cH}$ is a metric, we only need
+to check that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$ implies that
+$\Pr_{1}=\Pr_{2}$. That is, we need to check that $\cH$ is a determining
+class.
 \begin{defn}
 \label{def:special-metrics}We define some special cases of $d_{\cH}$.\begin{itemize}
 
@@ -694,7 +715,7 @@ constant 1), then $d_{\W}:=d_{\cH_{\W}}$ is called the \emph{Wasserstein
 metric}.
 
 \item If $\cH_{\TV}$ is the set of functions $\one_{B}$ for Borel
-$B$, $d_{\TV}:=d_{\cH_{\TV}}$ is called the \emph{total variation
+$B$, then $d_{\TV}:=d_{\cH_{\TV}}$ is called the \emph{total variation
 metric}.\end{itemize}\end{defn}
 \begin{prop}
 \label{prop:metric}The Kolmogorov, Wasserstein and total variation
@@ -714,10 +735,10 @@ the continuous function which takes the value 1 on the set $\left(-\infty,x\righ
 takes the value 0 on the set $\left[x+\varepsilon,\infty\right)$,
 and is linearly interpolated in the range $\left[x,x+\varepsilon\right]$.
 Since $\varepsilon\h_{x,\varepsilon}\in\cH_{\W}$, we have $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
-for each $n\in\NN$. For each $x\in\RR$, $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$
+for each $\varepsilon>0$. For each $x\in\RR$, $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$
 pointwise and each $\h_{x,1/n}\le1$ so by the dominated convergence
 theorem, $\E_{\Pr_{\i}}\h_{1/n}\to\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
-for each $\i\in\left\{ 1,2\right\} $. We have again proved that $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
+for each $\i\in\left\{ 1,2\right\} $. We have proved that $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
 for all $x\in\RR$.
 \end{proof}
 
@@ -730,12 +751,18 @@ If $d_{\K}\left(\X_{n},\X\right)\to0$ or $d_{\TV}\left(\X_{n},\X\right)\to0$
 then $\F_{\X_{n}}\to\F_{\X}$ uniformly, so certainly \ref{prop:dist-F}
 of \ref{prop:dist} holds.
 
-Now, suppose $d_{\K}\left(\X_{n},\X\right)\to0$. Let $d_{n}=\sqrt{d_{\K}\left(\X_{n},\X\right)}$
+Now, suppose $d_{\W}\left(\X_{n},\X\right)\to0$. Let $d_{n}=\sqrt{d_{\W}\left(\X_{n},\X\right)}$
 and recall the definition of $\h_{x,\varepsilon}$ from the proof
-of \ref{prop:metric}. Since $d_{n}\h_{x,d_{n}}\in\cH_{\K}$ for each
-$n\in\NN$, we have $\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\K}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0$
-uniformly for $x\in\RR$. Now, note that $\F_{\X}\left(x-\varepsilon\right)\le\E_{\X}h_{x-\varepsilon,\varepsilon}\le\F_{\X}\left(x\right)\le\E_{\X}h_{x,\varepsilon}\le\F_{\X}\left(x+\varepsilon\right)$
-for any random variable $\X$. If $\F_{\X}$ is continuous at $x$
+of \ref{prop:metric}. Since $d_{n}\h_{x,d_{n}}\in\cH_{\W}$ for each
+$n\in\NN$, we have 
+\[
+\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\W}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0
+\]
+ uniformly for $x\in\RR$. Now, note that 
+\[
+\F_{\X}\left(x-\varepsilon\right)\le\E_{\X}h_{x-\varepsilon,\varepsilon}\le\F_{\X}\left(x\right)\le\E_{\X}h_{x,\varepsilon}\le\F_{\X}\left(x+\varepsilon\right)
+\]
+ for any random variable $\X$. If $\F_{\X}$ is continuous at $x$
 then 
 \begin{align*}
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le\left(\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\right)+\left(\F_{\X}\left(x+d_{n}\right)-\F_{\X}\left(x\right)\right)\to0\\
@@ -749,7 +776,8 @@ that is consistent with distributional (weak) convergence. All three
 metrics are relevant in their own right, but sometimes one may be
 easier to work with. It is sometimes possible to transfer results
 between metrics, though this usually results in worse constants than
-working directly in the desired metric.
+working directly in the desired metric. We now prove some transfer
+results.
 
 \begin{todo}It may be worthwhile to actually characterize the Wasserstein,
 Kolmogorov and Total Variation topologies. In particular, Wikipedia
@@ -757,8 +785,8 @@ says that Wasserstein convergence is just weak convergence plus convergence
 of the first moment.\end{todo}
 \begin{defn}
 If $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
-then $f_{\X}$ is called the \emph{Lebesgue density} of $\X$, and
-$\X$ is called a \emph{continuous} random variable.
+for some $f_{\X}$, then $f_{\X}$ is called the \emph{Lebesgue density}
+of $\X$, and $\X$ is called a \emph{continuous} random variable.
 \end{defn}
 If $\X$ is a continuous random variable, then by the Radon-Nikodym
 chain rule $\E_{\X}\h=\int_{\RR}\h\left(x\right)f_{\X}\left(x\right)\d x$.
@@ -767,26 +795,27 @@ Let $\X_{1},\X_{2}$ be random variables.\begin{enumerate}
 
 \item \label{prop:transfer-K/TV}$d_{\K}\left(\X_{1},\X_{2}\right)\le d_{\TV}\left(\X_{1},\X_{2}\right)$
 
-\item \label{prop:transfer-K/W}If $\X_{2}$ has Lebesgue density
-bounded by $C$, then $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\W}\left(\X_{1},\X_{2}\right)}$.
+\item \label{prop:transfer-K/W}If $\left|f_{\X_{2}}\left(x\right)\right|\le C$
+for all $x$, then $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\W}\left(\X_{1},\X_{2}\right)}$.
 
 \end{enumerate}\end{prop}
 \begin{proof}
 (Adapted from \cite[Proposition 1.2]{Ros11}). \ref{prop:transfer-K/TV}
-is immediate from the definition. Then, as in the proof of \ref{prop:stronger-than-weak},
+is immediate from the definition. Then, as in the proof of \ref{prop:stronger-than-weak},\vspace{-10pt}
 \begin{eqnarray*}
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le & \left(\E_{\X_{n}}\h_{x,\varepsilon}-\E_{\X}\h_{x,\varepsilon}\right)+\left(\E_{\X}\h_{x,\varepsilon}-\F_{\X}\left(x\right)\right)\\
- & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}f_{\X}\left(x\right)\d x\\
+ & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}\, f_{\X}\left(x\right)\d x\\
  & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+C\varepsilon/2
 \end{eqnarray*}
-and similarly
+and similarly\vspace{-10pt}
 \begin{eqnarray*}
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge & -d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon-C\varepsilon/2,
 \end{eqnarray*}
 So, we can take $\varepsilon=\sqrt{2d_{\W}\left(\X_{1},\X_{2}\right)/C}$
 to prove \ref{prop:transfer-K/W}.\end{proof}
 \begin{example}
-If $\L{\X_{2}}=\N\left(0,1\right)$ then $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\W}\left(\X_{1},\X_{2}\right)}$.
+If $\L{\X_{2}}=\N\left(0,1\right)$ then $f_{\X_{2}}\left(x\right)=\left(2\pi\right)^{-1/2}e^{-x^{2}/2}$
+so we can take $C=\left(2\pi\right)^{-1/2}$ to obtain $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\W}\left(\X_{1},\X_{2}\right)}$.
 \end{example}
 In a combinatorial setting, many of our results are about integer
 random variables. The total variation metric is usually exclusively
@@ -982,7 +1011,7 @@ prove that. Also, is $\Uo$  bounded?\end{todo}
 
 Conversely, suppose \ref{eq:E_0T_0-consistency} holds and $\Uo$
 exists satisfying \ref{eq:U_0-characterizing}. For $\h\in\ker\Eo$
-we have $\To\left(\Uo\h\right)=\h$ and $\h\in\im\To$, so $\ker\Eo\subseteq\im\To$.
+we have $\To\left(\Uo\h\right)=\h$ and hence $\h\in\im\To$, so $\ker\Eo\subseteq\im\To$.
 Equation \ref{eq:E_0T_0-consistency} immediately says that $\im\To\subseteq\ker\Eo$,
 so $\To$ is a characterizing operator.
 \end{proof}
@@ -998,19 +1027,19 @@ is a characterizing operator for $\N\left(0,1\right)$.\end{thm}
 \begin{proof}
 For any $f\in\cF_{\N}$, integration by parts gives
 \[
-\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0
+\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)\d t-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0
 \]
 so $\E_{\N}\T_{\N}=0$ and \ref{eq:E_0T_0-consistency} holds. Then,
 define $\U_{\N}$ by 
 \[
 \U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.
 \]
-By the product rule and the fundamental theorem of calculus, for all
+By the product rule and the Fundamental Theorem of Calculus, for all
 $\h\in\cX_{\N}$ we have
 \begin{align*}
-\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h,
+\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h.
 \end{align*}
-so \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
+Hence, \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
 completes the proof.
 \end{proof}
 
@@ -1142,7 +1171,7 @@ I should have a toy example here that is amenable to several methods.
 \end{todo}
 
 
-\subsection{The method of Exchangeable Pairs}
+\subsection{The method of exchangeable pairs}
 
 \global\long\def\fX{f}
 
@@ -1240,8 +1269,8 @@ We can then define an exchangeable pair $\eX$ by
 \]
 and the proposition is proved.\end{proof}
 \begin{defn}
-We say an exchangeable pair $\eX$ is \emph{connected} if its Markov
-chain is irreducible.\end{defn}
+We say an exchangeable pair $\eX$ is \emph{connected} if the corresponding
+Markov chain is irreducible.\end{defn}
 \begin{rem}
 \label{rem:underlying-pair}We are particularly interested in exchangeable
 pairs $\eX$ with marginal distributions $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$.
@@ -1279,12 +1308,12 @@ is self-contained and requires no knowledge of homology theory).
 \begin{thm}
 Suppose\textup{ $\eX$ }is a connected exchangeable pair with margins
 $\L{\X}$. Let $\FX\subseteq L^{1}\left(\OmX^{2},\L{\eX}\right)$
-be the set of functions $\fX:\OmX^{2}\to\RR$ that are antisymmetric
-in the sense that $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
-and satisfy $\E\left|\fX\left(\eX\right)\right|<\infty$. Let $\XX=L^{1}\left(\OmX,\L{\X}\right)$
-be the set of functions $\hX:\OmX\to\RR$ that satisfy $\E_{\X}\left|\hX\right|<\infty$.
+be the set of functions $\fX:\OmX^{2}\to\RR$ which satisfy $\E\left|\fX\left(\eX\right)\right|<\infty$,
+and are antisymmetric in the sense that $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$.
+Let $\XX=L^{1}\left(\OmX,\L{\X}\right)$ be the set of functions $\hX:\OmX\to\RR$
+that satisfy $\E_{\X}\left|\hX\right|<\infty$.
 
-Define $\TX:\FX\to\XX$ by $\TX\fX\left(x\right)=\sum_{x'\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$,
+Define $\TX:\FX\to\XX$ by $\TX\fX\left(x\right)=\sum_{x_{2}\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$,
 so that $\TX\X=\E^{\X_{1}}\fX\left(\eX\right)$. Then $\TX$ is a
 characterizing operator for $\X$.\end{thm}
 \begin{proof}
@@ -1302,16 +1331,17 @@ so $\TX\FX\subseteq\XX$.
 We will next prove $\ker\E_{\X}\subseteq\im\TX$, but first we make
 some definitions. For each $x\in\OmX$, let $\hX_{x}$ be the function
 that takes the value $\pi\left(x\right)^{-1}$ on $x$ and is zero
-elsewhere, so that $\hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\hX_{x}$for
-each $\hX\in\XX$. For each $\left(x_{1},x_{2}\right)\in\OmeX$, define
-$\fX_{x_{1},x_{2}}\in\FX$ as the function that takes the value ${\displaystyle \left(\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)\right)^{-1}}$
+elsewhere, so that $\hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\hX_{x}$
+for each $\hX\in\XX$. For each $\left(x_{1},x_{2}\right)\in\OmeX$,
+define $\fX_{x_{1},x_{2}}\in\FX$ as the function that takes the value
+${\displaystyle \left(\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)\right)^{-1}}$
 on $\left(x_{1},x_{2}\right)$, takes the value $-\left(\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)\right)^{-1}$
 on $\left(x_{2},x_{1}\right)$, and takes the value zero elsewhere.
 Note that this function is antisymmetric by the reversibility of the
 Markov chain of $\eX$. We have $\TX\fX_{x_{1},x_{2}}=\hX_{x_{2}}-\hX_{x_{1}}$.
 
-Let $\hX\in\ker\E_{\X}$, and fix arbitrary $x^{*}\in\OmX$. By the
-connectedness assumption, for each $x\in\OmX$ there is a sequence
+Let $\hX\in\ker\E_{\X}$, and fix an arbitrary $x^{*}\in\OmX$. By
+the connectedness assumption, for each $x\in\OmX$ there is a sequence
 \[
 x=\x 0,\x 1,\dots,\x{k-1},\x k=x^{*}
 \]
@@ -1341,7 +1371,7 @@ so $\fX=\bar{\fX}$ and $\fX\in\FX$. Finally, it is a simple fact
 that an isometry between Banach spaces has a closed range. For, if
 $\left(\TX\fX_{n}\right)_{n\in\NN}$ is a Cauchy sequence in $\im\TX$,
 then $\left(\fX_{n}\right)_{n\in\NN}$ is a Cauchy sequence in $\FX$
-and converges to some $\fX\in\FX$. It follows that $\TX\fX_{n}\to\TX\fX\in\im\TX$.
+which converges to some $\fX\in\FX$. It follows that $\TX\fX_{n}\to\TX\fX\in\im\TX$.
 
 We have proved that $\hX\in\im\TX$, completing the proof that $\ker\E_{\X}\subseteq\im\TX$.
 \end{proof}
@@ -1356,12 +1386,12 @@ It is often fruitful to define $\conn$ by
 \]
 for some $c\in\RR$. We will then have
 \[
-\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
+\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
 \]
 Using the triangle inequality and the choice of $\cY$ in \ref{example:poisson-bound},
 for all $\fo\in\cY$: 
 \[
-\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|1-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
 \]
 This approximation is effective when 
 \begin{align}
