@@ -1,4 +1,4 @@
-%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[11pt,english]{article}
 \usepackage[T1]{fontenc}
@@ -7,12 +7,18 @@
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=3cm,headsep=3cm,footskip=1.5cm}
 \setlength{\parskip}{\bigskipamount}
 \setlength{\parindent}{0pt}
+\synctex=1
+\usepackage{babel}
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{setspace}
 \usepackage{esint}
 \setstretch{1.5}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
@@ -38,7 +44,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 % clickable links
-\usepackage[bookmarks,hidelinks]{hyperref} 
+%\usepackage[bookmarks,hidelinks]{hyperref} 
 
 % list hackery
 \usepackage{enumitem}
@@ -128,7 +134,6 @@
 
 \makeatother
 
-\usepackage{babel}
   \providecommand{\claimname}{Claim}
   \providecommand{\conjecturename}{Conjecture}
   \providecommand{\corollaryname}{Corollary}
@@ -205,7 +210,7 @@ c
 \global\long\def\id{\operatorname{id}}
 
 
-\global\long\def\one{\operatorname{1}}
+\global\long\def\one{\operatorname{\boldsymbol{1}}}
 
 
 \begin{comment}\begin{note}Commentary in blue\end{note}\begin{todo}Issues
@@ -350,7 +355,7 @@ a measure space by the triple $\left(\Om,\cA,\m\right)$.
 \end{comment}
 
 
-\subsection{Review of basic concepts}
+\subsection{Probability Spaces}
 
 \begin{note}
 
@@ -371,76 +376,71 @@ A \emph{probability space} is a measure space $\left(\Om,\cA,\Pr\right)$
 with $\Pr\left(\Om\right)=1$. In this case we say $\Pr$ is a \emph{probability
 measure}, and denote the set of all probability measures on $\left(\Om,\cA\right)$
 by $\P\left(\Om,\cA\right)$ or $\P\left(\Om\right)$ if there is
-no ambiguity. An \emph{event} is a measurable set $\A\in\cA$. When
-we have only defined one measure on the set $\Om$, we will sometimes
-abuse notation and write $\Pr$ to mean$\left(\Om,\cA,\Pr\right)$,
-and vice versa.
+no ambiguity. An \emph{event} is a measurable set $\A\in\cA$.
 \end{defn}
-\begin{todo}
-
-abuse?
-
-\end{todo}
-
-For our purposes $\Om$ will often be a finite set of combinatorial
-objects, with $\cA$ as the power set of $\Om$. In this case $\Pr$
-is defined by $\Pr\left(\om\right):=\Pr\left(\left\{ \om\right\} \right)$,
+For our purposes $\Om$ will often be countable, with $\cA$ as the
+power set of $\Om$. In this case $\Pr$ is uniquely defined by the
+probabilities $\Pr\left(\om\right):=\Pr\left(\left\{ \om\right\} \right)$,
 for each $\om\in\Om$. We will discuss specific probability spaces
 on combinatorial objects in \ref{sec:random-structures}.
 
 For an event $\A$, $\Pr\left(\A\right)$ is interpreted as the ``probability
-that $\A$ occurs''. For combinatorial spaces, events are usually
-of the form $\A=\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} $,
+that $\A$ occurs''. Events will usually be of the form $\A=\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} $,
 where $P\left(\om\right)$ is some property of an object $\om$. For
-clarity, we often abuse notation slightly and write $\Pr\left(P\left(\om\right)\mbox{ holds}\right)$
-instead of $\Pr\left(\A\right)$.
+clarity, we often abuse notation slightly and write $\Pr\left(P\mbox{ holds}\right)$
+instead of $\Pr\left(\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} \right)$.
+
+
+\subsection{Random Elements}
 \begin{defn}
-A \emph{random element} is a measurable function $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$.
-If $\Om_{2}=\RR^{n}$ and $\cA_{2}$ is the Borel $\sigma$-algebra
-on $\RR^{n}$, then we say $\X$ is a \emph{random vector}; if $n=1$
-then $\X$ is a \emph{random variable}. If $\Om_{2}$ is countable
-then we say $\X$ is \emph{discrete}.
+A \emph{random element} is a measurable function $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$
+between measurable spaces. If $\Om_{2}=\RR^{n}$ for some $n\in\NN$,
+with $\cA_{2}$ the Borel $\sigma$-algebra on $\RR^{n}$, then we
+say $\X$ is a \emph{random vector}. A one-dimensional random vector
+is a \emph{random variable}. If $\Om_{2}$ is countable then we say
+$\X$ is \emph{discrete}.
 \end{defn}
-Note that if $\Om_{1}$ is countable, then any function is measurable.
+Especially in combinatorial spaces, $\Om_{1}$ is often countable.
+In this case, any function from a probability space $\left(\Om_{1},2^{\Om_{1}},\Pr\right)$
+is measurable.
 
-If $\left(\Om_{1},\cA_{1}\right)$ is equipped with a probability
-measure $\Pr$, we will use slightly abusive (but standard) notation
-like $\Pr\left(\X\in\A\right)$ to denote $\Pr\left(\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A\right\} \right)$,
-and interpret this as ``the probability that $\X$ falls in the set
-$\A$''.
-
-Note that such probabilities depend on an the underlying probability
-space $\left(\Om_{1},\cA_{1},\Pr\right)$. We will often be interested
-in the probability that a random element takes certain values, without
-regard to any particular underlying probability space.
+To interpret a random variable, we need a probability measure $\Pr$
+on the underlying measurable space $\left(\Om_{1},\cA_{1}\right)$
+(often, this will be implicit). Then, $\Pr\left(\X\in\A\right)=\Pr\left(\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A\right\} \right)$
+is the probability that $\X$ takes a value in the set $\A$. Often,
+we will only be interested in such probabilities: that is, we do not
+care about the realization of a random variable as a function on an
+underlying probability space. This motivates the following definition:
 \begin{defn}
 Suppose $\X$ is a random element which takes values in the measurable
 space $\left(\Om,\cA\right)$. The \emph{distribution} (or \emph{law})
 $\L{\X}$ of $\X$ with respect to an underlying probability $\Pr$
 is the pushforward measure with respect to $\X$. That is, it is a
 probability measure defined by $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)$
-for $\A\subseteq\cA$. Usually, $\X$ will have been implicitly defined
-with respect to a particular underlying probability measure, so we
-will omit mention of $\Pr$ and just write $\L{\X}$. Also, we occasionally
-use the notation $\Lb{\X}:=\L{\X}$ for ease of reading.
+for $\A\subseteq\cA$. Also, we occasionally use the notation $\Lb{\X}:=\L{\X}$
+for ease of reading.
 \end{defn}
 It is worth noting that in fact any probability measure is the distribution
-of some random element. To see this, note that given a probability
-measure $\Pr\in\P\left(\Om\right)$, we can choose $\X=\id_{\Om}$
-to have $\L{\X}=\Pr$ with respect to the underlying probability measure
-$\Pr$. So, it is often convenient to define a probability distribution
-before specifying a random variable with that distribution.
-\begin{defn}
-The notation $\X\in\L{}$ means $\L{\X}=\L{}$. We say $\X$ \emph{is
-distributed as }$\L{}$.\end{defn}
+of some random element, so we can define a probability distribution
+in the abstract and then assert the existence of a random variable
+with that distribution. To see this, note that given a probability
+measure $\L{}\in\P\left(\Om\right)$, we can choose $\X=\id_{\Om}$
+to have $\L{\X}=\L{}$ with respect to the underlying probability
+measure $\L{}$. We also use the notation $\X\in\L{}$ to indicate
+that $\X$ has distribution $\L{}$.
 \begin{example}
 The normal distribution with parameters $\mu$ and $\sigma$ is denoted
 $\N\left(\mu,\sigma\right)$ or $\N_{\mu,\sigma}$ and is defined
 by $\N_{\mu,\sigma}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x$
 for any Borel set $B$.
+
+The Poisson distribution with parameter $\lambda$ is denoted $\Po\left(\lambda\right)=\Po_{\lambda}$;
+this is defined by $\Po_{\lambda}\left(k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
+for all $k\in\NN$.
 \end{example}
-For a discrete random variable, we can naturally define the set of
-values on which it is supported.
+It is in general a little tricky to define ``the set of values a
+random element can take'', but this is straightforward in the discrete
+case.
 \begin{defn}
 The \emph{support} of a discrete random element $\X$ is the set 
 \[
@@ -448,12 +448,64 @@ The \emph{support} of a discrete random element $\X$ is the set
 \]
 
 \end{defn}
-Then, $\L{\X}$ is just an assignment of a probability to each value
-in $\supp\left(\X\right)$.
-\begin{example}
-The Poisson distribution with parameter $\lambda$ is denoted $\Po\left(\lambda\right)=\Po_{\lambda}$;
-this is defined by $\Po_{\lambda}\left(k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
-for all $k\in\NN$.\end{example}
+For example, the Poisson distribution has support $\NN$.
+
+
+\subsection{Dependence and Coupling}
+\begin{defn}
+Suppose $\X$ and $\X'$ are random elements $\left(\Om_{1},\cA_{1},\Pr\right)\to\left(\Om_{2},\cA_{2}\right)$.
+We say that $\X$ and $\X'$ are \emph{independent} if $\Pr\left(\X\in\A_{2}\right)\Pr\left(\X'\in\A_{2}\right)=\Pr\left(\X\in\A_{2}\mbox{ and }\X'\in\A_{2}\right)$
+for all $\A_{2}\in\cA_{2}$.
+
+If $\A_{1},\A_{1}'\in\cA$ then we say $\A_{1}$ and $\A_{1}'$ are
+independent if $\Pr\left(\A_{1}\right)\Pr\left(\A_{1}'\right)=\Pr\left(\A_{1}\cap\A_{1}'\right)$.
+We can similarly say an event is independent of a random element.
+
+If two objects are not independent, then we say they are \emph{dependent}.
+\end{defn}
+Intuitively, two objects are dependent if information about one object
+can give information about the other. For example, we might be interested
+in the probability of an event $\A$, under the assumption that the
+event $\A'$ occurs.
+\begin{defn}
+The \emph{conditional probability} of an even $\A$ given an event
+$\A$' with nonzero probability is $\Pr\left(\A|\A'\right)=\Pr\left(\A\cap\A'\right)/\Pr\left(\A'\right)$
+\end{defn}
+We can also condition random elements on an event.
+\begin{defn}
+Suppose $\X:\left(\Om_{1},\cA_{1},\Pr\right)\to\left(\Om_{2},\cA_{2}\right)$
+is a random element, and $\A_{1}\in\cA_{1}$ is an event with nonzero
+probability. Then the \emph{distribution of $\X$ conditioned on $\A_{1}$}
+is denoted by $\L{\X|\A_{1}}$ and defined by $\L{\X|\A_{1}}\left(\A_{2}\right)=\Pr\left(\X\in\A_{2}|\A_{1}\right)$
+for $\A_{2}\in\cA_{2}$.
+\end{defn}
+Given a finite collection of measure spaces $\left(\Om_{1},\cA_{1},\m_{1}\right),\dots,\left(\Om_{n},\cA_{n},\m_{n}\right)$,
+recall the construction of the product measure space $\left(\Om,\cA,\m\right):=\left(\prod_{i=1}^{n}\Om_{i},\bigotimes_{i=1}^{n}\cA_{i},\prod_{i=1}^{n}\m_{i}\right)$.
+If a random element takes values in a product space then each component
+is measurable, and conversely if the components of a random tuple
+are measurable then that tuple is measurable in the product space.
+So, we can make the following definitions:
+\begin{defn}
+Given random elements $\X_{1},\dots,\X_{n}$ on the same underlying
+probability space, $\Lb{\X_{1},\dots,\X_{n}}:=\Lb{\left(\X_{1},\dots,\X_{n}\right)}$
+is called the \emph{joint distribution} of $\X_{1},\dots,\X_{n}$.
+Conversely, given a random tuple $\left(\X_{1},\dots,\X_{n}\right)$,
+each $\Lb{\X_{\i}}$ is called a \emph{marginal distribution}.
+\end{defn}
+Suppose we have two distributions of random elements $\Lb{\X_{1}}$
+and $\Lb{\X_{2}}$. \emph{Coupling} is the technique of constructing
+a random ordered pair $\left(\X_{1},\X_{2}\right)$ which realizes
+the given distributions as marginal distributions. Usually this is
+done by specifying the joint distribution $\Lb{\X_{1},\X_{2}}$.
+
+The idea is that coupling creates a particular kind of dependence
+between $\X_{1}$ and $\X_{2}$ that allows us to compare the two
+distributions. Often, we are able to make conclusions about the distributions
+$\Lb{\X_{\i}}$ which are independent of their specific realizations
+as random elements in the coupling.
+
+
+\subsection{Expected Value}
 \begin{defn}
 The \emph{expected value }of a random variable $\X$ is $\E\X=\int x\d\L{\X}\left(x\right)$.
 \end{defn}
@@ -477,11 +529,32 @@ on an existing measurable space. In this case we will write $\E_{\Pr'}$
 to indicate expecation with respect to the measure $\Pr'$, to avoid
 ambiguity.
 
-In fact, the expectation functional defines its underlying probability
-measure, because $\E\one_{\A}=\Pr\left(\A\right)$ for all $\A$.
-Since the distribution of a random variable is specified by a probability
-measure, the distribution $\Lb{\X}$ of a random variable $\X$ also
-uniquely defines an expectation functional $\E_{\X}:=\E_{\Lb{\X}}$.
+\begin{comment}
+
+If $\iota$ is the natural injection that takes $r\in\RR$ to the
+constant function $x\mapsto r$, and $I$ is the identity operator
+on $L^{1}\left(\Om,\Pr\right)$, then $\iota\E$ and $I-\iota\E$
+are both projection operators on $L^{1}\left(\Om,\Pr\right)$. In
+particular
+
+\end{comment}
+
+In fact, probability measures are uniquely determined by their expectation
+functional, because $\E_{\Pr}\one_{\A}=\Pr\left(\A\right)$ for all
+events $\A$.
+
+\global\long\def\cH{\mathcal{H}}
+
+
+\global\long\def\h{h}
+
+\begin{defn}
+\label{def:determining-class}A set of real functions $\cH$ is a
+\emph{determining class} if $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$ for all
+$\h\in\cH$ implies that $\Pr_{1}=\Pr_{2}$.
+\end{defn}
+We can also define the expectation functional of a random variable
+$\E_{\X}:=\E_{\Lb{\X}}$.
 
 \begin{comment}
 \begin{defn}
@@ -492,28 +565,9 @@ conditional variance?
 
 \end{comment}
 \begin{defn}
-For two collections $S,S'\subseteq\cA_{1}$ of events, we say that
-$S$ and $S'$ are \emph{independent} if $\Pr\left(\A\cap\A'\right)=\Pr\left(\A\right)\Pr\left(\A'\right)$
-for each $\A\in S$ and $\A\in S'$.
-\end{defn}
-If $\left\{ \A\right\} $ is independent of $S'$, we also say that
-$\A$ itself is independent of $S'$. If $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
-is independent of $S'$ for some random element $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$,
-then we say $\X$ is independent of $S'$. We can analogously say
-that two random variables are independent, or a random variable and
-an event are independent, or any similar combination.
-\begin{defn}
-If two objects are not independent, then we say they are \emph{dependent}.
-\end{defn}
-
-\begin{defn}
-Suppose $\X:\Om_{1}\to\Om_{2}$ is a random element defined on these
-spaces, and $\A_{1}\in\cA_{1}$ is an event with nonzero probability.
-Then the \emph{distribution of $\X$ conditioned on $\A_{1}$} is
-denoted by $\L{\X|\A_{1}}$ and defined by $\L{\X|\A_{1}}\left(\A_{2}\right)=\Pr\left(\X\in\A_{2}|\A_{1}\right)$
-for $\A_{2}\in\cA_{2}$. The expected value of a random variable with
-distribution $\L{\X|\A_{1}}$ is called the \emph{conditional expected
-value of $\X$ given $\A_{1}$} and is denoted $\E\left[\X|\A_{1}\right]$.
+The expected value of a random variable with distribution $\L{\X|\A_{1}}$
+is called the \emph{conditional expected value of $\X$ given $\A_{1}$}
+and is denoted $\E\left[\X|\A_{1}\right]$.
 \end{defn}
 We can also define conditional expectation with respect to another
 random variable. If $\X_{1}$ and $\X_{2}$ are random variables defined
@@ -553,34 +607,6 @@ probability space $\left(\Om,\cA\right)$. Then $\E\left[\E^{\X_{2}}\X_{1}\right]
 $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right]$
 \end{proof}
 
-\subsection{Coupling}
-
-Given a finite collection of measure spaces $\left(\Om_{1},\cA_{1},\m_{1}\right),\dots,\left(\Om_{n},\cA_{n},\m_{n}\right)$
-recall the construction of the product measure space $\left(\Om,\cA,\m\right):=\left(\prod_{i=1}^{n}\Om_{i},\bigotimes_{i=1}^{n}\cA_{i},\prod_{i=1}^{n}\m_{i}\right)$.
-If a random element takes values in a product space then each component
-is measurable, and conversely if the components of a random tuple
-are measurable then that tuple is measurable in the product space.
-So, we can make the following definitions:
-\begin{defn}
-Given random elements $\X_{1},\dots,\X_{n}$ on the same underlying
-probability space, $\Lb{\X_{1},\dots,\X_{n}}:=\Lb{\left(\X_{1},\dots,\X_{n}\right)}$
-is called the \emph{joint distribution} of $\X_{1},\dots,\X_{n}$.
-Conversely, given a random tuple $\left(\X_{1},\dots,\X_{n}\right)$,
-each $\Lb{\X_{\i}}$ is called a \emph{marginal distribution}.
-\end{defn}
-Suppose we have two distributions of random elements $\Lb{\X_{1}}$
-and $\Lb{\X_{2}}$. \emph{Coupling} is the technique of constructing
-a random ordered pair $\left(\X_{1},\X_{2}\right)$ which realizes
-the given distributions as marginal distributions. Usually this is
-done by specifying the joint distribution $\Lb{\X_{1},\X_{2}}$.
-
-The idea is that coupling creates a particular kind of dependence
-between $\X_{1}$ and $\X_{2}$ that allows us to compare the two
-distributions. Often, we are able to make conclusions about the distributions
-$\Lb{\X_{\i}}$ which are independent of their specific realizations
-as random elements in the coupling.
-
-
 \subsection{Markov Chains}
 
 \begin{note}
@@ -596,7 +622,7 @@ to Poisson processes.
 \end{note}
 
 
-\subsection{The Weak Topology on Probability Measures}
+\subsection{\label{sec:weak-topology}The Weak Topology on Probability Measures}
 
 \global\long\def\cH{\mathcal{H}}
 
@@ -683,63 +709,74 @@ Stein's method we will be interested in some slightly stronger metrics,
 which we will now define.
 \begin{defn}
 \label{def:general-metrics}Let $\cH$ be a collection of real measurable
-``test'' functions. Define $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$
+``test'' functions, and let $S\subseteq\P\left(\RR\right)$ be a
+set of ``comparable'' measures. Define $d_{\cH}:S^{2}\to\RR^{+}$
 by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
 For random variables $\X_{1},\X_{2}$, we write $d_{\cH}\left(\X_{1},\X_{2}\right)$
-instead of $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$.
-\end{defn}
-\begin{todo}
-
-What if there is no supremum or $\E_{\Pr_{1}}\h=\infty$?
-
-\end{todo}
-\begin{defn}
-A set of real functions $\cH$ is a \emph{determining class} if $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
-for all $\h\in\cH$ implies that $\Pr_{1}=\Pr_{2}$.
-\end{defn}
-Each $d_{\cH}$ is non-negative, symmetric and satisfies the triangle
-inequality. Hence, to check that $d_{\cH}$ is a metric, we only need
-to check that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$ implies that
-$\Pr_{1}=\Pr_{2}$. That is, we need to check that $\cH$ is a determining
-class.
+instead of $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$.\end{defn}
+\begin{rem}
+\label{rem:well-defined-metrics}In order for \ref{def:general-metrics}
+to be well-defined, we should choose $\cH$ and $S$ such that $\E_{\Pr}\h$
+is well-defined and finite for all $\Pr\in S$ and $\h\in\cH$. For
+$d_{\cH}$ to be a metric, we should also ensure that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)<\infty$
+for all $\Pr_{1},\Pr_{2}\in S$.
+\end{rem}
+Modulo the considerations in \ref{rem:well-defined-metrics}, $d_{\cH}$
+is always non-negative, symmetric and satisfies the triangle inequality.
+Hence, to check that $d_{\cH}$ is a metric, we only need to check
+that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$ implies that $\Pr_{1}=\Pr_{2}$.
+It suffices to check that $\cH$ is a determining class (\ref{def:determining-class}).
 \begin{defn}
 \label{def:special-metrics}We define some special cases of $d_{\cH}$.\begin{itemize}
 
 \item If $\cH_{\K}=\left\{ \one_{\left(-\infty,x\right]}:x\in\RR\right\} $
 then $d_{\K}:=d_{\cH_{\K}}$ is called the \emph{Kolmogorov metric}.
+We can choose $S_{\K}=\P\left(\RR\right)$; that is, all probability
+measures are comparable.
 
 \item If $\cH_{\W}$ is the set of real functions $\h$ that satisfy
 $\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
 for all $x_{1},x_{2}\in\RR$ (that is, the set of functions with Lipschitz
 constant 1), then $d_{\W}:=d_{\cH_{\W}}$ is called the \emph{Wasserstein
-metric}.
+metric}. We can only compare absolutely integrable probability measures.
+That is, let $S_{\W}\subset\P\left(\RR\right)$ be the set of probability
+measures $\Pr$ that satisfy $\E_{\Pr}\left|\id_{\RR}\right|<\infty$.
 
 \item If $\cH_{\TV}$ is the set of functions $\one_{B}$ for Borel
 $B$, then $d_{\TV}:=d_{\cH_{\TV}}$ is called the \emph{total variation
-metric}.\end{itemize}\end{defn}
+metric}. We can choose $S_{\TV}=\P\left(\RR\right)$.\end{itemize}\end{defn}
 \begin{prop}
 \label{prop:metric}The Kolmogorov, Wasserstein and total variation
 ``metrics'' are actually metrics.\end{prop}
 \begin{proof}
-We check that $\cH_{\K}$, $\cH_{\W}$ and $\cH_{\TV}$ are determining
-classes. Let $\cH\in\left\{ \cH_{\K},\cH_{\W},\cH_{\TV}\right\} $,
-and suppose that $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$ for all $\h\in\cH$.
-It suffices to prove that $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
-for all $x\in\RR$, since the sets $\left(-\infty,x\right]$ generate
-the Borel $\sigma$-algebra. For $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $
-this is immediate, because $\Pr_{\i}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$.
-So, consider, $\cH=\cH_{\W}$.
+First we consider the case $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $.
+Since the functions in $\cH$ are uniformly absolutely bounded (by
+1), the conditions in \ref{rem:well-defined-metrics} are immediately
+satisfied. Now, note that the sets $\left(-\infty,x\right]$ for $x\in\RR$
+generate the Borel $\sigma$-algebra. Since $\Pr\left(\left(-\infty,x\right]\right)=\E_{\Pr}\one_{\left(-\infty,x\right]}$
+and $\one_{\left(-\infty,x\right]}\in\cH$ for all $x\in\RR$ and
+$\Pr\in\P\left(\RR\right)$, it follows that $\cH$ is a determining
+class. We conclude that $d_{\K}$ and $d_{\TV}$ are metrics.
 
-For $\varepsilon>0$ and $x\in\RR$, let $\h_{x,\varepsilon}$ be
-the continuous function which takes the value 1 on the set $\left(-\infty,x\right]$,
-takes the value 0 on the set $\left[x+\varepsilon,\infty\right)$,
-and is linearly interpolated in the range $\left[x,x+\varepsilon\right]$.
-Since $\varepsilon\h_{x,\varepsilon}\in\cH_{\W}$, we have $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
+Now, $\E_{\Pr}\left|\h\right|\le\left|\h\left(0\right)\right|+\E_{\Pr}\left|\id_{\RR}\right|<\infty$
+for $\Pr\in S_{\W}$ and $\h\in\cH_{\W}$. So, $\E_{\Pr}\h$ is well-defined
+and finite. If $\Pr_{1},\Pr_{2}\in S_{\W}$ then $d_{\W}\left(\Pr_{1},\Pr_{2}\right)\le2\E_{\Pr}\left|\id_{\RR}\right|<\infty$.
+So, the conditions in \ref{rem:well-defined-metrics} are satisfied
+for the Wasserstein ``metric''.
+
+Next, let $\Pr_{1},\Pr_{2}\in S_{\W}$ and suppose $\E_{\Pr_{1}}\h=\E_{\Pr_{1}}\h$
+for all $\h\in\cH_{\W}$. For $\varepsilon>0$ and $x\in\RR$, let
+$\h_{x,\varepsilon}$ be the continuous function which takes the value
+1 on the set $\left(-\infty,x\right]$, takes the value 0 on the set
+$\left[x+\varepsilon,\infty\right)$, and is linearly interpolated
+in the range $\left[x,x+\varepsilon\right]$. Since $\varepsilon\h_{x,\varepsilon}\in\cH_{\W}$,
+we have $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
 for each $\varepsilon>0$. For each $x\in\RR$, $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$
 pointwise and each $\h_{x,1/n}\le1$ so by the dominated convergence
 theorem, $\E_{\Pr_{\i}}\h_{1/n}\to\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
 for each $\i\in\left\{ 1,2\right\} $. We have proved that $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
-for all $x\in\RR$.
+for all $x\in\RR$, so $\Pr_{1}=\Pr_{2}$ and $\cH_{\W}$ is a determining
+class. We conclude that $d_{\W}$ is a metric.
 \end{proof}
 
 \begin{prop}
@@ -747,6 +784,9 @@ for all $x\in\RR$.
 Wasserstein and total variation metrics are each stronger than the
 weak topology.\end{prop}
 \begin{proof}
+We show that $d_{\cH}\left(\X_{n},\X\right)\to0$ implies $\Lb{\X_{n}}\to\Lb{\X}$
+for $\cH\in\left\{ \cH_{\K},\cH_{\W},\cH_{\TV}\right\} $.
+
 If $d_{\K}\left(\X_{n},\X\right)\to0$ or $d_{\TV}\left(\X_{n},\X\right)\to0$
 then $\F_{\X_{n}}\to\F_{\X}$ uniformly, so certainly \ref{prop:dist-F}
 of \ref{prop:dist} holds.
@@ -773,7 +813,7 @@ so \ref{prop:dist-F} of \ref{prop:dist} holds.
 \ref{prop:stronger-than-weak} tells us that we can sensibly use our
 metrics to quantify the distance between random variables, in a way
 that is consistent with distributional (weak) convergence. All three
-metrics are relevant in their own right, but sometimes one may be
+metrics are meaningful in their own right, but sometimes one may be
 easier to work with. It is sometimes possible to transfer results
 between metrics, though this usually results in worse constants than
 working directly in the desired metric. We now prove some transfer
@@ -782,7 +822,11 @@ results.
 \begin{todo}It may be worthwhile to actually characterize the Wasserstein,
 Kolmogorov and Total Variation topologies. In particular, Wikipedia
 says that Wasserstein convergence is just weak convergence plus convergence
-of the first moment.\end{todo}
+of the first moment.
+
+Also, \href{http://en.wikipedia.org/wiki/Talk:Convergence_of_measures}{http://en.wikipedia.org/wiki/Talk:Convergence\_{}of\_{}measures}
+says an additional uniform boundedness condition on the test functions
+metrizes the weak topology. If so why arent we using that?\end{todo}
 \begin{defn}
 If $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
 for some $f_{\X}$, then $f_{\X}$ is called the \emph{Lebesgue density}
@@ -817,9 +861,9 @@ to prove \ref{prop:transfer-K/W}.\end{proof}
 If $\L{\X_{2}}=\N\left(0,1\right)$ then $f_{\X_{2}}\left(x\right)=\left(2\pi\right)^{-1/2}e^{-x^{2}/2}$
 so we can take $C=\left(2\pi\right)^{-1/2}$ to obtain $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\W}\left(\X_{1},\X_{2}\right)}$.
 \end{example}
-In a combinatorial setting, many of our results are about integer
-random variables. The total variation metric is usually exclusively
-used in this case.
+\begin{comment}In a combinatorial setting, many of our results are
+about integer random variables. The total variation metric is usually
+exclusively used in this case.
 \begin{prop}
 If $\X_{1},\X_{2}$ are integer-valued random variables, then
 \[
@@ -828,7 +872,7 @@ d_{\TV}\left(\X_{1},\X_{2}\right)=\frac{1}{2}\sum_{k\in\ZZ}\left|\Pr\left(\X_{1}
 \end{prop}
 \begin{proof}
 For any Borel set $\A$, let $d_{\A}=\Pr\left(\X_{1}\in\A\right)-\Pr\left(\X_{2}\in\A\right)$,
-so that $d_{\TV}\left(\X_{1},\X_{2}\right)=\sup\left|d_{\A}\right|$.
+so that $d_{\TV}\left(\X_{1},\X_{2}\right)=\sup_{\A}\left|d_{\A}\right|$.
 Define 
 \begin{align*}
 \A_{<} & =\left\{ k\in\ZZ:\,\Pr\left(\X_{1}=k\right)<\Pr\left(\X_{2}=k\right)\right\} ,\\
@@ -840,13 +884,15 @@ d_{\A} & =\sum_{k\in\ZZ\cap\A}\left(\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\r
  & \le\sum_{k\in\A_{>}}\left(\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right)\\
  & =d_{\A_{>}}
 \end{align*}
-and similarly $\Pr\left(\X_{1}\in\A\right)-\Pr\left(\X_{2}\in\A\right)\ge d_{\A_{<}}$.
-Since $d_{\A_{>}}=-d_{\A_{<}}$, we have 
+and similarly $-d_{\A}\ge d_{\A_{<}}$. Since $d_{\A_{>}}=-d_{\A_{<}}$,
+we have 
 \[
 d_{\TV}\left(\X_{1},\X_{2}\right)=\left(d_{\A_{>}}-d_{\A_{<}}\right)/2=\frac{1}{2}\sum_{k\in\ZZ}\left|\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right|.
 \]
 
 \end{proof}
+\end{comment}
+
 
 \section{Random Combinatorial Structures\label{sec:random-structures}}
 
@@ -959,17 +1005,18 @@ distribution $\Lo$. Then, Stein's method allows us to compare the
 operators $\E_{\X}$ and $\Eo:=\E_{\Lo}$. This is sometimes directly
 useful for approximating statistics of $\X$ (for example, $\Pr\left(\X\in\A\right)=\E_{\X}\one_{\A}$).
 However, particularly for combinatorical applications, Stein's method
-is most often used to bound the distance $d_{\cH}\left(\L{\X},\Lo\right)$,
-where the metric $d_{\cH}$ from \ref{def:general-metrics} is defined
-in terms of $\E_{\X}$ and $\Eo$.
+is most often used to bound the distance $d_{\cH}\left(\L{\X},\Lo\right)$
+for some $\cH$, where the metric $d_{\cH}$ from \ref{def:general-metrics}
+is defined in terms of $\E_{\X}$ and $\Eo$.
 
 Stein's method is motivated by the idea of a characterizing operator.
 \begin{defn}
 Let $\Fo$ be a vector space and $\Xo$ be a vector space of measurable
-functions. We say a linear operator $\To:\Fo\to\Xo$ is a \emph{characterizing
-operator} for the distribution $\Lo$ if $\im\To=\Xo\cap\ker\Eo$.
-For convenience, where there is no ambiguity we will often implicitly
-restrict $\Eo$ to $\Xo$, so we can write $\im\To=\ker\Eo$.
+functions which contains the constant functions. We say a linear operator
+$\To:\Fo\to\Xo$ is a \emph{characterizing operator} for the distribution
+$\Lo$ if $\im\To=\Xo\cap\ker\Eo$. For convenience, where there is
+no ambiguity we will often implicitly restrict $\Eo$ to $\Xo$, so
+we can write $\im\To=\ker\Eo$.
 \end{defn}
 The following proposition shows why $\To$ is called a characterizing
 operator.
@@ -980,18 +1027,11 @@ implies $\L{\X}=\Lo$.\end{prop}
 \begin{proof}
 If $\h\in\Xo$, then $\h-\Eo\h\in\ker\Eo=\im\To$ so $\E_{\X}\left[\h-\Eo\h\right]=0$.
 That is, $\E_{\X}\h=\Eo\h$ for all $\h\in\Xo$, which means $\L{\X}=\Lo$
-by the definition of a determining class.
-\end{proof}
-\begin{todo}\label{todo:characterizing}Ross \cite{Ros11} and others
-use this weaker condition as the definition of a characterizing operator.
-I'll have to look at examples of operators that satisfy the weaker
-but not the stronger condition to see if the stronger definition is
-warranted (my guess is yes, if Stein decided to originally define
-it the way I did).\end{todo}
+by the definition of a determining class.\end{proof}
 \begin{prop}
 \label{prop:U_0-characterizing}$\To:\Fo\to\Xo$ is characterizing
-if and only if there is a linear operator $\Uo:\Xo\to\Fo$ such that
-the following two equations hold.
+if and only if there is a linear operator $\Uo:\Xo\to\Fo$ (called
+a \emph{Stein transform}) such that the following two equations hold.
 \begin{align}
 \Eo\To & =0_{\Fo},\label{eq:E_0T_0-consistency}\\
 \To\Uo+\Eo & =\id_{\Xo}.\label{eq:U_0-characterizing}
@@ -1006,14 +1046,56 @@ $\To\fo_{\i}=\h_{\i}-\Eo\h_{\i}$. The operator $\Uo$ can then be
 defined by $\sum_{\i\in\mathcal{I}}a_{\i}\h_{\i}\mapsto\sum_{\i\in\mathcal{I}}a_{\i}\fo_{\i}$,
 satisfying \ref{eq:U_0-characterizing}.
 
-\begin{todo}there's probably a cleaner functional analysis way to
-prove that. Also, is $\Uo$  bounded?\end{todo}
-
 Conversely, suppose \ref{eq:E_0T_0-consistency} holds and $\Uo$
 exists satisfying \ref{eq:U_0-characterizing}. For $\h\in\ker\Eo$
 we have $\To\left(\Uo\h\right)=\h$ and hence $\h\in\im\To$, so $\ker\Eo\subseteq\im\To$.
 Equation \ref{eq:E_0T_0-consistency} immediately says that $\im\To\subseteq\ker\Eo$,
 so $\To$ is a characterizing operator.
+\end{proof}
+\begin{todo}
+
+Clean up the following remark. Maybe Banach space is too strong a
+requirement, can I have any topology though?
+
+\end{todo}
+\begin{rem}
+In full generality (and in accordance with \cite{Ste86}), we do not
+require any topological structure on $\Fo$ and $\Xo$.
+
+The proof of \ref{prop:U_0-characterizing} does not ensure that the
+Stein transform $\Uo$ is particularly well-behaved. In particular,
+if $\To$ is a bounded linear operator between Banach spaces, $\Uo$
+may not be bounded. In practice, we will usually require that $\Uo$
+is well-behaved to apply Stein's method. An equivalent condition for
+existence of a bounded Stein transform is that the kernel of $\To$
+is complementable. That is, there is a closed subspace $S\subseteq\Fo$
+with $S\oplus\ker\To=\Fo$. For example, this condition will always
+be satisfied if $\Fo$ is (isomorphic to a) Hilbert space, by the
+existence of orthogonal complements. In fact, Hilbert spaces are the
+only spaces where every closed subspace is complementable \cite{LT71}.\end{rem}
+\begin{proof}
+[Proof of claim]First assume $\ker\To$ is complementable, with complement
+$S$. Now, $\ker\Eo=\im\To$ is a closed (Banach) subspace of $\Xo$,
+so $\To$ restricts to a linear operator $\T':S\to\im\To$ between
+Banach spaces. By construction, $\T'$ is bijective so by the bounded
+inverse theorem, $\T'$ has a bounded inverse $\U':\im\To\to S$.
+This gives a bounded Stein transform
+\[
+\Uo:\Xo\to\Fo:\h\mapsto\U'\left(\h-\Eo\h\right).
+\]
+Conversely, if $\Uo$ is a bounded Stein transform for $\To$, let
+$J=\id_{\Fo}-\Uo\To$. If $\fo\in\ker J\cap\ker\To$ then $\To\fo=0$
+so $J\fo=\fo-\Uo0=\fo=0$. That is, $\ker J\cap\ker\To=\left\{ 0\right\} $.
+For any $\fo\in\Fo$, we have $\fo=J\fo+\Uo\To\fo$. Now, 
+\[
+J\Uo\To=\Uo\To-\Uo\left(\id_{\Xo}-\Eo\right)\To=\Uo\To-\Uo\To+\Uo\Eo\To=0
+\]
+and 
+\[
+\To J=\To-\left(\id_{\Xo}-\Eo\right)\To=\To-\To+\Eo\To=0,
+\]
+so $J\fo\in\ker\To$ and $\Uo\To\fo\in\ker J$. That is, $\ker\To\oplus\ker J=\Fo$
+and we conclude that $\ker\To$ is complementable.
 \end{proof}
 We'll use \ref{prop:U_0-characterizing} to give two important examples
 of characterizing operators.
@@ -1034,8 +1116,10 @@ define $\U_{\N}$ by
 \[
 \U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.
 \]
-By the product rule and the Fundamental Theorem of Calculus, for all
-$\h\in\cX_{\N}$ we have
+(obtaining this formula for $\U_{\N}$ would involve solving a differential
+equation, most simply by the method of integrating factors). By the
+product rule and the Fundamental Theorem of Calculus, for all $\h\in\cX_{\N}$
+we have
 \begin{align*}
 \T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h.
 \end{align*}
@@ -1077,8 +1161,9 @@ We can say the same about $\T_{\Po\left(\lambda\right)}$ if we restrict
 our attention to integer-valued random variables.
 
 \begin{todo} Stein chose $\Xo=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $,
-for both the Poisson and normal case. I'm not sure why, I'll revisit
-this after looking at exchangeable pairs.\end{todo}
+for both the Poisson and normal case. I think this was to make sure
+$\To$ and $\Uo$ have the right domain and range. See \cite{Ste86}
+page 20 and \cite{Ste92} page 18.\end{todo}
 
 The utility of the introduction of a characterizing operator is that
 for each $\h\in\Xo$, Equation \ref{eq:U_0-characterizing} allows
@@ -1114,6 +1199,13 @@ then we generally choose
 \]
 where $\Delta\fo\left(k\right)=\fo\left(k+1\right)-\fo\left(k\right)$.
 \end{example}
+\begin{todo}
+
+Maybe I can bound $\left\Vert \U_{\Po\left(\lambda\right)}\right\Vert $
+instead?
+
+\end{todo}
+
 Proving that this choice of $\cY$ satisfies $\cY\supseteq\U_{\Po\left(\lambda\right)}\cH$
 is nontrivial. But, we can prove that the constraints are of the ``correct''
 order of magnitude.
@@ -1210,7 +1302,7 @@ discrete. Let $\OmX$ be the support of $\X$.
 [adapted from {\cite[Example 4.21]{Ros11}}]\label{example:fixed-points}We
 will use an example problem to illustrate the principles in this section.
 We will say a \emph{fixed point} of a permutation $\sigma\in S_{n}$
-is an index $k\in\left[n\right]$ that satisfies $\sigma\left(k\right)=k$.
+is an index $k\in\range n$ that satisfies $\sigma\left(k\right)=k$.
 Let $\X:S_{n}\to\left\{ 0\right\} \cup\range n$ give the number of
 fixed points in each permutation from $S_{n}$. We interpret $\X$
 as a random variable on the underlying space $\rS n$.
@@ -1234,7 +1326,8 @@ We will denote the support of $\eX$ by $\OmeX$.
 \end{defn}
 That is, a pair $\eX$ is exchangeable if exchanging the components
 of the pair does not change their joint distribution. In particular,
-the marginal distribution of $\X_{1}$ and $\X_{2}$ must be the same.
+the marginal distributions of $\X_{1}$ and $\X_{2}$ must be the
+same.
 
 \begin{note}
 
@@ -1314,8 +1407,8 @@ Let $\XX=L^{1}\left(\OmX,\L{\X}\right)$ be the set of functions $\hX:\OmX\to\RR$
 that satisfy $\E_{\X}\left|\hX\right|<\infty$.
 
 Define $\TX:\FX\to\XX$ by $\TX\fX\left(x\right)=\sum_{x_{2}\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$,
-so that $\TX\X=\E^{\X_{1}}\fX\left(\eX\right)$. Then $\TX$ is a
-characterizing operator for $\X$.\end{thm}
+so that $\TX\fX\left(\X\right)$ is distributed as $\E^{\X_{1}}\fX\left(\eX\right)$.
+Then $\TX$ is a characterizing operator for $\X$.\end{thm}
 \begin{proof}
 To see that $\im\TX\subseteq\ker\E_{\X}$, fix $\fX\in\cF$ and note
 that by the tower law of expectation (\ref{prop:tower-law}), 

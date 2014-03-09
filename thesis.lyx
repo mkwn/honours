@@ -5,7 +5,7 @@
 \textclass article
 \begin_preamble
 % clickable links
-\usepackage[bookmarks,hidelinks]{hyperref} 
+%\usepackage[bookmarks,hidelinks]{hyperref} 
 
 % list hackery
 \usepackage{enumitem}
@@ -116,12 +116,22 @@ eqs-within-sections
 
 \graphics default
 \default_output_format default
-\output_sync 0
+\output_sync 1
+\output_sync_macro "\synctex=1"
 \bibtex_command default
 \index_command default
 \paperfontsize 11
 \spacing other 1.5
-\use_hyperref false
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
 \papersize default
 \use_geometry true
 \use_amsmath 1
@@ -362,7 +372,7 @@ end{comment}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\one}{\operatorname{1}}
+\newcommand{\one}{\operatorname{\boldsymbol{1}}}
 {\mathbf{1}}
 \end_inset
 
@@ -954,7 +964,7 @@ end{comment}
 \end_layout
 
 \begin_layout Subsection
-Review of basic concepts
+Probability Spaces
 \end_layout
 
 \begin_layout Standard
@@ -1050,55 +1060,6 @@ event
 \end_inset
 
 .
- When we have only defined one measure on the set 
-\begin_inset Formula $\Om$
-\end_inset
-
-, we will sometimes abuse notation and write 
-\begin_inset Formula $\Pr$
-\end_inset
-
- to mean
-\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
-\end_inset
-
-, and vice versa.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-abuse?
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1106,7 +1067,7 @@ For our purposes
 \begin_inset Formula $\Om$
 \end_inset
 
- will often be a finite set of combinatorial objects, with 
+ will often be countable, with 
 \begin_inset Formula $\cA$
 \end_inset
 
@@ -1119,7 +1080,7 @@ For our purposes
 \begin_inset Formula $\Pr$
 \end_inset
 
- is defined by 
+ is uniquely defined by the probabilities 
 \begin_inset Formula $\Pr\left(\om\right):=\Pr\left(\left\{ \om\right\} \right)$
 \end_inset
 
@@ -1161,7 +1122,7 @@ probability that
 \end_inset
 
 .
- For combinatorial spaces, events are usually of the form 
+ Events will usually be of the form 
 \begin_inset Formula $\A=\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} $
 \end_inset
 
@@ -1175,14 +1136,18 @@ probability that
 
 .
  For clarity, we often abuse notation slightly and write 
-\begin_inset Formula $\Pr\left(P\left(\om\right)\mbox{ holds}\right)$
+\begin_inset Formula $\Pr\left(P\mbox{ holds}\right)$
 \end_inset
 
  instead of 
-\begin_inset Formula $\Pr\left(\A\right)$
+\begin_inset Formula $\Pr\left(\left\{ \om\in\Om:\, P\left(\om\right)\mbox{ holds}\right\} \right)$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection
+Random Elements
 \end_layout
 
 \begin_layout Definition
@@ -1194,16 +1159,20 @@ random element
 \begin_inset Formula $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$
 \end_inset
 
-.
+ between measurable spaces.
  If 
 \begin_inset Formula $\Om_{2}=\RR^{n}$
 \end_inset
 
- and 
+ for some 
+\begin_inset Formula $n\in\NN$
+\end_inset
+
+, with 
 \begin_inset Formula $\cA_{2}$
 \end_inset
 
- is the Borel 
+ the Borel 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -1219,15 +1188,8 @@ random element
 \emph on
 random vector
 \emph default
-; if 
-\begin_inset Formula $n=1$
-\end_inset
-
- then 
-\begin_inset Formula $\X$
-\end_inset
-
- is a 
+.
+ A one-dimensional random vector is a 
 \emph on
 random variable
 \emph default
@@ -1248,7 +1210,7 @@ discrete
 \end_layout
 
 \begin_layout Standard
-Note that if 
+Especially in combinatorial spaces, 
 \family roman
 \series medium
 \shape up
@@ -1264,53 +1226,25 @@ Note that if
 \begin_inset Formula $\Om_{1}$
 \end_inset
 
- is countable, then any function is measurable.
+ is often countable.
+ In this case, any function from a probability space 
+\begin_inset Formula $\left(\Om_{1},2^{\Om_{1}},\Pr\right)$
+\end_inset
+
+ is measurable.
 \end_layout
 
 \begin_layout Standard
-If 
-\begin_inset Formula $\left(\Om_{1},\cA_{1}\right)$
-\end_inset
-
- is equipped with a probability measure 
+To interpret a random variable, we need a probability measure 
 \begin_inset Formula $\Pr$
 \end_inset
 
-, we will use slightly abusive (but standard) notation like 
-\begin_inset Formula $\Pr\left(\X\in\A\right)$
+ on the underlying measurable space 
+\begin_inset Formula $\left(\Om_{1},\cA_{1}\right)$
 \end_inset
 
- to denote 
-\begin_inset Formula $\Pr\left(\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A\right\} \right)$
-\end_inset
-
-, and interpret this as 
-\begin_inset Quotes eld
-\end_inset
-
-the probability that 
-\begin_inset Formula $\X$
-\end_inset
-
- falls in the set 
-\begin_inset Formula $\A$
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Note that such probabilities depend on an the underlying probability space
- 
-\begin_inset Formula $\left(\Om_{1},\cA_{1},\Pr\right)$
-\end_inset
-
-.
- 
+ (often, this will be implicit).
+ Then, 
 \family roman
 \series medium
 \shape up
@@ -1322,9 +1256,23 @@ Note that such probabilities depend on an the underlying probability space
 \uwave off
 \noun off
 \color none
-We will often be interested in the probability that a random element takes
- certain values, without regard to any particular underlying probability
- space.
+
+\begin_inset Formula $\Pr\left(\X\in\A\right)=\Pr\left(\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A\right\} \right)$
+\end_inset
+
+ is the probability that 
+\begin_inset Formula $\X$
+\end_inset
+
+ takes a value in the set 
+\begin_inset Formula $\A$
+\end_inset
+
+.
+ Often, we will only be interested in such probabilities: that is, we do
+ not care about the realization of a random variable as a function on an
+ underlying probability space.
+ This motivates the following definition:
 \end_layout
 
 \begin_layout Definition
@@ -1371,20 +1319,6 @@ law
 \end_inset
 
 .
- Usually, 
-\begin_inset Formula $\X$
-\end_inset
-
- will have been implicitly defined with respect to a particular underlying
- probability measure, so we will omit mention of 
-\begin_inset Formula $\Pr$
-\end_inset
-
- and just write 
-\begin_inset Formula $\L{\X}$
-\end_inset
-
-.
  Also, we occasionally use the notation 
 \begin_inset Formula $\Lb{\X}:=\L{\X}$
 \end_inset
@@ -1394,9 +1328,11 @@ law
 
 \begin_layout Standard
 It is worth noting that in fact any probability measure is the distribution
- of some random element.
+ of some random element, so we can define a probability distribution in
+ the abstract and then assert the existence of a random variable with that
+ distribution.
  To see this, note that given a probability measure 
-\begin_inset Formula $\Pr\in\P\left(\Om\right)$
+\begin_inset Formula $\L{}\in\P\left(\Om\right)$
 \end_inset
 
 , we can choose 
@@ -1404,37 +1340,23 @@ It is worth noting that in fact any probability measure is the distribution
 \end_inset
 
  to have 
-\begin_inset Formula $\L{\X}=\Pr$
-\end_inset
-
- with respect to the underlying probability measure 
-\begin_inset Formula $\Pr$
-\end_inset
-
-.
- So, it is often convenient to define a probability distribution before
- specifying a random variable with that distribution.
-\end_layout
-
-\begin_layout Definition
-The notation 
-\begin_inset Formula $\X\in\L{}$
-\end_inset
-
- means 
 \begin_inset Formula $\L{\X}=\L{}$
 \end_inset
 
+ with respect to the underlying probability measure 
+\begin_inset Formula $\L{}$
+\end_inset
+
 .
- We say 
+ We also use the notation 
+\begin_inset Formula $\X\in\L{}$
+\end_inset
+
+ to indicate that 
 \begin_inset Formula $\X$
 \end_inset
 
- 
-\emph on
-is distributed as 
-\emph default
-
+ has distribution 
 \begin_inset Formula $\L{}$
 \end_inset
 
@@ -1469,9 +1391,36 @@ The normal distribution with parameters
 .
 \end_layout
 
+\begin_layout Example
+The Poisson distribution with parameter 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is denoted 
+\begin_inset Formula $\Po\left(\lambda\right)=\Po_{\lambda}$
+\end_inset
+
+; this is defined by 
+\begin_inset Formula $\Po_{\lambda}\left(k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
+\end_inset
+
+ for all 
+\begin_inset Formula $k\in\NN$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
-For a discrete random variable, we can naturally define the set of values
- on which it is supported.
+It is in general a little tricky to define 
+\begin_inset Quotes eld
+\end_inset
+
+the set of values a random element can take
+\begin_inset Quotes erd
+\end_inset
+
+, but this is straightforward in the discrete case.
 \end_layout
 
 \begin_layout Definition
@@ -1495,35 +1444,254 @@ support
 \end_layout
 
 \begin_layout Standard
-Then, 
-\begin_inset Formula $\L{\X}$
-\end_inset
-
- is just an assignment of a probability to each value in 
-\begin_inset Formula $\supp\left(\X\right)$
+For example, the Poisson distribution has support 
+\begin_inset Formula $\NN$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Example
-The Poisson distribution with parameter 
-\begin_inset Formula $\lambda$
+\begin_layout Subsection
+Dependence and Coupling
+\end_layout
+
+\begin_layout Definition
+Suppose 
+\begin_inset Formula $\X$
 \end_inset
 
- is denoted 
-\begin_inset Formula $\Po\left(\lambda\right)=\Po_{\lambda}$
+ and 
+\begin_inset Formula $\X'$
 \end_inset
 
-; this is defined by 
-\begin_inset Formula $\Po_{\lambda}\left(k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}$
-\end_inset
-
- for all 
-\begin_inset Formula $k\in\NN$
+ are random elements 
+\begin_inset Formula $\left(\Om_{1},\cA_{1},\Pr\right)\to\left(\Om_{2},\cA_{2}\right)$
 \end_inset
 
 .
+ We say that 
+\begin_inset Formula $\X$
+\end_inset
+
+ and 
+\begin_inset Formula $\X'$
+\end_inset
+
+ are 
+\emph on
+independent
+\emph default
+ if 
+\begin_inset Formula $\Pr\left(\X\in\A_{2}\right)\Pr\left(\X'\in\A_{2}\right)=\Pr\left(\X\in\A_{2}\mbox{ and }\X'\in\A_{2}\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $\A_{2}\in\cA_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+If 
+\begin_inset Formula $\A_{1},\A_{1}'\in\cA$
+\end_inset
+
+ then we say 
+\begin_inset Formula $\A_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\A_{1}'$
+\end_inset
+
+ are independent if 
+\begin_inset Formula $\Pr\left(\A_{1}\right)\Pr\left(\A_{1}'\right)=\Pr\left(\A_{1}\cap\A_{1}'\right)$
+\end_inset
+
+.
+ We can similarly say an event is independent of a random element.
+\end_layout
+
+\begin_layout Definition
+If two objects are not independent, then we say they are 
+\emph on
+dependent
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Intuitively, two objects are dependent if information about one object can
+ give information about the other.
+ For example, we might be interested in the probability of an event 
+\begin_inset Formula $\A$
+\end_inset
+
+, under the assumption that the event 
+\begin_inset Formula $\A'$
+\end_inset
+
+ occurs.
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+conditional probability
+\emph default
+ of an even 
+\begin_inset Formula $\A$
+\end_inset
+
+ given an event 
+\begin_inset Formula $\A$
+\end_inset
+
+' with nonzero probability is 
+\begin_inset Formula $\Pr\left(\A|\A'\right)=\Pr\left(\A\cap\A'\right)/\Pr\left(\A'\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can also condition random elements on an event.
+\end_layout
+
+\begin_layout Definition
+Suppose 
+\begin_inset Formula $\X:\left(\Om_{1},\cA_{1},\Pr\right)\to\left(\Om_{2},\cA_{2}\right)$
+\end_inset
+
+ is a random element, and 
+\begin_inset Formula $\A_{1}\in\cA_{1}$
+\end_inset
+
+ is an event with nonzero probability.
+ Then the 
+\emph on
+distribution of 
+\begin_inset Formula $\X$
+\end_inset
+
+ conditioned on 
+\begin_inset Formula $\A_{1}$
+\end_inset
+
+
+\emph default
+ is denoted by 
+\begin_inset Formula $\L{\X|\A_{1}}$
+\end_inset
+
+ and defined by 
+\begin_inset Formula $\L{\X|\A_{1}}\left(\A_{2}\right)=\Pr\left(\X\in\A_{2}|\A_{1}\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\A_{2}\in\cA_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Given a finite collection of measure spaces 
+\begin_inset Formula $\left(\Om_{1},\cA_{1},\m_{1}\right),\dots,\left(\Om_{n},\cA_{n},\m_{n}\right)$
+\end_inset
+
+, recall the construction of the product measure space 
+\begin_inset Formula $\left(\Om,\cA,\m\right):=\left(\prod_{i=1}^{n}\Om_{i},\bigotimes_{i=1}^{n}\cA_{i},\prod_{i=1}^{n}\m_{i}\right)$
+\end_inset
+
+.
+ If a random element takes values in a product space then each component
+ is measurable, and conversely if the components of a random tuple are measurabl
+e then that tuple is measurable in the product space.
+ So, we can make the following definitions:
+\end_layout
+
+\begin_layout Definition
+Given random elements 
+\begin_inset Formula $\X_{1},\dots,\X_{n}$
+\end_inset
+
+ on the same underlying probability space, 
+\begin_inset Formula $\Lb{\X_{1},\dots,\X_{n}}:=\Lb{\left(\X_{1},\dots,\X_{n}\right)}$
+\end_inset
+
+ is called the 
+\emph on
+joint distribution
+\emph default
+ of 
+\begin_inset Formula $\X_{1},\dots,\X_{n}$
+\end_inset
+
+.
+ Conversely, given a random tuple 
+\begin_inset Formula $\left(\X_{1},\dots,\X_{n}\right)$
+\end_inset
+
+, each 
+\begin_inset Formula $\Lb{\X_{\i}}$
+\end_inset
+
+ is called a 
+\emph on
+marginal distribution
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Suppose we have two distributions of random elements 
+\begin_inset Formula $\Lb{\X_{1}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Lb{\X_{2}}$
+\end_inset
+
+.
+ 
+\emph on
+Coupling
+\emph default
+ is the technique of constructing a random ordered pair 
+\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+ which realizes the given distributions as marginal distributions.
+ Usually this is done by specifying the joint distribution 
+\begin_inset Formula $\Lb{\X_{1},\X_{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The idea is that coupling creates a particular kind of dependence between
+ 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ that allows us to compare the two distributions.
+ Often, we are able to make conclusions about the distributions 
+\begin_inset Formula $\Lb{\X_{\i}}$
+\end_inset
+
+ which are independent of their specific realizations as random elements
+ in the coupling.
+\end_layout
+
+\begin_layout Subsection
+Expected Value
 \end_layout
 
 \begin_layout Definition
@@ -1629,26 +1797,137 @@ If we fix a particular underlying probability space
 \end_layout
 
 \begin_layout Standard
-In fact, the expectation functional defines its underlying probability measure,
- because 
-\begin_inset Formula $\E\one_{\A}=\Pr\left(\A\right)$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
 \end_inset
 
- for all 
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\iota$
+\end_inset
+
+ is the natural injection that takes 
+\begin_inset Formula $r\in\RR$
+\end_inset
+
+ to the constant function 
+\begin_inset Formula $x\mapsto r$
+\end_inset
+
+, and 
+\begin_inset Formula $I$
+\end_inset
+
+ is the identity operator on 
+\begin_inset Formula $L^{1}\left(\Om,\Pr\right)$
+\end_inset
+
+, then 
+\begin_inset Formula $\iota\E$
+\end_inset
+
+ and 
+\begin_inset Formula $I-\iota\E$
+\end_inset
+
+ are both projection operators on 
+\begin_inset Formula $L^{1}\left(\Om,\Pr\right)$
+\end_inset
+
+.
+ In particular
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In fact, probability measures are uniquely determined by their expectation
+ functional, because 
+\begin_inset Formula $\E_{\Pr}\one_{\A}=\Pr\left(\A\right)$
+\end_inset
+
+ for all events 
 \begin_inset Formula $\A$
 \end_inset
 
 .
- Since the distribution of a random variable is specified by a probability
- measure, the distribution 
-\begin_inset Formula $\Lb{\X}$
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cH}{\mathcal{H}}
+{\boldsymbol{\mathcal{H}}}
 \end_inset
 
- of a random variable 
-\begin_inset Formula $\X$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\h}{h}
+{\boldsymbol{h}}
 \end_inset
 
- also uniquely defines an expectation functional 
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:determining-class"
+
+\end_inset
+
+A set of real functions 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is a 
+\emph on
+determining class
+\emph default
+ if 
+\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+\end_inset
+
+ for all 
+\begin_inset Formula $\h\in\cH$
+\end_inset
+
+ implies that 
+\begin_inset Formula $\Pr_{1}=\Pr_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can also define the expectation functional of a random variable 
 \begin_inset Formula $\E_{\X}:=\E_{\Lb{\X}}$
 \end_inset
 
@@ -1725,137 +2004,7 @@ end{comment}
 \end_layout
 
 \begin_layout Definition
-For two collections 
-\begin_inset Formula $S,S'\subseteq\cA_{1}$
-\end_inset
-
- of events, we say that 
-\begin_inset Formula $S$
-\end_inset
-
- and 
-\begin_inset Formula $S'$
-\end_inset
-
- are 
-\emph on
-independent
-\emph default
- if 
-\begin_inset Formula $\Pr\left(\A\cap\A'\right)=\Pr\left(\A\right)\Pr\left(\A'\right)$
-\end_inset
-
- for each 
-\begin_inset Formula $\A\in S$
-\end_inset
-
- and 
-\begin_inset Formula $\A\in S'$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-If 
-\begin_inset Formula $\left\{ \A\right\} $
-\end_inset
-
- is independent of 
-\begin_inset Formula $S'$
-\end_inset
-
-, we also say that 
-\begin_inset Formula $\A$
-\end_inset
-
- itself is independent of 
-\begin_inset Formula $S'$
-\end_inset
-
-.
- If 
-\begin_inset Formula $\left\{ \om\in\Om_{1}:\X\left(\om\right)\in\A_{2}\right\} $
-\end_inset
-
- is independent of 
-\begin_inset Formula $S'$
-\end_inset
-
- for some random element 
-\begin_inset Formula $\X:\left(\Om_{1},\cA_{1}\right)\to\left(\Om_{2},\cA_{2}\right)$
-\end_inset
-
-, then we say 
-\begin_inset Formula $\X$
-\end_inset
-
- is independent of 
-\begin_inset Formula $S'$
-\end_inset
-
-.
- We can analogously say that two random variables are independent, or a
- random variable and an event are independent, or any similar combination.
-\end_layout
-
-\begin_layout Definition
-If two objects are not independent, then we say they are 
-\emph on
-dependent
-\emph default
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-Suppose 
-\begin_inset Formula $\X:\Om_{1}\to\Om_{2}$
-\end_inset
-
- is a random element defined on these spaces, and 
-\begin_inset Formula $\A_{1}\in\cA_{1}$
-\end_inset
-
- is an event with nonzero probability.
- Then the 
-\emph on
-distribution of 
-\begin_inset Formula $\X$
-\end_inset
-
- conditioned on 
-\begin_inset Formula $\A_{1}$
-\end_inset
-
-
-\emph default
- is denoted by 
-\begin_inset Formula $\L{\X|\A_{1}}$
-\end_inset
-
- and defined by 
-\begin_inset Formula $\L{\X|\A_{1}}\left(\A_{2}\right)=\Pr\left(\X\in\A_{2}|\A_{1}\right)$
-\end_inset
-
- for 
-\begin_inset Formula $\A_{2}\in\cA_{2}$
-\end_inset
-
-.
- The expected value of a random variable with distribution 
+The expected value of a random variable with distribution 
 \begin_inset Formula $\L{\X|\A_{1}}$
 \end_inset
 
@@ -2087,104 +2236,6 @@ Suppose
 \end_layout
 
 \begin_layout Subsection
-Coupling
-\end_layout
-
-\begin_layout Standard
-Given a finite collection of measure spaces 
-\begin_inset Formula $\left(\Om_{1},\cA_{1},\m_{1}\right),\dots,\left(\Om_{n},\cA_{n},\m_{n}\right)$
-\end_inset
-
- recall the construction of the product measure space 
-\begin_inset Formula $\left(\Om,\cA,\m\right):=\left(\prod_{i=1}^{n}\Om_{i},\bigotimes_{i=1}^{n}\cA_{i},\prod_{i=1}^{n}\m_{i}\right)$
-\end_inset
-
-.
- If a random element takes values in a product space then each component
- is measurable, and conversely if the components of a random tuple are measurabl
-e then that tuple is measurable in the product space.
- So, we can make the following definitions:
-\end_layout
-
-\begin_layout Definition
-Given random elements 
-\begin_inset Formula $\X_{1},\dots,\X_{n}$
-\end_inset
-
- on the same underlying probability space, 
-\begin_inset Formula $\Lb{\X_{1},\dots,\X_{n}}:=\Lb{\left(\X_{1},\dots,\X_{n}\right)}$
-\end_inset
-
- is called the 
-\emph on
-joint distribution
-\emph default
- of 
-\begin_inset Formula $\X_{1},\dots,\X_{n}$
-\end_inset
-
-.
- Conversely, given a random tuple 
-\begin_inset Formula $\left(\X_{1},\dots,\X_{n}\right)$
-\end_inset
-
-, each 
-\begin_inset Formula $\Lb{\X_{\i}}$
-\end_inset
-
- is called a 
-\emph on
-marginal distribution
-\emph default
-.
-\end_layout
-
-\begin_layout Standard
-Suppose we have two distributions of random elements 
-\begin_inset Formula $\Lb{\X_{1}}$
-\end_inset
-
- and 
-\begin_inset Formula $\Lb{\X_{2}}$
-\end_inset
-
-.
- 
-\emph on
-Coupling
-\emph default
- is the technique of constructing a random ordered pair 
-\begin_inset Formula $\left(\X_{1},\X_{2}\right)$
-\end_inset
-
- which realizes the given distributions as marginal distributions.
- Usually this is done by specifying the joint distribution 
-\begin_inset Formula $\Lb{\X_{1},\X_{2}}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The idea is that coupling creates a particular kind of dependence between
- 
-\begin_inset Formula $\X_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $\X_{2}$
-\end_inset
-
- that allows us to compare the two distributions.
- Often, we are able to make conclusions about the distributions 
-\begin_inset Formula $\Lb{\X_{\i}}$
-\end_inset
-
- which are independent of their specific realizations as random elements
- in the coupling.
-\end_layout
-
-\begin_layout Subsection
 Markov Chains
 \end_layout
 
@@ -2232,12 +2283,18 @@ end{note}
 \end_layout
 
 \begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:weak-topology"
+
+\end_inset
+
 The Weak Topology on Probability Measures
 \end_layout
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\cH}{\mathcal{H}}
+\renewcommand{\cH}{\mathcal{H}}
 {\boldsymbol{\mathcal{H}}}
 \end_inset
 
@@ -2246,7 +2303,7 @@ The Weak Topology on Probability Measures
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\h}{h}
+\renewcommand{\h}{h}
 {\boldsymbol{h}}
 \end_inset
 
@@ -2773,9 +2830,21 @@ test
 \begin_inset Quotes erd
 \end_inset
 
- functions.
+ functions, and let 
+\begin_inset Formula $S\subseteq\P\left(\RR\right)$
+\end_inset
+
+ be a set of 
+\begin_inset Quotes eld
+\end_inset
+
+comparable
+\begin_inset Quotes erd
+\end_inset
+
+ measures.
  Define 
-\begin_inset Formula $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$
+\begin_inset Formula $d_{\cH}:S^{2}\to\RR^{+}$
 \end_inset
 
  by 
@@ -2810,76 +2879,69 @@ test
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:well-defined-metrics"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-What if there is no supremum or 
-\begin_inset Formula $\E_{\Pr_{1}}\h=\infty$
-\end_inset
-
-?
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
+In order for 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:general-metrics"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Definition
-A set of real functions 
+ to be well-defined, we should choose 
 \begin_inset Formula $\cH$
 \end_inset
 
- is a 
-\emph on
-determining class
-\emph default
- if 
-\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+ and 
+\begin_inset Formula $S$
 \end_inset
 
- for all 
+ such that 
+\begin_inset Formula $\E_{\Pr}\h$
+\end_inset
+
+ is well-defined and finite for all 
+\begin_inset Formula $\Pr\in S$
+\end_inset
+
+ and 
 \begin_inset Formula $\h\in\cH$
 \end_inset
 
- implies that 
-\begin_inset Formula $\Pr_{1}=\Pr_{2}$
+.
+ For 
+\begin_inset Formula $d_{\cH}$
+\end_inset
+
+ to be a metric, we should also ensure that 
+\begin_inset Formula $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)<\infty$
+\end_inset
+
+ for all 
+\begin_inset Formula $\Pr_{1},\Pr_{2}\in S$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-Each 
+Modulo the considerations in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:well-defined-metrics"
+
+\end_inset
+
+, 
 \begin_inset Formula $d_{\cH}$
 \end_inset
 
- is non-negative, symmetric and satisfies the triangle inequality.
+ is always non-negative, symmetric and satisfies the triangle inequality.
  Hence, to check that 
 \begin_inset Formula $d_{\cH}$
 \end_inset
@@ -2893,11 +2955,18 @@ Each
 \end_inset
 
 .
- That is, we need to check that 
+ It suffices to check that 
 \begin_inset Formula $\cH$
 \end_inset
 
- is a determining class.
+ is a determining class (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:determining-class"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Definition
@@ -2953,6 +3022,11 @@ If
 Kolmogorov metric
 \emph default
 .
+ We can choose 
+\begin_inset Formula $S_{\K}=\P\left(\RR\right)$
+\end_inset
+
+; that is, all probability measures are comparable.
 \end_layout
 
 \begin_layout Definition
@@ -2992,6 +3066,20 @@ If
 \emph on
 Wasserstein metric
 \emph default
+.
+ We can only compare absolutely integrable probability measures.
+ That is, let 
+\begin_inset Formula $S_{\W}\subset\P\left(\RR\right)$
+\end_inset
+
+ be the set of probability measures 
+\begin_inset Formula $\Pr$
+\end_inset
+
+ that satisfy 
+\begin_inset Formula $\E_{\Pr}\left|\id_{\RR}\right|<\infty$
+\end_inset
+
 .
 \end_layout
 
@@ -3053,6 +3141,11 @@ If
 total variation metric
 \emph default
 .
+ We can choose 
+\begin_inset Formula $S_{\TV}=\P\left(\RR\right)$
+\end_inset
+
+.
 \begin_inset ERT
 status open
 
@@ -3087,42 +3180,29 @@ metrics
 \end_layout
 
 \begin_layout Proof
-We check that 
-\begin_inset Formula $\cH_{\K}$
-\end_inset
-
-, 
-\begin_inset Formula $\cH_{\W}$
-\end_inset
-
- and 
-\begin_inset Formula $\cH_{\TV}$
-\end_inset
-
- are determining classes.
- Let 
-\begin_inset Formula $\cH\in\left\{ \cH_{\K},\cH_{\W},\cH_{\TV}\right\} $
-\end_inset
-
-, and suppose that 
-\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
-\end_inset
-
- for all 
-\begin_inset Formula $\h\in\cH$
+First we consider the case 
+\begin_inset Formula $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $
 \end_inset
 
 .
- It suffices to prove that 
-\begin_inset Formula $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
+ Since the functions in 
+\begin_inset Formula $\cH$
 \end_inset
 
- for all 
-\begin_inset Formula $x\in\RR$
+ are uniformly absolutely bounded (by 1), the conditions in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:well-defined-metrics"
+
 \end_inset
 
-, since the sets 
+ are immediately satisfied.
+ Now, note that the sets 
 \begin_inset Formula $\left(-\infty,x\right]$
+\end_inset
+
+ for 
+\begin_inset Formula $x\in\RR$
 \end_inset
 
  generate the Borel 
@@ -3130,24 +3210,99 @@ We check that
 \end_inset
 
 -algebra.
- For 
-\begin_inset Formula $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $
+ Since 
+\begin_inset Formula $\Pr\left(\left(-\infty,x\right]\right)=\E_{\Pr}\one_{\left(-\infty,x\right]}$
 \end_inset
 
- this is immediate, because 
-\begin_inset Formula $\Pr_{\i}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
+ and 
+\begin_inset Formula $\one_{\left(-\infty,x\right]}\in\cH$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+ and 
+\begin_inset Formula $\Pr\in\P\left(\RR\right)$
+\end_inset
+
+, it follows that 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is a determining class.
+ We conclude that 
+\begin_inset Formula $d_{\K}$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{\TV}$
+\end_inset
+
+ are metrics.
+\end_layout
+
+\begin_layout Proof
+Now, 
+\begin_inset Formula $\E_{\Pr}\left|\h\right|\le\left|\h\left(0\right)\right|+\E_{\Pr}\left|\id_{\RR}\right|<\infty$
+\end_inset
+
+ for 
+\begin_inset Formula $\Pr\in S_{\W}$
+\end_inset
+
+ and 
+\begin_inset Formula $\h\in\cH_{\W}$
 \end_inset
 
 .
- So, consider, 
-\begin_inset Formula $\cH=\cH_{\W}$
+ So, 
+\begin_inset Formula $\E_{\Pr}\h$
+\end_inset
+
+ is well-defined and finite.
+ If 
+\begin_inset Formula $\Pr_{1},\Pr_{2}\in S_{\W}$
+\end_inset
+
+ then 
+\begin_inset Formula $d_{\W}\left(\Pr_{1},\Pr_{2}\right)\le2\E_{\Pr}\left|\id_{\RR}\right|<\infty$
+\end_inset
+
+.
+ So, the conditions in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:well-defined-metrics"
+
+\end_inset
+
+ are satisfied for the Wasserstein 
+\begin_inset Quotes eld
+\end_inset
+
+metric
+\begin_inset Quotes erd
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Proof
-For 
+Next, let 
+\begin_inset Formula $\Pr_{1},\Pr_{2}\in S_{\W}$
+\end_inset
+
+ and suppose 
+\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{1}}\h$
+\end_inset
+
+ for all 
+\begin_inset Formula $\h\in\cH_{\W}$
+\end_inset
+
+.
+ For 
 \begin_inset Formula $\varepsilon>0$
 \end_inset
 
@@ -3214,7 +3369,20 @@ For
 \begin_inset Formula $x\in\RR$
 \end_inset
 
-.
+, so 
+\begin_inset Formula $\Pr_{1}=\Pr_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\cH_{\W}$
+\end_inset
+
+ is a determining class.
+ We conclude that 
+\begin_inset Formula $d_{\W}$
+\end_inset
+
+ is a metric.
 \end_layout
 
 \begin_layout Standard
@@ -3239,6 +3407,22 @@ name "prop:stronger-than-weak"
 
 The topologies induced by the Kolmogorov, Wasserstein and total variation
  metrics are each stronger than the weak topology.
+\end_layout
+
+\begin_layout Proof
+We show that 
+\begin_inset Formula $d_{\cH}\left(\X_{n},\X\right)\to0$
+\end_inset
+
+ implies 
+\begin_inset Formula $\Lb{\X_{n}}\to\Lb{\X}$
+\end_inset
+
+ for 
+\begin_inset Formula $\cH\in\left\{ \cH_{\K},\cH_{\W},\cH_{\TV}\right\} $
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3371,8 +3555,8 @@ reference "prop:stronger-than-weak"
  tells us that we can sensibly use our metrics to quantify the distance
  between random variables, in a way that is consistent with distributional
  (weak) convergence.
- All three metrics are relevant in their own right, but sometimes one may
- be easier to work with.
+ All three metrics are meaningful in their own right, but sometimes one
+ may be easier to work with.
  It is sometimes possible to transfer results between metrics, though this
  usually results in worse constants than working directly in the desired
  metric.
@@ -3396,6 +3580,19 @@ It may be worthwhile to actually characterize the Wasserstein, Kolmogorov
  and Total Variation topologies.
  In particular, Wikipedia says that Wasserstein convergence is just weak
  convergence plus convergence of the first moment.
+\end_layout
+
+\begin_layout Standard
+Also, 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://en.wikipedia.org/wiki/Talk:Convergence_of_measures"
+
+\end_inset
+
+ says an additional uniform boundedness condition on the test functions
+ metrizes the weak topology.
+ If so why arent we using that?
 \begin_inset ERT
 status open
 
@@ -3692,6 +3889,18 @@ If
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
 In a combinatorial setting, many of our results are about integer random
  variables.
  The total variation metric is usually exclusively used in this case.
@@ -3723,7 +3932,7 @@ For any Borel set
 \end_inset
 
 , so that 
-\begin_inset Formula $d_{\TV}\left(\X_{1},\X_{2}\right)=\sup\left|d_{\A}\right|$
+\begin_inset Formula $d_{\TV}\left(\X_{1},\X_{2}\right)=\sup_{\A}\left|d_{\A}\right|$
 \end_inset
 
 .
@@ -3751,7 +3960,7 @@ d_{\A} & =\sum_{k\in\ZZ\cap\A}\left(\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\r
 \end_inset
 
 and similarly 
-\begin_inset Formula $\Pr\left(\X_{1}\in\A\right)-\Pr\left(\X_{2}\in\A\right)\ge d_{\A_{<}}$
+\begin_inset Formula $-d_{\A}\ge d_{\A_{<}}$
 \end_inset
 
 .
@@ -3764,6 +3973,22 @@ and similarly
 \[
 d_{\TV}\left(\X_{1},\X_{2}\right)=\left(d_{\A_{>}}-d_{\A_{<}}\right)/2=\frac{1}{2}\sum_{k\in\ZZ}\left|\Pr\left(\X_{1}=k\right)-\Pr\left(\X_{2}=k\right)\right|.
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
 
 \end_inset
 
@@ -4263,6 +4488,10 @@ standard
 \begin_inset Formula $d_{\cH}\left(\L{\X},\Lo\right)$
 \end_inset
 
+ for some 
+\begin_inset Formula $\cH$
+\end_inset
+
 , where the metric 
 \begin_inset Formula $d_{\cH}$
 \end_inset
@@ -4298,7 +4527,7 @@ Let
 \begin_inset Formula $\Xo$
 \end_inset
 
- be a vector space of measurable functions.
+ be a vector space of measurable functions which contains the constant functions.
  We say a linear operator 
 \begin_inset Formula $\To:\Fo\to\Xo$
 \end_inset
@@ -4395,53 +4624,6 @@ If
  by the definition of a determining class.
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "todo:characterizing"
-
-\end_inset
-
-Ross 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Ros11"
-
-\end_inset
-
- and others use this weaker condition as the definition of a characterizing
- operator.
- I'll have to look at examples of operators that satisfy the weaker but
- not the stronger condition to see if the stronger definition is warranted
- (my guess is yes, if Stein decided to originally define it the way I did).
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Proposition
 \begin_inset CommandInset label
 LatexCommand label
@@ -4457,7 +4639,11 @@ name "prop:U_0-characterizing"
 \begin_inset Formula $\Uo:\Xo\to\Fo$
 \end_inset
 
- such that the following two equations hold.
+ (called a 
+\emph on
+Stein transform
+\emph default
+) such that the following two equations hold.
 \begin_inset Formula 
 \begin{align}
 \Eo\To & =0_{\Fo},\label{eq:E_0T_0-consistency}\\
@@ -4528,40 +4714,6 @@ reference "eq:U_0-characterizing"
 \end_layout
 
 \begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
-there's probably a cleaner functional analysis way to prove that.
- Also, is 
-\begin_inset Formula $\Uo$
-\end_inset
-
-  bounded?
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
 Conversely, suppose 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4614,6 +4766,255 @@ reference "eq:E_0T_0-consistency"
 \end_inset
 
  is a characterizing operator.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Clean up the following remark.
+ Maybe Banach space is too strong a requirement, can I have any topology
+ though?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+In full generality (and in accordance with 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste86"
+
+\end_inset
+
+), we do not require any topological structure on 
+\begin_inset Formula $\Fo$
+\end_inset
+
+ and 
+\begin_inset Formula $\Xo$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+The proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:U_0-characterizing"
+
+\end_inset
+
+ does not ensure that the Stein transform 
+\begin_inset Formula $\Uo$
+\end_inset
+
+ is particularly well-behaved.
+ In particular, if 
+\begin_inset Formula $\To$
+\end_inset
+
+ is a bounded linear operator between Banach spaces, 
+\begin_inset Formula $\Uo$
+\end_inset
+
+ may not be bounded.
+ In practice, we will usually require that 
+\begin_inset Formula $\Uo$
+\end_inset
+
+ is well-behaved to apply Stein's method.
+ An equivalent condition for existence of a bounded Stein transform is that
+ the kernel of 
+\begin_inset Formula $\To$
+\end_inset
+
+ is complementable.
+ That is, there is a closed subspace 
+\begin_inset Formula $S\subseteq\Fo$
+\end_inset
+
+ with 
+\begin_inset Formula $S\oplus\ker\To=\Fo$
+\end_inset
+
+.
+ For example, this condition will always be satisfied if 
+\begin_inset Formula $\Fo$
+\end_inset
+
+ is (isomorphic to a) Hilbert space, by the existence of orthogonal complements.
+ In fact, Hilbert spaces are the only spaces where every closed subspace
+ is complementable 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LT71"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of claim]
+\end_layout
+
+\end_inset
+
+First assume 
+\begin_inset Formula $\ker\To$
+\end_inset
+
+ is complementable, with complement 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ Now, 
+\begin_inset Formula $\ker\Eo=\im\To$
+\end_inset
+
+ is a closed (Banach) subspace of 
+\begin_inset Formula $\Xo$
+\end_inset
+
+, so 
+\begin_inset Formula $\To$
+\end_inset
+
+ restricts to a linear operator 
+\begin_inset Formula $\T':S\to\im\To$
+\end_inset
+
+ between Banach spaces.
+ By construction, 
+\begin_inset Formula $\T'$
+\end_inset
+
+ is bijective so by the bounded inverse theorem, 
+\begin_inset Formula $\T'$
+\end_inset
+
+ has a bounded inverse 
+\begin_inset Formula $\U':\im\To\to S$
+\end_inset
+
+.
+ This gives a bounded Stein transform
+\begin_inset Formula 
+\[
+\Uo:\Xo\to\Fo:\h\mapsto\U'\left(\h-\Eo\h\right).
+\]
+
+\end_inset
+
+Conversely, if 
+\begin_inset Formula $\Uo$
+\end_inset
+
+ is a bounded Stein transform for 
+\begin_inset Formula $\To$
+\end_inset
+
+, let 
+\begin_inset Formula $J=\id_{\Fo}-\Uo\To$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\fo\in\ker J\cap\ker\To$
+\end_inset
+
+ then 
+\begin_inset Formula $\To\fo=0$
+\end_inset
+
+ so 
+\begin_inset Formula $J\fo=\fo-\Uo0=\fo=0$
+\end_inset
+
+.
+ That is, 
+\begin_inset Formula $\ker J\cap\ker\To=\left\{ 0\right\} $
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $\fo\in\Fo$
+\end_inset
+
+, we have 
+\begin_inset Formula $\fo=J\fo+\Uo\To\fo$
+\end_inset
+
+.
+ Now, 
+\begin_inset Formula 
+\[
+J\Uo\To=\Uo\To-\Uo\left(\id_{\Xo}-\Eo\right)\To=\Uo\To-\Uo\To+\Uo\Eo\To=0
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+\To J=\To-\left(\id_{\Xo}-\Eo\right)\To=\To-\To+\Eo\To=0,
+\]
+
+\end_inset
+
+so 
+\begin_inset Formula $J\fo\in\ker\To$
+\end_inset
+
+ and 
+\begin_inset Formula $\Uo\To\fo\in\ker J$
+\end_inset
+
+.
+ That is, 
+\begin_inset Formula $\ker\To\oplus\ker J=\Fo$
+\end_inset
+
+ and we conclude that 
+\begin_inset Formula $\ker\To$
+\end_inset
+
+ is complementable.
 \end_layout
 
 \begin_layout Standard
@@ -4716,7 +5117,13 @@ reference "eq:E_0T_0-consistency"
 
 \end_inset
 
-By the product rule and the Fundamental Theorem of Calculus, for all 
+(obtaining this formula for 
+\begin_inset Formula $\U_{\N}$
+\end_inset
+
+ would involve solving a differential equation, most simply by the method
+ of integrating factors).
+ By the product rule and the Fundamental Theorem of Calculus, for all 
 \begin_inset Formula $\h\in\cX_{\N}$
 \end_inset
 
@@ -4935,7 +5342,30 @@ begin{todo}
 \end_inset
 
 , for both the Poisson and normal case.
- I'm not sure why, I'll revisit this after looking at exchangeable pairs.
+ I think this was to make sure 
+\begin_inset Formula $\To$
+\end_inset
+
+ and 
+\begin_inset Formula $\Uo$
+\end_inset
+
+ have the right domain and range.
+ See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste86"
+
+\end_inset
+
+ page 20 and 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste92"
+
+\end_inset
+
+ page 18.
 \begin_inset ERT
 status open
 
@@ -5143,6 +5573,46 @@ where
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Maybe I can bound 
+\begin_inset Formula $\left\Vert \U_{\Po\left(\lambda\right)}\right\Vert $
+\end_inset
+
+ instead?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5614,7 +6084,7 @@ fixed point
 \end_inset
 
  is an index 
-\begin_inset Formula $k\in\left[n\right]$
+\begin_inset Formula $k\in\range n$
 \end_inset
 
  that satisfies 
@@ -5794,7 +6264,7 @@ a pair
 \uwave default
 \noun default
 \color inherit
- In particular, the marginal distribution of 
+ In particular, the marginal distributions of 
 \begin_inset Formula $\X_{1}$
 \end_inset
 
@@ -6212,7 +6682,11 @@ Define
 \end_inset
 
 , so that 
-\begin_inset Formula $\TX\X=\E^{\X_{1}}\fX\left(\eX\right)$
+\begin_inset Formula $\TX\fX\left(\X\right)$
+\end_inset
+
+ is distributed as 
+\begin_inset Formula $\E^{\X_{1}}\fX\left(\eX\right)$
 \end_inset
 
 .
