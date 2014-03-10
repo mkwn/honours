@@ -354,6 +354,15 @@ end{comment}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\rest}{|}
+{\boldsymbol{|}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\d}{\operatorname d}
 {\mathbf{d}}
 \end_inset
@@ -487,8 +496,23 @@ end{note}
 
 \end_layout
 
+\begin_layout Standard
+Unless stated otherwise, all proofs are 
+\begin_inset Quotes eld
+\end_inset
+
+original
+\begin_inset Quotes erd
+\end_inset
+
+ in that I came up with them, although many are quite standard and probably
+ exist elsewhere.
+ For the proofs that I have adapted from other sources, I tried to add some
+ new explanation or details.
+\end_layout
+
 \begin_layout Subsection
-Notation
+Notation and Assumed Knowledge
 \end_layout
 
 \begin_layout Standard
@@ -524,6 +548,19 @@ For this thesis, the set of natural numbers
 
  denotes the set 
 \begin_inset Formula $\left\{ 1,\dots,k\right\} $
+\end_inset
+
+.
+ The function 
+\begin_inset Formula $f$
+\end_inset
+
+ restricted to the set 
+\begin_inset Formula $A$
+\end_inset
+
+ is denoted 
+\begin_inset Formula $f\rest_{A}$
 \end_inset
 
 .
@@ -573,6 +610,26 @@ randomly choose
 
  is taken to mean a uniformly random choice.
  That means, each possible option is chosen with equal probability.
+\end_layout
+
+\begin_layout Standard
+I will use results from analysis, particularly measure theory, without proof.
+ I will usually refer to a numbered theorem in Rudin's Real and Complex
+ Analysis 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Rud66"
+
+\end_inset
+
+ or Functional Analysis 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Rud73"
+
+\end_inset
+
+ when doing so.
 \end_layout
 
 \begin_layout Part
@@ -1703,7 +1760,7 @@ of a random variable
 \begin_inset Formula $\X$
 \end_inset
 
- is 
+ (or its distribution) is 
 \begin_inset Formula $\E\X=\int x\d\L{\X}\left(x\right)$
 \end_inset
 
@@ -2080,7 +2137,15 @@ We can also define conditional expectation with respect to another random
 \end_inset
 
 .
- By the Radon-Nikodym theorem there is an 
+ By the Radon-Nikodym theorem (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 6.10"
+key "Rud66"
+
+\end_inset
+
+) there is an 
 \begin_inset Formula $\cA'$
 \end_inset
 
@@ -2321,6 +2386,15 @@ The Weak Topology on Probability Measures
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\BL}{\mathrm{BL}}
+{\boldsymbol{\mathrm{BL}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\K}{\mathrm{K}}
 {\boldsymbol{\mathrm{K}}}
 \end_inset
@@ -2459,15 +2533,6 @@ weakly
 \end_inset
 
 .
- The topology on 
-\begin_inset Formula $\P\left(\RR\right)$
-\end_inset
-
- associated with this convergence is called the 
-\emph on
-weak topology
-\emph default
- (we will see that it is indeed a topology).
  Convergence in distribution of random vectors is defined component-wise.
 \end_layout
 
@@ -2573,6 +2638,37 @@ item
 
 \begin_inset CommandInset label
 LatexCommand label
+name "prop:dist-liminf"
+
+\end_inset
+
+
+\begin_inset Formula $\liminf_{n\to\infty}\L{\X_{n}}\left(U\right)\ge\L{\X}\left(U\right)$
+\end_inset
+
+ for every open 
+\begin_inset Formula $U\subseteq\RR$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
 name "prop:dist-F"
 
 \end_inset
@@ -2654,12 +2750,13 @@ status open
 
 
 \backslash
-ref{prop:dist-def,prop:dist-F}
+ref{prop:dist-def,prop:dist-liminf,prop:dist-F}
 \end_layout
 
 \end_inset
 
- is a well-known result called the Portmanteau Theorem.
+ is (part of) a well-known and relatively elementary result called the Portmante
+au Theorem.
 \end_layout
 
 \begin_layout Standard
@@ -2688,6 +2785,42 @@ reference "prop:dist-F"
 
 .
  This characterization is usually used to prove the Poisson limit theorem.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I haven't defined limit theorems
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2785,30 +2918,49 @@ In functional analysis terms, note that
 \end_inset
 
  in the weak-star topology.
- Although 
-\begin_inset Formula $C_{b}\left(\RR\right)^{*}$
-\end_inset
-
- is not metrizable, the subspace corresponding to 
+ The subspace corresponding to 
 \begin_inset Formula $\P\left(\RR\right)$
 \end_inset
 
- is in fact metrizable, with a metric called the L
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-'e
+ is confusingly called the 
+\emph on
+weak topology
+\emph default
+ on probability distributions.
 \end_layout
+
+\begin_layout Standard
+Although 
+\begin_inset Formula $C_{b}\left(\RR\right)^{*}$
+\end_inset
+
+ is not metrizable, the unit ball (in operator norm) of 
+\begin_inset Formula $C_{b}\left(\RR\right)^{*}$
+\end_inset
+
+ is in fact metrizable (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorems 3.15 and 3.16"
+key "Rud73"
 
 \end_inset
 
-vy metric.
- For Stein's method we will be interested in some slightly stronger metrics,
- which we will now define.
+).
+ Every expectation functional 
+\begin_inset Formula $\E$
+\end_inset
+
+ has unit operator norm because 
+\begin_inset Formula $\E\left|\h\right|\le\E\left|1\right|=1$
+\end_inset
+
+ for 
+\begin_inset Formula $\h$
+\end_inset
+
+ with unit uniform norm.
+ So, the weak topology is metrizable.
 \end_layout
 
 \begin_layout Definition
@@ -2822,7 +2974,7 @@ Let
 \begin_inset Formula $\cH$
 \end_inset
 
- be a collection of real measurable 
+ be a determining class of real measurable 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2830,21 +2982,9 @@ test
 \begin_inset Quotes erd
 \end_inset
 
- functions, and let 
-\begin_inset Formula $S\subseteq\P\left(\RR\right)$
-\end_inset
-
- be a set of 
-\begin_inset Quotes eld
-\end_inset
-
-comparable
-\begin_inset Quotes erd
-\end_inset
-
- measures.
+ functions that are uniformly absolutely bounded.
  Define 
-\begin_inset Formula $d_{\cH}:S^{2}\to\RR^{+}$
+\begin_inset Formula $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$
 \end_inset
 
  by 
@@ -2879,94 +3019,60 @@ comparable
 .
 \end_layout
 
-\begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:well-defined-metrics"
-
+\begin_layout Proposition
+Each 
+\begin_inset Formula $d_{\cH}$
 \end_inset
 
-In order for 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "def:general-metrics"
+ is a metric.
+\end_layout
 
-\end_inset
-
- to be well-defined, we should choose 
+\begin_layout Proof
+Since the functions in 
 \begin_inset Formula $\cH$
 \end_inset
 
- and 
-\begin_inset Formula $S$
+ are bounded, 
+\begin_inset Formula $\E_{\Pr_{1}}\h$
 \end_inset
 
- such that 
-\begin_inset Formula $\E_{\Pr}\h$
-\end_inset
-
- is well-defined and finite for all 
-\begin_inset Formula $\Pr\in S$
-\end_inset
-
- and 
+ is well-defined for every 
 \begin_inset Formula $\h\in\cH$
 \end_inset
 
 .
- For 
+ Since the bound is uniform, the supremum in the definition of 
 \begin_inset Formula $d_{\cH}$
 \end_inset
 
- to be a metric, we should also ensure that 
-\begin_inset Formula $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)<\infty$
-\end_inset
-
- for all 
-\begin_inset Formula $\Pr_{1},\Pr_{2}\in S$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Modulo the considerations in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "rem:well-defined-metrics"
-
-\end_inset
-
-, 
+ is finite as well.
+ It is immediate that 
 \begin_inset Formula $d_{\cH}$
 \end_inset
 
- is always non-negative, symmetric and satisfies the triangle inequality.
- Hence, to check that 
-\begin_inset Formula $d_{\cH}$
-\end_inset
-
- is a metric, we only need to check that 
+ is non-negative, symmetric and satisfies the triangle inequality.
+ Finally, 
 \begin_inset Formula $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$
 \end_inset
 
  implies that 
+\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+\end_inset
+
+ for all 
+\begin_inset Formula $\h\in\cH$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is a determining class, 
 \begin_inset Formula $\Pr_{1}=\Pr_{2}$
 \end_inset
 
 .
- It suffices to check that 
-\begin_inset Formula $\cH$
-\end_inset
-
- is a determining class (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "def:determining-class"
-
-\end_inset
-
-).
 \end_layout
 
 \begin_layout Definition
@@ -3022,11 +3128,6 @@ If
 Kolmogorov metric
 \emph default
 .
- We can choose 
-\begin_inset Formula $S_{\K}=\P\left(\RR\right)$
-\end_inset
-
-; that is, all probability measures are comparable.
 \end_layout
 
 \begin_layout Definition
@@ -3042,15 +3143,23 @@ item
 
 \end_inset
 
-If 
-\begin_inset Formula $\cH_{\W}$
+Let 
+\begin_inset Formula $\cH_{\BL}$
 \end_inset
 
- is the set of real functions 
+ be the set of functions 
 \begin_inset Formula $\h$
 \end_inset
 
- that satisfy 
+ that are absolutely bounded by 1 (that is, 
+\begin_inset Formula $\left|\h\left(x\right)\right|\le1$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+), and have Lipschitz constant at most 1 (that is, 
 \begin_inset Formula $\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
 \end_inset
 
@@ -3058,28 +3167,15 @@ If
 \begin_inset Formula $x_{1},x_{2}\in\RR$
 \end_inset
 
- (that is, the set of functions with Lipschitz constant 1), then 
-\begin_inset Formula $d_{\W}:=d_{\cH_{\W}}$
+).
+ Then, 
+\begin_inset Formula $d_{\BL}:=d_{\cH_{\BL}}$
 \end_inset
 
  is called the 
 \emph on
-Wasserstein metric
+Bounded Lipschitz metric
 \emph default
-.
- We can only compare absolutely integrable probability measures.
- That is, let 
-\begin_inset Formula $S_{\W}\subset\P\left(\RR\right)$
-\end_inset
-
- be the set of probability measures 
-\begin_inset Formula $\Pr$
-\end_inset
-
- that satisfy 
-\begin_inset Formula $\E_{\Pr}\left|\id_{\RR}\right|<\infty$
-\end_inset
-
 .
 \end_layout
 
@@ -3141,11 +3237,48 @@ If
 total variation metric
 \emph default
 .
- We can choose 
-\begin_inset Formula $S_{\TV}=\P\left(\RR\right)$
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
 \end_inset
 
-.
+If 
+\begin_inset Formula $\cH_{\W}$
+\end_inset
+
+ is the set of functions with Lipschitz constant at most 1, then 
+\begin_inset Formula $d_{\W}:=d_{\cH_{\W}}$
+\end_inset
+
+ is called the 
+\emph on
+Wasserstein 
+\emph default
+metric.
+ However, since 
+\begin_inset Formula $\cH$
+\end_inset
+
+ is not uniformly bounded, 
+\begin_inset Formula $d_{\W}$
+\end_inset
+
+ is not strictly speaking a metric on 
+\begin_inset Formula $\P\left(\RR\right)$
+\end_inset
+
+; the Wasserstein metric can only be used to compare distributions with
+ finite first moment.
 \begin_inset ERT
 status open
 
@@ -3168,7 +3301,7 @@ name "prop:metric"
 
 \end_inset
 
-The Kolmogorov, Wasserstein and total variation 
+The 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3176,45 +3309,67 @@ metrics
 \begin_inset Quotes erd
 \end_inset
 
+ in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:special-metrics"
+
+\end_inset
+
  are actually metrics.
 \end_layout
 
 \begin_layout Proof
-First we consider the case 
-\begin_inset Formula $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $
+First, note that if 
+\begin_inset Formula $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
+\end_inset
+
+ have finite first moment then 
+\begin_inset Formula $d_{\W}\left(\Pr_{1},\Pr_{2}\right)\le2\E_{\Pr}\left|\id_{\RR}\right|<\infty$
 \end_inset
 
 .
- Since the functions in 
+\end_layout
+
+\begin_layout Proof
+Now, we just need to check that each of 
+\begin_inset Formula $\cH_{\K},\cH_{\BL},\cH_{\TV},\cH_{\W}$
+\end_inset
+
+ are determining classes.
+ Let 
+\begin_inset Formula $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
+\end_inset
+
+ satisfy 
+\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+\end_inset
+
+ for each 
+\begin_inset Formula $\h$
+\end_inset
+
+ in 
 \begin_inset Formula $\cH$
 \end_inset
 
- are uniformly absolutely bounded (by 1), the conditions in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "rem:well-defined-metrics"
+.
+\end_layout
 
+\begin_layout Proof
+If 
+\begin_inset Formula $\cH$
 \end_inset
 
- are immediately satisfied.
- Now, note that the sets 
-\begin_inset Formula $\left(-\infty,x\right]$
+ is 
+\begin_inset Formula $\cH_{\K}$
 \end_inset
 
- for 
-\begin_inset Formula $x\in\RR$
+ or 
+\begin_inset Formula $\cH_{\TV}$
 \end_inset
 
- generate the Borel 
-\begin_inset Formula $\sigma$
-\end_inset
-
--algebra.
- Since 
-\begin_inset Formula $\Pr\left(\left(-\infty,x\right]\right)=\E_{\Pr}\one_{\left(-\infty,x\right]}$
-\end_inset
-
- and 
+ then 
 \begin_inset Formula $\one_{\left(-\infty,x\right]}\in\cH$
 \end_inset
 
@@ -3222,92 +3377,45 @@ reference "rem:well-defined-metrics"
 \begin_inset Formula $x\in\RR$
 \end_inset
 
+ so 
+\begin_inset Formula 
+\[
+\Pr_{1}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{1}}\one_{\left(-\infty,x\right]}=\E_{\Pr_{2}}\one_{\left(-\infty,x\right]}=\Pr_{2}\left(\left(-\infty,x\right]\right).
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $\left\{ \left(-\infty,x\right]:x\in\RR\right\} $
+\end_inset
+
+ generates the Borel 
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra, 
+\begin_inset Formula $\Pr_{1}=\Pr_{2}$
+\end_inset
+
+.
+ We have shown that 
+\begin_inset Formula $\cH_{\K}$
+\end_inset
+
  and 
-\begin_inset Formula $\Pr\in\P\left(\RR\right)$
+\begin_inset Formula $\cH_{\TV}$
 \end_inset
 
-, it follows that 
-\begin_inset Formula $\cH$
-\end_inset
-
- is a determining class.
- We conclude that 
-\begin_inset Formula $d_{\K}$
-\end_inset
-
- and 
-\begin_inset Formula $d_{\TV}$
-\end_inset
-
- are metrics.
+ are determining classes.
 \end_layout
 
 \begin_layout Proof
-Now, 
-\begin_inset Formula $\E_{\Pr}\left|\h\right|\le\left|\h\left(0\right)\right|+\E_{\Pr}\left|\id_{\RR}\right|<\infty$
-\end_inset
-
- for 
-\begin_inset Formula $\Pr\in S_{\W}$
-\end_inset
-
- and 
-\begin_inset Formula $\h\in\cH_{\W}$
-\end_inset
-
-.
- So, 
-\begin_inset Formula $\E_{\Pr}\h$
-\end_inset
-
- is well-defined and finite.
- If 
-\begin_inset Formula $\Pr_{1},\Pr_{2}\in S_{\W}$
-\end_inset
-
- then 
-\begin_inset Formula $d_{\W}\left(\Pr_{1},\Pr_{2}\right)\le2\E_{\Pr}\left|\id_{\RR}\right|<\infty$
-\end_inset
-
-.
- So, the conditions in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "rem:well-defined-metrics"
-
-\end_inset
-
- are satisfied for the Wasserstein 
-\begin_inset Quotes eld
-\end_inset
-
-metric
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Next, let 
-\begin_inset Formula $\Pr_{1},\Pr_{2}\in S_{\W}$
-\end_inset
-
- and suppose 
-\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{1}}\h$
-\end_inset
-
- for all 
-\begin_inset Formula $\h\in\cH_{\W}$
-\end_inset
-
-.
- For 
-\begin_inset Formula $\varepsilon>0$
-\end_inset
-
- and 
+For 
 \begin_inset Formula $x\in\RR$
+\end_inset
+
+ and 
+\begin_inset Formula $0<\varepsilon\le1$
 \end_inset
 
 , let 
@@ -3327,16 +3435,33 @@ Next, let
 \end_inset
 
 .
- Since 
-\begin_inset Formula $\varepsilon\h_{x,\varepsilon}\in\cH_{\W}$
+ Suppose 
+\begin_inset Formula $\cH$
 \end_inset
 
-, we have 
+ is 
+\begin_inset Formula $\cH_{\BL}$
+\end_inset
+
+ or 
+\begin_inset Formula $\cH_{\W}$
+\end_inset
+
+, so that each 
+\begin_inset Formula $\varepsilon\h_{x,\varepsilon}\in\cH$
+\end_inset
+
+.
+ It follows that 
 \begin_inset Formula $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
 \end_inset
 
  for each 
-\begin_inset Formula $\varepsilon>0$
+\begin_inset Formula $x\in\RR$
+\end_inset
+
+ and 
+\begin_inset Formula $0<\varepsilon\le1$
 \end_inset
 
 .
@@ -3344,58 +3469,32 @@ Next, let
 \begin_inset Formula $x\in\RR$
 \end_inset
 
-, 
+, note that 
 \begin_inset Formula $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$
 \end_inset
 
- pointwise and each 
+ pointwise, and each 
 \begin_inset Formula $\h_{x,1/n}\le1$
 \end_inset
 
- so by the dominated convergence theorem, 
-\begin_inset Formula $\E_{\Pr_{\i}}\h_{1/n}\to\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
-\end_inset
-
- for each 
-\begin_inset Formula $\i\in\left\{ 1,2\right\} $
-\end_inset
-
 .
- We have proved that 
-\begin_inset Formula $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
+ By the dominated convergence theorem, 
+\begin_inset Formula 
+\[
+\Pr_{1}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{1}}\one_{\left(-\infty,x\right]}=\lim_{n\to\infty}\E_{\Pr_{1}}\h_{x,1/n}=\lim_{n\to\infty}\E_{\Pr_{2}}\h_{x,1/n}=\E_{\Pr_{2}}\one_{\left(-\infty,x\right]}=\Pr_{2}\left(\left(-\infty,x\right]\right),
+\]
+
 \end_inset
 
- for all 
-\begin_inset Formula $x\in\RR$
-\end_inset
-
-, so 
-\begin_inset Formula $\Pr_{1}=\Pr_{2}$
+so 
+\begin_inset Formula $\cH_{\BL}$
 \end_inset
 
  and 
 \begin_inset Formula $\cH_{\W}$
 \end_inset
 
- is a determining class.
- We conclude that 
-\begin_inset Formula $d_{\W}$
-\end_inset
-
- is a metric.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
+ are determining classes.
 \end_layout
 
 \begin_layout Proposition
@@ -3405,8 +3504,14 @@ name "prop:stronger-than-weak"
 
 \end_inset
 
-The topologies induced by the Kolmogorov, Wasserstein and total variation
- metrics are each stronger than the weak topology.
+The metrics in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:special-metrics"
+
+\end_inset
+
+ are each stronger than the weak topology.
 \end_layout
 
 \begin_layout Proof
@@ -3457,12 +3562,16 @@ reference "prop:dist"
 
 \begin_layout Proof
 Now, suppose 
-\begin_inset Formula $d_{\W}\left(\X_{n},\X\right)\to0$
+\begin_inset Formula $d_{\BL}\left(\X_{n},\X\right)\to0$
 \end_inset
 
-.
+ (this will automatically be true if 
+\begin_inset Formula $d_{\K}\left(\X_{n},\X\right)\to0$
+\end_inset
+
+).
  Let 
-\begin_inset Formula $d_{n}=\sqrt{d_{\W}\left(\X_{n},\X\right)}$
+\begin_inset Formula $d_{n}=\sqrt{d_{\BL}\left(\X_{n},\X\right)}$
 \end_inset
 
  and recall the definition of 
@@ -3543,6 +3652,423 @@ reference "prop:dist"
 \end_inset
 
  holds.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:BL-metrizes-weak"
+
+\end_inset
+
+The bounded Lipschitz metric metrizes the weak topology.
+\end_layout
+
+\begin_layout Standard
+We will need a small lemma to prove 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:BL-metrizes-weak"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:prokhorov"
+
+\end_inset
+
+Let 
+\begin_inset Formula $S\subseteq\P\left(\RR\right)$
+\end_inset
+
+ be compact in the weak topology.
+ For each 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+, there is 
+\begin_inset Formula $k\in\NN$
+\end_inset
+
+ such that with 
+\begin_inset Formula $\sup_{\Pr\in S}\Pr\left(\left(-k,k\right)^{c}\right)\le\varepsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Fix 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+.
+ Suppose for the purpose of contradiction that for all 
+\begin_inset Formula $k\in\NN$
+\end_inset
+
+ there is 
+\begin_inset Formula $\Pr_{k}\in S$
+\end_inset
+
+ with 
+\begin_inset Formula $\Pr_{k}\left(\left(-k,k\right)^{c}\right)>\varepsilon$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $S$
+\end_inset
+
+ is compact, there is a subsequence 
+\begin_inset Formula $\left(\Pr_{k_{n}}\right)_{n\in\NN}$
+\end_inset
+
+ and a measure 
+\begin_inset Formula $\Pr\in S$
+\end_inset
+
+ with 
+\begin_inset Formula $\Pr_{k_{n}}\to\Pr$
+\end_inset
+
+ as 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+.
+ By 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:dist-liminf"
+
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:dist"
+
+\end_inset
+
+, for each 
+\begin_inset Formula $k\in\NN$
+\end_inset
+
+ we have
+\begin_inset Formula 
+\[
+\Pr\left(\left(-k,k\right)\right)\le\liminf_{n\to\infty}\Pr_{k_{n}}\left(\left(-k_{n},k_{n}\right)\right)\le\liminf_{n\to\infty}\Pr_{n}\left(\left(-n,n\right)\right)\le1-\varepsilon.
+\]
+
+\end_inset
+
+This is a contradiction because 
+\begin_inset Formula $\Pr\left(\left(-k,k\right)\right)=\E_{\Pr}\one_{\left(-k,k\right)}\to\E_{\Pr}1=1$
+\end_inset
+
+ by the dominated convergence theorem (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 1.34"
+key "Rud66"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of 
+\backslash
+ref{thm:BL-metrizes-weak}]
+\end_layout
+
+\end_inset
+
+(Adapted from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 7.12"
+key "Vil03"
+
+\end_inset
+
+).
+ Let 
+\begin_inset Formula $\Pr_{n}\to\Pr_{\infty}$
+\end_inset
+
+ weakly, and suppose for the purpose of contradiction that 
+\begin_inset Formula $d_{\BL}\left(\Pr_{n},\Pr_{\infty}\right)\not\to0$
+\end_inset
+
+.
+ Then there is 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+ and a subsequence 
+\begin_inset Formula $\left(\Pr_{k_{n}}\right)_{n\in\NN}$
+\end_inset
+
+ with 
+\begin_inset Formula $d_{\BL}\left(\Pr_{k_{n}},\Pr_{\infty}\right)>2\varepsilon$
+\end_inset
+
+ for all 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ To simplify notation, redefine 
+\begin_inset Formula $\Pr_{n}$
+\end_inset
+
+ to be 
+\begin_inset Formula $\Pr_{k_{n}}$
+\end_inset
+
+ for each 
+\begin_inset Formula $n$
+\end_inset
+
+ (we still have 
+\begin_inset Formula $\Pr_{n}\to\Pr_{\infty}$
+\end_inset
+
+ weakly).
+\end_layout
+
+\begin_layout Proof
+Now, by the definition of 
+\begin_inset Formula $d_{\BL}$
+\end_inset
+
+, for each 
+\begin_inset Formula $n\in\NN$
+\end_inset
+
+ there is 
+\begin_inset Formula $\h_{n}=\h_{n}^{\left(0\right)}\in\cH_{\BL}$
+\end_inset
+
+ with 
+\begin_inset Formula 
+\[
+\left|\E_{\Pr_{n}}\h_{n}-\E_{\Pr}\h_{n}\right|\ge d_{\BL}\left(\Pr_{n},\Pr\right)-\varepsilon>\varepsilon.
+\]
+
+\end_inset
+
+For each 
+\begin_inset Formula $k\in\ZZ^{+}$
+\end_inset
+
+, let 
+\begin_inset Formula $\cH_{\BL}^{\left(k\right)}=\left\{ \h\rest_{\left[-k,k\right]}:\h\in\cH_{\BL}\right\} $
+\end_inset
+
+.
+ By the Arzela-Ascoli theorem (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 11.28"
+key "Rud66"
+
+\end_inset
+
+), each 
+\begin_inset Formula $\cH_{\BL}^{\left(k\right)}$
+\end_inset
+
+ is a compact subset of 
+\begin_inset Formula $C_{b}\left(\left[-k,k\right]\right)$
+\end_inset
+
+ with the uniform norm.
+ So, for each 
+\begin_inset Formula $k\in\ZZ^{+}$
+\end_inset
+
+, we can inductively choose a subsequence 
+\begin_inset Formula $\left(\h_{n}^{\left(k\right)}\right)_{n\in\NN}$
+\end_inset
+
+ of 
+\begin_inset Formula $\left(\h_{n}^{\left(k-1\right)}\right)_{n\in\NN}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\h_{n}^{\left(k\right)}\rest_{\left[-k,k\right]}$
+\end_inset
+
+ converges uniformly to some 
+\begin_inset Formula $\h^{\left(k\right)}\in\cH_{\BL}^{\left(k\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $\h_{n}^{\left(n\right)}\rest_{\left[-k,k\right]}\to\h^{\left(k\right)}$
+\end_inset
+
+ uniformly for each 
+\begin_inset Formula $k\in\ZZ^{+}$
+\end_inset
+
+, so that 
+\begin_inset Formula $\h_{n}^{\left(n\right)}$
+\end_inset
+
+ converges pointwise to some function 
+\begin_inset Formula $\h:\RR\to\RR$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\h\rest_{\left[-k,k\right]}=\h^{\left(k\right)}$
+\end_inset
+
+ for all 
+\begin_inset Formula $k\in\ZZ^{+}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\h$
+\end_inset
+
+ is bounded by 1 and has Lipschitz constant less than 1 on each 
+\begin_inset Formula $\left[-k,k\right]$
+\end_inset
+
+, it follows that 
+\begin_inset Formula $\h\in\cH_{\BL}$
+\end_inset
+
+ and in particular 
+\begin_inset Formula $\h$
+\end_inset
+
+ is bounded and continuous.
+ Finally, note
+\begin_inset Formula 
+\begin{alignat*}{1}
+\left|\E_{\Pr_{n}}\h_{n}-\E_{\Pr_{\infty}}\h_{n}\right| & \le\left|\E_{\Pr_{n}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]}\right]\right|+\left|\E_{\Pr_{\infty}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]}\right]\right|\\
+ & +\left|\E_{\Pr_{n}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]^{c}}\right]\right|+\left|\E_{\Pr_{\infty}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]^{c}}\right]\right|\\
+ & +\left|\E_{\Pr_{n}}\h-\E_{\Pr_{\infty}}\h\right|
+\end{alignat*}
+
+\end_inset
+
+By the definition of weak convergence, there is 
+\begin_inset Formula $N\in\NN$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\left|\E_{\Pr_{n}}\h-\E_{\Pr_{\infty}}\h\right|\le\frac{\varepsilon}{5}
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $n>N$
+\end_inset
+
+.
+ Since the weak topology is metrizable, 
+\begin_inset Formula $\left\{ \Pr_{n}\right\} _{n\in\NN\cup\left\{ \infty\right\} }$
+\end_inset
+
+ is compact so by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:prokhorov"
+
+\end_inset
+
+, there is 
+\begin_inset Formula $k\in\NN$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\E_{\Pr_{n}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]^{c}}\right]\le2\Pr_{n}\left[\left(-k,k\right)^{c}\right]\le\frac{\varepsilon}{5}
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $n\in\NN\cup\left\{ \infty\right\} $
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\left(\h_{n}^{\left(n\right)}\right)_{n\in\NN}$
+\end_inset
+
+ is a subsequence of 
+\begin_inset Formula $\left(\h_{n}\right)_{n\in\NN}$
+\end_inset
+
+ and 
+\begin_inset Formula $\h_{n}^{\left(n\right)}\one_{\left[-k,k\right]}$
+\end_inset
+
+ converges uniformly to 
+\begin_inset Formula $\h\one_{\left[-k,k\right]}$
+\end_inset
+
+, there is 
+\begin_inset Formula $n>N$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\left\Vert \left(\h_{n}-\h\right)\one_{\left[-k,k\right]}\right\Vert _{\infty}\le\frac{\varepsilon}{5}.
+\]
+
+\end_inset
+
+For this 
+\begin_inset Formula $n$
+\end_inset
+
+ we have 
+\begin_inset Formula $\left|\E_{\Pr_{n}}\h_{n}-\E_{\Pr_{\infty}}\h_{n}\right|\le\varepsilon$
+\end_inset
+
+.
+ This is a contradiction.
 \end_layout
 
 \begin_layout Standard

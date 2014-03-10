@@ -204,6 +204,9 @@ c
 \global\long\def\range#1{\left[#1\right]}
 
 
+\global\long\def\rest{|}
+
+
 \global\long\def\d{\operatorname d}
 
 
@@ -235,13 +238,19 @@ asymptotic results.
 
 \end{note}
 
+Unless stated otherwise, all proofs are ``original'' in that I came
+up with them, although many are quite standard and probably exist
+elsewhere. For the proofs that I have adapted from other sources,
+I tried to add some new explanation or details.
 
-\subsection{Notation}
+
+\subsection{Notation and Assumed Knowledge}
 
 For this thesis, the set of natural numbers $\NN$ includes zero.
 We write $\one_{A}$ for the characteristic function of a set $A$:
 $\one_{A}\left(x\right)=1$ if $x\in A$, otherwise $\one_{A}\left(x\right)=0$.
-Also, $\range k$ denotes the set $\left\{ 1,\dots,k\right\} $.
+Also, $\range k$ denotes the set $\left\{ 1,\dots,k\right\} $. The
+function $f$ restricted to the set $A$ is denoted $f\rest_{A}$.
 
 Unless otherwise specified, all asympotics are as $n\to\infty$. Apart
 from standard asymptotic notation, we use two notions of asymptotic
@@ -255,6 +264,11 @@ have loops and/or multiple edges will be called a multigraph.
 
 The phrase ``randomly choose'' is taken to mean a uniformly random
 choice. That means, each possible option is chosen with equal probability.
+
+I will use results from analysis, particularly measure theory, without
+proof. I will usually refer to a numbered theorem in Rudin's Real
+and Complex Analysis \cite{Rud66} or Functional Analysis \cite{Rud73}
+when doing so.
 
 
 \part{Theory}
@@ -507,7 +521,8 @@ as random elements in the coupling.
 
 \subsection{Expected Value}
 \begin{defn}
-The \emph{expected value }of a random variable $\X$ is $\E\X=\int x\d\L{\X}\left(x\right)$.
+The \emph{expected value }of a random variable $\X$ (or its distribution)
+is $\E\X=\int x\d\L{\X}\left(x\right)$.
 \end{defn}
 For a random variable $\X$ that takes integer values, this definition
 is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\,\Pr\left(\X=x\right)$.
@@ -576,8 +591,8 @@ then the sets $\X_{2}^{-1}\left(B\right)$ for Borel $B$ comprise
 a sub-$\sigma$-algebra $\cA'$ of $\cA$. Then, $\m:\A'\mapsto\E\left[\X_{1}\one_{\A'}\right]$
 is a signed measure on $\cA'$ that is absolutely continuous with
 respect to the restriction of $\Pr$ to $\cA'$. By the Radon-Nikodym
-theorem there is an $\cA'$-measurable random variable $\E\left[\X_{1}|\X_{2}\right]$
-that satisfies $\E\left[\X_{1}\one_{\A'}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A'}\right]$
+theorem (see \cite[Theorem 6.10]{Rud66}) there is an $\cA'$-measurable
+random variable $\E\left[\X_{1}|\X_{2}\right]$ that satisfies $\E\left[\X_{1}\one_{\A'}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A'}\right]$
 for all $\A'$ in $\cA'$. This random variable is almost uniquely
 defined: for any two choices of $\E\left[\X_{1}|\X_{2}\right]$, the
 probability that they differ is zero.
@@ -633,6 +648,9 @@ to Poisson processes.
 \global\long\def\TV{\mathrm{TV}}
 
 
+\global\long\def\BL{\mathrm{BL}}
+
+
 \global\long\def\K{\mathrm{K}}
 
 
@@ -654,10 +672,7 @@ We say $\X_{n}$ \emph{converges in distribution} to a random variable
 $\X$ if $\E f\left(\X_{n}\right)\to\E f\left(\X\right)$ for all
 bounded continuous functions $f$. Alternatively, we say $\Lb{\X_{n}}$
 converges \emph{weakly} to $\Lb{\X}$, or simply $\Lb{\X_{n}}\to\Lb{\X}$.
-The topology on $\P\left(\RR\right)$ associated with this convergence
-is called the \emph{weak topology} (we will see that it is indeed
-a topology). Convergence in distribution of random vectors is defined
-component-wise.
+Convergence in distribution of random vectors is defined component-wise.
 \end{defn}
 
 \begin{defn}
@@ -670,6 +685,9 @@ is defined by $\F_{\X}\left(x\right)=\Pr\left(\X\le x\right)$.\end{defn}
 
 \item \label{prop:dist-def}$\Lb{\X_{n}}\to\Lb{\X}$
 
+\item \label{prop:dist-liminf}$\liminf_{n\to\infty}\L{\X_{n}}\left(U\right)\ge\L{\X}\left(U\right)$
+for every open $U\subseteq\RR$
+
 \item \label{prop:dist-F}$\F_{\X_{n}}\left(x\right)\to\F_{\X}\left(x\right)$
 for all $x$ where $\F_{\X}$ is continuous
 
@@ -678,13 +696,20 @@ for all $t\in\RR$.
 
 \end{conditions}
 \end{thm}
-The equivalence of \ref{prop:dist-def,prop:dist-F} is a well-known
-result called the Portmanteau Theorem.
+The equivalence of \ref{prop:dist-def,prop:dist-liminf,prop:dist-F}
+is (part of) a well-known and relatively elementary result called
+the Portmanteau Theorem.
 
 When $\X$ and each $\X_{n}$ are integer random variables, then \ref{prop:dist-F}
 reduces to the condition that $\Pr\left(\X_{n}=k\right)\to\Pr\left(\X=k\right)$
 for all $k$. This characterization is usually used to prove the Poisson
 limit theorem.
+
+\begin{todo}
+
+I haven't defined limit theorems
+
+\end{todo}
 
 Classically, distributional convergence results are often proved by
 L\'evy's continuity theorem. For example, this approach is usually
@@ -702,87 +727,87 @@ information about the rate of convergence.
 In functional analysis terms, note that expectation operators are
 bounded linear functionals on the space of real bounded continuous
 functions. Then, $\Lb{\X_{n}}\to\Lb{\X}$ just means that $\E_{\X_{n}}\to\E_{\X}$
-in the weak-star topology. Although $C_{b}\left(\RR\right)^{*}$ is
-not metrizable, the subspace corresponding to $\P\left(\RR\right)$
-is in fact metrizable, with a metric called the L\'evy metric. For
-Stein's method we will be interested in some slightly stronger metrics,
-which we will now define.
+in the weak-star topology. The subspace corresponding to $\P\left(\RR\right)$
+is confusingly called the \emph{weak topology} on probability distributions.
+
+Although $C_{b}\left(\RR\right)^{*}$ is not metrizable, the unit
+ball (in operator norm) of $C_{b}\left(\RR\right)^{*}$ is in fact
+metrizable (see \cite[Theorems 3.15 and 3.16]{Rud73}). Every expectation
+functional $\E$ has unit operator norm because $\E\left|\h\right|\le\E\left|1\right|=1$
+for $\h$ with unit uniform norm. So, the weak topology is metrizable.
 \begin{defn}
-\label{def:general-metrics}Let $\cH$ be a collection of real measurable
-``test'' functions, and let $S\subseteq\P\left(\RR\right)$ be a
-set of ``comparable'' measures. Define $d_{\cH}:S^{2}\to\RR^{+}$
-by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
+\label{def:general-metrics}Let $\cH$ be a determining class of real
+measurable ``test'' functions that are uniformly absolutely bounded.
+Define $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$ by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
 For random variables $\X_{1},\X_{2}$, we write $d_{\cH}\left(\X_{1},\X_{2}\right)$
 instead of $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$.\end{defn}
-\begin{rem}
-\label{rem:well-defined-metrics}In order for \ref{def:general-metrics}
-to be well-defined, we should choose $\cH$ and $S$ such that $\E_{\Pr}\h$
-is well-defined and finite for all $\Pr\in S$ and $\h\in\cH$. For
-$d_{\cH}$ to be a metric, we should also ensure that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)<\infty$
-for all $\Pr_{1},\Pr_{2}\in S$.
-\end{rem}
-Modulo the considerations in \ref{rem:well-defined-metrics}, $d_{\cH}$
-is always non-negative, symmetric and satisfies the triangle inequality.
-Hence, to check that $d_{\cH}$ is a metric, we only need to check
-that $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$ implies that $\Pr_{1}=\Pr_{2}$.
-It suffices to check that $\cH$ is a determining class (\ref{def:determining-class}).
+\begin{prop}
+Each $d_{\cH}$ is a metric.\end{prop}
+\begin{proof}
+Since the functions in $\cH$ are bounded, $\E_{\Pr_{1}}\h$ is well-defined
+for every $\h\in\cH$. Since the bound is uniform, the supremum in
+the definition of $d_{\cH}$ is finite as well. It is immediate that
+$d_{\cH}$ is non-negative, symmetric and satisfies the triangle inequality.
+Finally, $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=0$ implies that $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
+for all $\h\in\cH$. Since $\cH$ is a determining class, $\Pr_{1}=\Pr_{2}$.\end{proof}
 \begin{defn}
 \label{def:special-metrics}We define some special cases of $d_{\cH}$.\begin{itemize}
 
 \item If $\cH_{\K}=\left\{ \one_{\left(-\infty,x\right]}:x\in\RR\right\} $
 then $d_{\K}:=d_{\cH_{\K}}$ is called the \emph{Kolmogorov metric}.
-We can choose $S_{\K}=\P\left(\RR\right)$; that is, all probability
-measures are comparable.
 
-\item If $\cH_{\W}$ is the set of real functions $\h$ that satisfy
-$\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
-for all $x_{1},x_{2}\in\RR$ (that is, the set of functions with Lipschitz
-constant 1), then $d_{\W}:=d_{\cH_{\W}}$ is called the \emph{Wasserstein
-metric}. We can only compare absolutely integrable probability measures.
-That is, let $S_{\W}\subset\P\left(\RR\right)$ be the set of probability
-measures $\Pr$ that satisfy $\E_{\Pr}\left|\id_{\RR}\right|<\infty$.
+\item Let $\cH_{\BL}$ be the set of functions $\h$ that are absolutely
+bounded by 1 (that is, $\left|\h\left(x\right)\right|\le1$ for all
+$x\in\RR$), and have Lipschitz constant at most 1 (that is, $\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
+for all $x_{1},x_{2}\in\RR$). Then, $d_{\BL}:=d_{\cH_{\BL}}$ is
+called the \emph{Bounded Lipschitz metric}.
 
 \item If $\cH_{\TV}$ is the set of functions $\one_{B}$ for Borel
 $B$, then $d_{\TV}:=d_{\cH_{\TV}}$ is called the \emph{total variation
-metric}. We can choose $S_{\TV}=\P\left(\RR\right)$.\end{itemize}\end{defn}
+metric}.
+
+\item If $\cH_{\W}$ is the set of functions with Lipschitz constant
+at most 1, then $d_{\W}:=d_{\cH_{\W}}$ is called the \emph{Wasserstein
+}metric. However, since $\cH$ is not uniformly bounded, $d_{\W}$
+is not strictly speaking a metric on $\P\left(\RR\right)$; the Wasserstein
+metric can only be used to compare distributions with finite first
+moment.\end{itemize}\end{defn}
 \begin{prop}
-\label{prop:metric}The Kolmogorov, Wasserstein and total variation
-``metrics'' are actually metrics.\end{prop}
+\label{prop:metric}The ``metrics'' in \ref{def:special-metrics}
+are actually metrics.\end{prop}
 \begin{proof}
-First we consider the case $\cH\in\left\{ \cH_{\K},\cH_{\TV}\right\} $.
-Since the functions in $\cH$ are uniformly absolutely bounded (by
-1), the conditions in \ref{rem:well-defined-metrics} are immediately
-satisfied. Now, note that the sets $\left(-\infty,x\right]$ for $x\in\RR$
-generate the Borel $\sigma$-algebra. Since $\Pr\left(\left(-\infty,x\right]\right)=\E_{\Pr}\one_{\left(-\infty,x\right]}$
-and $\one_{\left(-\infty,x\right]}\in\cH$ for all $x\in\RR$ and
-$\Pr\in\P\left(\RR\right)$, it follows that $\cH$ is a determining
-class. We conclude that $d_{\K}$ and $d_{\TV}$ are metrics.
+First, note that if $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$ have finite
+first moment then $d_{\W}\left(\Pr_{1},\Pr_{2}\right)\le2\E_{\Pr}\left|\id_{\RR}\right|<\infty$.
 
-Now, $\E_{\Pr}\left|\h\right|\le\left|\h\left(0\right)\right|+\E_{\Pr}\left|\id_{\RR}\right|<\infty$
-for $\Pr\in S_{\W}$ and $\h\in\cH_{\W}$. So, $\E_{\Pr}\h$ is well-defined
-and finite. If $\Pr_{1},\Pr_{2}\in S_{\W}$ then $d_{\W}\left(\Pr_{1},\Pr_{2}\right)\le2\E_{\Pr}\left|\id_{\RR}\right|<\infty$.
-So, the conditions in \ref{rem:well-defined-metrics} are satisfied
-for the Wasserstein ``metric''.
+Now, we just need to check that each of $\cH_{\K},\cH_{\BL},\cH_{\TV},\cH_{\W}$
+are determining classes. Let $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
+satisfy $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$ for each $\h$ in $\cH$.
 
-Next, let $\Pr_{1},\Pr_{2}\in S_{\W}$ and suppose $\E_{\Pr_{1}}\h=\E_{\Pr_{1}}\h$
-for all $\h\in\cH_{\W}$. For $\varepsilon>0$ and $x\in\RR$, let
-$\h_{x,\varepsilon}$ be the continuous function which takes the value
-1 on the set $\left(-\infty,x\right]$, takes the value 0 on the set
-$\left[x+\varepsilon,\infty\right)$, and is linearly interpolated
-in the range $\left[x,x+\varepsilon\right]$. Since $\varepsilon\h_{x,\varepsilon}\in\cH_{\W}$,
-we have $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
-for each $\varepsilon>0$. For each $x\in\RR$, $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$
-pointwise and each $\h_{x,1/n}\le1$ so by the dominated convergence
-theorem, $\E_{\Pr_{\i}}\h_{1/n}\to\E_{\Pr_{\i}}\one_{\left(-\infty,x\right]}$
-for each $\i\in\left\{ 1,2\right\} $. We have proved that $\Pr_{1}\left(\left(-\infty,x\right]\right)=\Pr_{2}\left(\left(-\infty,x\right]\right)$
-for all $x\in\RR$, so $\Pr_{1}=\Pr_{2}$ and $\cH_{\W}$ is a determining
-class. We conclude that $d_{\W}$ is a metric.
-\end{proof}
+If $\cH$ is $\cH_{\K}$ or $\cH_{\TV}$ then $\one_{\left(-\infty,x\right]}\in\cH$
+for all $x\in\RR$ so 
+\[
+\Pr_{1}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{1}}\one_{\left(-\infty,x\right]}=\E_{\Pr_{2}}\one_{\left(-\infty,x\right]}=\Pr_{2}\left(\left(-\infty,x\right]\right).
+\]
+Since $\left\{ \left(-\infty,x\right]:x\in\RR\right\} $ generates
+the Borel $\sigma$-algebra, $\Pr_{1}=\Pr_{2}$. We have shown that
+$\cH_{\K}$ and $\cH_{\TV}$ are determining classes.
 
+For $x\in\RR$ and $0<\varepsilon\le1$, let $\h_{x,\varepsilon}$
+be the continuous function which takes the value 1 on the set $\left(-\infty,x\right]$,
+takes the value 0 on the set $\left[x+\varepsilon,\infty\right)$,
+and is linearly interpolated in the range $\left[x,x+\varepsilon\right]$.
+Suppose $\cH$ is $\cH_{\BL}$ or $\cH_{\W}$, so that each $\varepsilon\h_{x,\varepsilon}\in\cH$.
+It follows that $\E_{\Pr_{1}}\h_{x,\varepsilon}=\E_{\Pr_{2}}\h_{x,\varepsilon}$
+for each $x\in\RR$ and $0<\varepsilon\le1$. For each $x\in\RR$,
+note that $\h_{x,1/n}\to\one_{\left(-\infty,x\right]}$ pointwise,
+and each $\h_{x,1/n}\le1$. By the dominated convergence theorem,
+\[
+\Pr_{1}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{1}}\one_{\left(-\infty,x\right]}=\lim_{n\to\infty}\E_{\Pr_{1}}\h_{x,1/n}=\lim_{n\to\infty}\E_{\Pr_{2}}\h_{x,1/n}=\E_{\Pr_{2}}\one_{\left(-\infty,x\right]}=\Pr_{2}\left(\left(-\infty,x\right]\right),
+\]
+so $\cH_{\BL}$ and $\cH_{\W}$ are determining classes.\end{proof}
 \begin{prop}
-\label{prop:stronger-than-weak}The topologies induced by the Kolmogorov,
-Wasserstein and total variation metrics are each stronger than the
-weak topology.\end{prop}
+\label{prop:stronger-than-weak}The metrics in \ref{def:special-metrics}
+are each stronger than the weak topology.\end{prop}
 \begin{proof}
 We show that $d_{\cH}\left(\X_{n},\X\right)\to0$ implies $\Lb{\X_{n}}\to\Lb{\X}$
 for $\cH\in\left\{ \cH_{\K},\cH_{\W},\cH_{\TV}\right\} $.
@@ -791,7 +816,8 @@ If $d_{\K}\left(\X_{n},\X\right)\to0$ or $d_{\TV}\left(\X_{n},\X\right)\to0$
 then $\F_{\X_{n}}\to\F_{\X}$ uniformly, so certainly \ref{prop:dist-F}
 of \ref{prop:dist} holds.
 
-Now, suppose $d_{\W}\left(\X_{n},\X\right)\to0$. Let $d_{n}=\sqrt{d_{\W}\left(\X_{n},\X\right)}$
+Now, suppose $d_{\BL}\left(\X_{n},\X\right)\to0$ (this will automatically
+be true if $d_{\K}\left(\X_{n},\X\right)\to0$). Let $d_{n}=\sqrt{d_{\BL}\left(\X_{n},\X\right)}$
 and recall the definition of $\h_{x,\varepsilon}$ from the proof
 of \ref{prop:metric}. Since $d_{n}\h_{x,d_{n}}\in\cH_{\W}$ for each
 $n\in\NN$, we have 
@@ -808,7 +834,82 @@ then
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le\left(\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\right)+\left(\F_{\X}\left(x+d_{n}\right)-\F_{\X}\left(x\right)\right)\to0\\
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge\left(\E_{\X_{n}}\h_{x-d_{n},d_{n}}-\E_{\X}\h_{x-d_{n},d_{n}}\right)+\left(\F_{\X}\left(x-d_{n}\right)-\F_{\X}\left(x\right)\right)\to0
 \end{align*}
-so \ref{prop:dist-F} of \ref{prop:dist} holds.
+so \ref{prop:dist-F} of \ref{prop:dist} holds.\end{proof}
+\begin{thm}
+\label{thm:BL-metrizes-weak}The bounded Lipschitz metric metrizes
+the weak topology.
+\end{thm}
+We will need a small lemma to prove \ref{thm:BL-metrizes-weak}.
+\begin{lem}
+\label{lem:prokhorov}Let $S\subseteq\P\left(\RR\right)$ be compact
+in the weak topology. For each $\varepsilon>0$, there is $k\in\NN$
+such that with $\sup_{\Pr\in S}\Pr\left(\left(-k,k\right)^{c}\right)\le\varepsilon$.\end{lem}
+\begin{proof}
+Fix $\varepsilon>0$. Suppose for the purpose of contradiction that
+for all $k\in\NN$ there is $\Pr_{k}\in S$ with $\Pr_{k}\left(\left(-k,k\right)^{c}\right)>\varepsilon$.
+Since $S$ is compact, there is a subsequence $\left(\Pr_{k_{n}}\right)_{n\in\NN}$
+and a measure $\Pr\in S$ with $\Pr_{k_{n}}\to\Pr$ as $n\to\infty$.
+By \ref{prop:dist-liminf} of \ref{prop:dist}, for each $k\in\NN$
+we have
+\[
+\Pr\left(\left(-k,k\right)\right)\le\liminf_{n\to\infty}\Pr_{k_{n}}\left(\left(-k_{n},k_{n}\right)\right)\le\liminf_{n\to\infty}\Pr_{n}\left(\left(-n,n\right)\right)\le1-\varepsilon.
+\]
+This is a contradiction because $\Pr\left(\left(-k,k\right)\right)=\E_{\Pr}\one_{\left(-k,k\right)}\to\E_{\Pr}1=1$
+by the dominated convergence theorem (see \cite[Theorem 1.34]{Rud66}).
+\end{proof}
+
+\begin{proof}
+[Proof of \ref{thm:BL-metrizes-weak}](Adapted from \cite[Theorem 7.12]{Vil03}).
+Let $\Pr_{n}\to\Pr_{\infty}$ weakly, and suppose for the purpose
+of contradiction that $d_{\BL}\left(\Pr_{n},\Pr_{\infty}\right)\not\to0$.
+Then there is $\varepsilon>0$ and a subsequence $\left(\Pr_{k_{n}}\right)_{n\in\NN}$
+with $d_{\BL}\left(\Pr_{k_{n}},\Pr_{\infty}\right)>2\varepsilon$
+for all $n$. To simplify notation, redefine $\Pr_{n}$ to be $\Pr_{k_{n}}$
+for each $n$ (we still have $\Pr_{n}\to\Pr_{\infty}$ weakly).
+
+Now, by the definition of $d_{\BL}$, for each $n\in\NN$ there is
+$\h_{n}=\h_{n}^{\left(0\right)}\in\cH_{\BL}$ with 
+\[
+\left|\E_{\Pr_{n}}\h_{n}-\E_{\Pr}\h_{n}\right|\ge d_{\BL}\left(\Pr_{n},\Pr\right)-\varepsilon>\varepsilon.
+\]
+For each $k\in\ZZ^{+}$, let $\cH_{\BL}^{\left(k\right)}=\left\{ \h\rest_{\left[-k,k\right]}:\h\in\cH_{\BL}\right\} $.
+By the Arzela-Ascoli theorem (see \cite[Theorem 11.28]{Rud66}), each
+$\cH_{\BL}^{\left(k\right)}$ is a compact subset of $C_{b}\left(\left[-k,k\right]\right)$
+with the uniform norm. So, for each $k\in\ZZ^{+}$, we can inductively
+choose a subsequence $\left(\h_{n}^{\left(k\right)}\right)_{n\in\NN}$
+of $\left(\h_{n}^{\left(k-1\right)}\right)_{n\in\NN}$ such that $\h_{n}^{\left(k\right)}\rest_{\left[-k,k\right]}$
+converges uniformly to some $\h^{\left(k\right)}\in\cH_{\BL}^{\left(k\right)}$.
+
+Note that $\h_{n}^{\left(n\right)}\rest_{\left[-k,k\right]}\to\h^{\left(k\right)}$
+uniformly for each $k\in\ZZ^{+}$, so that $\h_{n}^{\left(n\right)}$
+converges pointwise to some function $\h:\RR\to\RR$ that satisfies
+$\h\rest_{\left[-k,k\right]}=\h^{\left(k\right)}$ for all $k\in\ZZ^{+}$.
+Since $\h$ is bounded by 1 and has Lipschitz constant less than 1
+on each $\left[-k,k\right]$, it follows that $\h\in\cH_{\BL}$ and
+in particular $\h$ is bounded and continuous. Finally, note
+\begin{alignat*}{1}
+\left|\E_{\Pr_{n}}\h_{n}-\E_{\Pr_{\infty}}\h_{n}\right| & \le\left|\E_{\Pr_{n}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]}\right]\right|+\left|\E_{\Pr_{\infty}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]}\right]\right|\\
+ & +\left|\E_{\Pr_{n}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]^{c}}\right]\right|+\left|\E_{\Pr_{\infty}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]^{c}}\right]\right|\\
+ & +\left|\E_{\Pr_{n}}\h-\E_{\Pr_{\infty}}\h\right|
+\end{alignat*}
+By the definition of weak convergence, there is $N\in\NN$ such that
+\[
+\left|\E_{\Pr_{n}}\h-\E_{\Pr_{\infty}}\h\right|\le\frac{\varepsilon}{5}
+\]
+for $n>N$. Since the weak topology is metrizable, $\left\{ \Pr_{n}\right\} _{n\in\NN\cup\left\{ \infty\right\} }$
+is compact so by \ref{lem:prokhorov}, there is $k\in\NN$ such that
+\[
+\E_{\Pr_{n}}\left[\left(\h_{n}-\h\right)\one_{\left[-k,k\right]^{c}}\right]\le2\Pr_{n}\left[\left(-k,k\right)^{c}\right]\le\frac{\varepsilon}{5}
+\]
+for $n\in\NN\cup\left\{ \infty\right\} $. Since $\left(\h_{n}^{\left(n\right)}\right)_{n\in\NN}$
+is a subsequence of $\left(\h_{n}\right)_{n\in\NN}$ and $\h_{n}^{\left(n\right)}\one_{\left[-k,k\right]}$
+converges uniformly to $\h\one_{\left[-k,k\right]}$, there is $n>N$
+such that 
+\[
+\left\Vert \left(\h_{n}-\h\right)\one_{\left[-k,k\right]}\right\Vert _{\infty}\le\frac{\varepsilon}{5}.
+\]
+For this $n$ we have $\left|\E_{\Pr_{n}}\h_{n}-\E_{\Pr_{\infty}}\h_{n}\right|\le\varepsilon$.
+This is a contradiction.
 \end{proof}
 \ref{prop:stronger-than-weak} tells us that we can sensibly use our
 metrics to quantify the distance between random variables, in a way
