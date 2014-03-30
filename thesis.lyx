@@ -187,7 +187,7 @@ Matthew Kwan
 
 \begin_layout Standard
 \begin_inset Branch Folded
-status open
+status collapsed
 
 \begin_layout Standard
 \begin_inset ERT
@@ -389,6 +389,15 @@ end{comment}
 \end_layout
 
 \begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\falling}[2]{\left(#1\right)_{#2}}
+{\boldsymbol{\left(#1\right)_{#2}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -445,10 +454,6 @@ LatexCommand tableofcontents
 
 \end_layout
 
-\begin_layout Section
-Introduction
-\end_layout
-
 \begin_layout Standard
 \begin_inset ERT
 status open
@@ -466,20 +471,67 @@ begin{note}
 \end_layout
 
 \begin_layout Standard
-The plan is to introduce with limit theorems: Central Limit theorem, Poisson
- Limit theorem.
- The failure of limit theorems is that they provide no understanding of
- speed of convergence, in particular convergence cannot be assumed to be
- uniform as parameters vary.
+Here's the general plan:
 \end_layout
 
-\begin_layout Standard
-Stein's method is a technique for bounding the distance between distributions,
- with a variety of different distance metrics.
- Quantitative bounds can be useful in their own right, or can be further
- applied to prove asymptotic results.
+\begin_layout Itemize
+Introduction: introduce with limit theorems (weak convergence) to motivate
+ Stein's method
 \end_layout
 
+\begin_layout Itemize
+probability theory review
+\end_layout
+
+\begin_layout Itemize
+discussion of weak convergence, definition of stein metrics and proofs that
+ stein metrics are 
+\begin_inset Quotes eld
+\end_inset
+
+compatible
+\begin_inset Quotes erd
+\end_inset
+
+ with weak convergence.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Highlight: proof that bounded lipschitz metric metrizes the weak topology
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+general discussion of the idea of stein's method
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+bare-hands proof of Berry-Esseen theorem
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Exchangeable pairs
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+fixed points in permutations example
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+(maybe) Size-bias coupling
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+subgraphs of erdos-renyi random graphs
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset ERT
 status open
@@ -496,6 +548,124 @@ end{note}
 
 \end_layout
 
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+central limit theorem
+\emph default
+, roughly speaking, says that sums of independent random variables are 
+\begin_inset Quotes eld
+\end_inset
+
+approximately normal
+\begin_inset Quotes erd
+\end_inset
+
+, with the approximation improving as the sumber of terms in the sum increases.
+ Similarly, the 
+\emph on
+Poisson limit theorem
+\emph default
+ says that the number of occurences of independent 
+\begin_inset Quotes eld
+\end_inset
+
+rare
+\begin_inset Quotes erd
+\end_inset
+
+ events over a given time period is 
+\begin_inset Quotes eld
+\end_inset
+
+approximately Poisson
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These two limit theorems are archetypal examples of a large class of related
+ results in statistics and probabilistic combinatorics.
+\end_layout
+
+\begin_layout Standard
+These types of results are generally formally stated asymptotically, with
+ a particular type of convergence called 
+\emph on
+weak convergence
+\emph default
+, or 
+\emph on
+convergence in distribution
+\emph default
+.
+ Such results are very powerful, but an obvious shortcoming is that they
+ do not quantify the convergence any way.
+ It may be that a sequence of random variables is 
+\begin_inset Quotes eld
+\end_inset
+
+asymptotically normal
+\begin_inset Quotes erd
+\end_inset
+
+, but we cannot say that any particular random variable in that sequence
+ is individually 
+\begin_inset Quotes eld
+\end_inset
+
+close to normal
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Even if we are only interested in asymptotic results, it can be problematic
+ that we cannot say convergence is 
+\begin_inset Quotes eld
+\end_inset
+
+uniform
+\begin_inset Quotes erd
+\end_inset
+
+ in any sense.
+\end_layout
+
+\begin_layout Standard
+The solution to both these problems is to define a distance metric between
+ probability distributions, and study convergence with respect to this metric.
+ Fortunately, weak convergence is in fact convergence with respect to a
+ topology, and this topology is metrizable.
+ That is, there is a metric on the set of probability distributions such
+ that the convergence in this metric space is equivalent to weak convergence.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Stein's method 
+\emph default
+was introduced by Charles Stein in 1972.
+ It is most generally a method for approximating expected values.
+ However, at least in probabilistic combinatorics, Stein's method has proved
+ especially useful for bounding the distance between probability distributions,
+ in a variety of metrics consistent with weak convergence.
+ This can be used to quantify existing limit theorems, and can also be used
+ as a tool to prove purely asymptotic results.
+\end_layout
+
+\begin_layout Standard
+In this thesis, we set out the theoretical groundwork for Stein's method,
+ including a rigorous overview of probability theory and a discussion of
+ weak convergence.
+ We then present a very general framework for the Stein's method, and outline
+ a few specific ways of applying the method.
+ We include a number of specific examples and applications.
+\end_layout
+
 \begin_layout Standard
 Unless stated otherwise, all proofs are 
 \begin_inset Quotes eld
@@ -505,8 +675,8 @@ original
 \begin_inset Quotes erd
 \end_inset
 
- in that I came up with them, although many are quite standard and probably
- exist elsewhere.
+ in that I came up with them, although many are quite straightforward and
+ probably exist elsewhere.
  For the proofs that I have adapted from other sources, I tried to add some
  new explanation or details.
 \end_layout
@@ -542,15 +712,6 @@ For this thesis, the set of natural numbers
 \end_inset
 
 .
- Also, 
-\begin_inset Formula $\range k$
-\end_inset
-
- denotes the set 
-\begin_inset Formula $\left\{ 1,\dots,k\right\} $
-\end_inset
-
-.
  The function 
 \begin_inset Formula $f$
 \end_inset
@@ -564,6 +725,25 @@ For this thesis, the set of natural numbers
 \end_inset
 
 .
+ The falling factorial 
+\begin_inset Formula $n\left(n-1\right)\dots\left(n-k+1\right)$
+\end_inset
+
+ is denoted 
+\begin_inset Formula $\falling nk$
+\end_inset
+
+.
+ Finally, 
+\begin_inset Formula $\range k$
+\end_inset
+
+ denotes the set 
+\begin_inset Formula $\left\{ 1,\dots,k\right\} $
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -572,13 +752,20 @@ Unless otherwise specified, all asympotics are as
 \end_inset
 
 .
- Apart from standard asymptotic notation, we use two notions of asymptotic
- equivalence: 
+ Apart from standard asymptotic notation, 
 \begin_inset Formula $f\sim g$
 \end_inset
 
  means 
 \begin_inset Formula $f=g\left(1+o\left(1\right)\right)$
+\end_inset
+
+, 
+\begin_inset Formula $f\prec g$
+\end_inset
+
+ means 
+\begin_inset Formula $f=O\left(g\right)$
 \end_inset
 
  and 
@@ -597,23 +784,23 @@ In this thesis, unless stated otherwise, graphs are labelled.
  That is, they are distinguished even within isomorphism classes.
  A graph may not have loops or multiple edges; an object which is allowed
  to have loops and/or multiple edges will be called a multigraph.
+ We write 
+\begin_inset Formula $G\subseteq G'$
+\end_inset
+
+ to indicate that 
+\begin_inset Formula $G$
+\end_inset
+
+ is a (not necessarily induced) subgraph of 
+\begin_inset Formula $G'$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-The phrase 
-\begin_inset Quotes eld
-\end_inset
-
-randomly choose
-\begin_inset Quotes erd
-\end_inset
-
- is taken to mean a uniformly random choice.
- That means, each possible option is chosen with equal probability.
-\end_layout
-
-\begin_layout Standard
-I will use results from analysis, particularly measure theory, without proof.
+I will occasionally use results from analysis without proof.
  I will usually refer to a numbered theorem in Rudin's Real and Complex
  Analysis 
 \begin_inset CommandInset citation
@@ -630,10 +817,6 @@ key "Rud73"
 \end_inset
 
  when doing so.
-\end_layout
-
-\begin_layout Part
-Theory
 \end_layout
 
 \begin_layout Section
@@ -849,228 +1032,40 @@ fi}
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 For many combinatorial applications, an informal understanding of probability
- theory will suffice, because probability spaces of combinatorial objects
- are usually finite.
- However, we will need a more rigorous foundation in probability theory.
- The following is only intended as a brief review (cite textbook).
-\end_layout
+ theory (often considering only discrete spaces) will suffice.
+ However, in this thesis a rigorous foundation in probability theory will
+ be useful.
+ This section will therefore assume knowledge of basic measure theory; see,
+ for example, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Rud66"
 
-\begin_layout Subsection
-Measure theory
+\end_inset
+
+.
+ However, where possible, we will note any simplifications that arise from
+ assuming discreteness, for the benefit of those less familiar with general
+ probability theory.
 \end_layout
 
 \begin_layout Standard
-Let 
-\begin_inset Formula $\A$
-\end_inset
-
- be a collection of subsets of some set 
-\begin_inset Formula $\Om$
-\end_inset
-
-.
- We say 
-\begin_inset Formula $\cA$
-\end_inset
-
- is a 
-\emph on
-
-\begin_inset Formula $\sigma$
-\end_inset
-
--algebra
-\emph default
- if it is closed under countable unions and complements, and contains the
- empty set.
- A 
-\emph on
-measure
-\emph default
- on 
-\begin_inset Formula $\cA$
-\end_inset
-
- is a map 
-\begin_inset Formula $\m:\cA\to\left[0,\infty\right)$
-\end_inset
-
- such that for any collection of pairwise disjoint sets 
-\begin_inset Formula $\left\{ \A_{\i}\right\} _{\i\in\NN}\subseteq\cA$
-\end_inset
-
-, we have 
-\begin_inset Formula $\sum_{\i\in\NN}\m\left(A_{\i}\right)=\m\left(\bigcup_{i\in\NN}\A_{\i}\right)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-A 
-\emph on
-measure space
-\emph default
- consists of a set 
-\begin_inset Formula $\Om$
-\end_inset
-
-, a 
-\begin_inset Formula $\sigma$
-\end_inset
-
--algebra 
-\begin_inset Formula $\cA$
-\end_inset
-
- of subsets of 
-\begin_inset Formula $\Om$
-\end_inset
-
- and a measure 
-\begin_inset Formula $\m$
-\end_inset
-
- on 
-\begin_inset Formula $\cA$
-\end_inset
-
-.
- We represent a measure space by the triple 
-\begin_inset Formula $\left(\Om,\cA,\m\right)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
-define 
-\begin_inset Formula $\sigma$
-\end_inset
-
--algebra generated by a set
-\end_layout
-
-\begin_layout Itemize
-define Borel 
-\begin_inset Formula $\sigma$
-\end_inset
-
--algebra 
-\begin_inset Formula $\B$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-if 
-\begin_inset Formula $\Om$
-\end_inset
-
- is countable we can choose 
-\begin_inset Formula $\cA=\Om$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-define measurable functions 
-\begin_inset Formula $X:\Om_{1}\to\Om_{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-define integration
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{comment}
-\end_layout
+No knowledge of probability theory is assumed; the first few subsections
+ will briefly review the foundations of probability.
+ The reader may nevertheless want to refer to a probability theory book
+ such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kal02"
 
 \end_inset
 
-
+ for some additional detail and further reading.
 \end_layout
 
 \begin_layout Subsection
 Probability Spaces
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{note}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-I'm a little bit uncertain how much depth to go into for this.
- At the moment, it's written so that someone who's seen measure theory but
- no probability theory (an analyst) can understand.
- Where possible, I've tried to translate things into the discrete case,
- because it's often more intuitive (and since I plan for applications to
- be combinatorial).
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{note}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-For many combinatorial applications, an informal understanding of probability
- theory will suffice.
- However, in this thesis a rigorous foundation in probability theory will
- be useful.
- The following is intended only as a brief review.
 \end_layout
 
 \begin_layout Definition
@@ -1108,18 +1103,15 @@ probability measure
 \end_inset
 
  if there is no ambiguity.
- An 
-\emph on
-event
-\emph default
- is a measurable set 
-\begin_inset Formula $\A\in\cA$
-\end_inset
-
-.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:discrete-space"
+
+\end_inset
+
 For our purposes 
 \begin_inset Formula $\Om$
 \end_inset
@@ -1152,6 +1144,22 @@ For our purposes
 LatexCommand ref
 reference "sec:random-structures"
 
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+An 
+\emph on
+event
+\emph default
+ in a probability space 
+\begin_inset Formula $\left(\Om,\cA,\Pr\right)$
+\end_inset
+
+ is a measurable set 
+\begin_inset Formula $\A\in\cA$
 \end_inset
 
 .
@@ -1266,7 +1274,7 @@ discrete
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 Especially in combinatorial spaces, 
 \family roman
 \series medium
@@ -1448,6 +1456,19 @@ The normal distribution with parameters
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Example
 The Poisson distribution with parameter 
 \begin_inset Formula $\lambda$
@@ -1466,6 +1487,14 @@ The Poisson distribution with parameter
 \end_inset
 
 .
+ (see 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:discrete-space"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -1500,14 +1529,6 @@ support
 
 \end_layout
 
-\begin_layout Standard
-For example, the Poisson distribution has support 
-\begin_inset Formula $\NN$
-\end_inset
-
-.
-\end_layout
-
 \begin_layout Subsection
 Dependence and Coupling
 \end_layout
@@ -1539,22 +1560,23 @@ Suppose
 independent
 \emph default
  if 
-\begin_inset Formula $\Pr\left(\X\in\A_{2}\right)\Pr\left(\X'\in\A_{2}\right)=\Pr\left(\X\in\A_{2}\mbox{ and }\X'\in\A_{2}\right)$
+\begin_inset Formula 
+\[
+\Pr\left(\X\in\A_{2}\right)\Pr\left(\X'\in\A_{2}\right)=\Pr\left(\X\in\A_{2}\mbox{ and }\X'\in\A_{2}\right)
+\]
+
 \end_inset
 
- for all 
+for all 
 \begin_inset Formula $\A_{2}\in\cA_{2}$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Definition
-If 
+ If 
 \begin_inset Formula $\A_{1},\A_{1}'\in\cA$
 \end_inset
 
- then we say 
+ then we analogously say 
 \begin_inset Formula $\A_{1}$
 \end_inset
 
@@ -1563,15 +1585,15 @@ If
 \end_inset
 
  are independent if 
-\begin_inset Formula $\Pr\left(\A_{1}\right)\Pr\left(\A_{1}'\right)=\Pr\left(\A_{1}\cap\A_{1}'\right)$
+\begin_inset Formula 
+\[
+\Pr\left(\A_{1}\right)\Pr\left(\A_{1}'\right)=\Pr\left(\A_{1}\cap\A_{1}'\right).
+\]
+
 \end_inset
 
-.
- We can similarly say an event is independent of a random element.
-\end_layout
-
-\begin_layout Definition
-If two objects are not independent, then we say they are 
+We can similarly say an event is independent of a random element.
+ If two objects are not independent, then we say they are 
 \emph on
 dependent
 \emph default
@@ -1602,14 +1624,30 @@ conditional probability
 \end_inset
 
  given an event 
-\begin_inset Formula $\A$
+\begin_inset Formula $\A'$
 \end_inset
 
-' with nonzero probability is 
+ with nonzero probability is 
 \begin_inset Formula $\Pr\left(\A|\A'\right)=\Pr\left(\A\cap\A'\right)/\Pr\left(\A'\right)$
 \end_inset
 
+.
+\end_layout
 
+\begin_layout Standard
+We have 
+\begin_inset Formula $\Pr\left(\A|\A'\right)=\Pr\left(\A\right)$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\A$
+\end_inset
+
+ and 
+\begin_inset Formula $\A'$
+\end_inset
+
+ are independent.
 \end_layout
 
 \begin_layout Standard
@@ -1662,7 +1700,15 @@ Given a finite collection of measure spaces
 \begin_inset Formula $\left(\Om,\cA,\m\right):=\left(\prod_{i=1}^{n}\Om_{i},\bigotimes_{i=1}^{n}\cA_{i},\prod_{i=1}^{n}\m_{i}\right)$
 \end_inset
 
-.
+ (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Chapter 8"
+key "Rud66"
+
+\end_inset
+
+).
  If a random element takes values in a product space then each component
  is measurable, and conversely if the components of a random tuple are measurabl
 e then that tuple is measurable in the product space.
@@ -1767,7 +1813,7 @@ of a random variable
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 For a random variable 
 \begin_inset Formula $\X$
 \end_inset
@@ -1778,6 +1824,19 @@ For a random variable
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -1832,7 +1891,8 @@ If we fix a particular underlying probability space
 \end_inset
 
 , we can also equivalently view expectation as a linear functional on the
- space of integrable functions: 
+ space of integrable functions (i.e.
+ random variables): 
 \begin_inset Formula $\E f=\int f\left(\om\right)\d\Pr$
 \end_inset
 
@@ -1846,11 +1906,20 @@ If we fix a particular underlying probability space
 \begin_inset Formula $\E_{\Pr'}$
 \end_inset
 
- to indicate expecation with respect to the measure 
+ to indicate expectation with respect to the measure 
 \begin_inset Formula $\Pr'$
 \end_inset
 
 , to avoid ambiguity.
+ We can also define the expectation functional of a random variable 
+\begin_inset Formula $\E_{\X}:=\E_{\Lb{\X}}$
+\end_inset
+
+, so that 
+\begin_inset Formula $\E_{\X}f=\E f\left(\X\right)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1933,6 +2002,12 @@ In fact, probability measures are uniquely determined by their expectation
 \end_inset
 
 .
+ In fact, it will be an important fact for later that much weaker classes
+ than 
+\begin_inset Formula $\left\{ \one_{\A}:\A\mbox{ is an event}\right\} $
+\end_inset
+
+ can distinguish expectation operators.
 \end_layout
 
 \begin_layout Standard
@@ -1978,14 +2053,6 @@ determining class
 
  implies that 
 \begin_inset Formula $\Pr_{1}=\Pr_{2}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-We can also define the expectation functional of a random variable 
-\begin_inset Formula $\E_{\X}:=\E_{\Lb{\X}}$
 \end_inset
 
 .
@@ -2058,6 +2125,10 @@ end{comment}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Another important concept later will be the idea of conditional expectation.
 \end_layout
 
 \begin_layout Definition
@@ -2204,7 +2275,7 @@ conditional expectation of
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark
 This definition generalizes the previous definition of expectation conditioned
  on an event: if 
 \begin_inset Formula $\om\in\A$
@@ -2222,6 +2293,19 @@ This definition generalizes the previous definition of expectation conditioned
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
 Note that if 
 \begin_inset Formula $\X_{2}$
 \end_inset
@@ -2347,6 +2431,50 @@ end{note}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "todo:graph-to-markov"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Every regular graph naturally defines a reversible markov chain on its vertex
+ set, stationary with respect to the uniform distribution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 \begin_inset CommandInset label
 LatexCommand label
@@ -2406,60 +2534,6 @@ The Weak Topology on Probability Measures
 \begin_inset FormulaMacro
 \newcommand{\W}{\mathrm{W}}
 {\boldsymbol{\mathrm{W}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{note}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The main purpose of this section is to motivate the metrics usually used
- in Stein's method: they are all legitimate topological metrics and are
- consistent with the topology of convergence in distribution.
- In particular, if we can show 
-\begin_inset Formula $\d_{\cH}\left(\X_{n},\X\right)\to0$
-\end_inset
-
- we have shown that 
-\begin_inset Formula $\X_{n}\xrightarrow{d}\X$
-\end_inset
-
-, as Toby does 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Joh11"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{note}
-\end_layout
-
 \end_inset
 
 
@@ -2533,20 +2607,11 @@ weakly
 \end_inset
 
 .
- Convergence in distribution of random vectors is defined component-wise.
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
+This is only one of a number of equivalent and very natural definitions
+ for convergence in distribution.
 \end_layout
 
 \begin_layout Definition
@@ -2714,7 +2779,15 @@ status open
 
 \end_inset
 
-vy's continuity theorem) 
+vy's continuity theorem, see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 4.3"
+key "Kal02"
+
+\end_inset
+
+) 
 \begin_inset Formula $\E e^{it\X_{n}}\to\E e^{it\X}$
 \end_inset
 
@@ -2756,7 +2829,15 @@ ref{prop:dist-def,prop:dist-liminf,prop:dist-F}
 \end_inset
 
  is (part of) a well-known and relatively elementary result called the Portmante
-au Theorem.
+au Theorem (
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 3.25"
+key "Kal02"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -2785,42 +2866,6 @@ reference "prop:dist-F"
 
 .
  This characterization is usually used to prove the Poisson limit theorem.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-I haven't defined limit theorems
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -3024,7 +3069,7 @@ Each
 \begin_inset Formula $d_{\cH}$
 \end_inset
 
- is a metric.
+ as defined above is a metric.
 \end_layout
 
 \begin_layout Proof
@@ -3045,7 +3090,7 @@ Since the functions in
 \begin_inset Formula $d_{\cH}$
 \end_inset
 
- is finite as well.
+ is finite.
  It is immediate that 
 \begin_inset Formula $d_{\cH}$
 \end_inset
@@ -3324,16 +3369,48 @@ First, note that if
 \begin_inset Formula $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
 \end_inset
 
- have finite first moment then 
-\begin_inset Formula $d_{\W}\left(\Pr_{1},\Pr_{2}\right)\le2\E_{\Pr}\left|\id_{\RR}\right|<\infty$
+ have finite first moment then (with 
+\begin_inset Formula $\X_{1}\in\Pr_{1}$
 \end_inset
 
-.
-\end_layout
+ and 
+\begin_inset Formula $\X_{2}\in\Pr_{2}$
+\end_inset
 
-\begin_layout Proof
+), then for all 
+\begin_inset Formula $\h\in\cH_{\W}$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\left|\E h\left(\X_{1}\right)-\E h\left(\X_{2}\right)\right|\le\left|\left(\E\left|\X_{1}\right|+h\left(0\right)\right)-\left(\E\left|\X_{2}\right|+h\left(0\right)\right)\right|\le\E\left|\X_{1}\right|+\E\left|\X_{2}\right|.
+\]
+
+\end_inset
+
+So,
+\begin_inset Formula 
+\[
+d_{\W}\left(\Pr_{1},\Pr_{2}\right)<\infty.
+\]
+
+\end_inset
+
 Now, we just need to check that each of 
-\begin_inset Formula $\cH_{\K},\cH_{\BL},\cH_{\TV},\cH_{\W}$
+\begin_inset Formula $\cH_{\K}$
+\end_inset
+
+, 
+\begin_inset Formula $\cH_{\BL}$
+\end_inset
+
+, 
+\begin_inset Formula $\cH_{\TV}$
+\end_inset
+
+, 
+\begin_inset Formula $\cH_{\W}$
 \end_inset
 
  are determining classes.
@@ -3478,7 +3555,15 @@ For
 \end_inset
 
 .
- By the dominated convergence theorem, 
+ By the dominated convergence theorem (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 1.34"
+key "Rud66"
+
+\end_inset
+
+), 
 \begin_inset Formula 
 \[
 \Pr_{1}\left(\left(-\infty,x\right]\right)=\E_{\Pr_{1}}\one_{\left(-\infty,x\right]}=\lim_{n\to\infty}\E_{\Pr_{1}}\h_{x,1/n}=\lim_{n\to\infty}\E_{\Pr_{2}}\h_{x,1/n}=\E_{\Pr_{2}}\one_{\left(-\infty,x\right]}=\Pr_{2}\left(\left(-\infty,x\right]\right),
@@ -3494,7 +3579,7 @@ so
 \begin_inset Formula $\cH_{\W}$
 \end_inset
 
- are determining classes.
+ are determining classes, as above.
 \end_layout
 
 \begin_layout Proposition
@@ -3763,7 +3848,7 @@ reference "prop:dist"
  we have
 \begin_inset Formula 
 \[
-\Pr\left(\left(-k,k\right)\right)\le\liminf_{n\to\infty}\Pr_{k_{n}}\left(\left(-k_{n},k_{n}\right)\right)\le\liminf_{n\to\infty}\Pr_{n}\left(\left(-n,n\right)\right)\le1-\varepsilon.
+\Pr\left(\left(-k,k\right)\right)\le\liminf_{n\to\infty}\Pr_{k_{n}}\left(\left(-k,k\right)\right)\le\liminf_{n\to\infty}\Pr_{k_{n}}\left(\left(-k_{n},k_{n}\right)\right)\le1-\varepsilon.
 \]
 
 \end_inset
@@ -3772,7 +3857,11 @@ This is a contradiction because
 \begin_inset Formula $\Pr\left(\left(-k,k\right)\right)=\E_{\Pr}\one_{\left(-k,k\right)}\to\E_{\Pr}1=1$
 \end_inset
 
- by the dominated convergence theorem (see 
+ as 
+\begin_inset Formula $k\to\infty$
+\end_inset
+
+, by the dominated convergence theorem (see 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Theorem 1.34"
@@ -4078,15 +4167,38 @@ reference "prop:stronger-than-weak"
 
 \end_inset
 
- tells us that we can sensibly use our metrics to quantify the distance
- between random variables, in a way that is consistent with distributional
- (weak) convergence.
- All three metrics are meaningful in their own right, but sometimes one
- may be easier to work with.
- It is sometimes possible to transfer results between metrics, though this
- usually results in worse constants than working directly in the desired
- metric.
- We now prove some transfer results.
+ tells us that our selection of 
+\begin_inset Quotes eld
+\end_inset
+
+special
+\begin_inset Quotes erd
+\end_inset
+
+ metrics are all 
+\begin_inset Quotes eld
+\end_inset
+
+consistent
+\begin_inset Quotes erd
+\end_inset
+
+ with weak convergence in some way, and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:BL-metrizes-weak"
+
+\end_inset
+
+ tells us that convergence in the Bounded Lipschitz metric is exactly the
+ same as weak convergence.
+ Typically, it will be natural to work with the total variation metric for
+ Poisson approximation, and to work with the Wasserstein metric for Normal
+ approximation.
+ In applications, we may be most interested in the Kolmogorov metric.
+ Therefore, it is sometimes useful to transfer results between metrics (though,
+ this usually results in worse constants than working directly in the desired
+ metric).
 \end_layout
 
 \begin_layout Standard
@@ -4104,21 +4216,8 @@ begin{todo}
 
 It may be worthwhile to actually characterize the Wasserstein, Kolmogorov
  and Total Variation topologies.
- In particular, Wikipedia says that Wasserstein convergence is just weak
- convergence plus convergence of the first moment.
-\end_layout
-
-\begin_layout Standard
-Also, 
-\begin_inset CommandInset href
-LatexCommand href
-target "http://en.wikipedia.org/wiki/Talk:Convergence_of_measures"
-
-\end_inset
-
- says an additional uniform boundedness condition on the test functions
- metrizes the weak topology.
- If so why arent we using that?
+ In particular, Wasserstein convergence is just weak convergence plus convergenc
+e of the first moment.
 \begin_inset ERT
 status open
 
@@ -4147,7 +4246,11 @@ end{todo}
 \uwave off
 \noun off
 \color none
-If 
+If (for all 
+\begin_inset Formula $x$
+\end_inset
+
+), 
 \begin_inset Formula $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
 \end_inset
 
@@ -4223,11 +4326,24 @@ If
 \begin_inset Formula $\X$
 \end_inset
 
- is a continuous random variable, then by the Radon-Nikodym chain rule 
+ is a continuous random variable, then 
+\begin_inset Formula $\E_{\X}\one_{\A}=\int_{\RR}\one_{\A}\left(x\right)f_{\X}\left(x\right)\d x$
+\end_inset
+
+, so by linearity 
 \begin_inset Formula $\E_{\X}\h=\int_{\RR}\h\left(x\right)f_{\X}\left(x\right)\d x$
 \end_inset
 
+ for simple 
+\begin_inset Formula $\h$
+\end_inset
+
 .
+ This extends to all 
+\begin_inset Formula $\h$
+\end_inset
+
+ by the measure-theoretic definition of the integral.
 \end_layout
 
 \begin_layout Proposition
@@ -4294,6 +4410,33 @@ item
 
 \begin_inset CommandInset label
 LatexCommand label
+name "prop:transfer-BL/W"
+
+\end_inset
+
+
+\begin_inset Formula $d_{\BL}\left(\X_{1},\X_{2}\right)\le d_{\W}\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
 name "prop:transfer-K/W"
 
 \end_inset
@@ -4307,7 +4450,7 @@ If
 \end_inset
 
 , then 
-\begin_inset Formula $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\W}\left(\X_{1},\X_{2}\right)}$
+\begin_inset Formula $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\BL}\left(\X_{1},\X_{2}\right)}$
 \end_inset
 
 .
@@ -4340,13 +4483,19 @@ key "Ros11"
 
 ).
  
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prop:transfer-K/TV"
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{prop:transfer-K/TV,prop:transfer-BL/W}
+\end_layout
 
 \end_inset
 
- is immediate from the definition.
+ are immediate from the definition.
  Then, as in the proof of 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4362,8 +4511,8 @@ reference "prop:stronger-than-weak"
 \begin_inset Formula 
 \begin{eqnarray*}
 \F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \le & \left(\E_{\X_{n}}\h_{x,\varepsilon}-\E_{\X}\h_{x,\varepsilon}\right)+\left(\E_{\X}\h_{x,\varepsilon}-\F_{\X}\left(x\right)\right)\\
- & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}\, f_{\X}\left(x\right)\d x\\
- & \le & d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon+C\varepsilon/2
+ & \le & d_{\BL}\left(\X_{1},\X_{2}\right)/\varepsilon+\int_{x}^{x+\varepsilon}\h_{x,\varepsilon}\, f_{\X}\left(x\right)\d x\\
+ & \le & d_{\BL}\left(\X_{1},\X_{2}\right)/\varepsilon+C\varepsilon/2
 \end{eqnarray*}
 
 \end_inset
@@ -4375,13 +4524,13 @@ and similarly
 
 \begin_inset Formula 
 \begin{eqnarray*}
-\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge & -d_{\W}\left(\X_{1},\X_{2}\right)/\varepsilon-C\varepsilon/2,
+\F_{\X_{n}}\left(x\right)-\F_{\X}\left(x\right) & \ge & -d_{\BL}\left(\X_{1},\X_{2}\right)/\varepsilon-C\varepsilon/2,
 \end{eqnarray*}
 
 \end_inset
 
 So, we can take 
-\begin_inset Formula $\varepsilon=\sqrt{2d_{\W}\left(\X_{1},\X_{2}\right)/C}$
+\begin_inset Formula $\varepsilon=\sqrt{2d_{\BL}\left(\X_{1},\X_{2}\right)/C}$
 \end_inset
 
  to prove 
@@ -4408,7 +4557,7 @@ If
 \end_inset
 
  to obtain 
-\begin_inset Formula $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\W}\left(\X_{1},\X_{2}\right)}$
+\begin_inset Formula $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\BL}\left(\X_{1},\X_{2}\right)}$
 \end_inset
 
 .
@@ -4806,7 +4955,7 @@ end{note}
 \end_layout
 
 \begin_layout Section
-Stein's Method in the Abstract
+Stein's Method in Generality
 \end_layout
 
 \begin_layout Standard
@@ -4854,6 +5003,42 @@ status open
 
 \backslash
 end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Maybe go through a bare-hands proof of Berry Esseen throughout this section
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
 \end_layout
 
 \end_inset
@@ -5009,7 +5194,7 @@ standard
 \end_inset
 
 ).
- However, particularly for combinatorical applications, Stein's method is
+ However, particularly for combinatorial applications, Stein's method is
  most often used to bound the distance 
 \begin_inset Formula $d_{\cH}\left(\L{\X},\Lo\right)$
 \end_inset
@@ -5294,44 +5479,6 @@ reference "eq:E_0T_0-consistency"
  is a characterizing operator.
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Clean up the following remark.
- Maybe Banach space is too strong a requirement, can I have any topology
- though?
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Remark
 In full generality (and in accordance with 
 \begin_inset CommandInset citation
@@ -5349,37 +5496,98 @@ key "Ste86"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Remark
-The proof of 
+ The proof of 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "prop:U_0-characterizing"
 
 \end_inset
 
- does not ensure that the Stein transform 
+ uses the axiom of choice and does not ensure that the Stein transform 
 \begin_inset Formula $\Uo$
 \end_inset
 
  is particularly well-behaved.
- In particular, if 
-\begin_inset Formula $\To$
-\end_inset
-
- is a bounded linear operator between Banach spaces, 
-\begin_inset Formula $\Uo$
-\end_inset
-
- may not be bounded.
  In practice, we will usually require that 
 \begin_inset Formula $\Uo$
 \end_inset
 
- is well-behaved to apply Stein's method.
- An equivalent condition for existence of a bounded Stein transform is that
- the kernel of 
+ is well-behaved to apply Stein's method (in fact, we will usually have
+ an explicit formula for 
+\begin_inset Formula $\Uo$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I managed to prove a necessary and sufficient condition for 
+\begin_inset Formula $\Uo$
+\end_inset
+
+ to be bounded if 
+\begin_inset Formula $\To$
+\end_inset
+
+ is a Banach space operator (namely, 
+\begin_inset Formula $\ker\To$
+\end_inset
+
+ is complementable).
+ I think it's probably a little off-topic to include this though.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+but an equivalent condition for existence of a bounded Stein transform is
+ that the kernel of 
 \begin_inset Formula $\To$
 \end_inset
 
@@ -5544,6 +5752,22 @@ so
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 We'll use 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -5561,42 +5785,37 @@ name "thm:normal-characterizing"
 
 \end_inset
 
-Define 
-\begin_inset Formula $T_{\N}$
+Let 
+\begin_inset Formula $\X_{\N}\in\N\left(0,1\right)$
 \end_inset
 
- by 
-\begin_inset Formula $T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$
+ and let 
+\begin_inset Formula $\cX_{\N}=\left\{ \h\in C^{\infty}\left(\RR\right):\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(\X_{\N}\right)\right|\right]<\infty\mbox{ for all }k\in\NN\right\} $
 \end_inset
 
 .
  Let 
-\begin_inset Formula $\cX_{\N}=L^{1}\left(\RR,\N\left(0,1\right)\right)$
+\begin_inset Formula $\cF_{\N}$
 \end_inset
 
- be the set of functions 
-\begin_inset Formula $\h:\RR\to\RR$
+ be the set of continuously differentiable 
+\begin_inset Formula $\fo$
 \end_inset
 
- that satisfy 
-\begin_inset Formula $\E_{\N}\left|\h\right|<\infty$
-\end_inset
-
- and let 
-\begin_inset Formula $\cF_{\N}=\T_{\N}^{-1}\cX_{\N}$
-\end_inset
-
- be the set of functions 
-\begin_inset Formula $\fo:\RR\to\RR$
-\end_inset
-
- such that 
-\begin_inset Formula $\E_{\N}\left|\T_{\N}\fo\right|<\infty$
+ with 
+\begin_inset Formula $\fo'\in\cX_{\N}$
 \end_inset
 
 .
- Then 
+\end_layout
+
+\begin_layout Theorem
+The operator 
 \begin_inset Formula $\T_{\N}:\cF_{\N}\to\cX_{\N}$
+\end_inset
+
+ given by 
+\begin_inset Formula $\T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$
 \end_inset
 
  is a characterizing operator for 
@@ -5607,8 +5826,140 @@ Define
 \end_layout
 
 \begin_layout Proof
+(Adapted from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Lecture II"
+key "Ste86"
+
+\end_inset
+
+).
+ First we prove that 
+\begin_inset Formula $\T_{\N}$
+\end_inset
+
+ is well-defined as an operator with codomain 
+\begin_inset Formula $\cX_{\N}$
+\end_inset
+
+.
+ Fix 
+\begin_inset Formula $\fo\in\cF_{\N}$
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+\E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]\le\E\left[\left|\X_{\N}\right|^{k}\left|\fo'\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)\right|\right].
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+Now, 
+\begin_inset Formula $\E\left|\X\right|^{a}\le\left(\E\left|\X\right|^{b}\right)^{a/b}$
+\end_inset
+
+ for 
+\begin_inset Formula $a\le b$
+\end_inset
+
+ by Hölder's inequality (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 3.6 (1)"
+key "Rud66"
+
+\end_inset
+
+) 
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E\left|\X_{\N}\right|^{k+1} & \prec\int_{0}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\\
+ & \prec\int_{0}^{\infty}x^{k}\frac{\d}{\d x}e^{-x^{2}/2}\d x\\
+ & \prec\left.x^{k}e^{-x^{2}/2}\right|_{0}^{\infty}-\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x\\
+ & \prec\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x
+\end{alignat*}
+
+\end_inset
+
+Proceeding inductively, we have 
+\begin_inset Formula $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}xe^{-x^{2}/2}\d x\prec\left.e^{-x^{2}/2}\right|_{0}^{\infty}<\infty$
+\end_inset
+
+ if 
+\begin_inset Formula $k$
+\end_inset
+
+ is even, or 
+\begin_inset Formula $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}e^{-x^{2}/2}\d x<\infty$
+\end_inset
+
+ if 
+\begin_inset Formula $k$
+\end_inset
+
+ is odd
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, 
+\begin_inset Formula $\E\left|\X_{\N}\right|^{k+1}<\infty$
+\end_inset
+
+ (this is a standard result that is easily proved inductively, using integration
+ by parts and the Gaussian integral).
+ So,
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)\right|\right] & \prec\int_{-\infty}^{\infty}\left|x\right|^{k+1}\left|\fo\left(x\right)-\fo\left(0\right)\right|e^{-x^{2}/2}\d x\\
+ & =\int_{-\infty}^{\infty}x^{k+1}\left|\fo\left(0\right)+\int_{0}^{x}\fo'\left(t\right)\d t\right|e^{-x^{2}/2}\d x\\
+ & \le\E\left|\X_{\N}\right|^{k+1}\left(\fo\left(0\right)+\int_{-\infty}^{\infty}\left|\fo'\left(t\right)\right|\d t\right)<\infty.
+\end{alignat*}
+
+\end_inset
+
+It follows that 
+\begin_inset Formula $\E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]<\infty$
+\end_inset
+
+ and 
+\begin_inset Formula $\T_{\N}\fo\in\cX_{\N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
 For any 
-\begin_inset Formula $f\in\cF_{\N}$
+\begin_inset Formula $\fo\in\cF_{\N}$
 \end_inset
 
 , integration by parts gives
@@ -5632,28 +5983,27 @@ reference "eq:E_0T_0-consistency"
 
  holds.
  Then, define 
-\begin_inset Formula $\U_{\N}$
+\begin_inset Formula $\U_{\N}:\cX_{\N}\to\cF_{\N}$
 \end_inset
 
  by 
 \begin_inset Formula 
 \[
-\U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.
+\U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t=-e^{x^{2}/2}\int_{x}^{\infty}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.
 \]
 
 \end_inset
 
-(obtaining this formula for 
-\begin_inset Formula $\U_{\N}$
+(These two definitions are the same because their difference is 
+\begin_inset Formula $e^{x^{2}/2}\left(\E_{\N}\h-\E_{\N}\h\right)=0$
 \end_inset
 
- would involve solving a differential equation, most simply by the method
- of integrating factors).
- By the product rule and the Fundamental Theorem of Calculus, for all 
-\begin_inset Formula $\h\in\cX_{\N}$
-\end_inset
+).
+\end_layout
 
- we have
+\begin_layout Proof
+A straightforward calculation involving the product rule and the fundamental
+ theorem of calculus yields
 \begin_inset Formula 
 \begin{align*}
 \T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h.
@@ -5661,21 +6011,72 @@ reference "eq:E_0T_0-consistency"
 
 \end_inset
 
-Hence, 
+(Indeed, 
+\begin_inset Formula $\U_{\N}$
+\end_inset
+
+ could have been obtained by solving this differential equation).
+ So, 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:U_0-characterizing"
 
 \end_inset
 
- holds and 
+ holds.
+ To apply 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "prop:U_0-characterizing"
 
 \end_inset
 
- completes the proof.
+, it remains to prove that 
+\begin_inset Formula $\U_{\N}$
+\end_inset
+
+ is indeed well-defined as an operator with codomain 
+\begin_inset Formula $\cF_{\N}$
+\end_inset
+
+.
+ For 
+\begin_inset Formula $\h\in\cX_{\N}$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\E\left[\left|\X_{\N}\right|^{k}\left|\left(\U_{\N}\h\right)'\left(\X_{\N}\right)\right|\right]\le\E\left[\left|\X_{\N}\right|^{k+1}\left|\U_{\N}\h\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(x\right)\right|\right]+\E\left|\X_{\N}\right|^{k}\E_{\N}\h.
+\]
+
+\end_inset
+
+By Fubini's theorem (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 8.8"
+key "Rud66"
+
+\end_inset
+
+),
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E\left[\left|\X_{\N}\right|^{k+1}\left|\U_{\N}\h\left(\X_{\N}\right)\right|\right] & \prec\int_{0}^{\infty}x^{k+1}\int_{x}^{\infty}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
+ & \qquad-\int_{-\infty}^{0}x^{k+1}\int_{\infty}^{x}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
+ & =\int_{0}^{\infty}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\int_{0}^{t}x^{k+1}\d x\d t\\
+ & \qquad-\int_{-\infty}^{0}x^{k+1}\int_{t}^{0}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
+ & \prec\int_{-\infty}^{\infty}\left|t\right|^{k+2}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d x\d t<\infty,
+\end{alignat*}
+
+\end_inset
+
+so 
+\begin_inset Formula $\U_{\N}\h\in\cF_{\N}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -5698,42 +6099,24 @@ name "thm:poisson-characterizing"
 
 \end_inset
 
-Define 
-\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
-\end_inset
-
- by 
-\begin_inset Formula $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $\cX_{\Po\left(\lambda\right)}$
-\end_inset
-
- be the set of integer-valued functions 
-\begin_inset Formula $\h:\NN\to\ZZ$
-\end_inset
-
- that satisfy 
-\begin_inset Formula $\E_{\Po\left(\lambda\right)}\left|\h\right|<\infty$
+Let 
+\begin_inset Formula $\X_{\Po\left(\lambda\right)}\in\Po\left(\lambda\right)$
 \end_inset
 
  and let 
-\begin_inset Formula $\cF_{\Po\left(\lambda\right)}=\T_{\Po\left(\lambda\right)}^{-1}\cX_{\Po\left(\lambda\right)}$
-\end_inset
-
- be the set of functions 
-\begin_inset Formula $\fo:\NN\to\ZZ$
-\end_inset
-
- such that 
-\begin_inset Formula $\E_{\Po\left(\lambda\right)}\left|\T_{\Po\left(\lambda\right)}\fo\right|<\infty$
+\begin_inset Formula $\cX_{\N}=\cF_{\N}=\left\{ \h:\NN\to\RR:\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]<\infty\mbox{ for all }k\in\NN\right\} $
 \end_inset
 
 .
- Then 
-\begin_inset Formula $\T_{\Po\left(\lambda\right)}:\cF_{\Po\left(\lambda\right)}\to\cX_{\Po\left(\lambda\right)}$
+\end_layout
+
+\begin_layout Theorem
+The operator 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}:\cF_{\N}\to\cX_{\N}$
+\end_inset
+
+ defined by 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$
 \end_inset
 
  is a characterizing operator for 
@@ -5741,6 +6124,54 @@ Define
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+This proof is unfinished; I need to prove that 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
+\end_inset
+
+
+\lang english
+ and 
+\begin_inset Formula $\U_{\Po\left(\lambda\right)}$
+\end_inset
+
+ have appropriate codomain.
+ See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste92"
+
+\end_inset
+
+, page 18.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
@@ -5848,63 +6279,6 @@ reference "prop:characterizing"
 \end_inset
 
  if we restrict our attention to integer-valued random variables.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
- Stein chose 
-\begin_inset Formula $\Xo=\left\{ \h:\E\left[\id_{\RR}^{k}\left|\h\right|\right]<\infty\mbox{ for all }k\right\} $
-\end_inset
-
-, for both the Poisson and normal case.
- I think this was to make sure 
-\begin_inset Formula $\To$
-\end_inset
-
- and 
-\begin_inset Formula $\Uo$
-\end_inset
-
- have the right domain and range.
- See 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Ste86"
-
-\end_inset
-
- page 20 and 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Ste92"
-
-\end_inset
-
- page 18.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -6086,7 +6460,7 @@ reference "thm:poisson-characterizing"
 
 \end_inset
 
-, then we generally choose 
+, then we can choose 
 \begin_inset Formula 
 \[
 \cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1/2}\right\} ,\,\left\Vert \Delta\fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1}\right\} \right\} ,
@@ -6227,31 +6601,35 @@ end{todo}
 
 \end_layout
 
-\begin_layout Proposition
-With 
-\begin_inset Formula $\U_{\Po\left(\lambda\right)}$
-\end_inset
+\begin_layout Proof
+\begin_inset ERT
+status open
 
- as in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "thm:poisson-characterizing"
+\begin_layout Plain Layout
 
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{align*}
-\sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1/2}\mbox{ as }\lambda\to\infty,\quad & \sup_{\A}\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1\mbox{ as }\lambda\to0,\\
-\sup_{\A}\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp\lambda^{-1}\mbox{ as }\lambda\to\infty,\quad & \sup_{\A}\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\asymp1\mbox{ as }\lambda\to0,
-\end{align*}
-
-\end_inset
-
-
+[Proof that this $
+\backslash
+cY$ satisfies $
+\backslash
+cY
+\backslash
+supseteq
+\backslash
+U_{
+\backslash
+Po
+\backslash
+left(
+\backslash
+lambda
+\backslash
+right)}
+\backslash
+cH$]
 \end_layout
 
-\begin_layout Proof
+\end_inset
+
 (Adapted from 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -6260,7 +6638,8 @@ key "BHJ92"
 
 \end_inset
 
-) For any Borel 
+).
+ For any Borel 
 \begin_inset Formula $\A$
 \end_inset
 
@@ -6271,10 +6650,10 @@ key "BHJ92"
 ,
 \begin_inset Formula 
 \begin{align*}
-\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right) & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\Po_{\lambda}\left(\A\cap\range{k-1}\right)-\Po_{\lambda}\left(\A\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
- & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\int}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\left(\vphantom{\sum}1-\Po_{\lambda}\left(\range{k-1}\right)\right)\right.\\
- & \qquad\qquad\qquad-\left.\vphantom{\int}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\right)-\Po_{\lambda}\left(\A\cap\range{k-1}\right)\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
- & =\frac{\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right).
+\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right) & =\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\left(\Po_{\lambda}\left(\A\cap\range{k-1}\right)-\Po_{\lambda}\left(\A\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
+ & =\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\int}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\left(\vphantom{\sum}1-\Po_{\lambda}\left(\range{k-1}\right)\right)\right.\\
+ & \qquad\qquad\qquad\quad-\left.\vphantom{\int}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\right)-\Po_{\lambda}\left(\A\cap\range{k-1}\right)\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
+ & =\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right).
 \end{align*}
 
 \end_inset
@@ -6310,7 +6689,7 @@ Note that
 , so
 \begin_inset Formula 
 \[
-\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right).
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right).
 \]
 
 \end_inset
@@ -6331,143 +6710,301 @@ Note that we have equality when
  then Stirling's approximation (unfinished...)
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "example:wasserstein-bound"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-I need a way to show 
-\begin_inset Formula $\Po_{\lambda}\left(\range{k-1}\right)\asymp1$
+If 
+\begin_inset Formula $\cH=\cH_{\W}$
 \end_inset
 
- when 
-\begin_inset Formula $k$
+ or 
+\begin_inset Formula $\cH=\cH_{\BL}$
 \end_inset
 
- is close to 
-\begin_inset Formula $\lambda$
+ and 
+\begin_inset Formula $\Lo=\N\left(0,1\right)$
 \end_inset
 
-.
- I imagine the typical approach would be to show that 
-\begin_inset Formula $\left(\Po\left(\lambda\right)-\lambda\right)/\lambda\to\N\left(0,1\right)$
-\end_inset
-
- with
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- L
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-'e
-\end_layout
-
-\end_inset
-
-vy's continuity theorem, but that would require me to introduce more stuff
- in the probability revision section.
- Maybe I can use Stein's method itself for this! In any case I'll think
- about this more when I've decided on my approach to 
+, using the characterizing operator in 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "todo:poisson-norm-bound"
+reference "thm:poisson-characterizing"
 
 \end_inset
 
-.
+, then we can choose 
+\begin_inset Formula 
+\[
+\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le2,\,\left\Vert \fo'\right\Vert _{\infty}\le\sqrt{2/\pi},\,\left\Vert \fo''\right\Vert _{\infty}\le4\right\} .
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
+\begin_layout Proof
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-
+[Proof that this $
 \backslash
-end{todo}
+cY$ satisfies $
+\backslash
+cY
+\backslash
+supseteq
+\backslash
+U_{
+\backslash
+N}
+\backslash
+cH$]
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{todo}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-I should have a toy example here that is amenable to several methods.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
-
-\end_inset
-
-
+to do
 \end_layout
 
 \begin_layout Subsection
+The Berry-Esseen Theorem
+\end_layout
+
+\begin_layout Standard
+Before we proceed further, we give a proof of a quantitative central limit
+ theorem using Stein's method bare-handed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+give some background; the theorem was apparently originally proved before
+ Stein but the proof was complicated.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Berry-Esseen]
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $Q_{1},\dots,Q_{n}$
+\end_inset
+
+ be independent random variables with common distribution 
+\begin_inset Formula $Q$
+\end_inset
+
+, such that 
+\begin_inset Formula $\E Q=0$
+\end_inset
+
+, 
+\begin_inset Formula $\E Q^{2}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\E\left|Q\right|^{3}<\infty$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula 
+\[
+\X=\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{i}.
+\]
+
+\end_inset
+
+Then 
+\begin_inset Formula 
+\[
+d_{\W}\left(n^{-1/2}\X,\N\left(0,1\right)\right)\le\frac{3}{\sqrt{n}}\E\left(\left|Q\right|^{3}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Fix 
+\begin_inset Formula $f\in\cY$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We need to compare 
+\begin_inset Formula 
+\[
+\E\left[\X f\left(\X\right)\right]=\E\left[\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{\i}f\left(\X\right)\right]
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\E f'\left(\X\right)$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $W_{\i}=\X-\frac{1}{\sqrt{n}}Q_{\i}$
+\end_inset
+
+, so 
+\begin_inset Formula $W_{\i}$
+\end_inset
+
+ and 
+\begin_inset Formula $Q_{\i}$
+\end_inset
+
+ are independent.
+ For each 
+\begin_inset Formula $\i$
+\end_inset
+
+, we then have 
+\begin_inset Formula 
+\[
+\E\left[Q_{\i}f\left(\X\right)\right]=\E\left[Q_{\i}\left(f\left(\X\right)-f\left(W_{\i}\right)\right)\right]=\frac{1}{\sqrt{n}}\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]+\frac{1}{n}\E\left[Q_{\i}^{3}\frac{f''\left(E\right)}{2}\right]
+\]
+
+\end_inset
+
+for some (random) 
+\begin_inset Formula $E$
+\end_inset
+
+, by Taylor's theorem with the Lagrange form of the remainder (noting 
+\begin_inset Formula $\X-W_{\i}=Q_{\i}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+Now, note that
+\begin_inset Formula 
+\[
+\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]=\E Q_{\i}^{2}\E f'\left(W_{\i}\right)=\E f'\left(W_{\i}\right)=\E f'\left(\X\right)+\E\left[Q_{\i}f''\left(E'\right)\right]
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $E'$
+\end_inset
+
+, again using the Lagrange form of the remainder.
+ Now, by the bound on 
+\begin_inset Formula $\left\Vert f''\right\Vert _{\infty}$
+\end_inset
+
+ in the definition of 
+\begin_inset Formula $\cY$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E\left|Q_{\i}^{3}\frac{f''\left(E\right)}{2}\right| & \le\E\left|Q^{3}\right|,\\
+\E\left|Q_{\i}f''\left(E'\right)\right| & \le2\E\left|Q\right|
+\end{alignat*}
+
+\end_inset
+
+Hölder's inequality (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 3.6 (1)"
+key "Rud66"
+
+\end_inset
+
+) for the 
+\begin_inset Formula $L^{3/2}$
+\end_inset
+
+ norm gives 
+\begin_inset Formula 
+\[
+1=\E\left|Q^{2}\right|^{3/2}\le\left(\E\left|\left(Q^{2}\right)^{3/2}\right|^{2/3}\right)^{3/2}=\E\left|Q^{3}\right|,
+\]
+
+\end_inset
+
+so another application of Hölder's inequality for the 
+\begin_inset Formula $L^{3}$
+\end_inset
+
+ norm gives
+\begin_inset Formula 
+\[
+\E\left|Q\right|\le\E\left|Q^{3}\right|^{1/3}\le\E\left|Q^{3}\right|.
+\]
+
+\end_inset
+
+We conclude
+\begin_inset Formula 
+\begin{alignat*}{1}
+\left|\E\left[\X f\left(\X\right)\right]-\E f'\left(\X\right)\right| & \le\left|\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}f\left(\X\right)\right]-\frac{1}{\sqrt{n}}\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]\right)\right|\\
+ & \qquad+\left|\frac{1}{n}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]-\E f'\left(\X\right)\right)\right|\\
+ & \le\frac{1}{\sqrt{n}}\E\left|Q^{3}\right|+\frac{2}{\sqrt{n}}\E\left|Q^{3}\right|
+\end{alignat*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 The method of exchangeable pairs
 \end_layout
 
@@ -6600,8 +7137,12 @@ name "example:fixed-points"
 
 \end_inset
 
-We will use an example problem to illustrate the principles in this section.
- We will say a 
+Throughout this section, we will refer to an example problem to illustrate
+ the principles of Stein's method for exchangeable pairs.
+\end_layout
+
+\begin_layout Example
+We will say a 
 \emph on
 fixed point
 \emph default
@@ -6681,7 +7222,7 @@ close
 \begin_inset Formula $d_{\TV}\left(\X,\Po\left(1\right)\right)$
 \end_inset
 
- to quantify this intuition.
+ to validate and quantify this intuition.
 \end_layout
 
 \begin_layout Standard
@@ -7113,7 +7654,7 @@ reference "rem:underlying-pair"
 \end_inset
 
  with margins 
-\begin_inset Formula $\mathbf{W}$
+\begin_inset Formula $X$
 \end_inset
 
 .
@@ -7559,7 +8100,66 @@ The final step is to choose an operator
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It's not clear if characterizing operators are in any sense unique so that
+ for two characterizing operators 
+\begin_inset Formula $\T_{1},\T_{2}$
+\end_inset
+
+ there is 
+\emph on
+always
+\emph default
+ a connection 
+\begin_inset Formula $\conn$
+\end_inset
+
+ that makes 
+\begin_inset Formula $\T_{1}=\T_{2}\conn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "example:poisson-connecting-operator"
+
+\end_inset
+
 For the Poisson case in 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -7619,7 +8219,7 @@ reference "example:poisson-bound"
 : 
 \begin_inset Formula 
 \[
-\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\E_{\X}\To\fo\le\min\left(1,\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
 \]
 
 \end_inset
@@ -7628,7 +8228,7 @@ This approximation is effective when
 \begin_inset Formula 
 \begin{align}
 \Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & \approx\lambda/c,\label{eq:immigration-death}\\
-\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right) & \approx\X_{1}/c.\nonumber 
+\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right) & \approx\X_{1}/c.\nonumber 
 \end{align}
 
 \end_inset
@@ -7680,6 +8280,46 @@ status open
 
 \begin_layout Plain Layout
 
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I should include sub-
+\begin_inset Formula $\sigma$
+\end_inset
+
+-algebra note to simplify conditional expectation stuff
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -7714,13 +8354,13 @@ reference "example:fixed-points-exchangeable-pair"
  The interpretation of 
 \begin_inset Formula 
 \[
-\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)=\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)
+\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)
 \]
 
 \end_inset
 
- is the probability of a transposition destroying exactly one out of an
- existing 
+is the probability of a transposition destroying exactly one out of an existing
+ 
 \begin_inset Formula $\X_{1}$
 \end_inset
 
@@ -8151,11 +8791,399 @@ end{note}
 \end_layout
 
 \begin_layout Subsection
-Size-Bias Coupling
+An Application: Switchings and Short Cycles in Random Regular Graphs
 \end_layout
 
-\begin_layout Part
-Applications
+\begin_layout Standard
+A particularly interesting (and new!) application of Stein's method is to
+ piggyback onto results proved using combinatorial
+\emph on
+ switchings.
+
+\emph default
+ In this subsection, I'll describe how a certain Poisson limit theorem concernin
+g short cycles in random regular graphs was improved by applying Stein's
+ method in a quite natural, and generally applicable, way.
+ First, we need some background on short cycles in random regular graphs,
+ and switchings.
+\end_layout
+
+\begin_layout Subsubsection
+Short Cycles in Random Regular Graphs
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\X_{\ell,n}^{\left(d\right)}$
+\end_inset
+
+ be the number of cycles of length 
+\begin_inset Formula $\ell$
+\end_inset
+
+ in a random 
+\begin_inset Formula $d$
+\end_inset
+
+-regular graph on 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices.
+ The following is a critical theorem describing the structure of random
+ regular graphs.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:short-cycles-fixed"
+
+\end_inset
+
+Fix 
+\begin_inset Formula $\ell\in\NN$
+\end_inset
+
+ and 
+\begin_inset Formula $d\in\NN$
+\end_inset
+
+ with 
+\begin_inset Formula $d\ge3$
+\end_inset
+
+.
+ Then
+\begin_inset Formula 
+\[
+\Lb{\X_{\ell,n}^{\left(d\right)}}\to\Po\left(\frac{\left(d-1\right)^{\ell}}{2\ell}\right)
+\]
+
+\end_inset
+
+as 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+, with 
+\begin_inset Formula $n$
+\end_inset
+
+ restricted to the even integers if 
+\begin_inset Formula $d$
+\end_inset
+
+ is odd.
+\end_layout
+
+\begin_layout Standard
+One reason 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-fixed"
+
+\end_inset
+
+ is interesting is because it tells us the number of 
+\begin_inset Quotes eld
+\end_inset
+
+short cycles
+\begin_inset Quotes erd
+\end_inset
+
+ in a random regular graph does not grow (to infinity) with the size of
+ the graph.
+ That is, random regular graphs are likely to 
+\begin_inset Quotes eld
+\end_inset
+
+locally
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+look like forests
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-fixed"
+
+\end_inset
+
+ is most easily proved with the method of moments; see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wor99"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-fixed"
+
+\end_inset
+
+ theorem can be extended to the case where 
+\begin_inset Formula $d$
+\end_inset
+
+ is allowed to grow modestly with 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MWW04"
+
+\end_inset
+
+, a natural variant of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-fixed"
+
+\end_inset
+
+ was proved for 
+\begin_inset Formula $\left(d-1\right)^{2\ell-1}=o\left(n\right)$
+\end_inset
+
+, using the idea of 
+\emph on
+switchings
+\emph default
+.
+ The condition 
+\begin_inset Formula $\left(d-1\right)^{2\ell-1}=o\left(n\right)$
+\end_inset
+
+ appeared to be a natural threshold; it was conjectured that short cycle
+ counts are no longer asymptotically Poisson if 
+\begin_inset Formula $d$
+\end_inset
+
+ grows any faster.
+\end_layout
+
+\begin_layout Standard
+It was recently proved that in fact cycle counts remain asymptotically Poisson
+ past this boundary:
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[
+\backslash
+cite{Joh11}]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:short-cycles-variable"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\ell$
+\end_inset
+
+ and 
+\begin_inset Formula $d$
+\end_inset
+
+ depend on 
+\begin_inset Formula $n$
+\end_inset
+
+, in such a way that 
+\begin_inset Formula $d\ge3$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+\sqrt{\ell}\left(d-1\right)^{3\ell/2-1}=o\left(n\right).
+\]
+
+\end_inset
+
+Then,
+\begin_inset Formula 
+\[
+d_{\TV}\left(\X_{\ell,n}^{\left(d\right)},\Po\left(\frac{\left(d-1\right)^{\ell}}{2\ell}\right)\right)\to0.
+\]
+
+\end_inset
+
+if 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+ in such a way that 
+\begin_inset Formula $nd$
+\end_inset
+
+ is always even.
+\end_layout
+
+\begin_layout Standard
+The proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-variable"
+
+\end_inset
+
+ combines switchings with Stein's method.
+\end_layout
+
+\begin_layout Subsubsection
+Switchings
+\end_layout
+
+\begin_layout Standard
+Formally speaking, a switching is a binary relation 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+ on a set of combinatorial objects 
+\begin_inset Formula $\Om$
+\end_inset
+
+ (in our case, 
+\begin_inset Formula $\Om$
+\end_inset
+
+ is the set of 
+\begin_inset Formula $d$
+\end_inset
+
+-regular graphs on 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices).
+ Usually, switchings are understood as an 
+\begin_inset Quotes eld
+\end_inset
+
+action
+\begin_inset Quotes erd
+\end_inset
+
+ that changes one combinatorial object to another.
+ The switching used in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MWW04"
+
+\end_inset
+
+ is defined as follows:
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:cycle-switching"
+
+\end_inset
+
+Let 
+\begin_inset Formula $C=v_{1}\dots v_{\ell}$
+\end_inset
+
+ be an 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycle in a 
+\begin_inset Formula $d$
+\end_inset
+
+-regular graph 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ For each 
+\begin_inset Formula $\i\in\ZZ/\ell\ZZ$
+\end_inset
+
+, suppose 
+\begin_inset Formula $e_{\i}=u_{\i}w_{\i+1}\in E\left(G\right)$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $u_{\i}v_{\i}\notin E\left(G\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{\i}w_{\i}\notin E\left(G\right)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $G'$
+\end_inset
+
+ be the 
+\begin_inset Formula $d$
+\end_inset
+
+-regular graph obtained from 
+\begin_inset Formula $G$
+\end_inset
+
+ by deleting all the edges in 
+\begin_inset Formula $C$
+\end_inset
+
+ and adding each of the edges 
+\begin_inset Formula $u_{\i}v_{\i}$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{\i}w_{\i}$
+\end_inset
+
+.
+ Further, suppose this operation does not create or delete any 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycle except 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ Then, we say 
+\begin_inset Formula $G\rightsquigarrow G'$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -8166,7 +9194,1079 @@ status open
 
 
 \backslash
-begin{note}
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Need picture here.
+ Also need precise definition: are edges/cycle oriented? Can we have some
+ 
+\begin_inset Formula $u_{\i}=v_{\ii}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The typical application of a switching is to estimate the relative sizes
+ of some subsets of 
+\begin_inset Formula $\Om$
+\end_inset
+
+, by analysing the 
+\begin_inset Quotes eld
+\end_inset
+
+flow
+\begin_inset Quotes erd
+\end_inset
+
+ of switchings between the subsets.
+ For example, define 
+\begin_inset Formula $S\left(k\right)$
+\end_inset
+
+ to be the set of 
+\begin_inset Formula $d$
+\end_inset
+
+-regular graphs with 
+\begin_inset Formula $k$
+\end_inset
+
+ cycles of length 
+\begin_inset Formula $\ell$
+\end_inset
+
+.
+ In 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Section 3"
+key "MWW04"
+
+\end_inset
+
+, bounds were obtained for the 
+\begin_inset Quotes eld
+\end_inset
+
+number of ways to switch out
+\begin_inset Quotes erd
+\end_inset
+
+ of each graph 
+\begin_inset Formula $G$
+\end_inset
+
+ (that is, the number of graphs 
+\begin_inset Formula $G'$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $G\rightsquigarrow G'$
+\end_inset
+
+), and the 
+\begin_inset Quotes eld
+\end_inset
+
+number of ways to switch in
+\begin_inset Quotes erd
+\end_inset
+
+ to each graph.
+ This gives an estimate on the relative sizes of 
+\begin_inset Formula $S\left(k\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $S\left(k-1\right)$
+\end_inset
+
+ for each 
+\begin_inset Formula $k$
+\end_inset
+
+, which is then used to estimate the distribution of 
+\begin_inset Formula $\X_{\ell,n}^{\left(d\right)}$
+\end_inset
+
+.
+ The relevant estimates work in the regime 
+\begin_inset Formula $\left(d-1\right)^{2\ell-1}=o\left(n\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Stein's method and Switchings
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\fG}{\mathfrak{G}}
+{\boldsymbol{\mathfrak{G}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The application of switchings in the proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-variable"
+
+\end_inset
+
+ is different conceptually, but the same kind of estimates are needed.
+ Hopefully it is possible that Stein's method can be applied similarly to
+ a variety of different switching arguments unrelated to short cycles in
+ random regular graphs.
+\end_layout
+
+\begin_layout Standard
+The approach is conceptually similar to that of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:fixed-points"
+
+\end_inset
+
+.
+ In the case of permuations, the transposition of two random indices is
+ a simple and effective way to perturb a permutation in an appropriate way
+ to apply the method of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:poisson-connecting-operator"
+
+\end_inset
+
+.
+ However, it is not so easy to perturb a regular graph in a way that maintains
+ regularity.
+ We accomplish this with the switching from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:cycle-switching"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We define a multigraph 
+\begin_inset Formula $\fG$
+\end_inset
+
+ with vertex set 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+ Make an edge in 
+\begin_inset Formula $\fG$
+\end_inset
+
+ for every pair 
+\begin_inset Formula $\left(G,G'\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $G\rightsquigarrow G'$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ be the maximum degree so far.
+ Add enough loops to each vertex of 
+\begin_inset Formula $\fG$
+\end_inset
+
+ so that 
+\begin_inset Formula $\fG$
+\end_inset
+
+ is a 
+\begin_inset Formula $\Delta$
+\end_inset
+
+-regular multigraph.
+ Recalling 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "todo:graph-to-markov"
+
+\end_inset
+
+, 
+\begin_inset Formula $\fG$
+\end_inset
+
+ induces a reversible Markov chain on 
+\begin_inset Formula $\Om$
+\end_inset
+
+ with stationary distribution 
+\begin_inset Formula $\rG nd$
+\end_inset
+
+, which corresponds to an exchangeable pair 
+\begin_inset Formula $\mathbf{G}=\left(G_{1},G_{2}\right)$
+\end_inset
+
+ with margins 
+\begin_inset Formula $\rG nd$
+\end_inset
+
+.
+ With 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:underlying-pair"
+
+\end_inset
+
+, this provides us with an exchangeable pair 
+\begin_inset Formula $\bX=\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+ with margins 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+ to apply Stein's method.
+\end_layout
+
+\begin_layout Subsection
+Proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-variable"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(Simplified from the proof of 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 11"
+key "Joh11"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\X=\X_{\ell,n}^{\left(d\right)}$
+\end_inset
+
+, let 
+\begin_inset Formula $\Om$
+\end_inset
+
+ be the set of all 
+\begin_inset Formula $d$
+\end_inset
+
+-regular graphs on 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices, and let 
+\begin_inset Formula $\lambda=\left(d-1\right)^{\ell}/\left(2\ell\right)\ge1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The approach is conceptually similar to that of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:fixed-points"
+
+\end_inset
+
+.
+ In the case of permuations, the transposition of two random indices is
+ a simple and effective way to perturb a permutation in an appropriate way
+ to apply the method of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:poisson-connecting-operator"
+
+\end_inset
+
+.
+ However, it is not so easy to perturb a regular graph in a way that maintains
+ regularity.
+ We accomplish this with the switching from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:cycle-switching"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\renewcommand{\fG}{\mathfrak{G}}
+{\boldsymbol{\mathfrak{G}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We define a multigraph 
+\begin_inset Formula $\fG$
+\end_inset
+
+ with vertex set 
+\begin_inset Formula $\Om$
+\end_inset
+
+.
+ Make an edge in 
+\begin_inset Formula $\fG$
+\end_inset
+
+ for every pair 
+\begin_inset Formula $\left(G,G'\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $G\rightsquigarrow G'$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ be the maximum degree so far.
+ Add enough loops to each vertex of 
+\begin_inset Formula $\fG$
+\end_inset
+
+ so that 
+\begin_inset Formula $\fG$
+\end_inset
+
+ is a 
+\begin_inset Formula $\Delta$
+\end_inset
+
+-regular multigraph.
+ Recalling 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "todo:graph-to-markov"
+
+\end_inset
+
+, 
+\begin_inset Formula $\fG$
+\end_inset
+
+ induces a reversible Markov chain on 
+\begin_inset Formula $\Om$
+\end_inset
+
+ with stationary distribution 
+\begin_inset Formula $\rG nd$
+\end_inset
+
+, which corresponds to an exchangeable pair 
+\begin_inset Formula $\mathbf{G}=\left(G_{1},G_{2}\right)$
+\end_inset
+
+ with margins 
+\begin_inset Formula $\rG nd$
+\end_inset
+
+.
+ With 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:underlying-pair"
+
+\end_inset
+
+, this provides us with an exchangeable pair 
+\begin_inset Formula $\bX=\left(\X_{1},\X_{2}\right)$
+\end_inset
+
+ with margins 
+\begin_inset Formula $\Lb{\X_{\ell,n}^{\left(d\right)}}$
+\end_inset
+
+ to apply Stein's method.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Is it confusing for 
+\begin_inset Formula $G_{1},G_{2}$
+\end_inset
+
+ to be random graphs, while graphs denoted 
+\begin_inset Formula $G$
+\end_inset
+
+ or 
+\begin_inset Formula $G'$
+\end_inset
+
+ generally refer to a specific, non-random graph? Maybe I should denote
+ particular graphs with 
+\begin_inset Formula $\om$
+\end_inset
+
+ instead or something.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $G\in\Om$
+\end_inset
+
+ and an 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycle 
+\begin_inset Formula $C$
+\end_inset
+
+, let 
+\begin_inset Formula $F_{C}\left(G\right)$
+\end_inset
+
+ be the number of ways to switch from 
+\begin_inset Formula $G$
+\end_inset
+
+ by destroying 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ That is,
+\begin_inset Formula 
+\[
+F_{C}\left(G\right)=\left|\left\{ G'\in\Om:\, G\rightsquigarrow G',\, C\subseteq G,\, C\nsubseteq G'\right\} \right|,
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $\sum_{C\in K_{n}}F_{C}\left(G\right)$
+\end_inset
+
+ is the number of ways to switch from 
+\begin_inset Formula $G$
+\end_inset
+
+, destroying one 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycle.
+ Then,
+\begin_inset Formula 
+\begin{alignat*}{1}
+\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & =\E\left[\Pr\left(\X_{2}=\X_{1}+1|G_{1}\right)|\X_{1}\right]\\
+ & =\E\left[\left.\frac{1}{\Delta}\sum_{C\in K_{n}}F_{C}\left(G_{1}\right)\right|\X_{1}\right].
+\end{alignat*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Conditioning on 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ is annoying, I'd rather condition on 
+\begin_inset Formula $G_{1}$
+\end_inset
+
+.
+ I should add a remark to this effect when introducing the method in the
+ theory section, and make the same adjustment to the permutations example.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{todo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, the automorphism group of an 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycle has size 
+\begin_inset Formula $2\ell$
+\end_inset
+
+, so the number of 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycles in 
+\begin_inset Formula $K_{n}$
+\end_inset
+
+ is 
+\begin_inset Formula $\falling n{\ell}/\left(2\ell\right)$
+\end_inset
+
+.
+ It follows that
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E\left|\X_{1}-\frac{\Delta}{\falling n{\ell}d^{\ell}}\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right| & =\E\left|\sum_{C\in K_{n}}\one_{C\subseteq G_{1}}-\frac{1}{\falling n{\ell}d^{\ell}}\sum_{C\in K_{n}}F_{C}\left(G\right)\right|\\
+ & \le\frac{\falling n{\ell}}{2\ell}\E\left|\one_{C\subseteq G_{1}}-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|.
+\end{alignat*}
+
+\end_inset
+
+Similarly, let 
+\begin_inset Formula $B_{C}\left(G\right)$
+\end_inset
+
+ be the number of ways to switch into 
+\begin_inset Formula $G$
+\end_inset
+
+ by destroying 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ We have
+\begin_inset Formula 
+\[
+\E\left|\lambda-\frac{\Delta}{\falling n{\ell}d^{\ell}}\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\E\left|\frac{\left(d-1\right)^{n}}{\falling n{\ell}}-\frac{B_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|.
+\]
+
+\end_inset
+
+The majority of this section will consist of combinatorially bounding these
+ expectations, resulting in the following lemmas:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:forward-switching-bound"
+
+\end_inset
+
+Uniformly in 
+\begin_inset Formula $C$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\E\left|\one_{C\subseteq G_{1}}-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n^{\ell+1}}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:backward-switching-bound"
+
+\end_inset
+
+Uniformly in 
+\begin_inset Formula $C$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\E\left|\frac{\left(d-1\right)^{n}}{\falling n{\ell}}-\frac{B_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n\falling n{\ell}}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+After proving these lemmas, we can conclude that
+\begin_inset Formula 
+\begin{alignat*}{1}
+d_{\TV}\left(\X,\Po\left(\lambda\right)\right) & \le\lambda^{-1/2}\left(\E\left|\lambda-\Delta\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-\Delta\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\right)\\
+ & =O\left(\frac{\sqrt{\ell}\left(d-1\right)^{3\ell/2-1}}{n}\right).
+\end{alignat*}
+
+\end_inset
+
+This concludes the proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:short-cycles-variable"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In order to prove 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{lem:forward-switching-bound,backward-switching-bound}
+\end_layout
+
+\end_inset
+
+, we will need a few lemmas.
+\end_layout
+
+\begin_layout Lemma
+Uniformly in 
+\begin_inset Formula $C$
+\end_inset
+
+ and 
+\begin_inset Formula $G$
+\end_inset
+
+ such that 
+\begin_inset Formula $C$
+\end_inset
+
+ does not share an edge with another 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycle in 
+\begin_inset Formula $G$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+F_{C}\left(G\right)\ge\falling n{\ell}d^{\ell}\left(1-\frac{2\ell\gamma\left(G\right)+O\left(\ell\left(d-1\right)^{\ell}\right)}{nd}\right),
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\gamma\left(G\right)$
+\end_inset
+
+ is the number of 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycles in 
+\begin_inset Formula $G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+adsf
+\end_layout
+
+\begin_layout Lemma
+Uniformly in 
+\begin_inset Formula $C$
+\end_inset
+
+ and 
+\begin_inset Formula $G$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+B_{C}\left(G\right)\ge\left(d\left(d-1\right)\right)^{\ell}\left(1-\frac{O\left(\ell\left(d-1\right)^{\ell-1}\right)}{n}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+adsf
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of 
+\backslash
+ref{lem:forward-switching-bound}]
+\end_layout
+
+\end_inset
+
+We partition 
+\begin_inset Formula $\rG nd$
+\end_inset
+
+ into three events:
+\begin_inset Formula 
+\begin{alignat*}{1}
+\A_{1} & =\left\{ G\in\Om:C\nsubseteq G\right\} ,\\
+\A_{2} & =\left\{ G\in\Om:C\subseteq G,\, C\mbox{ does not share an edge with another \ensuremath{\ell}-cycle in }G\right\} ,\\
+\A_{3} & =\left\{ G\in\Om:C\subseteq G,\, C\mbox{ shares an edge with another \ensuremath{\ell}-cycle in }G\right\} .
+\end{alignat*}
+
+\end_inset
+
+If 
+\begin_inset Formula $G\in\A_{1}$
+\end_inset
+
+ then 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $C\nsubseteq G$
+\end_inset
+
+, and
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ no switching can destroy 
+\begin_inset Formula $C$
+\end_inset
+
+, so 
+\begin_inset Formula $F_{C}\left(G\right)=0$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $G\in\A_{3}$
+\end_inset
+
+, then a switching that destroys 
+\begin_inset Formula $C$
+\end_inset
+
+ also destroys some other 
+\begin_inset Formula $\ell$
+\end_inset
+
+-cycle, which is not allowed in the definition of 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula $F_{C}\left(G\right)=0$
+\end_inset
+
+.
+ Also, note that a switching that deletes 
+\begin_inset Formula $C$
+\end_inset
+
+ is determined by the 
+\begin_inset Formula $\ell$
+\end_inset
+
+ oriented edges 
+\begin_inset Formula $e_{\i}$
+\end_inset
+
+ in the definition of 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+.
+ There are at most 
+\begin_inset Formula $\falling n{\ell}d^{\ell}$
+\end_inset
+
+ ways to choose these edges (choose the 
+\begin_inset Formula $\ell$
+\end_inset
+
+ vertices 
+\begin_inset Formula $u_{\i}$
+\end_inset
+
+ then choose a neighbor 
+\begin_inset Formula $w_{\i}$
+\end_inset
+
+ for each), so 
+\begin_inset Formula $F_{C}\le\falling n{\ell}d^{\ell}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+It follows that
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E\left|\one_{C\subseteq G_{1}}-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right| & =\E\left[\one_{A_{1}}\left|0-0\right|+\one_{\A_{2}}\left|1-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|+\one_{\A_{1}}\left(1-0\right)\right]\\
+ & =\E\left[\one_{\A_{2}}\left(1-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right)\right]+\Pr\left(\A_{3}\right)\\
+\end{alignat*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that a switching that deletes 
+\begin_inset Formula $C$
+\end_inset
+
+ is determined by the 
+\begin_inset Formula $\ell$
+\end_inset
+
+ oriented edges 
+\begin_inset Formula $e_{\i}$
+\end_inset
+
+ in the definition of 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+.
+ There are at most 
+\begin_inset Formula $\falling n{\ell}d^{\ell}$
+\end_inset
+
+ ways to choose these edges (choose the 
+\begin_inset Formula $\ell$
+\end_inset
+
+ vertices 
+\begin_inset Formula $u_{\i}$
+\end_inset
+
+ then choose a neighbor 
+\begin_inset Formula $w_{\i}$
+\end_inset
+
+ for each), so 
+\begin_inset Formula $F_{C}\le\falling n{\ell}d^{\ell}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+, so 
+\begin_inset Formula $F_{C}\left(G\right)\le\falling n{\ell}d^{\ell}$
+\end_inset
+
+ and
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of 
+\backslash
+ref{lem:backward-switching-bound}]
+\end_layout
+
+\end_inset
+
+asfd
+\end_layout
+
+\begin_layout Section
+Size-Bias Coupling
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
 \end_layout
 
 \end_inset
@@ -8253,7 +10353,7 @@ status open
 
 
 \backslash
-end{note}
+end{comment}
 \end_layout
 
 \end_inset
