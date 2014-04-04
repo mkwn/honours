@@ -46,6 +46,9 @@
 % clickable links
 %\usepackage[bookmarks,hidelinks]{hyperref} 
 
+%if I don't do this I get an error on URLs
+\usepackage{url}
+
 % list hackery
 \usepackage{enumitem}
 \setlist[enumerate]{label=\textup{(\roman*)},topsep=-5pt}
@@ -186,6 +189,12 @@ c
 \global\long\def\ii{j}
 
 
+\global\long\def\iii{q}
+
+
+\global\long\def\iiii{r}
+
+
 \global\long\def\NN{\mathbb{N}}
 
 
@@ -224,37 +233,6 @@ in red\end{todo}\end{comment}
 
 \tableofcontents{}
 
-\begin{note}
-
-Here's the general plan:
-\begin{itemize}
-\item Introduction: introduce with limit theorems (weak convergence) to
-motivate Stein's method
-\item probability theory review
-\item discussion of weak convergence, definition of stein metrics and proofs
-that stein metrics are ``compatible'' with weak convergence.
-
-\begin{itemize}
-\item Highlight: proof that bounded lipschitz metric metrizes the weak topology
-\end{itemize}
-\item general discussion of the idea of stein's method
-
-\begin{itemize}
-\item bare-hands proof of Berry-Esseen theorem
-\end{itemize}
-\item Exchangeable pairs
-
-\begin{itemize}
-\item fixed points in permutations example
-\end{itemize}
-\item (maybe) Size-bias coupling
-
-\begin{itemize}
-\item subgraphs of erdos-renyi random graphs
-\end{itemize}
-\end{itemize}
-\end{note}
-
 
 \section{Introduction}
 
@@ -270,8 +248,8 @@ combinatorics.
 These types of results are generally formally stated asymptotically,
 with a particular type of convergence called \emph{weak convergence},
 or \emph{convergence in distribution}. Such results are very powerful,
-but an obvious shortcoming is that they do not quantify the convergence
-any way. It may be that a sequence of random variables is ``asymptotically
+but an obvious shortcoming is that they do not ``quantify'' the
+convergence. It may be that a sequence of random variables is ``asymptotically
 normal'', but we cannot say that any particular random variable in
 that sequence is individually ``close to normal''. Even if we are
 only interested in asymptotic results, it can be problematic that
@@ -301,7 +279,11 @@ the method. We include a number of specific examples and applications.
 Unless stated otherwise, all proofs are ``original'' in that I came
 up with them, although many are quite straightforward and probably
 exist elsewhere. For the proofs that I have adapted from other sources,
-I tried to add some new explanation or details.
+I tried to add value with clearer explanation and filling in skipped
+steps, or by adapting (and simplifying) the proof for a special case.
+
+\begin{note}Should I explain in more detail what I've added to specific
+proofs? \end{note}
 
 
 \subsection{Notation and Assumed Knowledge}
@@ -398,8 +380,7 @@ probability theory (often considering only discrete spaces) will suffice.
 However, in this thesis a rigorous foundation in probability theory
 will be useful. This section will therefore assume knowledge of basic
 measure theory; see, for example, \cite{Rud66}. However, where possible,
-we will note any simplifications that arise from assuming discreteness,
-for the benefit of those less familiar with general probability theory.
+we will note any simplifications that arise from assuming discreteness.
 
 No knowledge of probability theory is assumed; the first few subsections
 will briefly review the foundations of probability. The reader may
@@ -960,10 +941,10 @@ metric. Therefore, it is sometimes useful to transfer results between
 metrics (though, this usually results in worse constants than working
 directly in the desired metric).
 
-\begin{todo}It may be worthwhile to actually characterize the Wasserstein,
+\begin{note}It may be worthwhile to further discuss the Wasserstein,
 Kolmogorov and Total Variation topologies. In particular, Wasserstein
 convergence is just weak convergence plus convergence of the first
-moment.\end{todo}
+moment.\end{note}
 \begin{defn}
 If (for all $x$), $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
 for some $f_{\X}$, then $f_{\X}$ is called the \emph{Lebesgue density}
@@ -974,7 +955,7 @@ so by linearity $\E_{\X}\h=\int_{\RR}\h\left(x\right)f_{\X}\left(x\right)\d x$
 for simple $\h$. This extends to all $\h$ by the measure-theoretic
 definition of the integral.
 \begin{prop}
-Let $\X_{1},\X_{2}$ be random variables.\begin{enumerate}
+\label{prop:transfer}Let $\X_{1},\X_{2}$ be random variables.\begin{enumerate}
 
 \item \label{prop:transfer-K/TV}$d_{\K}\left(\X_{1},\X_{2}\right)\le d_{\TV}\left(\X_{1},\X_{2}\right)$
 
@@ -1035,7 +1016,7 @@ d_{\TV}\left(\X_{1},\X_{2}\right)=\left(d_{\A_{>}}-d_{\A_{<}}\right)/2=\frac{1}{
 \end{comment}
 
 
-\section{Random Combinatorial Structures\label{sec:random-structures}}
+\subsection{Random Combinatorial Structures\label{sec:random-structures}}
 
 \global\long\def\rG#1#2{\mathcal{G}_{#1,#2}}
 
@@ -1086,30 +1067,19 @@ at random.
 
 \begin{note}
 
-This section is unfinished, I'll probably want random matrices and
-maybe the pairing model on random regular graphs
+This section is unfinished (it was probably a mistake to start it
+without knowing what I'll need, anyway).
 
 \end{note}
 
 
 \section{Stein's Method in Generality}
 
-\begin{note}There are a few quite different presentations of Stein's
-method. One thing I'm trying to do here is to unify Stein's functional
-analysis approach for exchangeable pairs \cite{Ste86} with Ross'
-general presentation\cite{Ros11}.
-
-The reason I want to look at Stein's original, more abstract presentation
-is that I think it does a better job motivating why things work. Before
-I read that, the steps taken to apply Stein's method seemed like blindly
-doing things and it turns out they work.\end{note}
-
-\begin{todo}
-
-Maybe go through a bare-hands proof of Berry Esseen throughout this
-section
-
-\end{todo}
+There are a number of different presentations of Stein's method, with
+slightly different assumptions and different (though mostly equivalent)
+defintions. I've decided to describe Stein's original approach \cite{Ste86}
+because, in particular, it does a better job motivating the method
+of exchangeable pairs in \ref{sec:exchangeable-pairs}.
 
 \global\long\def\Lo{\L 0}
 
@@ -1159,23 +1129,29 @@ is defined in terms of $\E_{\X}$ and $\Eo$.
 
 Stein's method is motivated by the idea of a characterizing operator.
 \begin{defn}
-Let $\Fo$ be a vector space and $\Xo$ be a vector space of measurable
-functions which contains the constant functions. We say a linear operator
-$\To:\Fo\to\Xo$ is a \emph{characterizing operator} for the distribution
-$\Lo$ if $\im\To=\Xo\cap\ker\Eo$. For convenience, where there is
-no ambiguity we will often implicitly restrict $\Eo$ to $\Xo$, so
-we can write $\im\To=\ker\Eo$.
+\label{def:characterizing}Let $\Fo$ be a vector space and $\Xo$
+be a vector space of measurable functions which contains the constant
+functions. We say a linear operator $\To:\Fo\to\Xo$ is a \emph{characterizing
+operator} for the distribution $\Lo$ if $\im\To=\Xo\cap\ker\Eo$.
+For convenience, where there is no ambiguity we will often implicitly
+restrict $\Eo$ to $\Xo$, so we can write $\im\To=\ker\Eo$.
 \end{defn}
 The following proposition shows why $\To$ is called a characterizing
 operator.
 \begin{prop}
 \label{prop:characterizing}If $\To:\Fo\to\Xo$ is a characterizing
 operator and $\Xo$ is a determining class then $\im\To\subseteq\ker\E_{\X}$
-implies $\L{\X}=\Lo$.\end{prop}
+implies $\X\in\Lo$.\end{prop}
 \begin{proof}
 If $\h\in\Xo$, then $\h-\Eo\h\in\ker\Eo=\im\To$ so $\E_{\X}\left[\h-\Eo\h\right]=0$.
 That is, $\E_{\X}\h=\Eo\h$ for all $\h\in\Xo$, which means $\L{\X}=\Lo$
-by the definition of a determining class.\end{proof}
+by the definition of a determining class.
+\end{proof}
+\ref{prop:characterizing} should already give some clue as to how
+Stein's method works. If $\E_{\X}\To\fo=0$ is the same as $\X\in\Lo$,
+then hopefully it is true that $\E_{\X}\To\fo\approx0$ means $\L{\X}\approx\Lo$.
+In practice it's a little unwieldy to show an operator is characterizing
+using \ref{def:characterizing}, so we'll prove an equivalent definition.
 \begin{prop}
 \label{prop:U_0-characterizing}$\To:\Fo\to\Xo$ is characterizing
 if and only if there is a linear operator $\Uo:\Xo\to\Fo$ (called
@@ -1252,118 +1228,8 @@ and we conclude that $\ker\To$ is complementable.
 \end{proof}
 \end{comment}
 
-We'll use \ref{prop:U_0-characterizing} to give two important examples
-of characterizing operators.
-\begin{thm}
-\label{thm:normal-characterizing}Let $\X_{\N}\in\N\left(0,1\right)$
-and let $\cX_{\N}=\left\{ \h\in C^{\infty}\left(\RR\right):\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(\X_{\N}\right)\right|\right]<\infty\mbox{ for all }k\in\NN\right\} $.
-Let $\cF_{\N}$ be the set of continuously differentiable $\fo$ with
-$\fo'\in\cX_{\N}$.
-
-The operator $\T_{\N}:\cF_{\N}\to\cX_{\N}$ given by $\T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$
-is a characterizing operator for $\N\left(0,1\right)$.\end{thm}
-\begin{proof}
-(Adapted from \cite[Lecture II]{Ste86}). First we prove that $\T_{\N}$
-is well-defined as an operator with codomain $\cX_{\N}$. Fix $\fo\in\cF_{\N}$.
-We have
-\[
-\E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]\le\E\left[\left|\X_{\N}\right|^{k}\left|\fo'\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)\right|\right].
-\]
-\begin{comment}Now, $\E\left|\X\right|^{a}\le\left(\E\left|\X\right|^{b}\right)^{a/b}$
-for $a\le b$ by Hölder's inequality (see \cite[Theorem 3.6 (1)]{Rud66})
-\begin{alignat*}{1}
-\E\left|\X_{\N}\right|^{k+1} & \prec\int_{0}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\\
- & \prec\int_{0}^{\infty}x^{k}\frac{\d}{\d x}e^{-x^{2}/2}\d x\\
- & \prec\left.x^{k}e^{-x^{2}/2}\right|_{0}^{\infty}-\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x\\
- & \prec\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x
-\end{alignat*}
-Proceeding inductively, we have $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}xe^{-x^{2}/2}\d x\prec\left.e^{-x^{2}/2}\right|_{0}^{\infty}<\infty$
-if $k$ is even, or $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}e^{-x^{2}/2}\d x<\infty$
-if $k$ is odd\end{comment}
-
-Now, $\E\left|\X_{\N}\right|^{k+1}<\infty$ (this is a standard result
-that is easily proved inductively, using integration by parts and
-the Gaussian integral). So,
-\begin{alignat*}{1}
-\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)\right|\right] & \prec\int_{-\infty}^{\infty}\left|x\right|^{k+1}\left|\fo\left(x\right)-\fo\left(0\right)\right|e^{-x^{2}/2}\d x\\
- & =\int_{-\infty}^{\infty}x^{k+1}\left|\fo\left(0\right)+\int_{0}^{x}\fo'\left(t\right)\d t\right|e^{-x^{2}/2}\d x\\
- & \le\E\left|\X_{\N}\right|^{k+1}\left(\fo\left(0\right)+\int_{-\infty}^{\infty}\left|\fo'\left(t\right)\right|\d t\right)<\infty.
-\end{alignat*}
-It follows that $\E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]<\infty$
-and $\T_{\N}\fo\in\cX_{\N}$.
-
-For any $\fo\in\cF_{\N}$, integration by parts gives
-\[
-\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)\d t-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0
-\]
-so $\E_{\N}\T_{\N}=0$ and \ref{eq:E_0T_0-consistency} holds. Then,
-define $\U_{\N}:\cX_{\N}\to\cF_{\N}$ by 
-\[
-\U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t=-e^{x^{2}/2}\int_{x}^{\infty}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.
-\]
-(These two definitions are the same because their difference is $e^{x^{2}/2}\left(\E_{\N}\h-\E_{\N}\h\right)=0$).
-
-A straightforward calculation involving the product rule and the fundamental
-theorem of calculus yields
-\begin{align*}
-\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h.
-\end{align*}
-(Indeed, $\U_{\N}$ could have been obtained by solving this differential
-equation). So, \ref{eq:U_0-characterizing} holds. To apply \ref{prop:U_0-characterizing},
-it remains to prove that $\U_{\N}$ is indeed well-defined as an operator
-with codomain $\cF_{\N}$. For $\h\in\cX_{\N}$,
-\[
-\E\left[\left|\X_{\N}\right|^{k}\left|\left(\U_{\N}\h\right)'\left(\X_{\N}\right)\right|\right]\le\E\left[\left|\X_{\N}\right|^{k+1}\left|\U_{\N}\h\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(x\right)\right|\right]+\E\left|\X_{\N}\right|^{k}\E_{\N}\h.
-\]
-By Fubini's theorem (see \cite[Theorem 8.8]{Rud66}),
-\begin{alignat*}{1}
-\E\left[\left|\X_{\N}\right|^{k+1}\left|\U_{\N}\h\left(\X_{\N}\right)\right|\right] & \prec\int_{0}^{\infty}x^{k+1}\int_{x}^{\infty}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
- & \qquad-\int_{-\infty}^{0}x^{k+1}\int_{\infty}^{x}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
- & =\int_{0}^{\infty}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\int_{0}^{t}x^{k+1}\d x\d t\\
- & \qquad-\int_{-\infty}^{0}x^{k+1}\int_{t}^{0}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
- & \prec\int_{-\infty}^{\infty}\left|t\right|^{k+2}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d x\d t<\infty,
-\end{alignat*}
-so $\U_{\N}\h\in\cF_{\N}$.
-\end{proof}
-
-\begin{thm}
-\label{thm:poisson-characterizing}Let $\X_{\Po\left(\lambda\right)}\in\Po\left(\lambda\right)$
-and let $\cX_{\N}=\cF_{\N}=\left\{ \h:\NN\to\RR:\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]<\infty\mbox{ for all }k\in\NN\right\} $.
-
-The operator $\T_{\Po\left(\lambda\right)}:\cF_{\N}\to\cX_{\N}$ defined
-by $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$
-is a characterizing operator for $\Po\left(\lambda\right)$.
-\end{thm}
-\begin{todo}This proof is unfinished; I need to prove that $\T_{\Po\left(\lambda\right)}$
-and $\U_{\Po\left(\lambda\right)}$ have appropriate codomain. See
-\cite{Ste92}, page 18.\end{todo}
-\begin{proof}
-For any $f\in\cF_{\Po\left(\lambda\right)}$, we have
-\[
-\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}\fo=e^{-\lambda}\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}\fo\left(\i+1\right)-e^{-\lambda}\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}\fo\left(\i\right)=0
-\]
-so $\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}=0$ and
-\ref{eq:E_0T_0-consistency} holds. Then, define $\U_{\Po\left(\lambda\right)}$
-by 
-\[
-\U_{\Po\left(\lambda\right)}\h\left(k\right)=\frac{\left(k-1\right)!}{\lambda^{k}}\sum_{\i=0}^{k-1}\frac{\lambda^{\i}}{\i!}\left(\h\left(\i\right)-\E_{\Po\left(\lambda\right)}\h\right)
-\]
-for $k\ge1$. Substituting and simplifying gives
-\[
-\T_{\Po\left(\lambda\right)}\U_{\Po\left(\lambda\right)}\h\left(k\right)=\h\left(k\right)-\E_{\Po\left(\lambda\right)}\h,
-\]
-so \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
-completes the proof.
-\end{proof}
-Note that $\cH_{\TV}\subseteq\cX_{\N}$, where $\cH_{\TV}$ is as
-defined in \ref{def:special-metrics}. Since $\cH_{\TV}$ is a determining
-class, $\T_{\N}$ is a characterizing operator in the sense of \ref{prop:characterizing}.
-We can say the same about $\T_{\Po\left(\lambda\right)}$ if we restrict
-our attention to integer-valued random variables.
-
-The utility of the introduction of a characterizing operator is that
-for each $\h\in\Xo$, Equation \ref{eq:U_0-characterizing} allows
-us to to make the transformation
+Now, note that for each $\h\in\Xo$, Equation \ref{eq:U_0-characterizing}
+allows us to to make the transformation
 \begin{equation}
 \E_{\X}\h=\Eo\h+\E_{\X}\To\Uo\h.\label{eq:stein-transformation}
 \end{equation}
@@ -1377,96 +1243,347 @@ small.
 For our purposes, the main use of \ref{eq:stein-transformation} is
 to bound $d_{\cH}\left(\X,\Lo\right)$ for some $\cH\subseteq\Xo$.
 For any $\cY\supseteq\Uo\cH$, we have 
-\[
-d_{\cH}\left(\X,\Lo\right)=\sup_{\h\in\cH}\left|\E_{\X}\To\Uo\h\right|\le\sup_{\fo\in\cY}\left|\E_{\X}\To\fo\right|.
-\]
+\begin{equation}
+d_{\cH}\left(\X,\Lo\right)=\sup_{\h\in\cH}\left|\E_{\X}\To\Uo\h\right|\le\sup_{\fo\in\cY}\left|\E_{\X}\To\fo\right|.\label{eq:stein-distance-transform}
+\end{equation}
 We have reduced the problem of bounding $d_{\cH}\left(\X,\Lo\right)$
 to that of bounding $\left|\E_{\X}\To\fo\right|$ (uniformly over
 $\fo\in\cY$). Especially in the cases where $\Lo$ is normal or Poisson
 and $\cH$ is one of the standard choices in \ref{def:special-metrics},
 there are a number of known convenient choices of $\cY$, and a number
 of methods that are known to be effective to bound $\left|\E_{\X}\To\fo\right|$.
-\begin{example}
-\label{example:poisson-bound}If $\cH=\cH_{\TV}$ and $\Lo=\Po\left(\lambda\right)$,
-using the characterizing operator in \ref{thm:poisson-characterizing},
-then we can choose 
+
+
+\section{The Normal Case}
+
+We'll use \ref{prop:U_0-characterizing} to give our first example
+of a characterizing operator.
+\begin{thm}
+\label{thm:normal-characterizing}Let $\X_{\N}\in\N\left(0,1\right)$
+and let 
 \[
-\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1/2}\right\} ,\,\left\Vert \Delta\fo\right\Vert _{\infty}\le\min\left\{ 1,\lambda^{-1}\right\} \right\} ,
+\cX_{\N}=\left\{ \h\mbox{ absolutely continuous}:\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(\X_{\N}\right)\right|\right]<\infty\mbox{ for all }k\ge0\right\} .
 \]
-where $\Delta\fo\left(k\right)=\fo\left(k+1\right)-\fo\left(k\right)$.
-\end{example}
-\begin{todo}
+Let $\cF_{\N}$ be the set of absolutely continuous $\fo$ with $\fo'\in\cX_{\N}$.
+(For a definition and characterization of absolute continuity, see
+\cite[Definition 7.17 and Theorem 7.18]{Rud66}).
 
-Maybe I can bound $\left\Vert \U_{\Po\left(\lambda\right)}\right\Vert $
-instead?
-
-\end{todo}
-
-Proving that this choice of $\cY$ satisfies $\cY\supseteq\U_{\Po\left(\lambda\right)}\cH$
-is nontrivial. But, we can prove that the constraints are of the ``correct''
-order of magnitude.
-
-\begin{todo}\label{todo:poisson-norm-bound}
-
-The proof is in \cite[Remark 10.2.4]{BHJ92}. There's also a simpler
-proof in \cite[Lemma 1.1.1]{BHJ92} that $\left\Vert \fo\right\Vert _{\infty}\le2\min\left\{ 1,\lambda^{-1/2}\right\} $
-suffices. I'll revisit this later.
-
-\end{todo}
+The operator $\T_{\N}:\cF_{\N}\to\cX_{\N}$ given by $\T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$
+is a characterizing operator for $\N\left(0,1\right)$.\end{thm}
 \begin{proof}
-[Proof that this $\cY$ satisfies $\cY\supseteq\U_{\Po\left(\lambda\right)}\cH$](Adapted
-from \cite[Lemma 1.1.1]{BHJ92}). For any Borel $\A$ and any $k\in\NN$,
-\begin{align*}
-\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right) & =\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\left(\Po_{\lambda}\left(\A\cap\range{k-1}\right)-\Po_{\lambda}\left(\A\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
- & =\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\int}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\left(\vphantom{\sum}1-\Po_{\lambda}\left(\range{k-1}\right)\right)\right.\\
- & \qquad\qquad\qquad\quad-\left.\vphantom{\int}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\right)-\Po_{\lambda}\left(\A\cap\range{k-1}\right)\right)\Po_{\lambda}\left(\range{k-1}\right)\right)\\
- & =\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)-\Po_{\lambda}\left(\A\backslash\range{k-1}\right)\Po_{\lambda}\left(\range{k-1}\right)\right).
-\end{align*}
-Note that $\Po_{\lambda}\left(\A\cap\range{k-1}\right)$ is bounded
-above by $\Po_{\lambda}\left(\range{k-1}\right)$ and $\Po_{\lambda}\left(\A\backslash\range{k-1}\right)$
-is bounded above by $\Po_{\lambda}\left(\RR\backslash\range{k-1}\right)$,
-so
+(Adapted from \cite[Lecture II]{Ste86}). 
+
+First, for each $k\ge0$ we have $e^{x^{2}/4}>x^{k}$ for sufficiently
+large $x$, so 
 \[
-\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\right|\le\frac{e^{\lambda}\,\left(k-1\right)!}{\lambda^{k}}\Po_{\lambda}\left(\range{k-1}\right)\Po_{\lambda}\left(\RR\backslash\range{k-1}\right).
+\int_{C}^{\infty}x^{k}e^{-x^{2}/2}\d x<\int_{C}^{\infty}e^{-x^{2}/4}\d x<\infty
 \]
-Note that we have equality when $\A=\range{k-1}$. If $k\asymp\lambda$
-as $\lambda\to\infty$ then Stirling's approximation (unfinished...)\end{proof}
-\begin{example}
+for some large $C$. It follows that $\E\left|\X_{\N}\right|^{k+1}<\infty$,
+and $\cX_{\N}$ contains the constant functions.
+
+Now, we prove that $\T_{\N}$ is well-defined as an operator with
+codomain $\cX_{\N}$. Fix $\fo\in\cF_{\N}$ and $k\ge0$. We have
+\[
+\E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]\le\E\left[\left|\X_{\N}\right|^{k}\left|\fo'\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)-\fo\left(0\right)\right|\right]+\left|\fo\left(0\right)\right|\E\left[\left|\X_{\N}\right|^{k+1}\right].
+\]
+\begin{comment}Now, $\E\left|\X\right|^{a}\le\left(\E\left|\X\right|^{b}\right)^{a/b}$
+for $a\le b$ by Hölder's inequality (see \cite[Theorem 3.6 (1)]{Rud66})
+\begin{alignat*}{1}
+\E\left|\X_{\N}\right|^{k+1} & \prec\int_{0}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\\
+ & \prec\int_{0}^{\infty}x^{k}\frac{\d}{\d x}e^{-x^{2}/2}\d x\\
+ & \prec\left.x^{k}e^{-x^{2}/2}\right|_{0}^{\infty}-\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x\\
+ & \prec\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x
+\end{alignat*}
+Proceeding inductively, we have $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}xe^{-x^{2}/2}\d x\prec\left.e^{-x^{2}/2}\right|_{0}^{\infty}<\infty$
+if $k$ is even, or $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}e^{-x^{2}/2}\d x<\infty$
+if $k$ is odd
+
+Note that the function $x\mapsto x^{k+3}e^{-x^{2}/2}$ is decreasing
+for sufficiently large $x$ (say for $x\ge C_{2}$), so 
+\begin{alignat*}{1}
+\int_{t}^{\infty}x^{k+1}e^{-x^{2}/2}\d x & \le t^{k+3}e^{-t^{2}/2}\int_{C_{2}}^{\infty}\frac{1}{x^{2}}\d x
+\end{alignat*}
+for $t\ge C_{2}$, and
+\[
+\int_{t}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\le\E\left|\X_{\N}\right|^{k+1}e^{C_{2}^{2}/2}e^{-t^{2}/2}
+\]
+for $0\le t<C_{2}$. That is, there is $C_{3}$ with 
+\[
+\int_{t}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\le C_{3}\left(1+t^{k+3}\right)
+\]
+for $t\ge0$.
+
+\end{comment}
+
+\begin{note}
+
+Stein had $\int_{t}^{\infty}x^{k}e^{-x^{2}/2}\d x\le C_{3}\left(1+t^{k}\right)$,
+but I couldn't immediately see how to prove that, and this works too.
+
+\end{note}
+
+Note that 
+\begin{eqnarray*}
+\int_{t}^{\infty}x^{k+1}e^{-x^{2}/2} & \le & e^{-t^{2}/2}\int_{0}^{\infty}\left(y+t\right)^{k+1}e^{-y^{2}/2}\\
+ & \prec & e^{-t^{2}/2}\left(1+t+\dots t^{k+1}\right)\\
+ & \prec & e^{-t^{2}/2}\left(1+t^{k+1}\right),
+\end{eqnarray*}
+with the substitution $y=x-t$. With Fubini's theorem (see \cite[Theorem 8.8]{Rud66}),
+\begin{alignat*}{1}
+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)\right|\right] & \prec\int_{0}^{\infty}x^{k+1}\left|\int_{0}^{x}\fo'\left(t\right)\d t\right|e^{-x^{2}/2}\d x\\
+ & \qquad-\int_{-\infty}^{0}x^{k+1}\left|\int_{0}^{x}\fo'\left(t\right)\d t\right|e^{-x^{2}/2}\d x\\
+ & \le\int_{0}^{\infty}\int_{t}^{\infty}x^{k+1}\left|\fo'\left(t\right)\right|e^{-x^{2}/2}\d x\d t\\
+ & \qquad-\int_{-\infty}^{0}\int_{-\infty}^{t}x^{k+1}\left|\fo'\left(t\right)\right|e^{-x^{2}/2}\d x\d t\\
+ & \prec\int_{0}^{\infty}e^{-t^{2}/2}\left(1+t^{k+1}\right)\left|\fo'\left(t\right)\right|\d t\\
+ & \qquad-\int_{-\infty}^{0}e^{-t^{2}/2}\left(1+t^{k+1}\right)\left|\fo'\left(t\right)\right|\d t.\\
+ & \prec\E\left[\left|\X_{\N}\right|^{0}\left|\fo'\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo'\left(\X_{\N}\right)\right|\right]\\
+ & <\infty.
+\end{alignat*}
+It follows that $\E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]<\infty$
+and $\T_{\N}\fo\in\cX_{\N}$.
+
+\begin{note}
+
+I'm using $f\prec g$ to mean $\left|f\right|\le c\left|g\right|$
+for some $c$, because I don't want to keep track of a lot of constants
+when I'm only proving something is finite. Is there some existing
+common notation for this?
+
+\end{note}
+
+Now, for any $\fo\in\cF_{\N}$, integration by parts gives
+\begin{equation}
+\E_{\N}\T_{\N}\fo=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-t^{2}/2}\fo'\left(t\right)\d t-\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}te^{-t^{2}/2}\fo\left(t\right)\d t=0\label{eq:normal-stein-identity}
+\end{equation}
+so $\E_{\N}\T_{\N}=0$ and \ref{eq:E_0T_0-consistency} holds.
+
+Now, consider the differential equation
+\begin{equation}
+\T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)=\h\left(x\right)-\E_{\N}\h\label{eq:diff-eqn}
+\end{equation}
+for $\fo$. We solve this equation with the method of integrating
+factors:
+\begin{alignat*}{1}
+e^{-x^{2}/2}\fo'\left(x\right)-xe^{-x^{2}/2}\fo\left(x\right) & =e^{-x^{2}/2}\left(\h\left(x\right)-\E_{\N}\h\right)\\
+\frac{\d}{\d x}e^{-x^{2}/2}\fo\left(x\right) & =e^{-x^{2}/2}\left(\h\left(x\right)-\E_{\N}\h\right)
+\end{alignat*}
+The general solution is 
+\begin{equation}
+\fo\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t+ce^{x^{2}/2}.\label{eq:diff-eqn-soln}
+\end{equation}
+
+
+We can therefore define $\U_{\N}:\cX_{\N}\to\cF_{\N}$ by 
+\begin{equation}
+\U_{\N}\h\left(x\right)=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t=-e^{x^{2}/2}\int_{x}^{\infty}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t.\label{eq:U_N}
+\end{equation}
+(These two definitions are the same because their difference is $e^{x^{2}/2}\left(\E_{\N}\h-\E_{\N}\h\right)=0$).
+By construction,
+\begin{align*}
+\T_{\N}\U_{\N}\h\left(x\right) & =\h\left(x\right)-\E_{\N}\h.
+\end{align*}
+So, \ref{eq:U_0-characterizing} holds. To apply \ref{prop:U_0-characterizing},
+it remains to prove that $\U_{\N}$ is indeed well-defined as an operator
+with codomain $\cF_{\N}$. For $\h\in\cX_{\N}$,
+\[
+\E\left[\left|\X_{\N}\right|^{k}\left|\left(\U_{\N}\h\right)'\left(\X_{\N}\right)\right|\right]\le\E\left[\left|\X_{\N}\right|^{k+1}\left|\U_{\N}\h\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(x\right)\right|\right]+\E\left|\X_{\N}\right|^{k}\E_{\N}\h.
+\]
+Fubini's theorem gives
+\begin{alignat*}{1}
+\E\left[\left|\X_{\N}\right|^{k+1}\left|\U_{\N}\h\left(\X_{\N}\right)\right|\right] & \prec\int_{0}^{\infty}x^{k+1}\int_{x}^{\infty}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
+ & \qquad-\int_{-\infty}^{0}x^{k+1}\int_{\infty}^{x}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\d x\\
+ & =\int_{0}^{\infty}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\int_{0}^{t}x^{k+1}\d x\d t\\
+ & \qquad-\int_{-\infty}^{0}x^{k+1}\int_{t}^{0}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d x\d t\\
+ & \prec\int_{-\infty}^{\infty}\left|t\right|^{k+2}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d x\d t<\infty,
+\end{alignat*}
+so $\U_{\N}\h\in\cX_{\N}$. Finally, 
+\[
+\E\left[\left|\X_{\N}\right|^{k}\left|\left(\U_{\N}\h\right)'\left(\X_{\N}\right)\right|\right]\le\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(\X_{\N}\right)\right|\right]+\E\left|\X_{\N}\right|^{k+1}\E_{\N}\h+\E\left[\left|\X_{\N}\right|^{k+1}\left|\X_{\N}\U_{\N}\h\left(\X_{\N}\right)\right|\right]
+\]
+since $\U_{\N}\h$ satisfies \ref{eq:diff-eqn}, so $\U_{\N}\h\in\cF_{\N}$.\end{proof}
+\begin{rem}
+Note that $\cH_{\W}\subseteq\cX_{\N}$, where $\cH_{\W}$ is as defined
+in \ref{def:special-metrics}. Since $\cH_{\W}$ is a determining
+class, $\T_{\N}$ is a characterizing operator in the sense of \ref{prop:characterizing}.
+\end{rem}
+Useful application of Stein's method depends on a good understanding
+of the functions in $\U_{\N}\cH$ (this will give us a set of functions
+$\cY$ to maximize over, as in \ref{eq:stein-distance-transform}).
+In the case of the Wasserstein and bounded Lipschitz metric, we can
+show that the first three derivatives are all bounded. This makes
+these metrics good choices for normal approximation.
+\begin{thm}
 \label{example:wasserstein-bound}If $\cH=\cH_{\W}$ or $\cH=\cH_{\BL}$
 and $\Lo=\N\left(0,1\right)$, using the characterizing operator in
-\ref{thm:poisson-characterizing}, then we can choose 
+\ref{thm:poisson-characterizing}, then 
 \[
-\cY=\left\{ \fo\in\Fo:\left\Vert \fo\right\Vert _{\infty}\le2,\,\left\Vert \fo'\right\Vert _{\infty}\le\sqrt{2/\pi},\,\left\Vert \fo''\right\Vert _{\infty}\le4\right\} .
+\left\Vert \U_{\N}\h\right\Vert _{\infty}\le2,\quad\left\Vert \left(\U_{\N}\h\right)'\right\Vert _{\infty}\le3\sqrt{\pi/2},\quad\left\Vert \left(\U_{\N}\h\right)''\right\Vert _{\infty}\le6.
 \]
-\end{example}
+\end{thm}
 \begin{proof}
-[Proof that this $\cY$ satisfies $\cY\supseteq\U_{\N}\cH$]to do
+(Adapted from \cite[Section 3.1]{Ste12}).
+
+First, note that Lipschitz functions are trivially absolutely continuous,
+and 
+\[
+\E\left[\left|\X_{\N}\right|^{k}\left|\h\left(\X_{\N}\right)\right|\right]<\left|\h\left(0\right)\right|\E\left|\X_{\N}\right|^{k}+\E\left|\X_{\N}\right|^{k+1}
+\]
+for $\h\in\cH$. So, $\cH\subseteq\cX_{\N}$ and it makes sense to
+consider $\U_{\N}\cH$.
+
+Since $\U_{\N}\h=\U_{\N}\left(\h-\h\left(0\right)\right)$ for all
+$\h\in\cH_{\N}$, it suffices to consider $\h\in\cH$ with $\h\left(0\right)=0$.
+So, fix such a $\h\in\cH$. We have $\h\left(x\right)\le\left|x\right|$
+for all $x\in\RR$, and it follows that $\left|\E_{\N}\h\right|\le\E\left|\X_{\N}\right|=\frac{2}{\sqrt{2\pi}}\int_{0}^{\infty}xe^{-x^{2}/2}\d x=\sqrt{2/\pi}$.
+Then, for $x\ge0$,
+
+\begin{alignat*}{1}
+\left|\U_{\N}\h\left(x\right)\right| & \le e^{x^{2}/2}\int_{x}^{\infty}\left|\h\left(t\right)-\E_{\N}\h\right|e^{-t^{2}/2}\d t\\
+ & \le e^{x^{2}/2}\int_{x}^{\infty}\left(t+\sqrt{\frac{2}{\pi}}\right)e^{-t^{2}/2}\d t\\
+ & \le e^{x^{2}/2}\int_{x}^{\infty}te^{-t^{2}/2}\d t+\sqrt{\frac{2}{\pi}}\int_{0}^{\infty}e^{-s^{2}/2}\d s\\
+ & =2.
+\end{alignat*}
+(We have used the substitution $s=t-x$, and the Gaussian integral).
+With the alternative form for $\U_{\N}$ in \ref{eq:U_N}, an identical
+argument gives $\left|\U_{\N}\h\left(x\right)\right|\le2$ for $x\le2$,
+so $\left\Vert \U_{\N}\h\right\Vert _{\infty}\le2$.
+
+\begin{comment}Now, define the differentiable function $\fo_{h}$
+by 
+\[
+\fo_{\h}\left(x\right)=-\int_{0}^{1}\frac{1}{2\sqrt{t\left(1-t\right)}}\E\left[\X_{\N}\h\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t.
+\]
+We have 
+\[
+\fo_{\h}'\left(x\right)=-\int_{0}^{1}\frac{1}{2\sqrt{1-t}}\E\left[\X_{\N}\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t.
+\]
+Now, integration by parts as in \ref{eq:normal-stein-identity} gives
+\[
+\E\left[\X_{\N}\h\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]=\E\left[\sqrt{1-t}\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right].
+\]
+Using Fubini's theorem (see \cite[Theorem 8.8]{Rud66}), 
+\begin{alignat*}{1}
+\fo_{\h}'\left(x\right)-x\fo_{\h}\left(x\right) & =\int_{0}^{1}\E\left[\left(-\frac{\X_{\N}}{2\sqrt{1-t}}+\frac{x}{2\sqrt{t}}\right)\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t\\
+ & =\int_{0}^{1}\E\left[\frac{\d}{\d t}\h\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t\\
+ & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-y^{2}/2}\int_{0}^{1}\frac{\d}{\d t}\h\left(\sqrt{t}x+\sqrt{1-t}y\right)\d t\d y\\
+ & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-y^{2}/2}\left(\h\left(x\right)-\h\left(y\right)\right)\d t\d y\\
+ & =\h\left(x\right)-\E\h.
+\end{alignat*}
+So, $\fo_{\h}$ satisfies \ref{eq:diff-eqn} and we must have 
+\[
+\fo_{\h}=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t+ce^{x^{2}/2}
+\]
+for some $c$, by the general form \ref{eq:diff-eqn-soln} of the
+solution to \ref{eq:diff-eqn}. By the Lipschitz condition on $\h$,
+\[
+\left|\fo_{\h}\left(x\right)\right|=\left|\int_{0}^{1}\frac{1}{2\sqrt{t}}\E\left[\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t\right|\le\int_{0}^{1}\frac{1}{2\sqrt{t}}\d t,
+\]
+so $e^{-x^{2}/2}\fo_{\h}\left(x\right)$ as $x\to-\infty$. That is,
+$c=0$ and 
+\[
+\left\Vert \left(\U_{\N}\h\right)'\right\Vert _{\infty}=\left\Vert \fo_{\h}'\right\Vert _{\infty}\le\E\left|\X_{\N}\right|\int_{0}^{1}\frac{1}{2\sqrt{1-t}}\d t\le\sqrt{\frac{2}{\pi}}.
+\]
+
+
+\begin{note}The preceding argument is very unmotivated. If I have
+time I'll try to frame it differently, as a different way of solving
+the differential equation \ref{eq:diff-eqn}. There's also a different
+(longer) argument in the proof of \cite[Lemma 2.4]{Ste12}.\end{note}
+
+\end{comment}
+
+Now, note
+\[
+\left(\T_{\N}\U_{\N}\h\right)'\left(x\right)=\left(\U_{\N}\h\right)''\left(x\right)-x\left(\U_{\N}\h\right)'\left(x\right)-\U_{\N}\h\left(x\right)=\h'\left(x\right).
+\]
+Set $g=\h'+\U_{\N}\h\in\cX_{\N}$ (note $\left\Vert g\right\Vert _{\infty}\le\left\Vert \h'\right\Vert _{\infty}+\left\Vert \U_{\N}\h\right\Vert _{\infty}\le3$),
+so that 
+\[
+\E_{\N}g=\E\left[\left(\U_{\N}\h\right)''\left(\X_{\N}\right)-\X_{\N}\left(\U_{\N}\h\right)'\left(\X_{\N}\right)\right]=0
+\]
+as in \ref{eq:normal-stein-identity}. So,
+\[
+\T_{\N}\left(\left(\U_{\N}\h\right)'\right)=g+\E_{\N}g,
+\]
+and $\left(\U_{\N}\h\right)'$ satisfies \ref{eq:diff-eqn} (with
+$g$ taking the role of $\h$). By the general form \ref{eq:diff-eqn-soln}
+of the solution to \ref{eq:diff-eqn}, we must have 
+\[
+\left(\U_{\N}\h\right)'=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t+ce^{x^{2}/2}
+\]
+for some $c$, by the general form \ref{eq:diff-eqn-soln} of the
+solution to \ref{eq:diff-eqn}. Since $\left(\U_{\N}\h\right)'\in\cX_{\N}$,
+we must have $e^{-x^{2}/2}\left(\U_{\N}\h\right)'\left(x\right)\to0$.
+That is, $c=0$. For $x\ge0$, we have
+
+\[
+\left|\left(\U_{\N}\h\right)'\left(x\right)\right|\le e^{x^{2}/2}\int_{x}^{\infty}\left|g\left(t\right)\right|e^{-t^{2}/2}\d t\le3\int_{0}^{\infty}e^{-s^{2}/2}\d s\le3\sqrt{\frac{\pi}{2}}.
+\]
+(As before, $s=t-x$). A similar calculation shows that $\left|\left(\U_{\N}\h\right)'\left(x\right)\right|\le3\sqrt{\frac{\pi}{2}}$
+for $x<0$, so 
+\[
+\left\Vert \left(\U_{\N}\h\right)'\right\Vert _{\infty}\le3\sqrt{\frac{\pi}{2}}.
+\]
+Also, for $x\ge0$,
+\begin{alignat*}{1}
+\left|\left(\U_{\N}g\right)'\left(x\right)\right| & =\left|g\left(x\right)+x\U_{\N}g\left(x\right)\right|\\
+ & \le3+3xe^{x^{2}/2}\int_{x}^{\infty}e^{-t^{2}/2}\\
+ & \le3+3xe^{x^{2}/2}\int_{x}^{\infty}\frac{t}{x}e^{-t^{2}/2}\\
+ & =6.
+\end{alignat*}
+Similarly, $\left|\left(\U_{\N}g\right)'\left(x\right)\right|\le6$
+for $x<0$, so 
+\[
+\left\Vert \left(\U_{\N}\h\right)''\right\Vert _{\infty}=\left\Vert \left(\U_{\N}g\right)'\right\Vert _{\infty}\le6.
+\]
 \end{proof}
+\begin{rem}
+\label{rem:better-wasserstein-bounds}In the interests of a simple
+proof, the bounds in \ref{example:wasserstein-bound} are very crude.
+The stronger bounds $\left\Vert \fo'\right\Vert _{\infty}\le\sqrt{\frac{2}{\pi}}$
+and $\left\Vert \fo''\right\Vert _{\infty}\le2$ can be shown to hold,
+with similarly elementary but much more fiddly proofs. See \cite[Lemma 2.4]{CGS10}.
+\end{rem}
 
 \subsection{The Berry-Esseen Theorem}
 
-Before we proceed further, we give a proof of a quantitative central
-limit theorem using Stein's method bare-handed.
+The Berry-Esseen theorem is a quantitative version of the central
+limit theorem. The original version was independently proved in \cite{Ber41}
+and \cite{Ess42} with some relatively involved Fourier analysis.
+However, the machinery of Stein's method allows for a very simple
+proof.
 
-\begin{todo}
-
-give some background; the theorem was apparently originally proved
-before Stein but the proof was complicated.
-
-\end{todo}
+The purpose of this section is to make the theory a bit more concrete
+by giving our first example of Stein's method in action. Of course,
+the result is also of practical interest in statistics.
 \begin{thm}
-[Berry-Esseen]Let $Q_{1},\dots,Q_{n}$ be independent random variables
-with common distribution $Q$, such that $\E Q=0$, $\E Q^{2}=1$
-and $\E\left|Q\right|^{3}<\infty$. Let 
+\label{thm:berry-esseen}Let $Q_{1},\dots,Q_{n}\in\L Q$ be independent,
+with $\E Q=0$, $\E Q^{2}=1$ and $\E\left|Q\right|^{3}<\infty$.
+Let 
 \[
 \X=\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{i}.
 \]
 Then 
 \[
-d_{\W}\left(n^{-1/2}\X,\N\left(0,1\right)\right)\le\frac{3}{\sqrt{n}}\E\left(\left|Q\right|^{3}\right).
+d_{\W}\left(\X,\N\left(0,1\right)\right)\le\frac{C}{\sqrt{n}}\E\left(\left|Q\right|^{3}\right)
 \]
-\end{thm}
+for some constant $C$.\end{thm}
+\begin{rem}
+In the following proof, we will prove the case $C=9$. The sharper
+bounds in \ref{rem:better-wasserstein-bounds} yield $C=3$ with the
+same argument.
+\end{rem}
+
+\begin{rem}
+\ref{prop:transfer} allows us to transfer the result of \ref{thm:berry-esseen}
+from the Wasserstein metric to the Kolmogorov metric. The Berry-Esseen
+theorem is usually stated for the Kolmogorov metric, because it has
+a direct interpretation as the supremum difference between probabilities.
+However in this case the transfer makes the bound much worse. It is
+possible to use Stein's method directly in the Kolmogorov metric (see
+\cite{Ste12}), but this is a little more involved.\end{rem}
 \begin{proof}
+[Proof of \ref{thm:berry-esseen}](Adapted from \cite[Section 5]{Ste12}).
 Fix $f\in\cY$.
 
 We need to compare 
@@ -1490,8 +1607,8 @@ for some $E'$, again using the Lagrange form of the remainder. Now,
 by the bound on $\left\Vert f''\right\Vert _{\infty}$ in the definition
 of $\cY$, we have 
 \begin{alignat*}{1}
-\E\left|Q_{\i}^{3}\frac{f''\left(E\right)}{2}\right| & \le\E\left|Q^{3}\right|,\\
-\E\left|Q_{\i}f''\left(E'\right)\right| & \le2\E\left|Q\right|
+\E\left|Q_{\i}^{3}\frac{f''\left(E\right)}{2}\right| & \le3\E\left|Q^{3}\right|,\\
+\E\left|Q_{\i}f''\left(E'\right)\right| & \le6\E\left|Q\right|
 \end{alignat*}
 Hölder's inequality (see \cite[Theorem 3.6 (1)]{Rud66}) for the $L^{3/2}$
 norm gives 
@@ -1507,12 +1624,212 @@ We conclude
 \begin{alignat*}{1}
 \left|\E\left[\X f\left(\X\right)\right]-\E f'\left(\X\right)\right| & \le\left|\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}f\left(\X\right)\right]-\frac{1}{\sqrt{n}}\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]\right)\right|\\
  & \qquad+\left|\frac{1}{n}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]-\E f'\left(\X\right)\right)\right|\\
- & \le\frac{1}{\sqrt{n}}\E\left|Q^{3}\right|+\frac{2}{\sqrt{n}}\E\left|Q^{3}\right|
+ & \le\frac{3}{\sqrt{n}}\E\left|Q^{3}\right|+\frac{6}{\sqrt{n}}\E\left|Q^{3}\right|\\
+ & =\frac{9}{\sqrt{n}}\E\left|Q^{3}\right|
 \end{alignat*}
 
 \end{proof}
 
-\section{The method of exchangeable pairs}
+\section{The Poisson Case}
+\begin{thm}
+\label{thm:poisson-characterizing}Let $\X_{\Po\left(\lambda\right)}\in\Po\left(\lambda\right)$
+and let 
+\[
+\cX_{\Po\left(\lambda\right)}=\cF_{\Po\left(\lambda\right)}=\left\{ \h:\NN\to\RR:\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]<\infty\mbox{ for all }k\in\NN\right\} .
+\]
+The operator $\T_{\Po\left(\lambda\right)}:\cF_{\Po\left(\lambda\right)}\to\cX_{\Po\left(\lambda\right)}$
+defined by $\T_{\Po\left(\lambda\right)}\fo\left(k\right)=\lambda\fo\left(k+1\right)-k\fo\left(k\right)$
+is a characterizing operator for $\Po\left(\lambda\right)$.\end{thm}
+\begin{proof}
+The components of the proof are very similar to that of \ref{thm:normal-characterizing}.
+First, fix $k$ and note 
+\[
+\left.\left(\i+1\right)^{k}\frac{\lambda^{\left(\i+1\right)}}{\left(\i+1\right)!}\middle/\i^{k}\frac{\lambda^{\i}}{\i!}\right.\to0
+\]
+as $\i\to\infty$. So by the ratio test $\E\X_{\Po\left(\lambda\right)}^{k}\prec\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}<\infty$,
+and $\cX_{\N}$ contains the constant functions.
+
+Now, we check that $\T_{\N}\fo$ is well-defined as an operator with
+codomain $\cX_{\Po\left(\lambda\right)}$. For $\fo\in\cF_{\Po\left(\lambda\right)}$
+and $k\in\NN$,
+\[
+\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\T_{\Po\left(\lambda\right)}\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]\le\lambda\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right]+\E\left[\X_{\Po\left(\lambda\right)}^{k+1}\left|\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right].
+\]
+We have 
+\begin{eqnarray*}
+\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right] & \prec & \sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\left|\fo\left(\i+1\right)\right|\\
+ & \prec & \sum_{r=0}^{k+1}\sum_{\i=0}^{\infty}\left(\i+1\right)^{r}\frac{\lambda^{\i+1}}{\left(\i+1\right)!}\left|\fo\left(\i+1\right)\right|\\
+ & \prec & \sum_{r=0}^{k+1}\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]\\
+ & < & \infty.
+\end{eqnarray*}
+It follows that $\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\T_{\Po\left(\lambda\right)}\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]<\infty$
+and $\T_{\Po\left(\lambda\right)}\fo\in\cX_{\Po\left(\lambda\right)}$.
+
+For any $\fo\in\cF_{\Po\left(\lambda\right)}$, we have
+\[
+\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}\fo=e^{-\lambda}\sum_{\i=0}^{\infty}\frac{\lambda^{\i+1}}{\i!}\fo\left(\i+1\right)-e^{-\lambda}\sum_{\i=1}^{\infty}\frac{\lambda^{\i}}{\left(\i-1\right)!}\fo\left(\i\right)=0
+\]
+so $\E_{\Po\left(\lambda\right)}\T_{\Po\left(\lambda\right)}=0$ and
+\ref{eq:E_0T_0-consistency} holds. Then, define $\U_{\Po\left(\lambda\right)}:\cX_{\Po\left(\lambda\right)}\to\cF_{\Po\left(\lambda\right)}$
+by 
+\[
+\U_{\Po\left(\lambda\right)}\h\left(\i\right)=\frac{\left(\i-1\right)!}{\lambda^{\i}}\sum_{\ii=0}^{\i-1}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)
+\]
+for $\i\in\ZZ^{+}$ (and $\U_{\Po\left(\lambda\right)}\h\left(0\right)=0$).
+
+For $\h\in\cX_{\Po\left(\lambda\right)}$ and $k\in\NN$,
+\begin{alignat*}{1}
+\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\U_{\Po\left(\lambda\right)}\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right] & \prec\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=0}^{\i-1}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\\
+ & =\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=\i}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\\
+ & \le\sum_{\ii=1}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\sum_{\i=1}^{\ii}\i^{k-1}\\
+ & \prec\sum_{\ii=1}^{\infty}\ii^{k}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\\
+ & <\infty,
+\end{alignat*}
+so $\U_{\Po\left(\lambda\right)}\h\in\cF_{\Po\left(\lambda\right)}$,
+and $\U_{\Po\left(\lambda\right)}$ is well-defined with codomain
+$\cF_{\Po\left(\lambda\right)}$. Now, substituting and simplifying
+gives
+\[
+\T_{\Po\left(\lambda\right)}\U_{\Po\left(\lambda\right)}\h\left(\i\right)=\h\left(\i\right)-\E_{\Po\left(\lambda\right)}\h,
+\]
+so \ref{eq:U_0-characterizing} holds and \ref{prop:U_0-characterizing}
+completes the proof.\end{proof}
+\begin{rem}
+As for the normal case, $\T_{\Po\left(\lambda\right)}$ is a characterizing
+operator in the sense of \ref{prop:characterizing}, because $\cH_{\TV}\subseteq\cX_{\Po\left(\lambda\right)}$.
+\end{rem}
+The natural metric to use in Poisson approximation is the total variation
+metric. We can bound the functions in $\U_{\Po\left(\lambda\right)}\cH_{\Po\left(\lambda\right)}$
+as well as their first differences (define $\Delta\fo\left(\i\right)=\fo\left(\i+1\right)-\fo\left(\i\right)$).
+\begin{thm}
+\label{example:poisson-bound}If $\cH=\cH_{\TV}$ and $\Lo=\Po\left(\lambda\right)$,
+using the characterizing operator in \ref{thm:poisson-characterizing},
+then 
+\[
+\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} ,\quad\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right)
+\]
+for all $\h\in\cH$.\end{thm}
+\begin{proof}
+[Proof that this $\cY$ satisfies $\cY\supseteq\U_{\Po\left(\lambda\right)}\cH$](Adapted
+from \cite[Lemma 1.1.1]{BHJ92}). For any Borel $\A$ and any $k\in\NN$,
+\begin{align}
+\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right) & =\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\left(\Po_{\lambda}\left(\A\cap\left[0,\i-1\right]\right)-\Po_{\lambda}\left(\A\right)\Po_{\lambda}\left(\left[0,\i-1\right]\right)\right)\nonumber \\
+ & =\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\left(\vphantom{\int}\Po_{\lambda}\left(\A\cap\left[0,\i-1\right]\right)\left(\vphantom{\sum}1-\Po_{\lambda}\left(\left[0,\i-1\right]\right)\right)\right.\nonumber \\
+ & \qquad\qquad\qquad\quad-\left.\vphantom{\int}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\right)-\Po_{\lambda}\left(\A\cap\left[0,\i-1\right]\right)\right)\Po_{\lambda}\left(\left[0,\i-1\right]\right)\right)\nonumber \\
+ & =\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\left(\vphantom{\sum}\Po_{\lambda}\left(\A\cap\left[0,\i-1\right]\right)\Po_{\lambda}\left(\left[\i,\infty\right]\right)-\Po_{\lambda}\left(\A\backslash\left[0,\i-1\right]\right)\Po_{\lambda}\left(\left[0,\i-1\right]\right)\right).\label{eq:U_po-bound-in-progress}
+\end{align}
+Note that $\Po_{\lambda}\left(\A\cap\left[0,\i-1\right]\right)$ is
+bounded above by $\Po_{\lambda}\left(\left[0,\i-1\right]\right)$
+and $\Po_{\lambda}\left(\A\backslash\left[0,\i-1\right]\right)$ is
+bounded above by $\Po_{\lambda}\left(\left[\i,\infty\right]\right)$,
+so
+\[
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right|\le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[0,\i-1\right]\right)\Po_{\lambda}\left(\left[\i,\infty\right]\right).
+\]
+If $1\le\i\le\lambda$,
+
+\begin{alignat*}{1}
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[0,\i-1\right]\right)\\
+ & =\lambda^{-1}\sum_{\ii=0}^{\i-1}\frac{\left(\i-1\right)!}{\ii!\lambda^{\i-1-\ii}}\\
+ & =\lambda^{-1}\sum_{\iii=0}^{\i-1}\frac{\left(\i-1\right)!}{\left(\i-1-\iii\right)!\lambda^{\iii}}.
+\end{alignat*}
+Define 
+\[
+a_{\iii}=\frac{\left(\i-1\right)!}{\left(\i-1-\iii\right)!\lambda^{\iii}}.
+\]
+Note $a_{\iii}\le\left(\i-1\right)^{\iii}/\lambda^{\iii}\le1$ for
+all $\iii$, so immediately $\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right|\le\i/\lambda\le1$.
+Also, 
+\[
+a_{\iii}\le\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2}\mbox{, and }a_{\iii+1}/a_{\iii}=\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2}
+\]
+for $\iii>\lambda^{1/2}$. So,
+\begin{alignat*}{1}
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\lambda^{-1}\sum_{\iii=0}^{\floor{\lambda^{1/2}}}a_{\iii}+\lambda^{-1}\sum_{\iii=\ceil{\lambda^{1/2}}}^{\i-1}a_{\iii}.\\
+ & \le\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(1-\lambda^{-1/2}\right)^{\iiii}\\
+ & =2\lambda^{-1/2}
+\end{alignat*}
+(note $\lambda\ge\i\ge1$, so $0\le1-\lambda^{-1/2}<1$). Now, suppose
+$\i>\lambda$.
+\begin{alignat*}{1}
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[\i,\infty\right]\right)\\
+ & =\i^{-1}\sum_{\ii=\i}^{\infty}\frac{\i!}{\ii!\lambda^{\i-\ii}}\\
+ & =\i^{-1}\sum_{\iii=0}^{\infty}\frac{\lambda^{\iii}\i!}{\left(\i+\iii\right)!}\\
+ & \le\i^{-1}\sum_{\ii=\i}^{\infty}\frac{\lambda^{\iii}}{\left(\i+1\right)^{\iii}}\\
+ & =\frac{\i+1}{\i\left(\i+1-\lambda\right)}\\
+ & \le2.
+\end{alignat*}
+This also shows $\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right|\le2\lambda^{-1/2}$
+if $\lambda<1$. Now, let $b_{\iii}=\lambda^{\iii}\i!/\left(\i+\iii\right)!$.
+As for the previous case, 
+\[
+b_{\iii}\le\frac{\lambda^{\iii}}{\left(\i+1\right)^{\iii}}\le1.
+\]
+Also, for $\iii>\lambda^{1/2}$,
+\[
+b_{\iii}\le\frac{\lambda}{\i+\iii}<\frac{\lambda}{\lambda+\lambda^{1/2}}\mbox{ and }\frac{b_{\iii+1}}{b_{\iii}}\le\frac{\lambda}{\i+\iii}<\frac{\lambda}{\lambda+\lambda^{1/2}}.
+\]
+So,
+\begin{alignat}{1}
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & =\i^{-1}\sum_{\iii=0}^{\floor{\lambda^{1/2}}}b_{\iii}+\i^{-1}\sum_{\iii=\ceil{\lambda^{1/2}}}^{\infty}b_{\iii}\nonumber \\
+ & =\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(\frac{\lambda}{\lambda+\lambda^{1/2}}\right)^{\iiii}\label{eq:U_Po-upper-estimate-2}\\
+ & =\lambda^{-1}+2\lambda^{-1/2}\nonumber \\
+ & \le3\lambda^{-1/2}.\nonumber 
+\end{alignat}
+We have proved $\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} $
+for $\h\in\cH$.
+\end{proof}
+\begin{note}
+
+\cite[Lemma 1.1.1]{BHJ92} gives this argument (but with no details),
+and claims it yields $\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right|\le2\lambda^{-1/2}$.
+I'm not seeing it though... I might revisit this.
+
+\end{note}
+\begin{proof}
+Let $\i,k\in\NN$. By \ref{eq:U_po-bound-in-progress}, 
+\begin{alignat*}{1}
+\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i-1\right) & =-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\ii=0}^{\i-2}\lambda^{\ii-\i}\frac{\left(\i-1\right)!}{\ii!}\\
+ & =-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=1}^{\i-1}\lambda^{\iii-\i}\frac{\left(\i-2\right)!}{\left(\iii-1\right)!}\\
+ & \le-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=0}^{\i-1}\lambda^{\iii-\i}\frac{\left(\i-1\right)!}{\iii!}\\
+ & =\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i\right).
+\end{alignat*}
+Similarly, if $\i>k$ then 
+\begin{alignat*}{1}
+\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i\right) & =\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\ii=\i}^{\infty}\lambda^{\ii-\i}\frac{\left(\i-1\right)!}{\ii!}\\
+ & =\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=\i+1}^{\infty}\lambda^{\iii-\i-1}\frac{\left(\i-1\right)!}{\left(\iii-1\right)!}\\
+ & \le\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=\i+1}^{\infty}\lambda^{\iii-\i-1}\frac{\i!}{\iii!}\\
+ & =\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i+1\right).
+\end{alignat*}
+Therefore, 
+\[
+\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i+1\right)-\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i\right)
+\]
+is positive only when $\i=k$, and
+\begin{alignat*}{1}
+\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(k+1\right)-\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(k\right) & =e^{-\lambda}\lambda^{-1}\sum_{\ii=k+1}^{\infty}\frac{\lambda^{\ii}}{\ii!}+e^{-\lambda}\lambda^{-1}\sum_{\iiii=1}^{k}\frac{\lambda^{\iiii}}{\iiii!}\frac{\iiii}{k}\\
+ & \le e^{-\lambda}\lambda^{-1}\left(e^{\lambda}-1\right)=\lambda^{-1}\left(1-e^{-\lambda}\right)
+\end{alignat*}
+Now, for any $\A\subseteq\NN$, $\one_{\A}=\sum_{k\in\A}\one_{\left\{ k\right\} }$,
+so linearity of $\U_{\Po\left(\lambda\right)}$ gives 
+\[
+\Delta\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\le\lambda^{-1}\left(1-e^{-\lambda}\right)
+\]
+for all $k$. Finally, note $\U_{\Po\left(\lambda\right)}\one_{\NN\backslash\A}+\U_{\Po\left(\lambda\right)}\one_{\A}=\U_{\Po\left(\lambda\right)}\one_{\NN}=0$,
+so 
+\[
+-\Delta\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\ge\Delta\U_{\Po\left(\lambda\right)}\one_{\NN\backslash\A}\left(k\right)\ge\lambda^{-1}\left(1-e^{-\lambda}\right).
+\]
+We conclude $\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right)$
+for $\h\in\cH$.\end{proof}
+\begin{rem}
+A similarly elementary but more fiddly argument can be used to show
+that the bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,1.4\lambda^{-1/2}\right\} $
+is also valid (see \cite[Lemma 4]{Bar83}). A significantly more sophisticated
+argument in \cite[Remark 10.2.4]{BHJ92} gives the sharper bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\sqrt{2/\left(e\lambda\right)}\right\} $.
+\end{rem}
+
+\section{The Method of Exchangeable Pairs\label{sec:exchangeable-pairs}}
 
 \global\long\def\fX{f}
 
@@ -1544,13 +1861,16 @@ We conclude
 \global\long\def\x#1{x^{\left(#1\right)}}
 
 
-This is Stein's original approach, and is effective in wide generality
-for discrete random variables. In what follows, we assume $\X$ is
-discrete. Let $\OmX$ be the support of $\X$.
+The method of exchangeable pairs is a particular way to apply Stein's
+method, that is effective in wide generality for discrete random variables.
+It is possible to adapt the method to non-discrete random variables,
+but in what follows, we assume $\X$ is discrete. Let $\OmX$ be the
+support of $\X$.
 \begin{example}
 [adapted from {\cite[Example 4.21]{Ros11}}]\label{example:fixed-points}Throughout
 this section, we will refer to an example problem to illustrate the
-principles of Stein's method for exchangeable pairs.
+principles of Stein's method for exchangeable pairs. This will be
+our first example of Poisson approximation.
 
 We will say a \emph{fixed point} of a permutation $\sigma\in S_{n}$
 is an index $k\in\range n$ that satisfies $\sigma\left(k\right)=k$.
@@ -1579,15 +1899,6 @@ That is, a pair $\eX$ is exchangeable if exchanging the components
 of the pair does not change their joint distribution. In particular,
 the marginal distributions of $\X_{1}$ and $\X_{2}$ must be the
 same.
-
-\begin{note}
-
-All presentations of Stein's method I've seen use the notation $\left(\X,\X'\right)$
-but I think that has the potential to be confusing because the $\X$
-in that pair is defined on $\Om^{2}$ whereas the original random
-variable $\X$ is defined on $\Om$.
-
-\end{note}
 \begin{prop}
 There is a natural equivalence between time-homogeneous reversible
 Markov chains with steady-state distribution $\L{\X}$, and exchangeable
@@ -1609,9 +1920,9 @@ between $x$ and $x'$ be $p\left(x,x'\right)$ and let the probability
 of state $x$ in the steady-state distribution be $\pi\left(x\right)$.
 We can then define an exchangeable pair $\eX$ by 
 \[
-\Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)=\Pr\left(\eX=\left(x_{2},x_{1}\right)\right)
+\Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)=\Pr\left(\eX=\left(x_{2},x_{1}\right)\right).
 \]
-and the proposition is proved.\end{proof}
+\end{proof}
 \begin{defn}
 We say an exchangeable pair $\eX$ is \emph{connected} if the corresponding
 Markov chain is irreducible.\end{defn}
@@ -1648,7 +1959,7 @@ viewed as a connected one-dimensional simplicial complex. The zeroth
 reduced homology group $\ker\partial_{0}/\im\partial_{1}$ of a connected
 simplicial complex has dimension zero, and this motivates the construction
 of a characterizing operator in a natural way. (The following theorem
-is self-contained and requires no knowledge of homology theory).
+is self-contained and requires no knowledge of homology).
 \begin{thm}
 Suppose\textup{ $\eX$ }is a connected exchangeable pair with margins
 $\L{\X}$. Let $\FX\subseteq L^{1}\left(\OmX^{2},\L{\eX}\right)$
@@ -1838,15 +2149,15 @@ the generator of an O-U process. Investigate the link here?
 \end{note}
 
 
-\subsection{An Application: Switchings and Short Cycles in Random Regular Graphs}
+\subsection{Switchings and Short Cycles in Random Regular Graphs}
 
 A particularly interesting (and new!) application of Stein's method
-is to piggyback onto results proved using combinatorial\emph{ switchings.}
-In this subsection, I'll describe how a certain Poisson limit theorem
-concerning short cycles in random regular graphs was improved by applying
-Stein's method in a quite natural, and generally applicable, way.
-First, we need some background on short cycles in random regular graphs,
-and switchings.
+for exchangeable pairs is to piggyback onto results proved using combinatorial\emph{
+switchings.} In this subsection, I'll describe how a certain Poisson
+limit theorem concerning short cycles in random regular graphs was
+improved by applying Stein's method in a quite natural, and generally
+applicable, way. First, we need some background on short cycles in
+random regular graphs, and switchings.
 
 
 \subsubsection{Short Cycles in Random Regular Graphs}
@@ -1861,8 +2172,18 @@ $d\ge3$. Then
 \Lb{\X_{\ell,n}^{\left(d\right)}}\to\Po\left(\frac{\left(d-1\right)^{\ell}}{2\ell}\right)
 \]
 as $n\to\infty$, with $n$ restricted to the even integers if $d$
-is odd.
-\end{thm}
+is odd.\end{thm}
+\begin{rem}
+The full theorem is that for any $r$, the vector of short cycle counts
+$\left(\X_{1,n}^{\left(d\right)},\dots\X_{r,n}^{\left(d\right)}\right)$
+is asymptotically distributed as an \emph{independent} vector of Poisson
+random variables. That is, not only do we understand the distributions
+of the short cycle counts, we also know that these cycle counts do
+not interact with each other, asymptotically speaking. Since we have
+not discussed the weak topology on random vectors, all the results
+and discussion in this subsection are simplified to the single-variable
+case.
+\end{rem}
 One reason \ref{thm:short-cycles-fixed} is interesting is because
 it tells us the number of ``short cycles'' in a random regular graph
 does not grow (to infinity) with the size of the graph. That is, random
@@ -1904,14 +2225,14 @@ set of $d$-regular graphs on $n$ vertices). Usually, switchings
 are understood as an ``action'' that changes one combinatorial object
 to another. The switching used in \cite{MWW04} is defined as follows:
 \begin{defn}
-\label{def:cycle-switching}Let $C=v_{1}\dots v_{\ell}$ be an $\ell$-cycle
-in a $d$-regular graph $G$. For each $\i\in\ZZ/\ell\ZZ$, suppose
-$e_{\i}=u_{\i}w_{\i+1}\in E\left(G\right)$ satisfies $u_{\i}v_{\i}\notin E\left(G\right)$
+\label{def:cycle-switching}Let $C=v_{1}\dots v_{\ell}$ be a short
+cycle in a $d$-regular graph $G$. For each $\i\in\ZZ/\ell\ZZ$,
+suppose $e_{\i}=u_{\i}w_{\i+1}\in E\left(G\right)$ satisfies $u_{\i}v_{\i}\notin E\left(G\right)$
 and $v_{\i}w_{\i}\notin E\left(G\right)$. Let $G'$ be the $d$-regular
 graph obtained from $G$ by deleting all the edges in $C$ and adding
 each of the edges $u_{\i}v_{\i}$ and $v_{\i}w_{\i}$. Further, suppose
-this operation does not create or delete any $\ell$-cycle except
-$C$. Then, we say $G\rightsquigarrow G'$.
+this operation does not create or delete any short cycle except $C$.
+Then, we say $G\rightsquigarrow G'$.
 \end{defn}
 \begin{todo}
 
@@ -1924,16 +2245,17 @@ The typical application of a switching is to estimate the relative
 sizes of some subsets of $\Om$, by analysing the ``flow'' of switchings
 between the subsets. For example, define $S\left(k\right)$ to be
 the set of $d$-regular graphs with $k$ cycles of length $\ell$.
-In \cite[Section 3]{MWW04}, bounds were obtained for the ``number
-of ways to switch out'' of each graph $G$ (that is, the number of
-graphs $G'$ satisfying $G\rightsquigarrow G'$), and the ``number
-of ways to switch in'' to each graph. This gives an estimate on the
-relative sizes of $S\left(k\right)$ and $S\left(k-1\right)$ for
-each $k$, which is then used to estimate the distribution of $\X_{\ell,n}^{\left(d\right)}$.
-The relevant estimates work in the regime $\left(d-1\right)^{2\ell-1}=o\left(n\right)$.
+In \cite[Section 3]{MWW04}, bounds were obtained for the ``average
+number of ways to switch out'' of each graph $G$ (that is, the number
+of graphs $G'$ satisfying $G\rightsquigarrow G'$), and similarly
+the ``number of ways to switch in'' to each graph. This gives an
+estimate on the relative sizes of $S\left(k\right)$ and $S\left(k-1\right)$
+for each $k$, which is then used to estimate the distribution of
+$\X_{\ell,n}^{\left(d\right)}$. The relevant estimates work in the
+regime $\left(d-1\right)^{2\ell-1}=o\left(n\right)$.
 
 
-\subsubsection{Stein's method and Switchings}
+\subsubsection{Stein's Method and Switchings}
 
 \global\long\def\fG{\mathfrak{G}}
 
@@ -1951,8 +2273,8 @@ way to apply the method of \ref{example:poisson-connecting-operator}.
 However, it is not so easy to perturb a regular graph in a way that
 maintains regularity. We accomplish this with the switching from \ref{def:cycle-switching}.
 
-We define a multigraph $\fG$ with vertex set $\Om$. Make an edge
-in $\fG$ for every pair $\left(G,G'\right)$ with $G\rightsquigarrow G'$.
+We define a weighted multigraph $\fG$ with vertex set $\Om$. Make
+an edge in $\fG$ for every pair $\left(G,G'\right)$ with $G\rightsquigarrow G'$.
 Let $\Delta$ be the maximum degree so far. Add enough loops to each
 vertex of $\fG$ so that $\fG$ is a $\Delta$-regular multigraph.
 Recalling \ref{todo:graph-to-markov}, $\fG$ induces a reversible
@@ -1962,10 +2284,10 @@ with margins $\rG nd$. With \ref{rem:underlying-pair}, this provides
 us with an exchangeable pair $\bX=\left(\X_{1},\X_{2}\right)$ with
 margins $\L{\X}$ to apply Stein's method.
 
+\begin{comment}
+
 
 \subsection{Proof of \ref{thm:short-cycles-variable}}
-
-(Simplified from the proof of \cite[Theorem 11]{Joh11}).
 
 Let $\X=\X_{\ell,n}^{\left(d\right)}$, let $\Om$ be the set of all
 $d$-regular graphs on $n$ vertices, and let $\lambda=\left(d-1\right)^{\ell}/\left(2\ell\right)\ge1$.
@@ -1991,13 +2313,13 @@ with margins $\rG nd$. With \ref{rem:underlying-pair}, this provides
 us with an exchangeable pair $\bX=\left(\X_{1},\X_{2}\right)$ with
 margins $\Lb{\X_{\ell,n}^{\left(d\right)}}$ to apply Stein's method.
 
-\begin{comment}
+\begin{comment!}
 
 Is it confusing for $G_{1},G_{2}$ to be random graphs, while graphs
 denoted $G$ or $G'$ generally refer to a specific, non-random graph?
 Maybe I should denote particular graphs with $\om$ instead or something.
 
-\end{comment}
+\end{comment!}
 
 For $G\in\Om$ and an $\ell$-cycle $C$, let $F_{C}\left(G\right)$
 be the number of ways to switch from $G$ by destroying $C$. That
@@ -2116,6 +2438,8 @@ $w_{\i}$ for each), so $F_{C}\le\falling n{\ell}d^{\ell}$.
 \begin{proof}
 [Proof of \ref{lem:backward-switching-bound}]asfd
 \end{proof}
+\end{comment}
+
 
 \section{Size-Bias Coupling}
 
