@@ -12,6 +12,7 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{graphicx}
 \usepackage{setspace}
 \usepackage{esint}
 \setstretch{1.5}
@@ -62,7 +63,7 @@
 \setlist[itemize]{topsep=-5pt}
 
 % cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
-\usepackage[nameinlink,capitalise]{cleveref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 
 % LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
@@ -143,7 +144,7 @@
 {\colorlet{shadecolor}{red!5}\begin{shaded}\begin{todothm}}{\end{todothm}\end{shaded}}
 
 %more distinct calligraphic letters
-\usepackage{calrsfs}
+%\usepackage{calrsfs}
 
 %theorem names in uppercase?
 \let\oldtextbf\textbf
@@ -152,6 +153,7 @@
 %graph drawing
 \usepackage{tikz}
 \tikzstyle{vertex}=[circle,draw=black,fill=black,inner sep=0,minimum size=0.2cm,text=white,font=\footnotesize]
+\tikzset{every loop/.style={min distance=50,in=50,out=130,looseness=7}}
 
 \makeatother
 
@@ -166,13 +168,29 @@
 \providecommand{\theoremname}{Theorem}
 
 \begin{document}
+\begin{titlepage}
 
-\title{Stein's Method}
+
+\title{\includegraphics[scale=0.3]{crest_4}\vfill{}
+Stein's Method}
 
 
-\author{Matthew Kwan}
+\author{Matthew Kwan\\
+Supervisor: Catherine Greenhill\\
+\\
+School of Mathematics,\\
+The University of New South Wales}
 
 \maketitle
+\noindent \begin{center}
+\vfill{}
+Submitted in partial fulfillment of the requirements of the degree
+of\\
+Bachelor of Science with Honours
+\par\end{center}
+
+\thispagestyle{empty}\end{titlepage}
+
 \begin{comment}
 \begin{thm}
 t\end{thm}
@@ -246,22 +264,28 @@ c
 \global\long\def\falling#1#2{\left(#1\right)_{#2}}
 
 
-\begin{comment}\begin{note}Commentary in blue\end{note}\begin{todo}Issues
-in red\end{todo}\end{comment}
-
 \tableofcontents{}
+
+\begin{todo}Remaining stuff:
+\begin{itemize}
+\item random combinatorial structures: merge?
+\item size-bias coupling
+\item finish proof sketch for random regular graphs section
+\item further reading
+\end{itemize}
+\end{todo}
 
 
 \section{Introduction}
 
 The \emph{\textbf{c}entral \textbf{l}imit \textbf{t}heorem}, roughly
-speaking, says that sums of independent random variables are ``approximately
-normal'', with the approximation improving as the number of terms
-in the sum increases. Similarly, the \emph{Poisson \textbf{l}imit
-\textbf{t}heorem} says that the number of occurences of independent
-``rare'' events over a given time period is ``approximately Poisson''.
-These two limit theorems are archetypal examples of a large class
-of related results in statistics and probabilistic combinatorics.
+speaking, says that sums of independent, identically distributed random
+variables are ``approximately normal'', with the approximation improving
+as the number of terms in the sum increases. Similarly, the \emph{Poisson
+\textbf{l}imit \textbf{t}heorem} says that the number of occurences
+of independent ``rare'' events over a given time period is ``approximately
+Poisson''. These two limit theorems are archetypal examples of a
+large class of related results in statistics and probabilistic combinatorics.
 
 These types of results are generally formally stated asymptotically,
 with a particular type of convergence called \emph{weak convergence},
@@ -317,17 +341,60 @@ from standard asymptotic notation, $f\sim g$ means $f=g\left(1+o\left(1\right)\r
 \begin{comment}, $f\prec g$ means $f=O\left(g\right)$ and $f\asymp g$
 means $f=\Theta\left(g\right)$.\end{comment}
 
-In this thesis, unless stated otherwise, graphs are labelled. That
-is, they are distinguished even within isomorphism classes. A graph
-may not have loops or multiple edges; an object which is allowed to
-have loops and/or multiple edges will be called a multigraph. We write
-$G\subseteq G'$ to indicate that $G$ is a (not necessarily induced)
-subgraph of $G'$.
-
 I will occasionally use results from analysis without proof. I will
 usually refer to a numbered theorem in Rudin's \emph{Real and Complex
 Analysis} \cite{Rud66} or \emph{Functional Analysis} \cite{Rud73}
 when doing so.
+
+I will also assume some familiarity with basic graph theory definitions
+and terminology. The reader may refer to a textbook such as \cite{Die00}
+if necessary. We also specify some conventions here. Unless stated
+otherwise, graphs are labelled. That is, they are distinguished even
+within isomorphism classes. A graph may not have loops or multiple
+edges; an object which is allowed to have loops and/or multiple edges
+will be called a multigraph. See \ref{fig:graph-conventions}. We
+write $G\subseteq G'$ to indicate that $G$ is a (not necessarily
+induced) subgraph of $G'$.
+
+\begin{figure}[h]
+\begin{center}
+\foreach \j in {1,2,3}
+{
+\hspace{0.5cm}
+\begin{tikzpicture}[scale=.6]
+\node[vertex] (1) at (0,3) {};
+\node at (-0.4,3.4) {\ifthenelse{\equal{\j}{3}}{2}{1}};
+\node[vertex] (4) at (3,0) {};
+\node at (3.4,-0.4) {4};
+\node[vertex] (3) at (0,0) {};
+\node at (-0.4,-0.4) {3};
+\node[vertex] (2) at (3,3) {};
+\node at (3.4,3.4) {\ifthenelse{\equal{\j}{3}}{1}{2}};
+\ifthenelse{\equal{\j}{1}}{
+\path
+(1) edge [bend right] (3)
+    edge [bend left] (3)
+    edge (2)
+(4) edge (3)
+    edge [loop right,-] (4)
+(2) edge (3);
+}
+{
+\path
+(1) edge (3)
+    edge (4)
+(4) edge (3)
+(2) edge (3);
+}
+\end{tikzpicture}
+\hspace{0.5cm}
+}
+\end{center}
+
+\caption{\label{fig:graph-conventions}From left to right: a multigraph that
+is not a graph, and two different graphs on the vertex set $\left\{ 1,2,3,4\right\} $.}
+\end{figure}
+
 
 
 \section{General Probability Theory}
@@ -556,7 +623,18 @@ between $\X_{1}$ and $\X_{2}$ that allows us to compare the two
 distributions. Often, we are able to make conclusions about the distributions
 $\Lb{\X_{\i}}$ which are independent of their specific realizations
 as random elements in the coupling.
-
+\begin{example}
+Let $X$ satisfy $\L X\left(0\right)=\frac{1}{2}$ and $\L X\left(1\right)=\frac{1}{2}$,
+and let $Y$ satisfy $\L Y\left(0\right)=\frac{1}{3}$ and $\L Y\left(1\right)=\frac{2}{3}$.
+Then we can couple $X$ and $Y$ into a distribution $\L{X,Y}$ on
+$\left\{ 0,1\right\} ^{2}$, defined by $\L{X,Y}\left(0,0\right)=\frac{1}{3}$,
+$\L{X,Y}\left(0,1\right)=\frac{1}{6}$, $\L{X,Y}\left(1,0\right)=0$
+and $\L{X,Y}\left(1,1\right)=\frac{1}{2}$. In this coupling, whenever
+$Y=0$ we have $X=0$, which allows us to make the observation $\L X\left(0\right)\ge\L Y\left(0\right)$.
+Of course, this was already obvious, but hopefully this example illustrates
+the principle that coupling random variables allows us to make direct
+comparisons between their distributions.
+\end{example}
 
 \subsection{Expected Value}
 \begin{defn}
@@ -669,14 +747,14 @@ probability space $\left(\Om,\cA\right)$. Then $\E\left[\E^{\X_{2}}\X_{1}\right]
 \begin{proof}
 Recall the definition of condition expectation. We have
 \[
-\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].
+\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].\qedhere
 \]
 
 \end{proof}
 
 \subsection{Markov Chains}
 
-\begin{note}
+\begin{comment}
 
 I'll need to define Markov Chains, stationary distributions, irreducibility
 and time-reversibility.
@@ -686,19 +764,85 @@ applying exchangeable pairs to Stein's method is has connections with
 Ornstein-Uhlenbeck processes and also Stein's method can be applied
 to Poisson processes.
 
-\end{note}
+\end{comment}
+
+We discuss Markov \textbf{c}hains only superficially, to the extent
+that is required for \ref{sec:exchangeable-pairs}. The theory of
+Markov \textbf{c}hains (and Markov \textbf{p}rocesses in general)
+is a very rich area of probability theory, see for example \cite[Chapter 7]{Kal02}.
+
+For our purposes, a (time-homogeneous, two-sided) \emph{Markov \textbf{c}hain}
+is a sequence of discrete random elements $\left(X_{\i}\right)_{\i\in\ZZ}$
+taking values on a common set $\Om$ (the \emph{state space}), such
+that 
+\begin{equation}
+\Pr\left(X_{\i+1}=y|X_{\i}=x\right)=\Pr\left(X_{\i}=y|X_{\i-1}=x\right)\label{eq:time-homogeneous-defn}
+\end{equation}
+for all $x,y\in\Om$, $n\in\ZZ$. The probability in \ref{eq:time-homogeneous-defn}
+is called the \emph{transition probability} from $x$ to $y$, and
+is denoted $p_{xy}$ or $p\left(x,y\right)$. We can think of $\left(X_{\i}\right)_{\i\in\ZZ}$
+as a process evolving in time in such a way that, given the current
+state, the next state does not depend on past states or the current
+point in time.
+\begin{defn}
+A Markov \textbf{c}hain $\left(X_{\i}\right)_{\i\in\ZZ}$ is stationary
+with respect to the distribution $\Lb X$ if $\Lb{X_{\i}}=\Lb X$
+for all $\i\in\ZZ$.
+\end{defn}
+Define $\pi_{x}=\Pr\left(X=x\right)$. Note that if $\left(X_{\i}\right)_{\i\in\ZZ}$
+is stationary with respect to $\Lb X$, then we must have 
+\begin{equation}
+\pi_{y}=\Pr\left(X_{\i}=y\right)=\sum_{x\in\Om}\Pr\left(X_{\i}=y,\, X_{\i-1}=x\right)=\sum_{x\in\Om}\pi_{x}p_{xy}\label{eq:stationary-defn}
+\end{equation}
+for all $y\in\Om$. In fact, the distribution $\Lb{X_{\i}}_{\i\in\ZZ}$
+of a stationary Markov \textbf{c}hain is uniquely defined by a stationary
+distribution $\L X$ and a set of transition probabilities $\left\{ p_{xy}\right\} _{x,y\in\Om}$
+which satisfy \ref{eq:stationary-defn} for all $y\in\Om$ and $\sum_{y\in\Om}p_{xy}=1$
+for all $x\in\Om$.
+\begin{defn}
+A stationary Markov \textbf{c}hain $\left(X_{\i}\right)_{\i\in\ZZ}$
+is \emph{reversible} if $\Lb{X_{\i}}_{\i\in\ZZ}=\Lb{X_{-\i}}_{\i\in\ZZ}$.
+\end{defn}
+Reversibility means that a Markov\textbf{ c}hain can be equally well
+understood as evolving forward or backward in time. As before, let
+$\pi_{x}=\Pr\left(X=x\right)$ for the stationary distribution $\L X$.
+Then, reversibility is equivalent to the condition $\pi_{x}p_{xy}=\pi_{y}p_{yx}$
+for all $x,y\in\Om$.
+\begin{defn}
+A Markov \textbf{c}hain $\left(X_{\i}\right)_{\i\in\ZZ}$ is \emph{irreducible}
+if for all $x,y\in\Om$ there is $t\in\ZZ$ such that $\Pr\left(X_{\i+t}=y|X_{\i}=x\right)>0$.
+\end{defn}
+Irreducibility means that every state can be accessed from every other
+state. Irreducibility is equivalent to the condition that for any
+$x,y\in\Om$, there is a finite sequence $x=x_{0},x_{1},\dots,x_{k}=y$
+with $p\left(x_{\i},x_{\i+1}\right)>0$ for all $\i<k$.
 \begin{prop}
-\label{prop:graph-to-markov}Let $G$ be an edge-weighted multigraph,
-such that the sum of the weights at each vertex is $\Delta$. Then
-$G$ defines a reversible Markov chain on its vertex set, which is
-stationary with respect to the uniform distribution.
-\end{prop}
-\begin{todo}
-
-Need proof and complete statement of proposition
-
-\end{todo}
-
+\label{prop:graph-to-markov}Let $G$ be a finite connected edge-weighted
+multigraph. Suppose that each edge weight is positive, and the sum
+of the weights at each vertex is $\Delta$. Then $G$ defines a reversible
+Markov \textbf{c}hain on its vertex set $V$, which is stationary
+with respect to the uniform distribution on $V$.\end{prop}
+\begin{proof}
+For $x,y\in V$, let $p_{xy}=p_{yx}$ be the sum of the weights of
+all edges between $x$ and $y$, divided by $\Delta$. By construction,
+$\sum_{y\in\Om}p_{xy}=1$. Let $\L X$ be the uniform distribution
+on $V$, and let $\pi_{x}=\L X\left(x\right)$. Then,
+\[
+\pi_{y}=\frac{1}{\left|V\right|}=\frac{1}{\left|V\right|}\sum_{x\in V}p_{xy}=\sum_{x\in V}\pi_{x}p_{xy}
+\]
+for all $y\in V$, and also
+\[
+\pi_{x}p_{xy}=\frac{1}{\left|V\right|}p_{xy}=\pi_{y}p_{yx}
+\]
+for each $x,y\in V$. We conclude that the transition probabilities
+$\left\{ p_{xy}\right\} _{x,y\in V}$ define a reversible Markov \textbf{c}hain
+stationary with respect to $\L X$. \end{proof}
+\begin{example}
+Let $G$ be a cycle of length $n$, with a weight of 1 on each edge.
+The corresponding Markov \textbf{c}hain is a random walk: at each
+time-step, there is equal probability of moving one step clockwise
+or counterclockwise around the cycle.
+\end{example}
 
 \subsection{\label{sec:weak-topology}The Weak Topology on Probability Measures}
 
@@ -1089,11 +1233,12 @@ then we say the space is \emph{uniform}.
 Uniform models are the simplest examples of random structures. For
 example, the uniform space $\rS n$ of permutations on $n$ elements
 has $\Pr\left(\sigma\right)=1/n!$ for each $\sigma\in S_{n}$. The
-uniform random graph model $\rG nM$ has $\Pr\left(G\right)={{n \choose 2} \choose M}^{-1}$
-for each graph $G$ on the vertex set $\range n$ which has $M$ edges.
-The uniform random regular graph model $\rG nd$ is uniform on the
-set of all $d$-regular graphs on the vertex set $\range n$, though
-an explicit formula for the number of such graphs is not known.
+uniform random graph model $\rG nM$ has $\Pr\left(G\right)=\begin{pmatrix}{n \choose 2}\\
+M
+\end{pmatrix}^{-1}$ for each graph $G$ on the vertex set $\range n$ which has $M$
+edges. The uniform random regular graph model $\rG nd$ is uniform
+on the set of all $d$-regular graphs on the vertex set $\range n$,
+though an explicit formula for the number of such graphs is not known.
 
 As an important example of a (generally) non-uniform model, the (Erd\H{o}s-R\'enyi)
 binomial random graph model $\rG np$ has
@@ -1163,7 +1308,7 @@ the method of exchangeable pairs in \ref{sec:exchangeable-pairs}.
 \global\long\def\Uo{\U_{0}}
 
 
-\global\long\def\cX{\mathcal{X}}
+\global\long\def\cX{\mathcal{V}}
 
 
 \global\long\def\Xo{\cX_{0}}
@@ -1592,8 +1737,8 @@ for $x<0$, so
 \end{proof}
 \begin{rem}
 \label{rem:better-wasserstein-bounds}In the interests of a simple
-proof, the bounds in \ref{example:wasserstein-bound} are very crude.
-The stronger bounds $\left\Vert \fo'\right\Vert _{\infty}\le\sqrt{\frac{2}{\pi}}$
+proof, the bounds in \ref{thm:wasserstein-normal-bounds} are very
+crude. The stronger bounds $\left\Vert \fo'\right\Vert _{\infty}\le\sqrt{\frac{2}{\pi}}$
 and $\left\Vert \fo''\right\Vert _{\infty}\le2$ can be shown to hold,
 with similarly elementary but much more fiddly proofs. See \cite[Lemma 2.4]{CGS10}.
 \end{rem}
@@ -1619,7 +1764,7 @@ Define
 \]
 Then 
 \[
-d_{\W}\left(\X,\N\left(0,1\right)\right)\le\frac{C}{\sqrt{n}}\,\E\left(\left|Q\right|^{3}\right)
+d_{\W}\left(\X,\N\left(0,1\right)\right)\le\frac{C}{\sqrt{n}}\,\E\left|Q\right|^{3}
 \]
 for some constant $C$.\end{thm}
 \begin{rem}
@@ -2003,26 +2148,26 @@ the marginal distributions of $\X_{1}$ and $\X_{2}$ must be the
 same.
 \begin{prop}
 There is a natural equivalence between time-homogeneous reversible
-Markov chains with steady-state distribution $\L{\X}$, and exchangeable
-pairs with margins $\L{\X}$.\end{prop}
+Markov \textbf{c}hains with steady-state distribution $\L{\X}$, and
+exchangeable pairs with margins $\L{\X}$.\end{prop}
 \begin{proof}
 Given an exchangeable pair $\eX$ with margins $\L{\X}$, we can define
 a time-homogenous Markov chain $M$ with transition probabilities
 $p\left(x_{1},x_{2}\right)=\Pr\left(\X_{2}=x_{2}|\X_{1}=x_{1}\right)$.
-With $\pi\left(x\right)=\Pr\left(\X=x\right)$, we then have
+With $\pi\left(x\right)=\L{\X}\left(x\right)$, we then have
 \[
 \pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\L{\bX}\left(x_{1},x_{2}\right)=\L{\bX}\left(x_{2},x_{1}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)
 \]
 for any $x_{1},x_{2}\in\OmX$. So, $M$ is reversible with steady-state
-distribution $\L{\X}$. Of course, given a time-homogeneous reversible
-markov chain with steady-state distribution $\L{\X}$, we can define
-the distribution $\L{\bX}$ in exactly the same way.
+distribution $\L{\X}$. Of course, given a reversible Markov \textbf{c}hain
+with steady-state distribution $\L{\X}$, we can define the distribution
+$\L{\bX}$ in exactly the same way.
 
 \begin{comment}Conversely, suppose we have a time-homogeneous reversible
-Markov chain with steady-state distribution $\L{\X}$. Let the transition
-probability between $x$ and $x'$ be $p\left(x,x'\right)$ and let
-the probability of state $x$ in the steady-state distribution be
-$\pi\left(x\right)$. We can then define an exchangeable pair $\eX$
+Markov \textbf{c}hain with steady-state distribution $\L{\X}$. Let
+the transition probability between $x$ and $x'$ be $p\left(x,x'\right)$
+and let the probability of state $x$ in the steady-state distribution
+be $\pi\left(x\right)$. We can then define an exchangeable pair $\eX$
 by 
 \[
 \Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)=\Pr\left(\eX=\left(x_{2},x_{1}\right)\right).
@@ -2034,7 +2179,7 @@ by
 \end{proof}
 \begin{defn}
 We say an exchangeable pair $\eX$ is \emph{connected} if the corresponding
-Markov chain is irreducible.\end{defn}
+Markov \textbf{c}hain is irreducible.\end{defn}
 \begin{rem}
 \label{rem:underlying-pair}We are particularly interested in exchangeable
 pairs $\eX$ with marginal distributions $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$.
@@ -2055,20 +2200,21 @@ with margins $\rS n$ by
 \end{cases}
 \]
 The relation of differing by a transposition is symmetric, so $\mathbf{W}$
-is indeed an exchangeable pair. The Markov chain associated with $\mathbf{W}$
-has a simple interpretation. Given a random permutation $\sigma$,
-to make a transition in the Markov chain we just randomly choose one
-of the ${n \choose 2}$ possible transpositions and compose it with
-$\sigma$. Because the transpositions generate $S_{n}$, the pair
-$\mathbf{W}$ is connected, so we can use the construction from \ref{rem:underlying-pair}
-to produce a connected exchangeable pair $\eX$ with margins $X$.
+is indeed an exchangeable pair. The Markov \textbf{c}hain associated
+with $\mathbf{W}$ has a simple interpretation. Given a random permutation
+$\sigma$, to make a transition in the Markov \textbf{c}hain we just
+randomly choose one of the ${n \choose 2}$ possible transpositions
+and compose it with $\sigma$. Because the transpositions generate
+$S_{n}$, the pair $\mathbf{W}$ is connected, so we can use the construction
+from \ref{rem:underlying-pair} to produce a connected exchangeable
+pair $\eX$ with margins $X$.
 \end{example}
-The Markov chain underlying a connected exchangeable pair can be naturally
-viewed as a connected one-dimensional simplicial complex. The zeroth
-reduced homology group $\ker\partial_{0}/\im\partial_{1}$ of a connected
-simplicial complex has dimension zero, and this motivates the construction
-of a characterizing operator in a natural way. (The following theorem
-is self-contained and requires no knowledge of homology).
+The Markov \textbf{c}hain underlying a connected exchangeable pair
+can be naturally viewed as a connected one-dimensional simplicial
+complex. The zeroth reduced homology group $\ker\partial_{0}/\im\partial_{1}$
+of a connected simplicial complex has dimension zero, and this motivates
+the construction of a characterizing operator in a natural way. (The
+following theorem is self-contained and requires no knowledge of homology).
 \begin{thm}
 Suppose\textup{ $\eX$ }is a connected exchangeable pair with margins
 $\L{\X}$. Let $\FX\subseteq L^{1}\left(\OmX^{2},\L{\eX}\right)$
@@ -2109,7 +2255,7 @@ ${\displaystyle \left(\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)\right)^{-1}
 on $\left(x_{1},x_{2}\right)$, takes the value $-\left(\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)\right)^{-1}$
 on $\left(x_{2},x_{1}\right)$, and takes the value zero elsewhere.
 Note that this function is antisymmetric by the reversibility of the
-Markov chain of $\eX$. We have $\TX\fX_{x_{1},x_{2}}=\hX_{x_{2}}-\hX_{x_{1}}$.
+Markov \textbf{c}hain of $\eX$. We have $\TX\fX_{x_{1},x_{2}}=\hX_{x_{2}}-\hX_{x_{1}}$.
 
 Let $\hX\in\ker\E_{\X}$, and fix an arbitrary $x^{*}\in\OmX$. By
 the connectedness assumption, for each $x\in\OmX$ there is a sequence
@@ -2183,13 +2329,13 @@ This approximation is effective when
 
 
 The interpretation of these approximate equalities is that the Markov
-chain associated with $\eX$ is approximately an immigration-death
+\textbf{c}hain associated with $\eX$ is approximately an immigration-death
 process. This is likely to happen when $\X\left(\om\right)$ is in
 some sense a statistic of the amount of local structure over the object
-$\om$, and $\eX$ is defined by a Markov chain on $\Om$ (as in \ref{rem:underlying-pair})
-that (uniformly) randomly disturbs local structure. The conclusion
-to \ref{example:fixed-points}, presented in \ref{example:fixed-point-conclusion}
-below, should make this clear.
+$\om$, and $\eX$ is defined by a Markov \textbf{c}hain on $\Om$
+(as in \ref{rem:underlying-pair}) that (uniformly) randomly disturbs
+local structure. The conclusion to \ref{example:fixed-points}, presented
+in \ref{example:fixed-point-conclusion} below, should make this clear.
 \end{example}
 \begin{comment}
 
@@ -2498,10 +2644,10 @@ The idea is that a switching $\rightsquigarrow$ defines a graph $\fG$
 with an edge for every pair $\left(G,G'\right)$ with $G\rightsquigarrow G'$,
 whose edges we can weight if desired. Loops are then added as necessary
 to so that each vertex has the same weight $\Delta$. By \ref{prop:graph-to-markov},
-$\fG$ induces a reversible Markov chain with uniform stationary distribution
-(in our case $\rG nd)$, which corresponds to an exchangeable pair
-$\mathbf{G}=\left(G_{1},G_{2}\right)$ with margins $\rG nd$. With
-\ref{rem:underlying-pair}, this provides us with an exchangeable
+$\fG$ induces a reversible Markov \textbf{c}hain with uniform stationary
+distribution (in our case $\rG nd)$, which corresponds to an exchangeable
+pair $\mathbf{G}=\left(G_{1},G_{2}\right)$ with margins $\rG nd$.
+With \ref{rem:underlying-pair}, this provides us with an exchangeable
 pair $\bX=\left(\X_{1},\X_{2}\right)$ with margins $\L{\X}$ with
 which to apply Stein's method.
 
@@ -2537,7 +2683,7 @@ ways to choose these paths. With these esimates in mind, we choose
 $c=\Delta2^{\ell}/\left(\falling n{\ell}d^{\ell}\right)$, so that
 both of 
 \[
-\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|\mbox{ and }\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|
+\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|
 \]
 are small. This will give us a bound on 
 \[
@@ -2572,8 +2718,8 @@ in $\fG$ for every pair $\left(G,G'\right)$ with $G\rightsquigarrow G'$.
 Let $\Delta$ be the maximum degree so far. Add enough loops to each
 vertex of $\fG$ so that $\fG$ is a $\Delta$-regular multigraph.
 Recalling \ref{prop:graph-to-markov}, $\fG$ induces a reversible
-Markov chain on $\Om$ with stationary distribution $\rG nd$, which
-corresponds to an exchangeable pair $\mathbf{G}=\left(G_{1},G_{2}\right)$
+Markov \textbf{c}hain on $\Om$ with stationary distribution $\rG nd$,
+which corresponds to an exchangeable pair $\mathbf{G}=\left(G_{1},G_{2}\right)$
 with margins $\rG nd$. With \ref{rem:underlying-pair}, this provides
 us with an exchangeable pair $\bX=\left(\X_{1},\X_{2}\right)$ with
 margins $\Lb{\X_{\ell,n}^{\left(d\right)}}$ to apply Stein's method.
@@ -2704,6 +2850,22 @@ $w_{\i}$ for each), so $F_{C}\le\falling n{\ell}d^{\ell}$.
 [Proof of \ref{lem:backward-switching-bound}]asfd
 \end{proof}
 \end{comment}
+
+
+\section{Further Reading}
+
+There are many aspects of Stein's method that we were unable to cover
+in this thesis.
+
+\begin{note}Possibly mention:
+\begin{itemize}
+\item different distributions, both standard and ad-hoc
+\item different techniques, such as zero-biasing
+\item Ways to construct characterizing operators other than exchangeable
+pairs
+\item Active research: random matrices, semicircle laws
+\end{itemize}
+\end{note}
 
 \begin{comment}
 

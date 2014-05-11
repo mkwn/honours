@@ -23,7 +23,7 @@
 \setlist[itemize]{topsep=-5pt}
 
 % cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
-\usepackage[nameinlink,capitalise]{cleveref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 
 % LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
@@ -104,7 +104,7 @@
 {\colorlet{shadecolor}{red!5}\begin{shaded}\begin{todothm}}{\end{todothm}\end{shaded}}
 
 %more distinct calligraphic letters
-\usepackage{calrsfs}
+%\usepackage{calrsfs}
 
 %theorem names in uppercase?
 \let\oldtextbf\textbf
@@ -113,6 +113,7 @@
 %graph drawing
 \usepackage{tikz}
 \tikzstyle{vertex}=[circle,draw=black,fill=black,inner sep=0,minimum size=0.2cm,text=white,font=\footnotesize]
+\tikzset{every loop/.style={min distance=50,in=50,out=130,looseness=7}}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -198,12 +199,85 @@ eqs-within-sections
 
 \begin_body
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{titlepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Title
+\begin_inset Graphics
+	filename crest_4.eps
+	scale 30
+
+\end_inset
+
+
+\begin_inset VSpace vfill
+\end_inset
+
 Stein's Method
 \end_layout
 
 \begin_layout Author
 Matthew Kwan
+\begin_inset Newline newline
+\end_inset
+
+Supervisor: Catherine Greenhill
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+School of Mathematics,
+\begin_inset Newline newline
+\end_inset
+
+The University of New South Wales
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset VSpace vfill
+\end_inset
+
+Submitted in partial fulfillment of the requirements of the degree of
+\begin_inset Newline newline
+\end_inset
+
+Bachelor of Science with Honours
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\backslash
+end{titlepage}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -437,36 +511,47 @@ end{comment}
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\backslash
-begin{note}
-\end_layout
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
 
 \end_inset
 
-Commentary in blue
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
 
-\backslash
-end{note}
 \backslash
 begin{todo}
 \end_layout
 
 \end_inset
 
-Issues in red
+Remaining stuff:
+\end_layout
+
+\begin_layout Itemize
+random combinatorial structures: merge?
+\end_layout
+
+\begin_layout Itemize
+size-bias coupling
+\end_layout
+
+\begin_layout Itemize
+finish proof sketch for random regular graphs section
+\end_layout
+
+\begin_layout Itemize
+further reading
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -475,18 +560,7 @@ status open
 
 \backslash
 end{todo}
-\backslash
-end{comment}
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
 
 \end_inset
 
@@ -534,7 +608,8 @@ status open
 
 \end_inset
 
-, roughly speaking, says that sums of independent random variables are 
+, roughly speaking, says that sums of independent, identically distributed
+ random variables are 
 \begin_inset Quotes eld
 \end_inset
 
@@ -823,26 +898,6 @@ end{comment}
 \end_layout
 
 \begin_layout Standard
-In this thesis, unless stated otherwise, graphs are labelled.
- That is, they are distinguished even within isomorphism classes.
- A graph may not have loops or multiple edges; an object which is allowed
- to have loops and/or multiple edges will be called a multigraph.
- We write 
-\begin_inset Formula $G\subseteq G'$
-\end_inset
-
- to indicate that 
-\begin_inset Formula $G$
-\end_inset
-
- is a (not necessarily induced) subgraph of 
-\begin_inset Formula $G'$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
 I will occasionally use results from analysis without proof.
  I will usually refer to a numbered theorem in Rudin's 
 \emph on
@@ -867,6 +922,308 @@ key "Rud73"
 \end_inset
 
  when doing so.
+\end_layout
+
+\begin_layout Standard
+I will also assume some familiarity with basic graph theory definitions
+ and terminology.
+ The reader may refer to a textbook such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Die00"
+
+\end_inset
+
+ if necessary.
+ We also specify some conventions here.
+ Unless stated otherwise, graphs are labelled.
+ That is, they are distinguished even within isomorphism classes.
+ A graph may not have loops or multiple edges; an object which is allowed
+ to have loops and/or multiple edges will be called a multigraph.
+ See 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:graph-conventions"
+
+\end_inset
+
+.
+ We write 
+\begin_inset Formula $G\subseteq G'$
+\end_inset
+
+ to indicate that 
+\begin_inset Formula $G$
+\end_inset
+
+ is a (not necessarily induced) subgraph of 
+\begin_inset Formula $G'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+j in {1,2,3}
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=.6]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[vertex] (1) at (0,3) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (-0.4,3.4) {
+\backslash
+ifthenelse{
+\backslash
+equal{
+\backslash
+j}{3}}{2}{1}};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[vertex] (4) at (3,0) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (3.4,-0.4) {4};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[vertex] (3) at (0,0) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (-0.4,-0.4) {3};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[vertex] (2) at (3,3) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (3.4,3.4) {
+\backslash
+ifthenelse{
+\backslash
+equal{
+\backslash
+j}{3}}{1}{2}};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+ifthenelse{
+\backslash
+equal{
+\backslash
+j}{1}}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge [bend right] (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+    edge [bend left] (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+    edge (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) edge (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+    edge [loop right,-] (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+(2) edge (3);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+    edge (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) edge (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+(2) edge (3);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{0.5cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:graph-conventions"
+
+\end_inset
+
+From left to right: a multigraph that is not a graph, and two different
+ graphs on the vertex set 
+\begin_inset Formula $\left\{ 1,2,3,4\right\} $
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -1848,6 +2205,83 @@ The idea is that coupling creates a particular kind of dependence between
  in the coupling.
 \end_layout
 
+\begin_layout Example
+Let 
+\begin_inset Formula $X$
+\end_inset
+
+ satisfy 
+\begin_inset Formula $\L X\left(0\right)=\frac{1}{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\L X\left(1\right)=\frac{1}{2}$
+\end_inset
+
+, and let 
+\begin_inset Formula $Y$
+\end_inset
+
+ satisfy 
+\begin_inset Formula $\L Y\left(0\right)=\frac{1}{3}$
+\end_inset
+
+ and 
+\begin_inset Formula $\L Y\left(1\right)=\frac{2}{3}$
+\end_inset
+
+.
+ Then we can couple 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ into a distribution 
+\begin_inset Formula $\L{X,Y}$
+\end_inset
+
+ on 
+\begin_inset Formula $\left\{ 0,1\right\} ^{2}$
+\end_inset
+
+, defined by 
+\begin_inset Formula $\L{X,Y}\left(0,0\right)=\frac{1}{3}$
+\end_inset
+
+, 
+\begin_inset Formula $\L{X,Y}\left(0,1\right)=\frac{1}{6}$
+\end_inset
+
+, 
+\begin_inset Formula $\L{X,Y}\left(1,0\right)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\L{X,Y}\left(1,1\right)=\frac{1}{2}$
+\end_inset
+
+.
+ In this coupling, whenever 
+\begin_inset Formula $Y=0$
+\end_inset
+
+ we have 
+\begin_inset Formula $X=0$
+\end_inset
+
+, which allows us to make the observation 
+\begin_inset Formula $\L X\left(0\right)\ge\L Y\left(0\right)$
+\end_inset
+
+.
+ Of course, this was already obvious, but hopefully this example illustrates
+ the principle that coupling random variables allows us to make direct compariso
+ns between their distributions.
+\end_layout
+
 \begin_layout Subsection
 Expected Value
 \end_layout
@@ -2444,7 +2878,7 @@ Recall the definition of condition expectation.
  We have
 \begin_inset Formula 
 \[
-\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].
+\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].\qedhere
 \]
 
 \end_inset
@@ -2464,7 +2898,7 @@ status open
 
 
 \backslash
-begin{note}
+begin{comment}
 \end_layout
 
 \end_inset
@@ -2491,12 +2925,323 @@ status open
 
 
 \backslash
-end{note}
+end{comment}
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+We discuss Markov 
+\series bold
+c
+\series default
+hains only superficially, to the extent that is required for 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:exchangeable-pairs"
+
+\end_inset
+
+.
+ The theory of Markov 
+\series bold
+c
+\series default
+hains (and Markov 
+\series bold
+p
+\series default
+rocesses in general) is a very rich area of probability theory, see for
+ example 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Chapter 7"
+key "Kal02"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For our purposes, a (time-homogeneous, two-sided) 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+emph{
+\end_layout
+
+\end_inset
+
+Markov 
+\series bold
+c
+\series default
+hain
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ is a sequence of discrete random elements 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ taking values on a common set 
+\begin_inset Formula $\Om$
+\end_inset
+
+ (the 
+\emph on
+state space
+\emph default
+), such that 
+\begin_inset Formula 
+\begin{equation}
+\Pr\left(X_{\i+1}=y|X_{\i}=x\right)=\Pr\left(X_{\i}=y|X_{\i-1}=x\right)\label{eq:time-homogeneous-defn}
+\end{equation}
+
+\end_inset
+
+for all 
+\begin_inset Formula $x,y\in\Om$
+\end_inset
+
+, 
+\begin_inset Formula $n\in\ZZ$
+\end_inset
+
+.
+ The probability in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:time-homogeneous-defn"
+
+\end_inset
+
+ is called the 
+\emph on
+transition probability
+\emph default
+ from 
+\begin_inset Formula $x$
+\end_inset
+
+ to 
+\begin_inset Formula $y$
+\end_inset
+
+, and is denoted 
+\begin_inset Formula $p_{xy}$
+\end_inset
+
+ or 
+\begin_inset Formula $p\left(x,y\right)$
+\end_inset
+
+.
+ We can think of 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ as a process evolving in time in such a way that, given the current state,
+ the next state does not depend on past states or the current point in time.
+\end_layout
+
+\begin_layout Definition
+A Markov 
+\series bold
+c
+\series default
+hain 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ is stationary with respect to the distribution 
+\begin_inset Formula $\Lb X$
+\end_inset
+
+ if 
+\begin_inset Formula $\Lb{X_{\i}}=\Lb X$
+\end_inset
+
+ for all 
+\begin_inset Formula $\i\in\ZZ$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Define 
+\begin_inset Formula $\pi_{x}=\Pr\left(X=x\right)$
+\end_inset
+
+.
+ Note that if 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ is stationary with respect to 
+\begin_inset Formula $\Lb X$
+\end_inset
+
+, then we must have 
+\begin_inset Formula 
+\begin{equation}
+\pi_{y}=\Pr\left(X_{\i}=y\right)=\sum_{x\in\Om}\Pr\left(X_{\i}=y,\, X_{\i-1}=x\right)=\sum_{x\in\Om}\pi_{x}p_{xy}\label{eq:stationary-defn}
+\end{equation}
+
+\end_inset
+
+for all 
+\begin_inset Formula $y\in\Om$
+\end_inset
+
+.
+ In fact, the distribution 
+\begin_inset Formula $\Lb{X_{\i}}_{\i\in\ZZ}$
+\end_inset
+
+ of a stationary Markov 
+\series bold
+c
+\series default
+hain is uniquely defined by a stationary distribution 
+\begin_inset Formula $\L X$
+\end_inset
+
+ and a set of transition probabilities 
+\begin_inset Formula $\left\{ p_{xy}\right\} _{x,y\in\Om}$
+\end_inset
+
+ which satisfy 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stationary-defn"
+
+\end_inset
+
+ for all 
+\begin_inset Formula $y\in\Om$
+\end_inset
+
+ and 
+\begin_inset Formula $\sum_{y\in\Om}p_{xy}=1$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\Om$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+A stationary Markov 
+\series bold
+c
+\series default
+hain 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ is 
+\emph on
+reversible
+\emph default
+ if 
+\begin_inset Formula $\Lb{X_{\i}}_{\i\in\ZZ}=\Lb{X_{-\i}}_{\i\in\ZZ}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Reversibility means that a Markov
+\series bold
+ c
+\series default
+hain can be equally well understood as evolving forward or backward in time.
+ As before, let 
+\begin_inset Formula $\pi_{x}=\Pr\left(X=x\right)$
+\end_inset
+
+ for the stationary distribution 
+\begin_inset Formula $\L X$
+\end_inset
+
+.
+ Then, reversibility is equivalent to the condition 
+\begin_inset Formula $\pi_{x}p_{xy}=\pi_{y}p_{yx}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x,y\in\Om$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+A Markov 
+\series bold
+c
+\series default
+hain 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ is 
+\emph on
+irreducible
+\emph default
+ if for all 
+\begin_inset Formula $x,y\in\Om$
+\end_inset
+
+ there is 
+\begin_inset Formula $t\in\ZZ$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Pr\left(X_{\i+t}=y|X_{\i}=x\right)>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Irreducibility means that every state can be accessed from every other state.
+ Irreducibility is equivalent to the condition that for any 
+\begin_inset Formula $x,y\in\Om$
+\end_inset
+
+, there is a finite sequence 
+\begin_inset Formula $x=x_{0},x_{1},\dots,x_{k}=y$
+\end_inset
+
+ with 
+\begin_inset Formula $p\left(x_{\i},x_{\i+1}\right)>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $\i<k$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proposition
@@ -2510,8 +3255,9 @@ Let
 \begin_inset Formula $G$
 \end_inset
 
- be an edge-weighted multigraph, such that the sum of the weights at each
- vertex is 
+ be a finite connected edge-weighted multigraph.
+ Suppose that each edge weight is positive, and the sum of the weights at
+ each vertex is 
 \begin_inset Formula $\Delta$
 \end_inset
 
@@ -2520,44 +3266,118 @@ Let
 \begin_inset Formula $G$
 \end_inset
 
- defines a reversible Markov chain on its vertex set, which is stationary
- with respect to the uniform distribution.
+ defines a reversible Markov 
+\series bold
+c
+\series default
+hain on its vertex set 
+\begin_inset Formula $V$
+\end_inset
+
+, which is stationary with respect to the uniform distribution on 
+\begin_inset Formula $V$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
+\begin_layout Proof
+For 
+\begin_inset Formula $x,y\in V$
+\end_inset
 
-\begin_layout Plain Layout
+, let 
+\begin_inset Formula $p_{xy}=p_{yx}$
+\end_inset
 
+ be the sum of the weights of all edges between 
+\begin_inset Formula $x$
+\end_inset
 
-\backslash
-begin{todo}
-\end_layout
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+, divided by 
+\begin_inset Formula $\Delta$
+\end_inset
+
+.
+ By construction, 
+\begin_inset Formula $\sum_{y\in\Om}p_{xy}=1$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\L X$
+\end_inset
+
+ be the uniform distribution on 
+\begin_inset Formula $V$
+\end_inset
+
+, and let 
+\begin_inset Formula $\pi_{x}=\L X\left(x\right)$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+\pi_{y}=\frac{1}{\left|V\right|}=\frac{1}{\left|V\right|}\sum_{x\in V}p_{xy}=\sum_{x\in V}\pi_{x}p_{xy}
+\]
 
 \end_inset
 
+for all 
+\begin_inset Formula $y\in V$
+\end_inset
 
-\end_layout
-
-\begin_layout Standard
-Need proof and complete statement of proposition
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{todo}
-\end_layout
+, and also
+\begin_inset Formula 
+\[
+\pi_{x}p_{xy}=\frac{1}{\left|V\right|}p_{xy}=\pi_{y}p_{yx}
+\]
 
 \end_inset
 
+for each 
+\begin_inset Formula $x,y\in V$
+\end_inset
 
+.
+ We conclude that the transition probabilities 
+\begin_inset Formula $\left\{ p_{xy}\right\} _{x,y\in V}$
+\end_inset
+
+ define a reversible Markov 
+\series bold
+c
+\series default
+hain stationary with respect to 
+\begin_inset Formula $\L X$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+Let 
+\begin_inset Formula $G$
+\end_inset
+
+ be a cycle of length 
+\begin_inset Formula $n$
+\end_inset
+
+, with a weight of 1 on each edge.
+ The corresponding Markov 
+\series bold
+c
+\series default
+hain is a random walk: at each time-step, there is equal probability of
+ moving one step clockwise or counterclockwise around the cycle.
 \end_layout
 
 \begin_layout Subsection
@@ -5030,7 +5850,9 @@ Uniform models are the simplest examples of random structures.
 \end_inset
 
  has 
-\begin_inset Formula $\Pr\left(G\right)={{n \choose 2} \choose M}^{-1}$
+\begin_inset Formula $\Pr\left(G\right)=\begin{pmatrix}{n \choose 2}\\
+M
+\end{pmatrix}^{-1}$
 \end_inset
 
  for each graph 
@@ -5328,7 +6150,7 @@ reference "sec:exchangeable-pairs"
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cX}{\mathcal{V}}
 {\boldsymbol{\mathcal{X}}}
 \end_inset
 
@@ -7341,7 +8163,7 @@ name "rem:better-wasserstein-bounds"
 In the interests of a simple proof, the bounds in 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "example:wasserstein-bound"
+reference "thm:wasserstein-normal-bounds"
 
 \end_inset
 
@@ -7448,7 +8270,7 @@ Let
 Then 
 \begin_inset Formula 
 \[
-d_{\W}\left(\X,\N\left(0,1\right)\right)\le\frac{C}{\sqrt{n}}\,\E\left(\left|Q\right|^{3}\right)
+d_{\W}\left(\X,\N\left(0,1\right)\right)\le\frac{C}{\sqrt{n}}\,\E\left|Q\right|^{3}
 \]
 
 \end_inset
@@ -8977,7 +9799,11 @@ a pair
 
 \begin_layout Proposition
 There is a natural equivalence between time-homogeneous reversible Markov
- chains with steady-state distribution 
+ 
+\series bold
+c
+\series default
+hains with steady-state distribution 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
@@ -9007,7 +9833,7 @@ Given an exchangeable pair
 
 .
  With 
-\begin_inset Formula $\pi\left(x\right)=\Pr\left(\X=x\right)$
+\begin_inset Formula $\pi\left(x\right)=\L{\X}\left(x\right)$
 \end_inset
 
 , we then have
@@ -9032,8 +9858,11 @@ for any
 \end_inset
 
 .
- Of course, given a time-homogeneous reversible markov chain with steady-state
- distribution 
+ Of course, given a reversible Markov 
+\series bold
+c
+\series default
+hain with steady-state distribution 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
@@ -9057,8 +9886,11 @@ begin{comment}
 
 \end_inset
 
-Conversely, suppose we have a time-homogeneous reversible Markov chain with
- steady-state distribution 
+Conversely, suppose we have a time-homogeneous reversible Markov 
+\series bold
+c
+\series default
+hain with steady-state distribution 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
@@ -9137,7 +9969,11 @@ We say an exchangeable pair
 \emph on
 connected
 \emph default
- if the corresponding Markov chain is irreducible.
+ if the corresponding Markov 
+\series bold
+c
+\series default
+hain is irreducible.
 \end_layout
 
 \begin_layout Remark
@@ -9243,7 +10079,11 @@ The relation of differing by a transposition is symmetric, so
 \end_inset
 
  is indeed an exchangeable pair.
- The Markov chain associated with 
+ The Markov 
+\series bold
+c
+\series default
+hain associated with 
 \begin_inset Formula $\mathbf{W}$
 \end_inset
 
@@ -9252,8 +10092,11 @@ The relation of differing by a transposition is symmetric, so
 \begin_inset Formula $\sigma$
 \end_inset
 
-, to make a transition in the Markov chain we just randomly choose one of
- the 
+, to make a transition in the Markov 
+\series bold
+c
+\series default
+hain we just randomly choose one of the 
 \begin_inset Formula ${n \choose 2}$
 \end_inset
 
@@ -9289,8 +10132,12 @@ reference "rem:underlying-pair"
 \end_layout
 
 \begin_layout Standard
-The Markov chain underlying a connected exchangeable pair can be naturally
- viewed as a connected one-dimensional simplicial complex.
+The Markov 
+\series bold
+c
+\series default
+hain underlying a connected exchangeable pair can be naturally viewed as
+ a connected one-dimensional simplicial complex.
  The zeroth reduced homology group 
 \begin_inset Formula $\ker\partial_{0}/\im\partial_{1}$
 \end_inset
@@ -9530,7 +10377,11 @@ We will next prove
 
 , and takes the value zero elsewhere.
  Note that this function is antisymmetric by the reversibility of the Markov
- chain of 
+ 
+\series bold
+c
+\series default
+hain of 
 \begin_inset Formula $\eX$
 \end_inset
 
@@ -9917,8 +10768,11 @@ This approximation is effective when
 \end_layout
 
 \begin_layout Example
-The interpretation of these approximate equalities is that the Markov chain
- associated with 
+The interpretation of these approximate equalities is that the Markov 
+\series bold
+c
+\series default
+hain associated with 
 \begin_inset Formula $\eX$
 \end_inset
 
@@ -9936,7 +10790,11 @@ The interpretation of these approximate equalities is that the Markov chain
 \begin_inset Formula $\eX$
 \end_inset
 
- is defined by a Markov chain on 
+ is defined by a Markov 
+\series bold
+c
+\series default
+hain on 
 \begin_inset Formula $\Om$
 \end_inset
 
@@ -11754,8 +12612,11 @@ reference "prop:graph-to-markov"
 \begin_inset Formula $\fG$
 \end_inset
 
- induces a reversible Markov chain with uniform stationary distribution
- (in our case 
+ induces a reversible Markov 
+\series bold
+c
+\series default
+hain with uniform stationary distribution (in our case 
 \begin_inset Formula $\rG nd)$
 \end_inset
 
@@ -11973,7 +12834,7 @@ Now, if
 , so that both of 
 \begin_inset Formula 
 \[
-\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|\mbox{ and }\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|
+\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|
 \]
 
 \end_inset
@@ -12141,7 +13002,11 @@ reference "prop:graph-to-markov"
 \begin_inset Formula $\fG$
 \end_inset
 
- induces a reversible Markov chain on 
+ induces a reversible Markov 
+\series bold
+c
+\series default
+hain on 
 \begin_inset Formula $\Om$
 \end_inset
 
@@ -12799,6 +13664,74 @@ status open
 
 \backslash
 end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Further Reading
+\end_layout
+
+\begin_layout Standard
+There are many aspects of Stein's method that we were unable to cover in
+ this thesis.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Possibly mention:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+different distributions, both standard and ad-hoc
+\end_layout
+
+\begin_layout Itemize
+different techniques, such as zero-biasing
+\end_layout
+
+\begin_layout Itemize
+Ways to construct characterizing operators other than exchangeable pairs
+\end_layout
+
+\begin_layout Itemize
+Active research: random matrices, semicircle laws
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
 \end_layout
 
 \end_inset
