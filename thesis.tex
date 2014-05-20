@@ -65,6 +65,8 @@
 % cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
 \usepackage[nameinlink,capitalise,noabbrev]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
+\crefname{section}{Chapter}{Chapters}
+\crefname{subsection}{Section}{Sections}
 
 % LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
 \theoremstyle{plain}
@@ -264,13 +266,41 @@ c
 \global\long\def\falling#1#2{\left(#1\right)_{#2}}
 
 
+\begin{comment}
+
+
+\section*{Acknowledgements}
+
+First and foremost I would like to thank my supervisor Catherine Greenhill
+for her support and guidance for the duration of the thesis, and also
+for providing me with invaluable advice and opportunities outside
+of her role as thesis advisor.
+
+I would like to thank the honours students of 2013 and 2014, for making
+the honours room a great place to learn and collaborate.
+
+I would also like to thank the honours coordinators Hendrik Grundling
+and Daniel Chan, for running the honours program smoothly, providing
+useful advice, and ensuring I knew how to give a seminar!
+
+Finally, I would like to thank every one of my maths and stats lecturers
+from 2010 to 2014, whose effort and expertise have managed to transform
+me into an enthusiastic (and maybe even capable!) student of mathematics.
+
+\newpage{}
+
+\end{comment}
+
 \tableofcontents{}
 
 \begin{todo}Remaining stuff:
 \begin{itemize}
 \item random combinatorial structures: merge?
+\item put a remark in the Poisson section saying we'll do Poisson approximation
+later
 \item size-bias coupling
-\item finish proof sketch for random regular graphs section
+\item finish proof sketch for random regular graphs section - where does
+the bound come from?
 \item further reading
 \end{itemize}
 \end{todo}
@@ -312,11 +342,13 @@ in a variety of metrics consistent with weak convergence. Such bounds
 can be used to quantify existing limit theorems, and can also be used
 as a tool to prove purely asymptotic results.
 
-In this thesis, we set out the theoretical groundwork for Stein's
-method, including an overview of basic probability theory and a discussion
-of weak convergence. We then present a very general framework for
-the Stein's method, and outline a few particular ways of applying
-the method. We include a number of specific examples and applications.
+In this thesis, we will first set out the theoretical groundwork for
+Stein's method, including an overview of basic probability theory
+and a discussion of weak convergence (\ref{sec:probability-theory}).
+We then present a very general framework for the Stein's method (\ref{sec:stein-general})
+before specializing to the Normal and Poisson cases (\ref{sec:normal,sec:poisson}).
+We finally outline a few particular ways of applying the method (\ref{sec:size-bias-coupling,sec:exchangeable-pairs}).
+We include a number of specific examples and applications throughout.
 
 Unless stated otherwise, all proofs are ``original'' in that I came
 up with them, although many are quite straightforward and probably
@@ -337,6 +369,8 @@ is denoted $\falling nk$. Finally, $\range k$ denotes the set $\left\{ 1,\dots,k
 
 Unless otherwise specified, all asympotics are as $n\to\infty$. Apart
 from standard asymptotic notation, $f\sim g$ means $f=g\left(1+o\left(1\right)\right)$.
+We will occasionally use big-oh notation non-asymptotically, to avoid
+writing constant factors.
 
 \begin{comment}, $f\prec g$ means $f=O\left(g\right)$ and $f\asymp g$
 means $f=\Theta\left(g\right)$.\end{comment}
@@ -397,7 +431,7 @@ is not a graph, and two different graphs on the vertex set $\left\{ 1,2,3,4\righ
 
 
 
-\section{General Probability Theory}
+\section{\label{sec:probability-theory}General Probability Theory}
 
 \global\long\def\L#1{\mathcal{L}_{#1}}
 
@@ -639,7 +673,7 @@ comparisons between their distributions.
 \subsection{Expected Value}
 \begin{defn}
 The \emph{expected value }of a random variable $\X$ (or its distribution)
-is the measure-theoretc integral $\E\X=\int x\d\L{\X}\left(x\right)$.\end{defn}
+is the measure-theoretic integral $\E\X=\int x\d\L{\X}\left(x\right)$.\end{defn}
 \begin{rem}
 For a random variable $\X$ that takes integer values, this definition
 is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\,\Pr\left(\X=x\right)$.
@@ -738,16 +772,26 @@ for all $\om\in\Om$ with $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$;
 this defines $\E\left[\X_{1}|\X_{2}\right]$ up to a set of probability
 zero.
 \end{rem}
-We finally present a simple consequence of the definition of conditional
+We finally present some simple consequences of the definition of conditional
 expectation.
 \begin{prop}
-[Tower Law of Expectation]\label{prop:tower-law}Suppose $\X_{1}$
-and $\X_{2}$ are random variables defined on the same underlying
-probability space $\left(\Om,\cA\right)$. Then $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$.\end{prop}
+[Tower Law of Expectation]\label{prop:tower-contractivity}Suppose
+$\X_{1}$ and $\X_{2}$ are random variables defined on the same underlying
+probability space $\left(\Om,\cA\right)$. Then\begin{enumerate}
+
+\item (Tower Law) $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$,
+
+\item (Contractivity) $\E\left|\E^{\X_{2}}\X_{1}\right|\le\E\left|\X_{1}\right|$.
+
+\end{enumerate}\end{prop}
 \begin{proof}
-Recall the definition of condition expectation. We have
+Recall the definition of conditional expectation. We have
 \[
-\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].\qedhere
+\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].
+\]
+Next, let $\A=\left\{ \E^{\X_{2}}\X_{1}\ge0\right\} $, so
+\[
+\E\left|\E^{\X_{2}}\X_{1}\right|=\E\left[\one_{\A}\E^{\X_{2}}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\E^{\X_{2}}\X_{1}\right]=\E\left[\one_{\A}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\X_{1}\right]\le\E\left|\X_{1}\right|.\qedhere
 \]
 
 \end{proof}
@@ -871,8 +915,8 @@ for all bounded continuous functions $f:\RR\to\RR$. Alternatively,
 we say $\Lb{\X_{n}}$ converges \emph{weakly} to $\Lb{\X}$, or simply
 $\Lb{\X_{n}}\to\Lb{\X}$.
 \end{defn}
-This is only one of a number of equivalent and very natural definitions
-for convergence in distribution.
+This is only one of a number of equivalent natural definitions for
+convergence in distribution.
 \begin{defn}
 The \emph{distribution function} $\F_{\X}$ of a random variable $\X$
 is defined by\\
@@ -899,27 +943,24 @@ all $t\in\RR$.
 The equivalence of \ref{prop:dist-def,prop:dist-liminf,prop:dist-F}
 is (part of) a well-known and relatively elementary result called
 the Portmanteau \textbf{t}heorem (\cite[Theorem 3.25]{Kal02}). The
-equivalence of \ref{prop:dist-def,prop:dist-levy} is called\emph{L\'evy's
-\textbf{c}ontinuity \textbf{t}heorem}(\cite[Theorem 4.3]{Kal02}).
+equivalence of \ref{prop:dist-def,prop:dist-levy} is called \emph{L\'evy's
+\textbf{c}ontinuity \textbf{t}heorem} (\cite[Theorem 4.3]{Kal02}).
 
-When $\X$ and each $\X_{n}$ are integer random variables, then \ref{prop:dist-F}
+If $\X$ and each $\X_{n}$ are integer random variables, then \ref{prop:dist-F}
 reduces to the condition that $\Pr\left(\X_{n}=k\right)\to\Pr\left(\X=k\right)$
 for all $k$. This characterization is usually used to prove the Poisson
 \textbf{l}imit \textbf{t}heorem.
 
-Classically, distributional convergence results are often proved by
-L\'evy's continuity theorem. For example, this approach is usually
-used to prove the \textbf{c}entral \textbf{l}imit \textbf{t}heorem.
-For combinatorial applications, convergence in distribution can also
-be proved by the ``method of moments'': if $\X$ is the only random
-variable with the moments $\left(\E\X^{k}\right)_{k\in\NN}$, then
-$\Lb{\X_{n}}\to\Lb{\X}$ if $\E\X_{n}^{k}\to\E\X^{k}$. Convergence
-in distribution can also sometimes be inferred from stronger forms
-of convergence when $\X$ and all the $\X_{n}$ are coupled to the
-same underlying space.
-
-A disadvantage of all these approaches is that they provide little
-information about the rate of convergence.
+Classically, distributional convergence results are usually proved
+with L\'evy's continuity theorem and Fourier analysis. For example,
+this approach is used to prove the \textbf{c}entral \textbf{l}imit
+\textbf{t}heorem. In combinatorial applications, convergence in distribution
+is often proved with the ``method of moments'' (which is actually
+the Fourier analytic method in disguise): under certain conditions,
+$\Lb{\X_{n}}\to\Lb{\X}$ if $\E\X_{n}^{k}\to\E\X^{k}$ for all $k$.
+Convergence in distribution can also sometimes be inferred from stronger
+forms of convergence when $\X$ and all the $\X_{n}$ are coupled
+to the same underlying space.
 
 In functional analysis terms, note that expectation operators are
 bounded linear functionals on the space of real bounded continuous
@@ -936,7 +977,10 @@ for $\h$ with unit uniform norm. So, the weak topology is metrizable.
 \begin{defn}
 \label{def:general-metrics}Let $\cH$ be a determining class of real
 measurable ``test'' functions that are uniformly absolutely bounded.
-Define $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$ by $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$.
+Define $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$ by 
+\[
+d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|.
+\]
 For random variables $\X_{1},\X_{2}$, we write $d_{\cH}\left(\X_{1},\X_{2}\right)$
 instead of $d_{\cH}\left(\Lb{\X_{1}},\Lb{\X_{2}}\right)$.\end{defn}
 \begin{prop}
@@ -1151,11 +1195,11 @@ If $\X$ is a continuous random variable, then $\E_{\X}\h=\int_{\RR}\h\left(x\rig
 for measurable $\h$. (This is immediate from the measure-theoretic
 definition of the integral).
 \begin{prop}
-\label{prop:transfer}Let $\X_{1},\X_{2}$ be random variables.\begin{enumerate}
+\label{prop:transfer}Let $\X_{1},\X_{2}$ be random variables. Then\begin{enumerate}
 
-\item \label{prop:transfer-K/TV}$d_{\K}\left(\X_{1},\X_{2}\right)\le d_{\TV}\left(\X_{1},\X_{2}\right)$
+\item \label{prop:transfer-K/TV}$d_{\K}\left(\X_{1},\X_{2}\right)\le d_{\TV}\left(\X_{1},\X_{2}\right)$;
 
-\item \label{prop:transfer-BL/W}$d_{\BL}\left(\X_{1},\X_{2}\right)\le d_{\W}\left(\X_{1},\X_{2}\right)$
+\item \label{prop:transfer-BL/W}$d_{\BL}\left(\X_{1},\X_{2}\right)\le d_{\W}\left(\X_{1},\X_{2}\right)$;
 
 \item \label{prop:transfer-K/W}If there is $C>0$ such that $\left|f_{\X_{2}}\left(x\right)\right|\le C$
 for all $x$, then $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\BL}\left(\X_{1},\X_{2}\right)}$.
@@ -1315,10 +1359,10 @@ the method of exchangeable pairs in \ref{sec:exchangeable-pairs}.
 
 
 Suppose we have a potentially complicated random variable $\X$, and
-we believe the distribution of $\X$ is close to a ``standard''
-distribution $\Lo$. Then, Stein's method allows us to compare the
-operators $\E_{\X}$ and $\Eo:=\E_{\Lo}$. This is sometimes directly
-useful for approximating statistics of $\X$ (for example, $\Pr\left(\X\in\A\right)=\E_{\X}\one_{\A}$).
+we believe the distribution of $\X$ is close to a ``special'' distribution
+$\Lo$. Then, Stein's method allows us to compare the operators $\E_{\X}$
+and $\Eo:=\E_{\Lo}$. This is sometimes directly useful for approximating
+statistics of $\X$ (for example, $\Pr\left(\X\in\A\right)=\E_{\X}\one_{\A}$).
 However, particularly for combinatorial applications, Stein's method
 is most often used to bound the distance $d_{\cH}\left(\L{\X},\Lo\right)$
 for some $\cH$, where the metric $d_{\cH}$ from \ref{def:general-metrics}
@@ -1336,19 +1380,20 @@ restrict $\Eo$ to $\Xo$, so we can write $\im\To=\ker\Eo$.
 The following proposition shows why $\To$ is called a characterizing
 operator.
 \begin{prop}
-\label{prop:characterizing}If $\To:\Fo\to\Xo$ is a characterizing
-operator and $\Xo$ is a determining class then $\im\To\subseteq\ker\E_{\X}$
-implies $\X\in\Lo$.\end{prop}
+\label{prop:characterizing}Suppose $\To:\Fo\to\Xo$ is a characterizing
+operator and $\Xo$ is a determining class. If some random variable
+$\X$ satisfies $\im\To\subseteq\ker\E_{\X}$, then $\X\in\Lo$.\end{prop}
 \begin{proof}
 If $\h\in\Xo$, then $\h-\Eo\h\in\ker\Eo=\im\To$ so $\E_{\X}\left[\h-\Eo\h\right]=0$.
 That is, $\E_{\X}\h=\Eo\h$ for all $\h\in\Xo$, which means $\L{\X}=\Lo$
 by the definition of a determining class.
 \end{proof}
 \ref{prop:characterizing} should already give some clue as to how
-Stein's method works. If $\E_{\X}\To\fo=0$ is the same as $\X\in\Lo$,
-then hopefully it is true that $\E_{\X}\To\fo\approx0$ means $\L{\X}\approx\Lo$.
-In practice it is a little unwieldy to show an operator is characterizing
-using \ref{def:characterizing}, so we'll prove an equivalent definition.
+Stein's method works. If $\E_{\X}\To\fo=0$ for all $\fo$ means $\L{\X}=\Lo$,
+then hopefully it is true that $\E_{\X}\To\fo\approx0$ for all $\fo$
+means $\L{\X}\approx\Lo$. In practice it is a little unwieldy to
+show an operator is characterizing using \ref{def:characterizing},
+so we'll prove an equivalent definition.
 \begin{prop}
 \label{prop:U_0-characterizing}$\To:\Fo\to\Xo$ is characterizing
 if and only if there is a linear operator $\Uo:\Xo\to\Fo$ (called
@@ -1425,17 +1470,16 @@ and we conclude that $\ker\To$ is complementable.
 \end{proof}
 \end{comment}
 
-Now, note that for each $\h\in\Xo$, Equation \ref{eq:U_0-characterizing}
-allows us to to make the transformation
+Now, note that for any random variable $\X$ and any $\h\in\Xo$,
+Equation \ref{eq:U_0-characterizing} allows us to to make the transformation
 \begin{equation}
 \E_{\X}\h=\Eo\h+\E_{\X}\To\Uo\h.\label{eq:stein-transformation}
 \end{equation}
 The original purpose of Stein's method was to estimate some particular
-$\E_{\X}\h$. If $\Lo$ was chosen to be a ``simple'', well-understood
-distribution then the term $\Eo\h$ should be easy to compute or estimate,
-and if the distribution of $\X$ was ``close'' to $\Lo$, then it
-should be possible to show that the remainder $\E_{\X}\To\Uo\h$ is
-small.
+$\E_{\X}\h$. If $\Lo$ is a well-understood distribution then the
+term $\Eo\h$ should be easy to compute or estimate, and if the distribution
+of $\X$ was ``close'' to $\Lo$, then it should be possible to
+show that the remainder $\E_{\X}\To\Uo\h$ is small.
 
 For our purposes, the main use of \ref{eq:stein-transformation} is
 to bound $d_{\cH}\left(\X,\Lo\right)$ for some $\cH\subseteq\Xo$.
@@ -1451,10 +1495,10 @@ there are a number of known convenient choices of $\cY$.
 
 In the next two sections, we will present characterizing operators
 for the normal and Poisson distributions, and some associated convenient
-choices for $\mathcal{Y}$.
+choices for $\cY$.
 
 
-\section{The Normal Case}
+\section{The Normal Case\label{sec:normal}}
 
 We'll use \ref{prop:U_0-characterizing} to give our first example
 of a characterizing operator.
@@ -1468,7 +1512,7 @@ Let $\cF_{\N}$ be the set of absolutely continuous $\fo$ with $\fo'\in\cX_{\N}$.
 (For a definition and characterization of absolute continuity, see
 \cite[Definition 7.17 and Theorem 7.18]{Rud66}).
 
-The operator $\T_{\N}:\cF_{\N}\to\cX_{\N}$ given by $\T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$
+The linear operator $\T_{\N}:\cF_{\N}\to\cX_{\N}$ given by $\T_{\N}\fo\left(x\right)=\fo'\left(x\right)-x\fo\left(x\right)$
 is a characterizing operator for $\N\left(0,1\right)$.\end{thm}
 \begin{proof}
 (Adapted from \cite[Lecture II]{Ste86}). 
@@ -1607,8 +1651,9 @@ Useful application of Stein's method depends on a good understanding
 of the functions in $\U_{\N}\cH$. This will give us a set of functions
 $\cY$ to maximize over, as in \ref{eq:stein-distance-transform}.
 In the case of the Wasserstein and bounded Lipschitz metric, we can
-show that the first three derivatives are all bounded. This makes
-these metrics good choices for normal approximation.
+show that the first three derivatives are all bounded, so we can choose
+$\cY$ to be the set of functions that satisfies these bounds. This
+makes these metrics good choices for normal approximation.
 \begin{thm}
 \label{thm:wasserstein-normal-bounds}Suppose that $\cH\in\left\{ \cH_{\W},\cH_{\BL}\right\} $
 and $\Lo=\N\left(0,1\right)$. Using the characterizing operator in
@@ -1746,10 +1791,10 @@ with similarly elementary but much more fiddly proofs. See \cite[Lemma 2.4]{CGS1
 \subsection{The Berry-Esseen Theorem\label{sub:berry-esseen}}
 
 The Berry-Esseen \textbf{t}heorem is a quantitative version of the
-central limit theorem. The original version was independently proved
-in \cite{Ber41} and \cite{Ess42} with some relatively involved Fourier
-analysis. However, the machinery of Stein's method allows for a very
-simple proof.
+\textbf{c}entral \textbf{l}imit \textbf{t}heorem. The original version
+was independently proved in \cite{Ber41} and \cite{Ess42} with some
+relatively involved Fourier analysis. However, the machinery of Stein's
+method allows for a very simple proof.
 
 The purpose of this section is to make the theory from \ref{sec:stein-general}
 a bit more concrete by giving our first example of Stein's method
@@ -1808,20 +1853,19 @@ gives
 \end{equation}
 Next, note that
 \begin{equation}
-\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]=\E Q_{\i}^{2}\,\E f'\left(W_{\i}\right)=\E f'\left(W_{\i}\right)=\E f'\left(\X\right)+\frac{1}{\sqrt{n}}\E\left[Q_{\i}f''\left(E'\right)\right]\label{eq:berry-esseen-EQ2fW}
+\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]=\E Q_{\i}^{2}\,\E f'\left(W_{\i}\right)=\E f'\left(W_{\i}\right)=\E f'\left(\X\right)+\frac{1}{\sqrt{n}}\,\E\left[Q_{\i}f''\left(E'\right)\right]\label{eq:berry-esseen-EQ2fW}
 \end{equation}
 for some $E'$, again using the Lagrange form of the remainder. Since
 $\left\Vert f''\right\Vert _{\infty}\le6$, we have 
 \begin{equation}
-\frac{1}{2}\E\left|Q_{\i}^{3}f''\left(E\right)\right|\le3\E\left|Q^{3}\right|,\quad\E\left|Q_{\i}f''\left(E'\right)\right|\le6\E\left|Q\right|.\label{eq:berry-esseen-error-bounds}
+\frac{1}{2}\E\left|Q_{\i}^{3}f''\left(E\right)\right|\le3\,\E\left|Q^{3}\right|,\quad\E\left|Q_{\i}f''\left(E'\right)\right|\le6\,\E\left|Q\right|.\label{eq:berry-esseen-error-bounds}
 \end{equation}
 Hölder's inequality (see \cite[Theorem 3.6 (1)]{Rud66}) for the $L^{3/2}$
 norm gives 
 \[
 1=\E\left|Q^{2}\right|^{3/2}\le\left(\E\left|\left(Q^{2}\right)^{3/2}\right|^{2/3}\right)^{3/2}=\E\left|Q^{3}\right|,
 \]
-so another application of Hölder's inequality for the $L^{3}$ norm
-gives
+so an application of Hölder's inequality for the $L^{3}$ norm gives
 \begin{equation}
 \E\left|Q\right|\le\E\left|Q^{3}\right|^{1/3}\le\E\left|Q^{3}\right|.\label{eq:berry-esseen-holder}
 \end{equation}
@@ -1830,13 +1874,13 @@ gives
 \begin{alignat*}{1}
 \left|\E\left[\X f\left(\X\right)\right]-\E f'\left(\X\right)\right| & \le\left|\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}f\left(\X\right)\right]-\frac{1}{\sqrt{n}}\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]\right)\right|\\
  & \qquad+\left|\frac{1}{n}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]-\E f'\left(\X\right)\right)\right|\\
- & \le\frac{3}{\sqrt{n}}\E\left|Q^{3}\right|+\frac{6}{\sqrt{n}}\E\left|Q^{3}\right|\\
- & =\frac{9}{\sqrt{n}}\E\left|Q^{3}\right|.
+ & \le\frac{3}{\sqrt{n}}\,\E\left|Q^{3}\right|+\frac{6}{\sqrt{n}}\,\E\left|Q^{3}\right|\\
+ & =\frac{9}{\sqrt{n}}\,\E\left|Q^{3}\right|.
 \end{alignat*}
 
 \end{proof}
 
-\section{The Poisson Case}
+\section{The Poisson Case\label{sec:poisson}}
 \begin{thm}
 \label{thm:poisson-characterizing}Let $\X_{\Po\left(\lambda\right)}\in\Po\left(\lambda\right)$
 and let 
@@ -1852,22 +1896,22 @@ First, fix $k$ and note that
 \[
 \left.\left(\i+1\right)^{k}\frac{\lambda^{\left(\i+1\right)}}{\left(\i+1\right)!}\middle/\i^{k}\frac{\lambda^{\i}}{\i!}\right.\to0
 \]
-as $\i\to\infty$. So by the ratio test $\E\X_{\Po\left(\lambda\right)}^{k}\prec\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}<\infty$,
+as $\i\to\infty$. So by the ratio test $\E\X_{\Po\left(\lambda\right)}^{k}=O\left(\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\right)<\infty$,
 and $\cX_{\N}$ contains the constant functions.
 
-Now, we check that $\T_{\N}\fo$ is well-defined as an operator with
-codomain $\cX_{\Po\left(\lambda\right)}$. For $\fo\in\cF_{\Po\left(\lambda\right)}$
+Now, we check that $\T_{\N}\fo$ is well-defined as a linear operator
+with codomain $\cX_{\Po\left(\lambda\right)}$. For $\fo\in\cF_{\Po\left(\lambda\right)}$
 and $k\in\NN$,
 \[
 \E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\T_{\Po\left(\lambda\right)}\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]\le\lambda\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right]+\E\left[\X_{\Po\left(\lambda\right)}^{k+1}\left|\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right].
 \]
 We have 
-\begin{eqnarray*}
-\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right] & \prec & \sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\left|\fo\left(\i+1\right)\right|\\
- & \prec & \sum_{r=0}^{k+1}\sum_{\i=0}^{\infty}\left(\i+1\right)^{r}\frac{\lambda^{\i+1}}{\left(\i+1\right)!}\left|\fo\left(\i+1\right)\right|\\
- & \prec & \sum_{r=0}^{k+1}\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]\\
- & < & \infty.
-\end{eqnarray*}
+\begin{alignat*}{1}
+\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right] & =O\left(\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\left|\fo\left(\i+1\right)\right|\right)\\
+ & =O\left(\sum_{r=0}^{k+1}\sum_{\i=0}^{\infty}\left(\i+1\right)^{r}\frac{\lambda^{\i+1}}{\left(\i+1\right)!}\left|\fo\left(\i+1\right)\right|\right)\\
+ & =O\left(\sum_{r=0}^{k+1}\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]\right)\\
+ & <\infty.
+\end{alignat*}
 It follows that $\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\T_{\Po\left(\lambda\right)}\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]<\infty$
 and $\T_{\Po\left(\lambda\right)}\fo\in\cX_{\Po\left(\lambda\right)}$.
 
@@ -1885,10 +1929,10 @@ for $\i\in\ZZ^{+}$ (and $\U_{\Po\left(\lambda\right)}\h\left(0\right)=0$).
 
 For $\h\in\cX_{\Po\left(\lambda\right)}$ and $k\in\NN$,
 \begin{alignat*}{1}
-\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\U_{\Po\left(\lambda\right)}\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right] & \prec\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=0}^{\i-1}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\\
- & =\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=\i}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\\
- & \le\sum_{\ii=1}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\sum_{\i=1}^{\ii}\i^{k-1}\\
- & \prec\sum_{\ii=1}^{\infty}\ii^{k}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\\
+\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\U_{\Po\left(\lambda\right)}\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right] & =O\left(\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=0}^{\i-1}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\right)\\
+ & =O\left(\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=\i}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\right)\\
+ & =O\left(\sum_{\ii=1}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\sum_{\i=1}^{\ii}\i^{k-1}\right)\\
+ & =O\left(\sum_{\ii=1}^{\infty}\ii^{k}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\right)\\
  & <\infty,
 \end{alignat*}
 so $\U_{\Po\left(\lambda\right)}\h\in\cF_{\Po\left(\lambda\right)}$,
@@ -1932,7 +1976,6 @@ so
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right|\le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[0,\i-1\right]\right)\Po_{\lambda}\left(\left[\i,\infty\right]\right).
 \]
 If $1\le\i\le\lambda$, then
-
 \begin{alignat*}{1}
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[0,\i-1\right]\right)\\
  & =\lambda^{-1}\sum_{\ii=0}^{\i-1}\frac{\left(\i-1\right)!}{\ii!\lambda^{\i-1-\ii}}\\
@@ -2013,7 +2056,7 @@ Therefore,
 is positive only when $\i=k$, and
 \begin{alignat*}{1}
 \U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(k+1\right)-\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(k\right) & =e^{-\lambda}\lambda^{-1}\sum_{\ii=k+1}^{\infty}\frac{\lambda^{\ii}}{\ii!}+e^{-\lambda}\lambda^{-1}\sum_{\iiii=1}^{k}\frac{\lambda^{\iiii}}{\iiii!}\frac{\iiii}{k}\\
- & \le e^{-\lambda}\lambda^{-1}\left(e^{\lambda}-1\right)=\lambda^{-1}\left(1-e^{-\lambda}\right)
+ & \le e^{-\lambda}\lambda^{-1}\left(e^{\lambda}-1\right)=\lambda^{-1}\left(1-e^{-\lambda}\right).
 \end{alignat*}
 Now, for any $\A\subseteq\NN$, $\one_{\A}=\sum_{k\in\A}\one_{\left\{ k\right\} }$,
 so linearity of $\U_{\Po\left(\lambda\right)}$ gives 
@@ -2034,11 +2077,17 @@ is also valid (see \cite[Lemma 4]{Bar83}). A much more sophisticated
 argument in \cite[Remark 10.2.4]{BHJ92} gives the sharper bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\sqrt{2/\left(e\lambda\right)}\right\} $.
 \end{rem}
 
-\section{Size-Bias Coupling}
+\section{Size-Bias Coupling\label{sec:size-bias-coupling}}
 
-In both the Normal and Poisson case, estimation of the necessary expectation
-$\E_{\X}\To\fo$ involves some control over expectations of the form
-$\E\left[\X f\left(\X\right)\right]$. In \ref{sec:exchangeable-pairs},
+\global\long\def\Ls#1{\mathcal{L}_{#1}^{\left(s\right)}}
+
+
+\global\long\def\Xs#1{#1^{\left(s\right)}}
+
+
+In both the Normal and Poisson cases, estimation of the necessary
+expectation $\E_{\X}\To\fo$ involves some control over expectations
+of the form $\E\left[\X f\left(\X\right)\right]$. In \ref{sec:exchangeable-pairs},
 we were able to achieve this with an ad-hoc argument exploiting independence
 in our random variable of interest. However, in order to apply Stein's
 method in less ideal circumstances, we will need some more machinery.
@@ -2047,31 +2096,32 @@ circumstances. In the case of positive random variables such as those
 found in combinatorial applications, one particularly useful technique
 is \emph{size-bias coupling}, which we will discuss in this section.
 \begin{defn}
-The \emph{size-bias distribution} $\L{\X^{s}}$ with respect to a
-nonnegative integrable random variable $\X$ is given by $\L{\X^{s}}\left(A\right)=\E\left[\X\one_{\X\in\A}\right]/\E\X$.\end{defn}
+The \emph{size-bias distribution} $\Ls{\X}$ with respect to a nonnegative
+integrable random variable $\X$ is given by $\Ls{\X}\left(A\right)=\E\left[\X\one_{\X\in\A}\right]/\E\X$.\end{defn}
 \begin{rem}
 \label{rem:size-bias-discrete}The reason this is called size-biasing
 is because the probability of each value of $\X$ is biased proportionally
 by that value. To be precise, in the discrete case we have 
 \[
-\L{\X^{s}}\left(k\right)=\frac{k}{\E\X}\L{\X^{s}}\left(k\right).
+\Ls{\X}\left(k\right)=\frac{k}{\E\X}\Ls{\X}\left(k\right).
 \]
 This often has a combinatorial interpretation. Intuitively speaking,
-if $\X$ is the number of balls in a random bin, then $\X^{s}$ has
-the distribution of the number of balls in the bin of a random ball.
+if $\L{\X}$ is the number of balls in a random bin, then $\Ls{\X}$
+is the distribution of the number of balls in the bin of a random
+ball.
 \end{rem}
 We can immediately see from \ref{rem:size-bias-discrete} that in
-the discrete case $\E\fo\left(\X^{s}\right)=\E\left[\X\fo\left(\X\right)\right]/\E\X$
-for all $\L{\X^{s}}$-integrable functions $\fo$. This is in fact
-true in general, which can be straightforwardly proved with the measure-theoretic
+the discrete case $\E\fo\left(\Xs{\X}\right)=\E\left[\X\fo\left(\X\right)\right]/\E\X$
+for all $\Ls{\X}$-integrable functions $\fo$. This is in fact true
+in general, which can be straightforwardly proved with the measure-theoretic
 definition of the integral.
 
 Size-biasing therefore gives us a way to work with expectations of
 the form $\E\left[\X\fo\left(\X\right)\right]$. In order to use this
-for Stein's method, we need to couple $\X$ with $\X^{s}$ in an appropriate
-way. The objective of this coupling varies slightly between the Normal
-and Poisson cases, but there is a general construction that can be
-frequently used for both.
+for Stein's method, we need to couple $\X$ with $\Xs{\X}$ in an
+appropriate way. The objective of this coupling varies slightly between
+the Normal and Poisson cases, but there is a general construction
+that can be frequently used for both.
 \begin{thm}
 coming soon
 \end{thm}
@@ -2108,8 +2158,24 @@ coming soon
 \global\long\def\x#1{x^{\left(#1\right)}}
 
 
-The method of exchangeable pairs is a particular way to apply Stein's
-method. The method has been applied in some generality, but for simplicity,
+In \cite{Ste86}, Stein introduced a method for the construction of
+a characterizing operator using an object called an \emph{exchangeable}
+\emph{pair}. Up until this point, we have only been interested in
+characterizing operators for our ``special'' distributions $\Lo$
+to which we compare our distribution of interest $\L{\X}$. The exchangeable
+pairs construction can be used for this purpose, but in this section
+we will be more interested in a technique for applying Stein's method
+that involves the construction of a characterizing operator for $\L{\X}$.
+
+The general idea is that we define an exchangeable pair $\eX$, and
+by a general construction this gives a characterizing operator $\TX$
+for our distribution of interest $\L{\X}$. We then use an operator
+$\conn$ to connect the domains of $\TX$ and $\To$ in such a way
+that $\TX\conn$ approximates $\To$. By the definition of a characterizing
+operator, we have $\E_{\X}\To=\E_{\X}\left(\To-\TX\conn\right)$,
+so we can use the fact that $\To-\TX\conn$ is small to bound $\E_{\X}\To\fo$.
+
+This method has been applied in some generality, but for simplicity,
 we assume throughout that the random variable of interest $\X$ has
 finite support $\OmX$.
 \begin{example}
@@ -2129,18 +2195,12 @@ each other, and each of $n$ indices has a probability of $1/n$ to
 be a fixed point. So (recalling \ref{rem:indicator-expectation}),
 we might expect $\L{\X}$ to be ``close'' to $\Po\left(1\right)$.
 We will attempt to bound $d_{\TV}\left(\X,\Po\left(1\right)\right)$
-to validate and quantify this intuition.
-\end{example}
-The general idea is that we can use an object $\eX$ called an \emph{exchangeable
-pair} to construct a characterizing operator $\TX$ for $\X$. We
-then use an operator $\conn$ to connect the domains of $\TX$ and
-$\To$ in such a way that $\TX\conn$ approximates $\To$. By the
-definition of a characterizing operator, we have $\E_{\X}\To=\E_{\X}\left(\To-\TX\conn\right)$,
-so we can use the fact that $\To-\TX\conn$ is small to bound $\E_{\X}\To\fo$.
+to validate and quantify this intuition.\end{example}
 \begin{defn}
 A 2-dimensional random pair $\eX=\left(\X_{1},\X_{2}\right)$ is an
 \emph{exchangeable pair} if $\Lb{\X_{1},\X_{2}}=\Lb{\X_{2},\X_{1}}$.
-We will denote the support of $\eX$ by $\OmeX$.
+We will denote the support of $\eX$ by $\OmeX$ (this is a subset
+of $\OmX^{2}$).
 \end{defn}
 That is, a pair $\eX$ is exchangeable if exchanging the components
 of the pair does not change their joint distribution. In particular,
@@ -2216,12 +2276,11 @@ of a connected simplicial complex has dimension zero, and this motivates
 the construction of a characterizing operator in a natural way. (The
 following theorem is self-contained and requires no knowledge of homology).
 \begin{thm}
-Suppose\textup{ $\eX$ }is a connected exchangeable pair with margins
-$\L{\X}$. Let $\FX\subseteq L^{1}\left(\OmX^{2},\L{\eX}\right)$
-be the set of functions $\fX:\OmX^{2}\to\RR$ which satisfy $\E\left|\fX\left(\eX\right)\right|<\infty$,
-and are antisymmetric in the sense that $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$.
-Let $\XX=L^{1}\left(\OmX,\L{\X}\right)$ be the set of functions $\hX:\OmX\to\RR$
-that satisfy $\E_{\X}\left|\hX\right|<\infty$.
+\label{thm:characterizing-from-exchangeable-pair}Suppose\textup{
+$\eX$ }is a connected exchangeable pair with margins $\L{\X}$. Let
+$\FX$ be the set of functions $\fX:\OmX^{2}\to\RR$ which are antisymmetric
+in the sense that $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$.
+Let $\XX$ be the set of functions $\hX:\OmX\to\RR$.
 
 Define $\TX:\FX\to\XX$ by $\TX\fX\left(x\right)=\sum_{x_{2}\in\OmX}\fX\left(x,x_{2}\right)p\left(x,x_{2}\right)=\E\left[\fX\left(\eX\right)|\X_{1}=x\right]$,
 so that $\TX\fX\left(\X\right)$ is distributed as $\E^{\X_{1}}\fX\left(\eX\right)$.
@@ -2230,8 +2289,8 @@ Then $\TX$ is a characterizing operator for $\X$.\end{thm}
 This theorem appears in \cite[Section 4]{Ste92}, but the proof appears
 to be incorrect. I have adjusted it fairly significantly.\end{rem}
 \begin{proof}
-To see that $\im\TX\subseteq\ker\E_{\X}$, fix $\fX\in\cF$ and note
-that by the tower law of expectation (\ref{prop:tower-law}), 
+To see that $\im\TX\subseteq\ker\E_{\X}$, fix $\fX\in\FX$ and note
+that by the tower law of expectation (\ref{prop:tower-contractivity}),
 \[
 \E_{\X}\TX\fX=\E\E^{\X_{1}}\fX\left(\eX\right)=\E\fX\left(\eX\right).
 \]
@@ -2239,8 +2298,8 @@ By exchangeability and antisymmetry, $\E\fX\left(\eX\right)=\E\fX\left(\X_{2},\X
 so $\E\fX\left(\X_{1},\X_{2}\right)=\E_{\X}\TX\fX=0$. This did not
 require the connectedness condition. We can similarly prove that $\TX$
 is well-defined as an operator from $\FX$ to $\XX$: note that for
-$\fX\in\FX$ we have $\E_{\X}\left|\TX\fX\right|\le\E\left|\fX\left(\eX\right)\right|<\infty$,
-so $\TX\fX\in\XX$.
+$\fX\in\FX$ we have $\E_{\X}\left|\TX\fX\right|\le\E\left|\fX\left(\eX\right)\right|<\infty$
+by contractivity, so $\TX\fX\in\XX$.
 
 We will next prove $\ker\E_{\X}\subseteq\im\TX$, but first we make
 some definitions. For each $x\in\OmX$, let $\hX_{x}$ be the function
@@ -2263,39 +2322,19 @@ the connectedness assumption, for each $x\in\OmX$ there is a sequence
 x=\x 0,\x 1,\dots,\x{k-1},\x k=x^{*}
 \]
  with $\left(\x{\i-1},\x{\i}\right)\in\OmeX$ for $\i=1,\dots k$.
-Note that 
+Define
 \[
-\hX_{x^{*}}-\hX_{x}=\TX\sum_{\i=1}^{k}\fX_{\x{\i-1},\x{\i}}=:\TX\fX_{x}^{*},
+\fX_{x}^{*}=\sum_{\i=1}^{k}\fX_{\x{\i-1},\x{\i}},
 \]
-and it follows that
+so that $\hX_{x^{*}}-\hX_{x}=\TX\fX_{x}^{*}$ by linearity. It follows
+that
 \[
 \hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\left(\hX_{x^{*}}-\TX\fX_{x}^{*}\right)=\sum_{x\in\OmX}\left(\E_{\X}\hX\right)\hX_{x^{*}}-\TX\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\fX_{x}^{*}\in\im\TX.
 \]
-
-
-\begin{comment}Otherwise we will need some functional analysis. Note
-that $\TX$ is actually an isometry between a subspace $\FX$ of $L^{1}\left(\OmX^{2},\L{\eX}\right)$
-and $L^{1}\left(\OmX,\L{\X}\right)$ . First we prove that $\FX$
-is closed and therefore a Banach space. For any $\fX\in L^{1}\left(\OmX^{2},\L{\eX}\right)$,
-let $\bar{\fX}$ be defined by $\left(x_{1},x_{2}\right)\mapsto-\fX\left(x_{2},x_{1}\right)$,
-so that $\fX\in\FX$ implies that $\fX=\bar{\fX}$. Suppose $\fX_{n}\to\fX$,
-with $\fX_{n}\in\FX$ for all $n\in\NN$. By exchangeability we have
-\[
-\left\Vert \fX_{n}-\fX\right\Vert =\E\left|\fX_{n}\left(\eX\right)-\fX\left(\eX\right)\right|=\E\left|\fX_{n}\left(\X_{2},\X_{1}\right)-\bar{\fX}\left(\X_{2},\X_{1}\right)\right|=\left\Vert \fX_{n}-\bar{\fX}\right\Vert 
-\]
-so $\fX=\bar{\fX}$ and $\fX\in\FX$. Finally, it is a simple fact
-that an isometry between Banach spaces has a closed range. For, if
-$\left(\TX\fX_{n}\right)_{n\in\NN}$ is a Cauchy sequence in $\im\TX$,
-then $\left(\fX_{n}\right)_{n\in\NN}$ is a Cauchy sequence in $\FX$
-which converges to some $\fX\in\FX$. It follows that $\TX\fX_{n}\to\TX\fX\in\im\TX$.
-
-We have proved that $\hX\in\im\TX$, completing the proof that $\ker\E_{\X}\subseteq\im\TX$.
-
-\end{comment}
+Once we have defined an exchangeable pair and used it to construct
+$\TX$, the final step is to choose an operator $\conn:\Fo\to\FX$
+in such a way that $\To$ can be easily compared with $\TX\conn$.
 \end{proof}
-The final step is to choose an operator $\conn:\Fo\to\FX$ in such
-a way that $\TX$ can be easily compared with $\To\conn$.
-
 \begin{note}
 
 It's not clear if characterizing operators are in any sense unique
@@ -2313,21 +2352,22 @@ by
 \]
 for some $c\in\RR$. We will then have
 \[
-\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
+\left(\TX\conn f\right)\left(x\right)=c\fo\left(x+1\right)\Pr\left(\X_{2}=\X_{1}+1|\X_{1}=x\right)-c\fo\left(x\right)\Pr\left(\X_{1}=\X_{2}+1|\X_{1}=x\right)
 \]
-Using the triangle inequality and the choice of $\cY$ in \ref{example:poisson-bound},
-for all $\fo\in\cY$: 
+so $\E_{\X}\To\fo=\E_{\X}\left(\To\fo-\TX\conn\fX\right)$ equals
 \[
-\E_{\X}\To\fo\le\min\left(2,3\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
+\E\left[\fo\left(\X_{1}+1\right)\left(\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right)\right].
 \]
-
+Using the triangle inequality, we have 
+\begin{equation}
+\left|\E_{\X}\To\fo\right|\le\min\left(2,3\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right)\label{eq:EXT0-immigration-death-bound}
+\end{equation}
+for all $\fo$ satisfying the bound in \ref{example:poisson-bound}.
 
 This approximation is effective when 
 \begin{equation}
 \Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\approx\lambda/c,\quad\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)\approx\X_{1}/c.\label{eq:immigration-death}
 \end{equation}
-
-
 The interpretation of these approximate equalities is that the Markov
 \textbf{c}hain associated with $\eX$ is approximately an immigration-death
 process. This is likely to happen when $\X\left(\om\right)$ is in
@@ -2347,7 +2387,7 @@ on the permutation than on its number of fixed points).
 
 
 \begin{example}
-\label{example:fixed-point-conclusion}We continue \ref{example:fixed-points},
+\label{example:fixed-point-conclusion}We continue with \ref{example:fixed-points},
 recalling the exchangeable pairs $\mathbf{W}$ and $\eX$ from \ref{example:fixed-points-exchangeable-pair}.
 The interpretation of 
 \[
@@ -2359,7 +2399,7 @@ fixed point, we have to choose a fixed point to destroy, and swap
 it with a non-fixed-point. There are $\X_{1}\left(n-\X_{1}\right)$
 out of ${n \choose 2}$ transpositions that do this, so
 \[
-\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)=\frac{\X_{1}\left(n-\X_{1}\right)}{{n \choose 2}}.
+\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)=\frac{\X_{1}\left(n-\X_{1}\right)}{{n \choose 2}}.
 \]
 Next, we will find a formula for $\Pr\left(\X\left(W_{2}\right)=\X\left(W_{1}\right)+1|W_{1}\right)$,
 noting that 
@@ -2368,7 +2408,7 @@ noting that
 \]
 In order to create exactly one new fixed point, we have to choose
 an index $k$ that is not fixed in $W_{1}$ (there are $n-\X_{1}$
-such) and compose $W_{1}$ with $\left(k\;\sigma\left(k\right)\right)$.
+such) and compose $W_{1}$ with the transposition $\left(k\;\sigma\left(k\right)\right)$.
 This creates exactly one fixed point unless $\sigma^{-1}\left(k\right)=k$,
 in which case it creates two. We have counted this second case twice
 for every transposition in the cycle decomposition of $W_{1}$. Let
@@ -2380,12 +2420,12 @@ $W_{1}$. We have
 In order to satisfy \ref{eq:immigration-death} as closely as possible,
 we choose $c={n \choose 2}/n$. Recalling that $\E\X_{1}=1$, we then
 have
-\begin{align*}
-\E\left|1-c\Pr\left(X_{2}=X_{1}+1|X_{1}\right)\right| & =\E\left[1-\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{n}\right]\\
- & =1/n+2\E Y/n,\\
-\E\left|X_{1}-c\Pr\left(X_{2}=X_{1}-1|X_{1}\right)\right| & =\E\left[\X_{1}-\frac{\X_{1}\left(n-\X_{1}\right)}{n}\right]\\
- & =\E\X_{1}^{2}/n.
-\end{align*}
+\begin{align}
+\E\left|1-c\Pr\left(X_{2}=X_{1}+1|X_{1}\right)\right| & =\E\left[1-\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{n}\right]\nonumber \\
+ & =1/n+2\E Y/n,\label{eq:fixed-point-progress-1}\\
+\E\left|X_{1}-c\Pr\left(X_{2}=X_{1}-1|X_{1}\right)\right| & =\E\left[\X_{1}-\frac{\X_{1}\left(n-\X_{1}\right)}{n}\right]\nonumber \\
+ & =\E\X_{1}^{2}/n.\label{eq:fixed-point-progress-2}
+\end{align}
 Now, the probability that a transposition $\left(\i\,\ii\right)$
 is in the cycle decomposition of $W_{1}$ is $\left(n\left(n-1\right)\right)^{-1}$
 because $\i$ must map to $\ii$ out of the $n$ possible options
@@ -2405,7 +2445,9 @@ of unordered pairs is ${n \choose 2}=n\left(n-1\right)/2$, so again
 applying \ref{rem:indicator-expectation}, we have $\E\left[\X_{1}\left(\X_{1}-1\right)/2\right]=1/2$
 and $\E\left[\X_{1}^{2}\right]=2$.
 
-We conclude that $d_{\TV}\left(\X,\Po\left(1\right)\right)\le8/n$.
+Combining \ref{eq:stein-distance-transform}, \ref{eq:EXT0-immigration-death-bound},
+\ref{eq:fixed-point-progress-1} and \ref{eq:fixed-point-progress-2},
+we can conclude that $d_{\TV}\left(\X,\Po\left(1\right)\right)\le8/n$.
 \end{example}
 \begin{comment}
 
@@ -2425,10 +2467,10 @@ substructures, so the number of objects of a given size is some function
 of the number of objects of smaller sizes. The most difficult combinatorial
 structures to enumerate and study, then, are those that are constrained
 in some way so that they exhibit self-dependence, meaning that they
-cannot be built up from independent substructures. For example, regular
-graphs are graphs where each vertex has the same degree. There is
-no simple, uniform way to construct a regular graph from regular graphs
-of smaller degree or with fewer vertices.
+cannot be built up from substructures. For example, regular graphs
+are graphs where each vertex has the same degree. There is no simple,
+uniform way to construct a regular graph from regular graphs of smaller
+degree or with fewer vertices.
 
 Combinatorial\emph{ switchings} are a powerful tool for the analysis
 of these kinds of combinatorial structures. In particular, they have
@@ -2624,7 +2666,7 @@ the (``forwards'') switching ``destroys a cycle'', and $B\left(k\right)$
 can be interpreted as the ``probability'' that the ``backwards''
 switching ``creates a cycle'', both given that there are $k$ existing
 cycles. These are analogous to the probabilities $\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)$
-and $\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)$ that must be estimated
+and $\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)$ that were estimated
 in \ref{example:poisson-connecting-operator}.
 
 The idea, then, is to use a switching to define a suitable exchangeable
@@ -2665,7 +2707,7 @@ so
 Similarly, let $B_{C}\left(G\right)$ be the number of ways to switch
 into $G$ by destroying $C$. We have 
 \[
-\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.
+\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\,\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.
 \]
 Now, if $C\subseteq G$, then $F_{C}\left(G\right)$ is approximately
 $\falling n{\ell}\, d^{\ell}/2^{\ell}$. To see this, note that a

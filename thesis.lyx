@@ -25,6 +25,8 @@
 % cleveref allows \ref{thm:asdf} instead of Theorem~\ref{thm:asdf}
 \usepackage[nameinlink,capitalise,noabbrev]{cleveref}
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
+\crefname{section}{Chapter}{Chapters}
+\crefname{subsection}{Section}{Sections}
 
 % LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
 \theoremstyle{plain}
@@ -511,6 +513,73 @@ end{comment}
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Acknowledgements
+\end_layout
+
+\begin_layout Standard
+First and foremost I would like to thank my supervisor Catherine Greenhill
+ for her support and guidance for the duration of the thesis, and also for
+ providing me with invaluable advice and opportunities outside of her role
+ as thesis advisor.
+\end_layout
+
+\begin_layout Standard
+I would like to thank the honours students of 2013 and 2014, for making
+ the honours room a great place to learn and collaborate.
+\end_layout
+
+\begin_layout Standard
+I would also like to thank the honours coordinators Hendrik Grundling and
+ Daniel Chan, for running the honours program smoothly, providing useful
+ advice, and ensuring I knew how to give a seminar!
+\end_layout
+
+\begin_layout Standard
+Finally, I would like to thank every one of my maths and stats lecturers
+ from 2010 to 2014, whose effort and expertise have managed to transform
+ me into an enthusiastic (and maybe even capable!) student of mathematics.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
 
@@ -540,11 +609,17 @@ random combinatorial structures: merge?
 \end_layout
 
 \begin_layout Itemize
+put a remark in the Poisson section saying we'll do Poisson approximation
+ later
+\end_layout
+
+\begin_layout Itemize
 size-bias coupling
 \end_layout
 
 \begin_layout Itemize
-finish proof sketch for random regular graphs section
+finish proof sketch for random regular graphs section - where does the bound
+ come from?
 \end_layout
 
 \begin_layout Itemize
@@ -746,12 +821,52 @@ was introduced by Charles Stein in 1972.
 \end_layout
 
 \begin_layout Standard
-In this thesis, we set out the theoretical groundwork for Stein's method,
- including an overview of basic probability theory and a discussion of weak
- convergence.
- We then present a very general framework for the Stein's method, and outline
- a few particular ways of applying the method.
- We include a number of specific examples and applications.
+In this thesis, we will first set out the theoretical groundwork for Stein's
+ method, including an overview of basic probability theory and a discussion
+ of weak convergence (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:probability-theory"
+
+\end_inset
+
+).
+ We then present a very general framework for the Stein's method (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:stein-general"
+
+\end_inset
+
+) before specializing to the Normal and Poisson cases (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{sec:normal,sec:poisson}
+\end_layout
+
+\end_inset
+
+).
+ We finally outline a few particular ways of applying the method (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{sec:size-bias-coupling,sec:exchangeable-pairs}
+\end_layout
+
+\end_inset
+
+).
+ We include a number of specific examples and applications throughout.
 \end_layout
 
 \begin_layout Standard
@@ -850,6 +965,8 @@ Unless otherwise specified, all asympotics are as
 \end_inset
 
 .
+ We will occasionally use big-oh notation non-asymptotically, to avoid writing
+ constant factors.
 \end_layout
 
 \begin_layout Standard
@@ -1227,6 +1344,12 @@ From left to right: a multigraph that is not a graph, and two different
 \end_layout
 
 \begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:probability-theory"
+
+\end_inset
+
 General Probability Theory
 \end_layout
 
@@ -2295,7 +2418,7 @@ of a random variable
 \begin_inset Formula $\X$
 \end_inset
 
- (or its distribution) is the measure-theoretc integral 
+ (or its distribution) is the measure-theoretic integral 
 \begin_inset Formula $\E\X=\int x\d\L{\X}\left(x\right)$
 \end_inset
 
@@ -2831,7 +2954,7 @@ for all
 \end_layout
 
 \begin_layout Standard
-We finally present a simple consequence of the definition of conditional
+We finally present some simple consequences of the definition of conditional
  expectation.
 \end_layout
 
@@ -2849,7 +2972,7 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "prop:tower-law"
+name "prop:tower-contractivity"
 
 \end_inset
 
@@ -2866,19 +2989,96 @@ Suppose
 \end_inset
 
 .
- Then 
+ Then
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+(Tower Law) 
 \begin_inset Formula $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+(Contractivity) 
+\begin_inset Formula $\E\left|\E^{\X_{2}}\X_{1}\right|\le\E\left|\X_{1}\right|$
 \end_inset
 
 .
 \end_layout
 
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proof
-Recall the definition of condition expectation.
+Recall the definition of conditional expectation.
  We have
 \begin_inset Formula 
 \[
-\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].\qedhere
+\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].
+\]
+
+\end_inset
+
+Next, let 
+\begin_inset Formula $\A=\left\{ \E^{\X_{2}}\X_{1}\ge0\right\} $
+\end_inset
+
+, so
+\begin_inset Formula 
+\[
+\E\left|\E^{\X_{2}}\X_{1}\right|=\E\left[\one_{\A}\E^{\X_{2}}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\E^{\X_{2}}\X_{1}\right]=\E\left[\one_{\A}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\X_{1}\right]\le\E\left|\X_{1}\right|.\qedhere
 \]
 
 \end_inset
@@ -3516,8 +3716,8 @@ weakly
 \end_layout
 
 \begin_layout Standard
-This is only one of a number of equivalent and very natural definitions
- for convergence in distribution.
+This is only one of a number of equivalent natural definitions for convergence
+ in distribution.
 \end_layout
 
 \begin_layout Definition
@@ -3767,7 +3967,7 @@ ref{prop:dist-def,prop:dist-levy}
 
 \end_inset
 
- is called
+ is called 
 \begin_inset ERT
 status open
 
@@ -3812,7 +4012,7 @@ status open
 
 \end_inset
 
-(
+ (
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Theorem 4.3"
@@ -3824,7 +4024,7 @@ key "Kal02"
 \end_layout
 
 \begin_layout Standard
-When 
+If 
 \begin_inset Formula $\X$
 \end_inset
 
@@ -3860,7 +4060,8 @@ heorem.
 \end_layout
 
 \begin_layout Standard
-Classically, distributional convergence results are often proved by L
+Classically, distributional convergence results are usually proved with
+ L
 \begin_inset ERT
 status open
 
@@ -3873,8 +4074,8 @@ status open
 
 \end_inset
 
-vy's continuity theorem.
- For example, this approach is usually used to prove the 
+vy's continuity theorem and Fourier analysis.
+ For example, this approach is used to prove the 
 \series bold
 c
 \series default
@@ -3887,8 +4088,8 @@ imit
 t
 \series default
 heorem.
- For combinatorial applications, convergence in distribution can also be
- proved by the 
+ In combinatorial applications, convergence in distribution is often proved
+ with the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3896,20 +4097,17 @@ method of moments
 \begin_inset Quotes erd
 \end_inset
 
-: if 
-\begin_inset Formula $\X$
-\end_inset
-
- is the only random variable with the moments 
-\begin_inset Formula $\left(\E\X^{k}\right)_{k\in\NN}$
-\end_inset
-
-, then 
+ (which is actually the Fourier analytic method in disguise): under certain
+ conditions, 
 \begin_inset Formula $\Lb{\X_{n}}\to\Lb{\X}$
 \end_inset
 
  if 
 \begin_inset Formula $\E\X_{n}^{k}\to\E\X^{k}$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
 \end_inset
 
 .
@@ -3923,11 +4121,6 @@ method of moments
 \end_inset
 
  are coupled to the same underlying space.
-\end_layout
-
-\begin_layout Standard
-A disadvantage of all these approaches is that they provide little information
- about the rate of convergence.
 \end_layout
 
 \begin_layout Standard
@@ -4036,11 +4229,14 @@ test
 \end_inset
 
  by 
-\begin_inset Formula $d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|$
+\begin_inset Formula 
+\[
+d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|.
+\]
+
 \end_inset
 
-.
- For random variables 
+For random variables 
 \begin_inset Formula $\X_{1},\X_{2}$
 \end_inset
 
@@ -5418,6 +5614,7 @@ Let
 \end_inset
 
  be random variables.
+ Then
 \begin_inset ERT
 status open
 
@@ -5457,7 +5654,7 @@ name "prop:transfer-K/TV"
 \begin_inset Formula $d_{\K}\left(\X_{1},\X_{2}\right)\le d_{\TV}\left(\X_{1},\X_{2}\right)$
 \end_inset
 
-
+;
 \end_layout
 
 \begin_layout Proposition
@@ -5484,7 +5681,7 @@ name "prop:transfer-BL/W"
 \begin_inset Formula $d_{\BL}\left(\X_{1},\X_{2}\right)\le d_{\W}\left(\X_{1},\X_{2}\right)$
 \end_inset
 
-
+;
 \end_layout
 
 \begin_layout Proposition
@@ -6179,7 +6376,7 @@ Suppose we have a potentially complicated random variable
 \begin_inset Quotes eld
 \end_inset
 
-standard
+special
 \begin_inset Quotes erd
 \end_inset
 
@@ -6305,7 +6502,7 @@ name "prop:characterizing"
 
 \end_inset
 
-If 
+Suppose 
 \begin_inset Formula $\To:\Fo\to\Xo$
 \end_inset
 
@@ -6313,11 +6510,16 @@ If
 \begin_inset Formula $\Xo$
 \end_inset
 
- is a determining class then 
+ is a determining class.
+ If some random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ satisfies 
 \begin_inset Formula $\im\To\subseteq\ker\E_{\X}$
 \end_inset
 
- implies 
+, then 
 \begin_inset Formula $\X\in\Lo$
 \end_inset
 
@@ -6365,12 +6567,20 @@ reference "prop:characterizing"
 \begin_inset Formula $\E_{\X}\To\fo=0$
 \end_inset
 
- is the same as 
-\begin_inset Formula $\X\in\Lo$
+ for all 
+\begin_inset Formula $\fo$
+\end_inset
+
+ means 
+\begin_inset Formula $\L{\X}=\Lo$
 \end_inset
 
 , then hopefully it is true that 
 \begin_inset Formula $\E_{\X}\To\fo\approx0$
+\end_inset
+
+ for all 
+\begin_inset Formula $\fo$
 \end_inset
 
  means 
@@ -6831,7 +7041,11 @@ end{comment}
 \end_layout
 
 \begin_layout Standard
-Now, note that for each 
+Now, note that for any random variable 
+\begin_inset Formula $\X$
+\end_inset
+
+ and any 
 \begin_inset Formula $\h\in\Xo$
 \end_inset
 
@@ -6859,15 +7073,7 @@ The original purpose of Stein's method was to estimate some particular
 \begin_inset Formula $\Lo$
 \end_inset
 
- was chosen to be a 
-\begin_inset Quotes eld
-\end_inset
-
-simple
-\begin_inset Quotes erd
-\end_inset
-
-, well-understood distribution then the term 
+ is a well-understood distribution then the term 
 \begin_inset Formula $\Eo\h$
 \end_inset
 
@@ -6986,7 +7192,7 @@ reference "def:special-metrics"
 In the next two sections, we will present characterizing operators for the
  normal and Poisson distributions, and some associated convenient choices
  for 
-\begin_inset Formula $\mathcal{Y}$
+\begin_inset Formula $\cY$
 \end_inset
 
 .
@@ -6994,6 +7200,13 @@ In the next two sections, we will present characterizing operators for the
 
 \begin_layout Section
 The Normal Case
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:normal"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -7051,7 +7264,7 @@ key "Rud66"
 \end_layout
 
 \begin_layout Theorem
-The operator 
+The linear operator 
 \begin_inset Formula $\T_{\N}:\cF_{\N}\to\cX_{\N}$
 \end_inset
 
@@ -7610,7 +7823,11 @@ reference "eq:stein-distance-transform"
 
 .
  In the case of the Wasserstein and bounded Lipschitz metric, we can show
- that the first three derivatives are all bounded.
+ that the first three derivatives are all bounded, so we can choose 
+\begin_inset Formula $\cY$
+\end_inset
+
+ to be the set of functions that satisfies these bounds.
  This makes these metrics good choices for normal approximation.
 \end_layout
 
@@ -8204,7 +8421,19 @@ The Berry-Esseen
 \series bold
 t
 \series default
-heorem is a quantitative version of the central limit theorem.
+heorem is a quantitative version of the 
+\series bold
+c
+\series default
+entral 
+\series bold
+l
+\series default
+imit 
+\series bold
+t
+\series default
+heorem.
  The original version was independently proved in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -8464,7 +8693,7 @@ reference "eq:berry-esseen-EQfX"
 Next, note that
 \begin_inset Formula 
 \begin{equation}
-\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]=\E Q_{\i}^{2}\,\E f'\left(W_{\i}\right)=\E f'\left(W_{\i}\right)=\E f'\left(\X\right)+\frac{1}{\sqrt{n}}\E\left[Q_{\i}f''\left(E'\right)\right]\label{eq:berry-esseen-EQ2fW}
+\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]=\E Q_{\i}^{2}\,\E f'\left(W_{\i}\right)=\E f'\left(W_{\i}\right)=\E f'\left(\X\right)+\frac{1}{\sqrt{n}}\,\E\left[Q_{\i}f''\left(E'\right)\right]\label{eq:berry-esseen-EQ2fW}
 \end{equation}
 
 \end_inset
@@ -8481,7 +8710,7 @@ for some
 , we have 
 \begin_inset Formula 
 \begin{equation}
-\frac{1}{2}\E\left|Q_{\i}^{3}f''\left(E\right)\right|\le3\E\left|Q^{3}\right|,\quad\E\left|Q_{\i}f''\left(E'\right)\right|\le6\E\left|Q\right|.\label{eq:berry-esseen-error-bounds}
+\frac{1}{2}\E\left|Q_{\i}^{3}f''\left(E\right)\right|\le3\,\E\left|Q^{3}\right|,\quad\E\left|Q_{\i}f''\left(E'\right)\right|\le6\,\E\left|Q\right|.\label{eq:berry-esseen-error-bounds}
 \end{equation}
 
 \end_inset
@@ -8506,7 +8735,7 @@ key "Rud66"
 
 \end_inset
 
-so another application of Hölder's inequality for the 
+so an application of Hölder's inequality for the 
 \begin_inset Formula $L^{3}$
 \end_inset
 
@@ -8537,8 +8766,8 @@ sseen-error-bounds,eq:berry-esseen-holder}
 \begin{alignat*}{1}
 \left|\E\left[\X f\left(\X\right)\right]-\E f'\left(\X\right)\right| & \le\left|\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}f\left(\X\right)\right]-\frac{1}{\sqrt{n}}\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]\right)\right|\\
  & \qquad+\left|\frac{1}{n}\sum_{\i=1}^{n}\left(\E\left[Q_{\i}^{2}f'\left(W_{\i}\right)\right]-\E f'\left(\X\right)\right)\right|\\
- & \le\frac{3}{\sqrt{n}}\E\left|Q^{3}\right|+\frac{6}{\sqrt{n}}\E\left|Q^{3}\right|\\
- & =\frac{9}{\sqrt{n}}\E\left|Q^{3}\right|.
+ & \le\frac{3}{\sqrt{n}}\,\E\left|Q^{3}\right|+\frac{6}{\sqrt{n}}\,\E\left|Q^{3}\right|\\
+ & =\frac{9}{\sqrt{n}}\,\E\left|Q^{3}\right|.
 \end{alignat*}
 
 \end_inset
@@ -8548,6 +8777,13 @@ sseen-error-bounds,eq:berry-esseen-holder}
 
 \begin_layout Section
 The Poisson Case
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:poisson"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Theorem
@@ -8611,7 +8847,7 @@ as
 
 .
  So by the ratio test 
-\begin_inset Formula $\E\X_{\Po\left(\lambda\right)}^{k}\prec\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}<\infty$
+\begin_inset Formula $\E\X_{\Po\left(\lambda\right)}^{k}=O\left(\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\right)<\infty$
 \end_inset
 
 , and 
@@ -8626,7 +8862,7 @@ Now, we check that
 \begin_inset Formula $\T_{\N}\fo$
 \end_inset
 
- is well-defined as an operator with codomain 
+ is well-defined as a linear operator with codomain 
 \begin_inset Formula $\cX_{\Po\left(\lambda\right)}$
 \end_inset
 
@@ -8649,12 +8885,12 @@ Now, we check that
 
 We have 
 \begin_inset Formula 
-\begin{eqnarray*}
-\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right] & \prec & \sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\left|\fo\left(\i+1\right)\right|\\
- & \prec & \sum_{r=0}^{k+1}\sum_{\i=0}^{\infty}\left(\i+1\right)^{r}\frac{\lambda^{\i+1}}{\left(\i+1\right)!}\left|\fo\left(\i+1\right)\right|\\
- & \prec & \sum_{r=0}^{k+1}\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]\\
- & < & \infty.
-\end{eqnarray*}
+\begin{alignat*}{1}
+\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right] & =O\left(\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\left|\fo\left(\i+1\right)\right|\right)\\
+ & =O\left(\sum_{r=0}^{k+1}\sum_{\i=0}^{\infty}\left(\i+1\right)^{r}\frac{\lambda^{\i+1}}{\left(\i+1\right)!}\left|\fo\left(\i+1\right)\right|\right)\\
+ & =O\left(\sum_{r=0}^{k+1}\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}\right)\right|\right]\right)\\
+ & <\infty.
+\end{alignat*}
 
 \end_inset
 
@@ -8729,10 +8965,10 @@ For
 ,
 \begin_inset Formula 
 \begin{alignat*}{1}
-\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\U_{\Po\left(\lambda\right)}\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right] & \prec\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=0}^{\i-1}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\\
- & =\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=\i}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\\
- & \le\sum_{\ii=1}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\sum_{\i=1}^{\ii}\i^{k-1}\\
- & \prec\sum_{\ii=1}^{\infty}\ii^{k}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\\
+\E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\U_{\Po\left(\lambda\right)}\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right] & =O\left(\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=0}^{\i-1}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\right)\\
+ & =O\left(\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=\i}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\right)\\
+ & =O\left(\sum_{\ii=1}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\sum_{\i=1}^{\ii}\i^{k-1}\right)\\
+ & =O\left(\sum_{\ii=1}^{\infty}\ii^{k}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\right)\\
  & <\infty,
 \end{alignat*}
 
@@ -8917,21 +9153,6 @@ If
 \end_inset
 
 , then
-\end_layout
-
-\begin_layout Proof
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
 \begin_inset Formula 
 \begin{alignat*}{1}
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[0,\i-1\right]\right)\\
@@ -9188,7 +9409,7 @@ is positive only when
 \begin_inset Formula 
 \begin{alignat*}{1}
 \U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(k+1\right)-\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(k\right) & =e^{-\lambda}\lambda^{-1}\sum_{\ii=k+1}^{\infty}\frac{\lambda^{\ii}}{\ii!}+e^{-\lambda}\lambda^{-1}\sum_{\iiii=1}^{k}\frac{\lambda^{\iiii}}{\iiii!}\frac{\iiii}{k}\\
- & \le e^{-\lambda}\lambda^{-1}\left(e^{\lambda}-1\right)=\lambda^{-1}\left(1-e^{-\lambda}\right)
+ & \le e^{-\lambda}\lambda^{-1}\left(e^{\lambda}-1\right)=\lambda^{-1}\left(1-e^{-\lambda}\right).
 \end{alignat*}
 
 \end_inset
@@ -9315,10 +9536,35 @@ key "BHJ92"
 
 \begin_layout Section
 Size-Bias Coupling
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:size-bias-coupling"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-In both the Normal and Poisson case, estimation of the necessary expectation
+\begin_inset FormulaMacro
+\newcommand{\Ls}[1]{\mathcal{L}_{#1}^{\left(s\right)}}
+{\boldsymbol{\mathcal{L}}_{#1}^{\boldsymbol{\left(s\right)}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Xs}[1]{#1^{\left(s\right)}}
+{#1^{\boldsymbol{\left(s\right)}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In both the Normal and Poisson cases, estimation of the necessary expectation
  
 \begin_inset Formula $\E_{\X}\To\fo$
 \end_inset
@@ -9355,7 +9601,7 @@ The
 size-bias distribution
 \emph default
  
-\begin_inset Formula $\L{\X^{s}}$
+\begin_inset Formula $\Ls{\X}$
 \end_inset
 
  with respect to a nonnegative integrable random variable 
@@ -9363,7 +9609,7 @@ size-bias distribution
 \end_inset
 
  is given by 
-\begin_inset Formula $\L{\X^{s}}\left(A\right)=\E\left[\X\one_{\X\in\A}\right]/\E\X$
+\begin_inset Formula $\Ls{\X}\left(A\right)=\E\left[\X\one_{\X\in\A}\right]/\E\X$
 \end_inset
 
 .
@@ -9385,21 +9631,21 @@ The reason this is called size-biasing is because the probability of each
  To be precise, in the discrete case we have 
 \begin_inset Formula 
 \[
-\L{\X^{s}}\left(k\right)=\frac{k}{\E\X}\L{\X^{s}}\left(k\right).
+\Ls{\X}\left(k\right)=\frac{k}{\E\X}\Ls{\X}\left(k\right).
 \]
 
 \end_inset
 
 This often has a combinatorial interpretation.
  Intuitively speaking, if 
-\begin_inset Formula $\X$
+\begin_inset Formula $\L{\X}$
 \end_inset
 
  is the number of balls in a random bin, then 
-\begin_inset Formula $\X^{s}$
+\begin_inset Formula $\Ls{\X}$
 \end_inset
 
- has the distribution of the number of balls in the bin of a random ball.
+ is the distribution of the number of balls in the bin of a random ball.
 \end_layout
 
 \begin_layout Standard
@@ -9411,11 +9657,11 @@ reference "rem:size-bias-discrete"
 \end_inset
 
  that in the discrete case 
-\begin_inset Formula $\E\fo\left(\X^{s}\right)=\E\left[\X\fo\left(\X\right)\right]/\E\X$
+\begin_inset Formula $\E\fo\left(\Xs{\X}\right)=\E\left[\X\fo\left(\X\right)\right]/\E\X$
 \end_inset
 
  for all 
-\begin_inset Formula $\L{\X^{s}}$
+\begin_inset Formula $\Ls{\X}$
 \end_inset
 
 -integrable functions 
@@ -9439,7 +9685,7 @@ Size-biasing therefore gives us a way to work with expectations of the form
 \end_inset
 
  with 
-\begin_inset Formula $\X^{s}$
+\begin_inset Formula $\Xs{\X}$
 \end_inset
 
  in an appropriate way.
@@ -9554,8 +9800,103 @@ name "sec:exchangeable-pairs"
 \end_layout
 
 \begin_layout Standard
-The method of exchangeable pairs is a particular way to apply Stein's method.
- The method has been applied in some generality, but for simplicity, we
+In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ste86"
+
+\end_inset
+
+, Stein introduced a method for the construction of a characterizing operator
+ using an object called an 
+\emph on
+exchangeable
+\emph default
+ 
+\emph on
+pair
+\emph default
+.
+ Up until this point, we have only been interested in characterizing operators
+ for our 
+\begin_inset Quotes eld
+\end_inset
+
+special
+\begin_inset Quotes erd
+\end_inset
+
+ distributions 
+\begin_inset Formula $\Lo$
+\end_inset
+
+ to which we compare our distribution of interest 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+.
+ The exchangeable pairs construction can be used for this purpose, but in
+ this section we will be more interested in a technique for applying Stein's
+ method that involves the construction of a characterizing operator for
+ 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The general idea is that we define an exchangeable pair 
+\begin_inset Formula $\eX$
+\end_inset
+
+, and by a general construction this gives a characterizing operator 
+\begin_inset Formula $\TX$
+\end_inset
+
+ for our distribution of interest 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+.
+ We then use an operator 
+\begin_inset Formula $\conn$
+\end_inset
+
+ to connect the domains of 
+\begin_inset Formula $\TX$
+\end_inset
+
+ and 
+\begin_inset Formula $\To$
+\end_inset
+
+ in such a way that 
+\begin_inset Formula $\TX\conn$
+\end_inset
+
+ approximates 
+\begin_inset Formula $\To$
+\end_inset
+
+.
+ By the definition of a characterizing operator, we have 
+\begin_inset Formula $\E_{\X}\To=\E_{\X}\left(\To-\TX\conn\right)$
+\end_inset
+
+, so we can use the fact that 
+\begin_inset Formula $\To-\TX\conn$
+\end_inset
+
+ is small to bound 
+\begin_inset Formula $\E_{\X}\To\fo$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This method has been applied in some generality, but for simplicity, we
  assume throughout that the random variable of interest 
 \begin_inset Formula $\X$
 \end_inset
@@ -9676,60 +10017,6 @@ close
  to validate and quantify this intuition.
 \end_layout
 
-\begin_layout Standard
-The general idea is that we can use an object 
-\begin_inset Formula $\eX$
-\end_inset
-
- called an 
-\emph on
-exchangeable pair
-\emph default
- to construct a characterizing operator 
-\begin_inset Formula $\TX$
-\end_inset
-
- for 
-\begin_inset Formula $\X$
-\end_inset
-
-.
- We then use an operator 
-\begin_inset Formula $\conn$
-\end_inset
-
- to connect the domains of 
-\begin_inset Formula $\TX$
-\end_inset
-
- and 
-\begin_inset Formula $\To$
-\end_inset
-
- in such a way that 
-\begin_inset Formula $\TX\conn$
-\end_inset
-
- approximates 
-\begin_inset Formula $\To$
-\end_inset
-
-.
- By the definition of a characterizing operator, we have 
-\begin_inset Formula $\E_{\X}\To=\E_{\X}\left(\To-\TX\conn\right)$
-\end_inset
-
-, so we can use the fact that 
-\begin_inset Formula $\To-\TX\conn$
-\end_inset
-
- is small to bound 
-\begin_inset Formula $\E_{\X}\To\fo$
-\end_inset
-
-.
-\end_layout
-
 \begin_layout Definition
 A 2-dimensional random pair 
 \begin_inset Formula $\eX=\left(\X_{1},\X_{2}\right)$
@@ -9752,7 +10039,11 @@ exchangeable pair
 \begin_inset Formula $\OmeX$
 \end_inset
 
-.
+ (this is a subset of 
+\begin_inset Formula $\OmX^{2}$
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -10148,6 +10439,12 @@ hain underlying a connected exchangeable pair can be naturally viewed as
 \end_layout
 
 \begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:characterizing-from-exchangeable-pair"
+
+\end_inset
+
 Suppose
 \family roman
 \series medium
@@ -10182,32 +10479,24 @@ is a connected exchangeable pair with margins
 
 .
  Let 
-\begin_inset Formula $\FX\subseteq L^{1}\left(\OmX^{2},\L{\eX}\right)$
+\begin_inset Formula $\FX$
 \end_inset
 
  be the set of functions 
 \begin_inset Formula $\fX:\OmX^{2}\to\RR$
 \end_inset
 
- which satisfy 
-\begin_inset Formula $\E\left|\fX\left(\eX\right)\right|<\infty$
-\end_inset
-
-, and are antisymmetric in the sense that 
+ which are antisymmetric in the sense that 
 \begin_inset Formula $\fX\left(x_{1},x_{2}\right)=-\fX\left(x_{2},x_{1}\right)$
 \end_inset
 
 .
  Let 
-\begin_inset Formula $\XX=L^{1}\left(\OmX,\L{\X}\right)$
+\begin_inset Formula $\XX$
 \end_inset
 
  be the set of functions 
 \begin_inset Formula $\hX:\OmX\to\RR$
-\end_inset
-
- that satisfy 
-\begin_inset Formula $\E_{\X}\left|\hX\right|<\infty$
 \end_inset
 
 .
@@ -10261,13 +10550,13 @@ To see that
 \end_inset
 
 , fix 
-\begin_inset Formula $\fX\in\cF$
+\begin_inset Formula $\fX\in\FX$
 \end_inset
 
  and note that by the tower law of expectation (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prop:tower-law"
+reference "prop:tower-contractivity"
 
 \end_inset
 
@@ -10309,7 +10598,7 @@ By exchangeability and antisymmetry,
 \begin_inset Formula $\E_{\X}\left|\TX\fX\right|\le\E\left|\fX\left(\eX\right)\right|<\infty$
 \end_inset
 
-, so 
+ by contractivity, so 
 \begin_inset Formula $\TX\fX\in\XX$
 \end_inset
 
@@ -10424,15 +10713,20 @@ x=\x 0,\x 1,\dots,\x{k-1},\x k=x^{*}
 \end_inset
 
 .
- Note that 
+ Define
 \begin_inset Formula 
 \[
-\hX_{x^{*}}-\hX_{x}=\TX\sum_{\i=1}^{k}\fX_{\x{\i-1},\x{\i}}=:\TX\fX_{x}^{*},
+\fX_{x}^{*}=\sum_{\i=1}^{k}\fX_{\x{\i-1},\x{\i}},
 \]
 
 \end_inset
 
-and it follows that
+so that 
+\begin_inset Formula $\hX_{x^{*}}-\hX_{x}=\TX\fX_{x}^{*}$
+\end_inset
+
+ by linearity.
+ It follows that
 \begin_inset Formula 
 \[
 \hX=\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\left(\hX_{x^{*}}-\TX\fX_{x}^{*}\right)=\sum_{x\in\OmX}\left(\E_{\X}\hX\right)\hX_{x^{*}}-\TX\sum_{x\in\OmX}\hX\left(x\right)\pi\left(x\right)\fX_{x}^{*}\in\im\TX.
@@ -10440,189 +10734,20 @@ and it follows that
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\end_layout
-
-\end_inset
-
-Otherwise we will need some functional analysis.
- Note that 
+Once we have defined an exchangeable pair and used it to construct 
 \begin_inset Formula $\TX$
 \end_inset
 
- is actually an isometry between a subspace 
-\begin_inset Formula $\FX$
-\end_inset
-
- of 
-\begin_inset Formula $L^{1}\left(\OmX^{2},\L{\eX}\right)$
-\end_inset
-
- and 
-\begin_inset Formula $L^{1}\left(\OmX,\L{\X}\right)$
-\end_inset
-
- .
- First we prove that 
-\begin_inset Formula $\FX$
-\end_inset
-
- is closed and therefore a Banach space.
- For any 
-\begin_inset Formula $\fX\in L^{1}\left(\OmX^{2},\L{\eX}\right)$
-\end_inset
-
-, let 
-\begin_inset Formula $\bar{\fX}$
-\end_inset
-
- be defined by 
-\begin_inset Formula $\left(x_{1},x_{2}\right)\mapsto-\fX\left(x_{2},x_{1}\right)$
-\end_inset
-
-, so that 
-\begin_inset Formula $\fX\in\FX$
-\end_inset
-
- implies that 
-\begin_inset Formula $\fX=\bar{\fX}$
-\end_inset
-
-.
- Suppose 
-\begin_inset Formula $\fX_{n}\to\fX$
-\end_inset
-
-, with 
-\begin_inset Formula $\fX_{n}\in\FX$
-\end_inset
-
- for all 
-\begin_inset Formula $n\in\NN$
-\end_inset
-
-.
- By exchangeability we have 
-\begin_inset Formula 
-\[
-\left\Vert \fX_{n}-\fX\right\Vert =\E\left|\fX_{n}\left(\eX\right)-\fX\left(\eX\right)\right|=\E\left|\fX_{n}\left(\X_{2},\X_{1}\right)-\bar{\fX}\left(\X_{2},\X_{1}\right)\right|=\left\Vert \fX_{n}-\bar{\fX}\right\Vert 
-\]
-
-\end_inset
-
-so 
-\begin_inset Formula $\fX=\bar{\fX}$
-\end_inset
-
- and 
-\begin_inset Formula $\fX\in\FX$
-\end_inset
-
-.
- Finally, it is a simple fact that an isometry between Banach spaces has
- a closed range.
- For, if 
-\begin_inset Formula $\left(\TX\fX_{n}\right)_{n\in\NN}$
-\end_inset
-
- is a Cauchy sequence in 
-\begin_inset Formula $\im\TX$
-\end_inset
-
-, then 
-\begin_inset Formula $\left(\fX_{n}\right)_{n\in\NN}$
-\end_inset
-
- is a Cauchy sequence in 
-\begin_inset Formula $\FX$
-\end_inset
-
- which converges to some 
-\begin_inset Formula $\fX\in\FX$
-\end_inset
-
-.
- It follows that 
-\begin_inset Formula $\TX\fX_{n}\to\TX\fX\in\im\TX$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-We have proved that 
-\begin_inset Formula $\hX\in\im\TX$
-\end_inset
-
-, completing the proof that 
-\begin_inset Formula $\ker\E_{\X}\subseteq\im\TX$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{comment}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The final step is to choose an operator 
+, the final step is to choose an operator 
 \begin_inset Formula $\conn:\Fo\to\FX$
 \end_inset
 
  in such a way that 
-\begin_inset Formula $\TX$
+\begin_inset Formula $\To$
 \end_inset
 
  can be easily compared with 
-\begin_inset Formula $\To\conn$
+\begin_inset Formula $\TX\conn$
 \end_inset
 
 .
@@ -10724,35 +10849,43 @@ for some
  We will then have
 \begin_inset Formula 
 \[
-\To\fo-\TX\conn\fX=\fo\left(\X+1\right)\left(\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right).
+\left(\TX\conn f\right)\left(x\right)=c\fo\left(x+1\right)\Pr\left(\X_{2}=\X_{1}+1|\X_{1}=x\right)-c\fo\left(x\right)\Pr\left(\X_{1}=\X_{2}+1|\X_{1}=x\right)
 \]
 
 \end_inset
 
-Using the triangle inequality and the choice of 
-\begin_inset Formula $\cY$
+so 
+\begin_inset Formula $\E_{\X}\To\fo=\E_{\X}\left(\To\fo-\TX\conn\fX\right)$
 \end_inset
 
- in 
+ equals 
+\begin_inset Formula 
+\[
+\E\left[\fo\left(\X_{1}+1\right)\left(\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right)-\fo\left(\X_{1}\right)\left(\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right)\right].
+\]
+
+\end_inset
+
+Using the triangle inequality, we have 
+\begin_inset Formula 
+\begin{equation}
+\left|\E_{\X}\To\fo\right|\le\min\left(2,3\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right)\label{eq:EXT0-immigration-death-bound}
+\end{equation}
+
+\end_inset
+
+for all 
+\begin_inset Formula $\fo$
+\end_inset
+
+ satisfying the bound in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "example:poisson-bound"
 
 \end_inset
 
-, for all 
-\begin_inset Formula $\fo\in\cY$
-\end_inset
-
-: 
-\begin_inset Formula 
-\[
-\E_{\X}\To\fo\le\min\left(2,3\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right).
-\]
-
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Example
@@ -10764,10 +10897,6 @@ This approximation is effective when
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Example
 The interpretation of these approximate equalities is that the Markov 
 \series bold
 c
@@ -10891,7 +11020,7 @@ name "example:fixed-point-conclusion"
 
 \end_inset
 
-We continue 
+We continue with 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "example:fixed-points"
@@ -10953,7 +11082,7 @@ is the probability of a transposition destroying exactly one out of the
 
 \begin_inset Formula 
 \[
-\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)=\frac{\X_{1}\left(n-\X_{1}\right)}{{n \choose 2}}.
+\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)=\frac{\X_{1}\left(n-\X_{1}\right)}{{n \choose 2}}.
 \]
 
 \end_inset
@@ -10999,7 +11128,7 @@ In order to create exactly one new fixed point, we have to choose an index
 \begin_inset Formula $W_{1}$
 \end_inset
 
- with 
+ with the transposition 
 \begin_inset Formula $\left(k\;\sigma\left(k\right)\right)$
 \end_inset
 
@@ -11086,12 +11215,12 @@ reference "eq:immigration-death"
 \color none
 
 \begin_inset Formula 
-\begin{align*}
-\E\left|1-c\Pr\left(X_{2}=X_{1}+1|X_{1}\right)\right| & =\E\left[1-\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{n}\right]\\
- & =1/n+2\E Y/n,\\
-\E\left|X_{1}-c\Pr\left(X_{2}=X_{1}-1|X_{1}\right)\right| & =\E\left[\X_{1}-\frac{\X_{1}\left(n-\X_{1}\right)}{n}\right]\\
- & =\E\X_{1}^{2}/n.
-\end{align*}
+\begin{align}
+\E\left|1-c\Pr\left(X_{2}=X_{1}+1|X_{1}\right)\right| & =\E\left[1-\frac{n-\X_{1}-2\E\left[Y|\X_{1}\right]}{n}\right]\nonumber \\
+ & =1/n+2\E Y/n,\label{eq:fixed-point-progress-1}\\
+\E\left|X_{1}-c\Pr\left(X_{2}=X_{1}-1|X_{1}\right)\right| & =\E\left[\X_{1}-\frac{\X_{1}\left(n-\X_{1}\right)}{n}\right]\nonumber \\
+ & =\E\X_{1}^{2}/n.\label{eq:fixed-point-progress-2}
+\end{align}
 
 \end_inset
 
@@ -11293,7 +11422,35 @@ reference "rem:indicator-expectation"
 \end_layout
 
 \begin_layout Example
-We conclude that 
+Combining 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stein-distance-transform"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EXT0-immigration-death-bound"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fixed-point-progress-1"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fixed-point-progress-2"
+
+\end_inset
+
+, we can conclude that 
 \begin_inset Formula $d_{\TV}\left(\X,\Po\left(1\right)\right)\le8/n$
 \end_inset
 
@@ -11365,7 +11522,7 @@ A standard way to enumerate combinatorial objects is by way of a recurrence.
  of the number of objects of smaller sizes.
  The most difficult combinatorial structures to enumerate and study, then,
  are those that are constrained in some way so that they exhibit self-dependence
-, meaning that they cannot be built up from independent substructures.
+, meaning that they cannot be built up from substructures.
  For example, regular graphs are graphs where each vertex has the same degree.
  There is no simple, uniform way to construct a regular graph from regular
  graphs of smaller degree or with fewer vertices.
@@ -12534,7 +12691,7 @@ creates a cycle
 \begin_inset Formula $\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)$
 \end_inset
 
- that must be estimated in 
+ that were estimated in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "example:poisson-connecting-operator"
@@ -12723,7 +12880,7 @@ Similarly, let
  We have 
 \begin_inset Formula 
 \[
-\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.
+\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\,\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.
 \]
 
 \end_inset
