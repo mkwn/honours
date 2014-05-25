@@ -157,6 +157,12 @@
 \tikzstyle{vertex}=[circle,draw=black,fill=black,inner sep=0,minimum size=0.2cm,text=white,font=\footnotesize]
 \tikzset{every loop/.style={min distance=50,in=50,out=130,looseness=7}}
 
+%\usepackage{titlepic}
+\hypersetup{
+ pdftitle = {Stein's Method},
+ pdfauthor = {Matthew Kwan}
+}
+
 \makeatother
 
   \providecommand{\claimname}{Claim}
@@ -266,10 +272,10 @@ c
 \global\long\def\falling#1#2{\left(#1\right)_{#2}}
 
 
-\begin{comment}
-
 
 \section*{Acknowledgements}
+
+\begin{comment}
 
 First and foremost I would like to thank my supervisor Catherine Greenhill
 for her support and guidance for the duration of the thesis, and also
@@ -287,23 +293,22 @@ Finally, I would like to thank every one of my maths and stats lecturers
 from 2010 to 2014, whose effort and expertise have managed to transform
 me into an enthusiastic (and maybe even capable!) student of mathematics.
 
-\newpage{}
-
 \end{comment}
+
+\newpage{}
 
 \tableofcontents{}
 
-\begin{todo}Remaining stuff:
+\begin{todo}Things remaining:
 \begin{itemize}
-\item random combinatorial structures: merge?
-\item put a remark in the Poisson section saying we'll do Poisson approximation
-later
 \item size-bias coupling
-\item finish proof sketch for random regular graphs section - where does
-the bound come from?
-\item further reading
+\item address and remove comments
+\item fix overfull hboxes and large empty spaces
+\item (only if time) law of small numbers
 \end{itemize}
 \end{todo}
+
+\newpage{}
 
 
 \section{Introduction}
@@ -570,22 +575,34 @@ $\L{\X}=\L{}$ with respect to the underlying probability measure
 $\L{}$. We also use the notation $\X\in\L{}$ to indicate that $\X$
 has distribution $\L{}$.
 \begin{example}
-The normal distribution with parameters $\mu$ and $\sigma$ is denoted
-$\N\left(\mu,\sigma\right)$ or $\N_{\mu,\sigma}$ and is defined
-by 
+The \emph{normal distribution} with parameters $\mu$ and $\sigma$
+is denoted $\N\left(\mu,\sigma\right)$ or $\N_{\mu,\sigma}$ and
+is defined by 
 \[
 \N_{\mu,\sigma}\left(B\right)=\frac{1}{\sigma\sqrt{2\pi}}\int_{B}e^{-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}}\d x
 \]
- for any Borel set $B$.
+for any Borel set $B$. We can use the Gaussian integral to show that
+this is indeed a probability measure, with $\N_{\mu,\sigma}\left(\RR\right)=1$.
+
+The normal distribution will be of particular importance in this thesis,
+so we make some remarks. Note that if $\X\in\N\left(\mu,\sigma\right)$
+then $\E\X=\mu$ and $\Var\X=\sigma^{2}$ (this second fact can be
+established using integration by parts and the Gaussian integral).
+Also, note that $\frac{\X-\mu}{\sigma}\in\N\left(0,1\right)$. So,
+we will sometimes only consider the \emph{standard normal} distribution
+$\N\left(0,1\right)$, with the understanding that it is very easy
+to transfer results to other normal distributions.
 \end{example}
 
 \begin{example}
-The Poisson distribution with parameter $\lambda$ is denoted $\Po\left(\lambda\right)=\Po_{\lambda}$;
-this is defined by 
+The \emph{Poisson distribution} with parameter $\lambda$ is denoted
+$\Po\left(\lambda\right)=\Po_{\lambda}$; this is defined by 
 \[
 \Po_{\lambda}\left(k\right)=\frac{\lambda^{k}e^{-\lambda}}{k!}
 \]
- for all $k\in\NN$ (see \ref{rem:discrete-space}).
+for all $k\in\NN$ (see \ref{rem:discrete-space}). The Taylor expansion
+of the exponential can be used to show that this indeed defines a
+probability measure.
 \end{example}
 It is in general a little tricky to define ``the set of values a
 random element can take'', but this is straightforward in the discrete
@@ -672,11 +689,14 @@ comparisons between their distributions.
 
 \subsection{Expected Value}
 \begin{defn}
-The \emph{expected value }of a random variable $\X$ (or its distribution)
-is the measure-theoretic integral $\E\X=\int x\d\L{\X}\left(x\right)$.\end{defn}
+The \emph{expected value} of a random variable $\X$ (or its distribution)
+is the measure-theoretic integral $\E\X=\int x\d\L{\X}\left(x\right)$.
+It can be intuitively understood as the ``average'' value that random
+variable takes. The \emph{variance} of $\X$ is a measure of how much
+variation there is from the expected value; it is defined by $\Var\X=\E\left(\X-\E\X\right)^{2}=\E\X^{2}-\left(\E\X\right)^{2}$.\end{defn}
 \begin{rem}
-For a random variable $\X$ that takes integer values, this definition
-is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\,\Pr\left(\X=x\right)$.
+For a random variable $\X$ that takes integer values, our definition
+of expected value is equivalent to the well-known formula $\E\X=\sum_{x\in\ZZ}x\,\Pr\left(\X=x\right)$.
 \end{rem}
 
 \begin{rem}
@@ -743,8 +763,9 @@ We can also define conditional expectation with respect to another
 random variable. If $\X_{1}$ and $\X_{2}$ are random variables defined
 on the same underlying probability space $\left(\Om,\cA,\Pr\right)$,
 then the sets $\X_{2}^{-1}\left(B\right)$ for Borel $B$ comprise
-a sub-$\sigma$-algebra $\cA'$ of $\cA$. Then, $\m:\A'\mapsto\E\left[\X_{1}\one_{\A'}\right]$
-is a signed measure on $\cA'$ that is absolutely continuous with
+a sub-$\sigma$-algebra $\sigma\left(\X_{2}\right)$ of $\cA$. Then,
+$\m:\A'\mapsto\E\left[\X_{1}\one_{\A'}\right]$ is a signed measure
+on $\sigma\left(\X_{2}\right)$ that is absolutely continuous with
 respect to the restriction of $\Pr$ to $\cA'$. By the Radon-Nikodym
 \textbf{t}heorem (see \cite[Theorem 6.10]{Rud66}) there is an $\cA'$-measurable
 random variable $\E\left[\X_{1}|\X_{2}\right]$ that satisfies $\E\left[\X_{1}\one_{\A'}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A'}\right]$
@@ -776,24 +797,31 @@ We finally present some simple consequences of the definition of conditional
 expectation.
 \begin{prop}
 [Tower Law of Expectation]\label{prop:tower-contractivity}Suppose
-$\X_{1}$ and $\X_{2}$ are random variables defined on the same underlying
-probability space $\left(\Om,\cA\right)$. Then\begin{enumerate}
+$\X_{1}$, $\X_{2}$ and $\X_{3}$ are random variables defined on
+the same underlying probability space $\left(\Om,\cA\right)$. Further,
+suppose $\X_{3}$ is $\sigma\left(\X_{2}\right)$-measurable (intuitively,
+this means $\X_{3}$ is dependent only on the information from $\X_{2}$).
+Then\begin{enumerate}
 
-\item (Tower Law) $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$,
+\item (Tower Law) $\E^{\X_{3}}\left[\E^{\X_{2}}\X_{1}\right]=\E^{\X_{3}}\left[\X_{1}\right]$.
+In particular, taking $\X_{3}\equiv1$, we have $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$.
 
 \item (Contractivity) $\E\left|\E^{\X_{2}}\X_{1}\right|\le\E\left|\X_{1}\right|$.
 
 \end{enumerate}\end{prop}
 \begin{proof}
-Recall the definition of conditional expectation. We have
+Recall the definition of conditional expectation. For all $\A\in\sigma\left(\X_{3}\right)\subseteq\sigma\left(\X_{2}\right)$
+we have
 \[
-\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\Om}\right]=\E\left[\X_{1}\one_{\Om}\right]=\E\left[\X_{1}\right].
+\E\left[\E\left[\X_{1}|\X_{3}\right]\one_{\A}\right]=\E\left[\X_{1}\one_{\A}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A}\right].
 \]
-Next, let $\A=\left\{ \E^{\X_{2}}\X_{1}\ge0\right\} $, so
+Since $\E\left[\X_{1}|\X_{3}\right]$ is $\sigma\left(\X_{3}\right)$-measurable,
+the tower law is proved. Next, let $\A=\left\{ \E^{\X_{2}}\X_{1}\ge0\right\} $,
+so
 \[
-\E\left|\E^{\X_{2}}\X_{1}\right|=\E\left[\one_{\A}\E^{\X_{2}}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\E^{\X_{2}}\X_{1}\right]=\E\left[\one_{\A}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\X_{1}\right]\le\E\left|\X_{1}\right|.\qedhere
+\E\left|\E^{\X_{2}}\X_{1}\right|=\E\left[\one_{\A}\E^{\X_{2}}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\E^{\X_{2}}\X_{1}\right]=\E\left[\one_{\A}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\X_{1}\right]\le\E\left|\X_{1}\right|,
 \]
-
+proving contractivity.
 \end{proof}
 
 \subsection{Markov Chains}
@@ -1277,12 +1305,16 @@ then we say the space is \emph{uniform}.
 Uniform models are the simplest examples of random structures. For
 example, the uniform space $\rS n$ of permutations on $n$ elements
 has $\Pr\left(\sigma\right)=1/n!$ for each $\sigma\in S_{n}$. The
-uniform random graph model $\rG nM$ has $\Pr\left(G\right)=\begin{pmatrix}{n \choose 2}\\
+uniform random regular graph model $\rG nd$ is uniform on the set
+of all $d$-regular graphs on the vertex set $\range n$, though an
+explicit formula for the number of such graphs is not known. (Recall
+that a $d$-regular graph is a graph where each vertex has exactly
+$d$ incident edges).
+
+\begin{comment}The uniform random graph model $\rG nM$ has $\Pr\left(G\right)=\begin{pmatrix}{n \choose 2}\\
 M
 \end{pmatrix}^{-1}$ for each graph $G$ on the vertex set $\range n$ which has $M$
-edges. The uniform random regular graph model $\rG nd$ is uniform
-on the set of all $d$-regular graphs on the vertex set $\range n$,
-though an explicit formula for the number of such graphs is not known.
+edges. \end{comment}
 
 As an important example of a (generally) non-uniform model, the (Erd\H{o}s-R\'enyi)
 binomial random graph model $\rG np$ has
@@ -1291,6 +1323,9 @@ binomial random graph model $\rG np$ has
 \]
 for each graph $G$ on the vertex set $\range n$. When $p=1/2$,
 we obtain the uniform model on all graphs on the vertex set $\range n$.
+It is unfortunate that the common notations for the random regular
+model and the binomial model clash, but hopefully in this thesis the
+intended meaning will always be very clear from context.
 
 One way to conceptualize the binomial model is to consider a sequence
 of independent coin tosses, where the coin is biased to land heads
@@ -1300,18 +1335,11 @@ final random graph. When we define more complicated random models,
 we will often use this kind of informal description rather than giving
 an explicit formula for each $\Pr\left(\om\right)$.
 
-As another example, the uniform model $\rG nM$ can be alternatively
-defined recursively: $\rG n0$ is always the trivial graph with no
-edges, and for each $M>0$, to obtain $\rG nM$ we choose $G\in\rG n{M-1}$
-and add one of the ${n \choose 2}-\left(M-1\right)$ possible edges
-at random.
-
-\begin{note}
-
-This section is unfinished (it was probably a mistake to start it
-without knowing what I'll need, anyway).
-
-\end{note}
+\begin{comment}As another example, the uniform model $\rG nM$ can
+be alternatively defined recursively: $\rG n0$ is always the trivial
+graph with no edges, and for each $M>0$, to obtain $\rG nM$ we choose
+$G\in\rG n{M-1}$ and add one of the ${n \choose 2}-\left(M-1\right)$
+possible edges at random.\end{comment}
 
 
 \section{Stein's Method in Generality\label{sec:stein-general}}
@@ -1532,7 +1560,7 @@ codomain $\cX_{\N}$. Fix $\fo\in\cF_{\N}$ and $k\ge0$. We have
  & \quad\le\E\left[\left|\X_{\N}\right|^{k}\left|\fo'\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)-\fo\left(0\right)\right|\right]+\left|\fo\left(0\right)\right|\E\left[\left|\X_{\N}\right|^{k+1}\right].\label{eq:normal-well-defined-bound}
 \end{alignat}
 \begin{comment}Now, $\E\left|\X\right|^{a}\le\left(\E\left|\X\right|^{b}\right)^{a/b}$
-for $a\le b$ by Hölder's inequality (see \cite[Theorem 3.6 (1)]{Rud66})
+for $a\le b$ by H\"older's inequality (see \cite[Theorem 3.6 (1)]{Rud66})
 \begin{alignat*}{1}
 \E\left|\X_{\N}\right|^{k+1} & \prec\int_{0}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\\
  & \prec\int_{0}^{\infty}x^{k}\frac{\d}{\d x}e^{-x^{2}/2}\d x\\
@@ -1602,8 +1630,8 @@ Next, consider the differential equation
 for $\fo$. We solve this equation with the method of integrating
 factors:
 \begin{alignat*}{1}
-e^{-x^{2}/2}\fo'\left(x\right)-xe^{-x^{2}/2}\fo\left(x\right) & =e^{-x^{2}/2}\left(\h\left(x\right)-\E_{\N}\h\right)\\
-\frac{\d}{\d x}e^{-x^{2}/2}\fo\left(x\right) & =e^{-x^{2}/2}\left(\h\left(x\right)-\E_{\N}\h\right)
+e^{-x^{2}/2}\fo'\left(x\right)-xe^{-x^{2}/2}\fo\left(x\right) & =e^{-x^{2}/2}\left(\h\left(x\right)-\E_{\N}\h\right),\\
+\frac{\d}{\d x}e^{-x^{2}/2}\fo\left(x\right) & =e^{-x^{2}/2}\left(\h\left(x\right)-\E_{\N}\h\right).
 \end{alignat*}
 The general solution is 
 \begin{equation}
@@ -1860,12 +1888,13 @@ $\left\Vert f''\right\Vert _{\infty}\le6$, we have
 \begin{equation}
 \frac{1}{2}\E\left|Q_{\i}^{3}f''\left(E\right)\right|\le3\,\E\left|Q^{3}\right|,\quad\E\left|Q_{\i}f''\left(E'\right)\right|\le6\,\E\left|Q\right|.\label{eq:berry-esseen-error-bounds}
 \end{equation}
-Hölder's inequality (see \cite[Theorem 3.6 (1)]{Rud66}) for the $L^{3/2}$
-norm gives 
+H\"older's inequality (see \cite[Theorem 3.6 (1)]{Rud66}) for the
+$L^{3/2}$ norm gives 
 \[
 1=\E\left|Q^{2}\right|^{3/2}\le\left(\E\left|\left(Q^{2}\right)^{3/2}\right|^{2/3}\right)^{3/2}=\E\left|Q^{3}\right|,
 \]
-so an application of Hölder's inequality for the $L^{3}$ norm gives
+so an application of H\"older's inequality for the $L^{3}$ norm
+gives
 \begin{equation}
 \E\left|Q\right|\le\E\left|Q^{3}\right|^{1/3}\le\E\left|Q^{3}\right|.\label{eq:berry-esseen-holder}
 \end{equation}
@@ -2076,13 +2105,16 @@ fiddly argument can be used to show that the bound $\left\Vert \fo\right\Vert _{
 is also valid (see \cite[Lemma 4]{Bar83}). A much more sophisticated
 argument in \cite[Remark 10.2.4]{BHJ92} gives the sharper bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\sqrt{2/\left(e\lambda\right)}\right\} $.
 \end{rem}
+We will see some examples of Poisson approximation using Stein's method
+in the coming sections.
+
 
 \section{Size-Bias Coupling\label{sec:size-bias-coupling}}
 
 \global\long\def\Ls#1{\mathcal{L}_{#1}^{\left(s\right)}}
 
 
-\global\long\def\Xs#1{#1^{\left(s\right)}}
+\global\long\def\s#1{#1^{\left(s\right)}}
 
 
 In both the Normal and Poisson cases, estimation of the necessary
@@ -2097,34 +2129,190 @@ found in combinatorial applications, one particularly useful technique
 is \emph{size-bias coupling}, which we will discuss in this section.
 \begin{defn}
 The \emph{size-bias distribution} $\Ls{\X}$ with respect to a nonnegative
-integrable random variable $\X$ is given by $\Ls{\X}\left(A\right)=\E\left[\X\one_{\X\in\A}\right]/\E\X$.\end{defn}
+integrable random variable $\X$ is given by $\Ls{\X}\left(A\right)=\E\left[\X\one_{\X\in\A}\right]/\E\X$.
+In this section, $\s{\X}$ will always denote a random variable with
+the distribution $\Ls{\X}$.\end{defn}
 \begin{rem}
 \label{rem:size-bias-discrete}The reason this is called size-biasing
 is because the probability of each value of $\X$ is biased proportionally
-by that value. To be precise, in the discrete case we have 
-\[
-\Ls{\X}\left(k\right)=\frac{k}{\E\X}\Ls{\X}\left(k\right).
-\]
-This often has a combinatorial interpretation. Intuitively speaking,
-if $\L{\X}$ is the number of balls in a random bin, then $\Ls{\X}$
-is the distribution of the number of balls in the bin of a random
-ball.
+by that value. To be precise, in the discrete the definition of $\Ls{\X}$
+can be stated as 
+\begin{equation}
+\Ls{\X}\left(k\right)=\frac{k}{\E\X}\L{\X}\left(k\right).\label{eq:discrete-size-bias-definition}
+\end{equation}
+for each $k$. This often has a combinatorial interpretation. Intuitively
+speaking, if $\L{\X}$ is the number of balls in a random bin, then
+$\Ls{\X}$ is the distribution of the number of balls in the bin of
+a random ball.
 \end{rem}
 We can immediately see from \ref{rem:size-bias-discrete} that in
-the discrete case $\E\fo\left(\Xs{\X}\right)=\E\left[\X\fo\left(\X\right)\right]/\E\X$
+the discrete case 
+\begin{equation}
+\E\fo\left(\s{\X}\right)=\E\left[\X\fo\left(\X\right)\right]/\E\X\label{eq:size-bias-transformation}
+\end{equation}
 for all $\Ls{\X}$-integrable functions $\fo$. This is in fact true
 in general, which can be straightforwardly proved with the measure-theoretic
 definition of the integral.
 
 Size-biasing therefore gives us a way to work with expectations of
 the form $\E\left[\X\fo\left(\X\right)\right]$. In order to use this
-for Stein's method, we need to couple $\X$ with $\Xs{\X}$ in an
-appropriate way. The objective of this coupling varies slightly between
-the Normal and Poisson cases, but there is a general construction
-that can be frequently used for both.
-\begin{thm}
-coming soon
-\end{thm}
+for Stein's method, we need to couple $\X$ with $\s{\X}$ in an appropriate
+way. There is a general construction that can be frequently used for
+both normal and Poisson approximation in combinatorial applications.
+\begin{prop}
+Let $\left(Q_{\i}\right)_{\i=1}^{n}$ be a sequence of zero-one random
+variables, and let $\X=\sum_{\i=1}^{n}Q_{\i}$. Suppose \textup{$\left(\X^{\left(\i\right)}\right)_{\i=1}^{n},\left(Q_{\i}\right)_{\i=1}^{n}$
+and $\X$ are coupled in such a way that }$\X^{\left(\i\right)}\in\Lb{\X|Q_{i}=1}$
+for each $\i$. Let $I$ be a random variable independent of all the
+random variables defined so far, with distribution satisfying $\L I\left(i\right)=\Pr\left(Q_{i}=1\right)/\E\X$.
+Then $\X^{\left(I\right)}\in\Ls{\X}$.\end{prop}
+\begin{proof}
+We have 
+\begin{alignat*}{1}
+\Pr\left(\X^{\left(I\right)}=k\right) & =\sum_{\i=1}^{n}\frac{\Pr\left(Q_{\i}=1\right)}{\E\X}\Pr\left(\X=k|Q_{\i}=1\right)\\
+ & =\frac{1}{\E\X}\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right).
+\end{alignat*}
+Now, when $\X=k$, exactly $k$ of the events $\left\{ Q_{\i}=1\right\} $
+will hold, so
+\[
+\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right)=\L{\X}\left(k\right).
+\]
+Then, the discrete definition \ref{eq:discrete-size-bias-definition}
+for the size-bias distribution proves $\X^{\left(I\right)}\in\Ls{\X}$.\end{proof}
+\begin{example}
+[adapted from {\cite[Example 4.21]{Ros11}}]\label{example:isolated-vertices}We
+say a vertex in a graph is \emph{isolated }if it has no neighbours.
+Fix $n$ and $p$, and let $G\in\rG np$ (see \ref{sec:random-structures}).
+Let 
+\[
+Q_{\i}=\one\left\{ \i\mbox{ is an isolated vertex in }G\right\} ,
+\]
+so that $\X=\sum_{\i=1}^{n}Q_{\i}$ is the number of isolated vertices
+in $G$. Now, the event $Q_{\i}=1$ means that $\i$ has no incident
+edges. By the independence in the definition of $\rG np$, the distribution
+of $\Lb{\X|Q_{i}=1}$ can be realized as the number of isolated vertices
+in a graph obtained by deleting from $G$ all edges incident to $\i$.
+By symmetry, each $\Pr\left(Q_{i}=1\right)$ is equal, so we can couple
+$\s{\X}$ with $\X$ by letting $\s{\X}$ be the number of isolated
+vertices in the graph obtained by picking a vertex in $G$ at random
+and deleting all its adjacent edges.
+
+Now, the distribution of $\X$ depends on the relationship between
+$n$ and $p$. First, note that each $Q_{\i}$ is ``almost'' independent.
+Next, the probability that a vertex is isolated is $\left(1-p\right)^{n-1}$
+because the $n-1$ potential edges incident to that vertex must independently
+not be present. So if $p$ is not vanishingly small compared to $n$
+then isolated points are a ``rare event'' and we might expect $\X$
+to have an approximate Poisson distribution. If $p$ vanishes at just
+the right rate (compared to $n$), then we might expect the central
+limit theorem to approximately hold, so that $\X$ has an approximate
+normal distribution. We will therefore return to this example to illustrate
+the application of size-bias coupling for both normal and Poisson
+approximation.
+
+In both cases, we will need to compute $\E\X$ and $\Var\X$, so we
+do this now. Using \ref{rem:indicator-expectation}, we can immediately
+deduce that $\E\X=n\left(1-p\right)^{n-1}$. For a pair of distinct
+vertices, the probability that both are isolated is $\left(1-p\right)^{2n-3}$,
+so
+\[
+\E\left[\X\left(\X-1\right)/2\right]={n \choose 2}\left(1-p\right)^{2n-3}
+\]
+and
+\begin{alignat*}{1}
+\Var\X & =n\left(n-1\right)\left(1-p\right)^{2n-3}+n\left(1-p\right)^{n-1}-n^{2}\left(1-p\right)^{2n-2}\\
+ & =n\left(1-p\right)^{n-1}\left(1+\left(np-1\right)\left(1-p\right)^{n-2}\right).
+\end{alignat*}
+
+\end{example}
+
+\subsection{Normal approximation}
+
+For a nonnegative random variable $\X$, let $\mu=\E\X$ and $\sigma^{2}=\Var\X$.
+Suppose we believe $W=\left(\X-\mu\right)/\sigma$ is approximately
+distributed as $\N\left(0,1\right)$. In order to prove this, our
+objective is to compare $\E\left[f\left(W\right)\right]$ to $\E\left[f'\left(W\right)\right]$,
+as in \ref{sub:berry-esseen}.
+
+Now, for any function $f:\RR\to\RR$, by considering \ref{eq:size-bias-transformation}
+with the function $x\mapsto f\left(\left(\X-\mu\right)/\sigma\right)$,
+we have
+\[
+\E\left[Wf\left(W\right)\right]=\E\left[\frac{\X-\mu}{\sigma}f\left(\frac{\X-\mu}{\sigma}\right)\right]=\frac{\mu}{\sigma}\E\left[f\left(\frac{\s{\X}-\mu}{\sigma}\right)-f\left(\frac{\X-\mu}{\sigma}\right)\right].
+\]
+A Taylor expansion (assuming $f$ is twice-differentiable) then gives
+\[
+\E\left[Wf\left(W\right)\right]=\frac{\mu}{\sigma}\E\left[\frac{\s{\X}-\X}{\sigma}f'\left(\frac{\X-\mu}{\sigma}\right)+\frac{1}{2}\left(\frac{\s{\X}-\X}{\sigma}\right)^{2}f''\left(E\right)\right],
+\]
+for some (random) $E$. So, for $\To=\T_{\N}$ as defined in \ref{thm:normal-characterizing},
+we have 
+\begin{equation}
+\left|\E_{W}\To f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.\label{eq:size-bias-normal-bound}
+\end{equation}
+for $f$ satisfying the bounds in \ref{thm:wasserstein-normal-bounds}.
+(We have used the tower law of expectation, see \ref{prop:tower-contractivity}).
+Now, by considering the function $x\mapsto x$ in \ref{eq:size-bias-transformation},
+observe that 
+\[
+\E\s{\X}=\frac{\E\X^{2}}{\E\X}=\frac{\sigma^{2}+\mu^{2}}{\mu},
+\]
+so $\E\left[\E^{\X}\left[\s{\X}-\X\right]\right]=\E\left[\s{\X}-\X\right]=\sigma^{2}/\mu$.
+H\"older's inequality (see \cite[Theorem 3.6 (1)]{Rud66}) for the
+$L^{2}$ norm then gives
+\begin{equation}
+\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|\le\sqrt{\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)}.\label{eq:size-bias-normal-variance-bound}
+\end{equation}
+
+
+It follows that $d_{\W}\left(\X,\N\left(0,1\right)\right)$ will be
+small when $\s{\X}$ is coupled in such a way that it is a slight
+perturbation of $\X$. We will show how $d_{\W}\left(\X,\N\left(0,1\right)\right)$
+can be bounded in practice with the continuation of \ref{example:isolated-vertices}.
+\begin{example}
+As in \ref{example:isolated-vertices}, let $\X$ be the number of
+isolated vertices in a random $G\in\rG np$, let $I$ be a random
+vertex, and let $\s{\X}$ be the number of isolated vertices with
+the edges incident to a random vertex deleted. For each vertex $\i$
+in $G$, let $D_{\i}$ be the number of vertices adjacent to $\i$
+which have degree $1$, and as before let $Q_{\i}$ be the indicator
+random variable for the event that $\i$ is isolated. Then, we have
+\[
+\s{\X}-\X=D_{I}+Q_{I}.
+\]
+First, note that
+\begin{equation}
+\E\left(\s{\X}-\X\right)^{2}=\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+Q_{\i}\right)^{2}\le\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+1\right)^{2}=\E D_{\i}^{2}+2\E D_{\i}+1.\label{eq:isolated-vertices-E(X^s-X)^2-bound}
+\end{equation}
+Next, by contractivity and the tower law (see \ref{prop:tower-contractivity}),
+we have
+\begin{equation}
+\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)=\Var\left(\E^{\X}\left[\E^{G}\left[\s{\X}-\X\right]\right]\right)\le\Var\left(\E^{G}\left[\s{\X}-\X\right]\right).\label{eq:isolated-vertices-var-contractive-bound}
+\end{equation}
+The interpretation of $\E^{G}\left[\s{\X}-\X\right]$ is that $\s{\X}-\X$
+is averaged over all choices of the random vertex $I$, for each $G$.
+That is,
+\[
+\E^{G}\left[\s{\X}-\X\right]=\sum_{\i=1}^{n}\frac{1}{n}\left(D_{\i}+Q_{\i}\right).
+\]
+Now, let $D=\sum_{\i=1}^{n}D_{\i}$ be the number of vertices with
+degree 1 in $G$, and let $\hat{D}=D-\E D$. Recall that $\X=\sum_{\i=1}^{n}Q_{\i}$,
+and let $\hat{\X}=\X-\E\X$. We have
+\begin{equation}
+\Var\left(\E^{G}\left[\s{\X}-\X\right]\right)=\frac{1}{n^{2}}\E\left(\hat{D}+\hat{\X}\right)^{2}=\frac{1}{n^{2}}\E\left[2\hat{D}^{2}-2\hat{\X}^{2}-\left(\hat{D}-\hat{\X}\right)^{2}\right]\le\frac{2}{n^{2}}\left(\Var D+\Var\X\right).\label{eq:isolated-vertices-var-full-bound}
+\end{equation}
+Combining Equations \ref{eq:size-bias-normal-bound}, \ref{eq:size-bias-normal-variance-bound},
+\ref{eq:isolated-vertices-E(X^s-X)^2-bound}, \ref{eq:isolated-vertices-var-contractive-bound}
+and \ref{eq:isolated-vertices-var-full-bound}, we just need to estimate
+$\Var D$, $\E D_{i}$ and $\E D_{i}^{2}$ in order to obtain a bound
+for 
+\[
+d_{\W}\left(\frac{\X-\mu}{\sigma},\N\left(0,1\right)\right).
+\]
+
+\end{example}
+
+\subsection{Poisson Approximation}
+
 
 \section{The Method of Exchangeable Pairs\label{sec:exchangeable-pairs}}
 
@@ -2181,8 +2369,7 @@ finite support $\OmX$.
 \begin{example}
 [adapted from {\cite[Example 4.21]{Ros11}}]\label{example:fixed-points}Throughout
 this section, we will refer to an example problem to illustrate the
-principles of Stein's method for exchangeable pairs. This will be
-our first example of Poisson approximation.
+principles of Stein's method for exchangeable pairs.
 
 We will say a \emph{fixed point} of a permutation $\sigma\in S_{n}$
 is an index $k\in\range n$ that satisfies $\sigma\left(k\right)=k$.
@@ -2449,6 +2636,15 @@ Combining \ref{eq:stein-distance-transform}, \ref{eq:EXT0-immigration-death-boun
 \ref{eq:fixed-point-progress-1} and \ref{eq:fixed-point-progress-2},
 we can conclude that $d_{\TV}\left(\X,\Po\left(1\right)\right)\le8/n$.
 \end{example}
+We stress that this example was included only for illustrative purposes.
+Since $d_{\TV}$ has a relatively direct probabilistic interpretation,
+and since permutations are very simple, well-understood combinatorial
+objects, it is actually possible to analyze $d_{\TV}\left(\X,\Po\left(1\right)\right)$
+with elementary (but complicated) combinatorics. One can obtain super-exponential
+bounds which are much better than the bound we obtained by Stein's
+method (see \cite[Section 1.1]{ABT03}). However, such elementary
+analysis is sometimes not possible, as we will now see.
+
 \begin{comment}
 
 The ``generator method'' \cite{BC05} says that the Poisson characterizing
@@ -2500,7 +2696,10 @@ $d\ge3$. Then
 \[
 \Lb{\X_{\ell,n}^{\left(d\right)}}\to\Po\left(\frac{\left(d-1\right)^{\ell}}{2\ell}\right)
 \]
-as $n\to\infty$.\end{thm}
+as $n\to\infty$.
+\end{thm}
+This theorem is most easily proved with the method of moments; see
+\cite[Theorem 2.5]{Wor99}.
 \begin{rem}
 The full theorem is that for any $r\in\NN$, the vector of short cycle
 counts $\left(\X_{1,n}^{\left(d\right)},\dots\X_{r,n}^{\left(d\right)}\right)$
@@ -2512,13 +2711,14 @@ not discussed the weak topology on random vectors, all the results
 and discussion in this subsection are simplified to the single-variable
 case.
 \end{rem}
-One reason \ref{thm:short-cycles-fixed} is interesting is because
-it tells us the number of ``short cycles'' in a random regular graph
-does not grow (to infinity) with the size of the graph. That is, random
-regular graphs are likely to ``locally'' ``look like forests''.
-\ref{thm:short-cycles-fixed} is most easily proved with the method
-of moments; see \cite{Wor99}.
 
+\begin{rem}
+\label{rem:short-cycles-are-rare}One reason \ref{thm:short-cycles-fixed}
+is interesting is because it tells us the number of ``short cycles''
+in a random regular graph does not grow (to infinity) with the size
+of the graph. That is, random regular graphs are likely to ``locally''
+``look like forests''.
+\end{rem}
 \ref{thm:short-cycles-fixed} can be extended to the case where $d$
 is allowed to grow modestly with $n$. In \cite{MWW04}, a natural
 variant of \ref{thm:short-cycles-fixed} was proved for $\left(d-1\right)^{2\ell-1}=o\left(n\right)$,
@@ -2556,13 +2756,13 @@ to another. The switching used in \cite{MWW04} is defined as follows:
 \label{def:cycle-switching}Let $C=v_{1}\dots v_{\ell}v_{1}$ be a
 cycle of length $\ell$ in a $d$-regular graph $G$. For each $\i\in\ZZ/\ell\ZZ$,
 suppose $e_{\i}=u_{\i}w_{\i+1}\in E\left(G\right)$ satisfies $u_{\i}v_{\i}\notin E\left(G\right)$
-and $v_{\i}w_{\i}\notin E\left(G\right)$. (Each $v_{\i},u_{\i},w_{\i}$
-must be distinct). Let $G'$ be the $d$-regular graph obtained from
-$G$ by deleting each $e_{\i}$ and all the edges in $C$ and adding
-each of the edges $u_{\i}v_{\i}$ and $v_{\i}w_{\i}$. Suppose that
-no cycles other than $C$ are created or destroyed by this process.
-Then, we say $G\rightsquigarrow G'$. \ref{fig:cycle-switching} below
-illustrates the idea.
+and $v_{\i}w_{\i}\notin E\left(G\right)$. (Each of the $3\ell$ vertices
+in $v_{\i},u_{\i},w_{\i}$ must be distinct). Let $G'$ be the $d$-regular
+graph obtained from $G$ by deleting each $e_{\i}$ and all the edges
+in $C$ and adding each of the edges $u_{\i}v_{\i}$ and $v_{\i}w_{\i}$.
+Suppose that no cycles of length less than or equal to $\ell$ other
+than $C$ are created or destroyed by this process. Then, we say $G\rightsquigarrow G'$.
+\ref{fig:cycle-switching} below illustrates the idea.
 \end{defn}
 \begin{figure}[h]
 \begin{center}
@@ -2677,10 +2877,13 @@ estimates of each $F\left(k\right)$ and $B\left(k\right)$, but Stein's
 method allows us to estimate the relevant probabilities only in expectation
 (effectively, we are only estimating $\E\left[\lambda-cB\left(\X\right)\right]$
 and $\E\left[\X-cF\left(\X\right)\right]$, where $\lambda$ is the
-parameter of the approximating Poisson). Second, our final estimate
-is likely to be sharper when using Stein's method, because we can
-take advantage of the sophisticated estimates developed for Stein's
-method rather than using elementary ad-hoc estimates.
+parameter of the approximating Poisson distribution). Second, our
+final estimate is likely to be sharper when using Stein's method,
+because we can take advantage of the sophisticated estimates developed
+for Stein's method rather than using elementary ad-hoc estimates.
+In particular, the improvement in \ref{thm:short-cycles-variable}
+over the natural bound in \cite{MWW04} is due to the term $\lambda^{-1/2}$
+in \ref{eq:EXT0-immigration-death-bound}.
 
 The idea is that a switching $\rightsquigarrow$ defines a graph $\fG$
 with an edge for every pair $\left(G,G'\right)$ with $G\rightsquigarrow G'$,
@@ -2689,17 +2892,17 @@ to so that each vertex has the same weight $\Delta$. By \ref{prop:graph-to-marko
 $\fG$ induces a reversible Markov \textbf{c}hain with uniform stationary
 distribution (in our case $\rG nd)$, which corresponds to an exchangeable
 pair $\mathbf{G}=\left(G_{1},G_{2}\right)$ with margins $\rG nd$.
-With \ref{rem:underlying-pair}, this provides us with an exchangeable
-pair $\bX=\left(\X_{1},\X_{2}\right)$ with margins $\L{\X}$ with
-which to apply Stein's method.
+With \ref{rem:underlying-pair}, this provides us an exchangeable
+pair $\bX=\left(\X_{1},\X_{2}\right)$ with margins $\L{\X}$, which
+we use to apply Stein's method.
 
 We give a very simplified sketch of the proof of \ref{thm:short-cycles-variable}.
 We use the switching in \ref{def:cycle-switching}. Assign all edges
 in $\fG$ a weight of 1, and let $\X=\X_{\ell,n}^{\left(d\right)}$.
 Let $F_{C}\left(G\right)$ be the number of ways to switch out of
 a graph $G$ by destroying an $\ell$-cycle $C\subseteq K_{n}$. Now,
-there are $\falling n{\ell}/\left(2\ell\right)$ cycles in $K_{n}$,
-so 
+there are $\falling n{\ell}/\left(2\ell\right)$ cycles in the complete
+graph $K_{n}$ on $n$ vertices, so 
 \begin{alignat*}{1}
 \E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right| & \le\E\left|\sum_{C\in K_{n}}\one_{C\subseteq G_{1}}-\frac{c}{\Delta}\sum_{C\in K_{n}}F_{C}\left(G_{1}\right)\right|\\
  & \le\frac{\falling n{\ell}}{2\ell}\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|.
@@ -2709,24 +2912,29 @@ into $G$ by destroying $C$. We have
 \[
 \E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\,\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.
 \]
-Now, if $C\subseteq G$, then $F_{C}\left(G\right)$ is approximately
-$\falling n{\ell}\, d^{\ell}/2^{\ell}$. To see this, note that a
-switching is determined by the $\ell$ vertices $\left\{ w_{\i}\right\} _{\i}$
-and a neighbour $u_{\i}$ for each. For large $n$, there are about
-$\falling n{\ell}$ ways to choose the $\left\{ w_{\i}\right\} _{\i}$,
-and each $w_{\i}$ has $d$ neighbors (for large $n$ these are unlikely
-to interfere with each other). Because each $u_{\i}$ and $w_{\i}$
-can be interchanged, resulting in the same switching, we then need
-to divide by $2^{\ell}$. Similarly, let $B_{C}\left(G\right)$ be
-the number of ways to switch into $G$ by destroying $C$. A switching
-that destroyed $C$ to create $G$ can be identified with a path $u_{\i}v_{\i}w_{\i}$
-for each $v_{\i}\in C$, and there are about ${d \choose 2}^{\ell}$
-ways to choose these paths. With these esimates in mind, we choose
-$c=\Delta2^{\ell}/\left(\falling n{\ell}d^{\ell}\right)$, so that
-both of 
-\[
-\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|
-\]
+Now, if $C\subseteq G$, then 
+\begin{equation}
+F_{C}\left(G\right)\approx\falling n{\ell}\, d^{\ell}/2^{\ell}.\label{eq:FC-approximate}
+\end{equation}
+To see this, note that a forwards switching is determined by the $\ell$
+vertices $\left\{ w_{\i}\right\} _{\i}$ and a neighbour $u_{\i}$
+for each. For large $n$, there are about $\falling n{\ell}$ ways
+to choose the $\left\{ w_{\i}\right\} _{\i}$, and each $w_{\i}$
+has $d$ neighbors (for large $n$ these are unlikely to interfere
+with each other). Because each $u_{\i}$ and $w_{\i}$ can be interchanged,
+resulting in the same switching, we then need to divide by $2^{\ell}$.
+Also, we have
+\begin{equation}
+B_{C}\left(G\right)\approx{d \choose 2}^{\ell},\label{eq:BC-approximate}
+\end{equation}
+because a switching that destroyed $C$ to create $G$ can be identified
+with a path $u_{\i}v_{\i}w_{\i}$ for each $v_{\i}\in C$, and there
+are about ${d \choose 2}^{\ell}$ ways to choose these paths. With
+these estimates in mind, we choose $c=\Delta2^{\ell}/\left(\falling n{\ell}d^{\ell}\right)$,
+so that both of 
+\begin{equation}
+\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|\label{eq:switchings-required-expectation-bound}
+\end{equation}
 are small. This will give us a bound on 
 \[
 \E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|,
@@ -2737,200 +2945,77 @@ d_{\TV}\left(\X,\Po\left(\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}\right)
 \]
 
 
-\begin{comment}
+The arguments needed to actually obtain bounds on the expectations
+in \ref{eq:switchings-required-expectation-bound} can be mostly adapted
+from corresponding arguments in the bare-hands application of switchings
+in \cite{MWW04}, which we will now sketch.
 
-
-\subsection{Proof of \ref{thm:short-cycles-variable}}
-
-Let $\X=\X_{\ell,n}^{\left(d\right)}$, let $\Om$ be the set of all
-$d$-regular graphs on $n$ vertices, and let $\lambda=\left(d-1\right)^{\ell}/\left(2\ell\right)\ge1$.
-
-The approach is conceptually similar to that of \ref{example:fixed-points}.
-In the case of permuations, the transposition of two random indices
-is a simple and effective way to perturb a permutation in an appropriate
-way to apply the method of \ref{example:poisson-connecting-operator}.
-However, it is not so easy to perturb a regular graph in a way that
-maintains regularity. We accomplish this with the switching from \ref{def:cycle-switching}.
-
-\global\long\def\fG{\mathfrak{G}}
-
-
-We define a multigraph $\fG$ with vertex set $\Om$. Make an edge
-in $\fG$ for every pair $\left(G,G'\right)$ with $G\rightsquigarrow G'$.
-Let $\Delta$ be the maximum degree so far. Add enough loops to each
-vertex of $\fG$ so that $\fG$ is a $\Delta$-regular multigraph.
-Recalling \ref{prop:graph-to-markov}, $\fG$ induces a reversible
-Markov \textbf{c}hain on $\Om$ with stationary distribution $\rG nd$,
-which corresponds to an exchangeable pair $\mathbf{G}=\left(G_{1},G_{2}\right)$
-with margins $\rG nd$. With \ref{rem:underlying-pair}, this provides
-us with an exchangeable pair $\bX=\left(\X_{1},\X_{2}\right)$ with
-margins $\Lb{\X_{\ell,n}^{\left(d\right)}}$ to apply Stein's method.
-
-\begin{comment!}
-
-Is it confusing for $G_{1},G_{2}$ to be random graphs, while graphs
-denoted $G$ or $G'$ generally refer to a specific, non-random graph?
-Maybe I should denote particular graphs with $\om$ instead or something.
-
-\end{comment!}
-
-For $G\in\Om$ and an $\ell$-cycle $C$, let $F_{C}\left(G\right)$
-be the number of ways to switch from $G$ by destroying $C$. That
-is,
+By the argument used to establish \ref{eq:FC-approximate}, we know
+that a switching that destroys a cycle $C$ is determined by a choice
+of a set of edges $\left\{ w_{\i}u_{\i}\right\} _{\i=1}^{\ell}$.
+To estimate $\E\left[F_{C}\left(G\right)\right]$, we need a lower
+bound (in expectation) of the number of such choices that are ``legal''
+as per \ref{def:cycle-switching} (that is, the relevant vertices
+are distinct and no extraoneous cycles are created or destroyed).
+A choice will certainly be legal if we require that each of the edges
+$w_{\i}u_{\i}$ are a certain minimum distance (say $\ell$) away
+from each other and of the cycle $C$, and we also require that none
+of the edges $w_{\i}u_{\i}$ are part of a ``short cycle'' (a cycle
+with length less than or equal to $\ell$). The number of vertices
+with distance less than or equal to $\ell$ from a particular vertex
+is at most $d^{\ell}$, which is a vanishingly small proportion of
+the vertices of a large graph. Due to this and the fact that short
+cycles are ``rare'' in expectation (\ref{rem:short-cycles-are-rare}),
+it can be shown combinatorially that
 \[
-F_{C}\left(G\right)=\left|\left\{ G'\in\Om:\, G\rightsquigarrow G',\, C\subseteq G,\, C\nsubseteq G'\right\} \right|,
+\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n^{\ell+1}}\right).
 \]
-so that $\sum_{C\in K_{n}}F_{C}\left(G\right)$ is the number of ways
-to switch from $G$, destroying one $\ell$-cycle. Then,
-\begin{alignat*}{1}
-\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right) & =\E\left[\Pr\left(\X_{2}=\X_{1}+1|G_{1}\right)|\X_{1}\right]\\
- & =\E\left[\left.\frac{1}{\Delta}\sum_{C\in K_{n}}F_{C}\left(G_{1}\right)\right|\X_{1}\right].
-\end{alignat*}
-
-
-\begin{todo}
-
-Conditioning on $\X_{1}$ is annoying, I'd rather condition on $G_{1}$.
-I should add a remark to this effect when introducing the method in
-the theory section, and make the same adjustment to the permutations
-example.
-
-\end{todo}
-
-Next, the automorphism group of an $\ell$-cycle has size $2\ell$,
-so the number of $\ell$-cycles in $K_{n}$ is $\falling n{\ell}/\left(2\ell\right)$.
-It follows that
-\begin{alignat*}{1}
-\E\left|\X_{1}-\frac{\Delta}{\falling n{\ell}d^{\ell}}\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right| & =\E\left|\sum_{C\in K_{n}}\one_{C\subseteq G_{1}}-\frac{1}{\falling n{\ell}d^{\ell}}\sum_{C\in K_{n}}F_{C}\left(G\right)\right|\\
- & \le\frac{\falling n{\ell}}{2\ell}\E\left|\one_{C\subseteq G_{1}}-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|.
-\end{alignat*}
-Similarly, let $B_{C}\left(G\right)$ be the number of ways to switch
-into $G$ by destroying $C$. We have
+We similarly need to investigate the sharpness of \ref{eq:BC-approximate}
+by bounding the number of ``legal'' choices of sets of paths $\left\{ u_{\i}v_{\i}w_{\i}\right\} _{\i=1}^{\ell}$.
+For this, we restrict our attention to such choices where no edge
+$v_{\i}u_{\i}$ or $v_{\i}w_{\i}$ is contained in a short cycle,
+and the distance between $u_{\i}v_{\i}w_{\i}$ and $u_{\ii}v_{\ii}w_{\ii}$
+is exactly the distance between $v_{\i}$ and $v_{\ii}$. We can then
+obtain a similar bound
 \[
-\E\left|\lambda-\frac{\Delta}{\falling n{\ell}d^{\ell}}\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\E\left|\frac{\left(d-1\right)^{n}}{\falling n{\ell}}-\frac{B_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|.
+\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n^{\ell+1}}\right).
 \]
-The majority of this section will consist of combinatorially bounding
-these expectations, resulting in the following lemmas:
-\begin{lem}
-\label{lem:forward-switching-bound}Uniformly in $C$,
-\[
-\E\left|\one_{C\subseteq G_{1}}-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n^{\ell+1}}\right).
-\]
-
-\end{lem}
-
-\begin{lem}
-\label{lem:backward-switching-bound}Uniformly in $C$,
-\[
-\E\left|\frac{\left(d-1\right)^{n}}{\falling n{\ell}}-\frac{B_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n\falling n{\ell}}\right).
-\]
-
-\end{lem}
-After proving these lemmas, we can conclude that
-\begin{alignat*}{1}
-d_{\TV}\left(\X,\Po\left(\lambda\right)\right) & \le\lambda^{-1/2}\left(\E\left|\lambda-\Delta\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-\Delta\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\right)\\
- & =O\left(\frac{\sqrt{\ell}\left(d-1\right)^{3\ell/2-1}}{n}\right).
-\end{alignat*}
-This concludes the proof of \ref{thm:short-cycles-variable}.
-
-In order to prove \ref{lem:forward-switching-bound,backward-switching-bound},
-we will need a few lemmas.
-\begin{lem}
-Uniformly in $C$ and $G$ such that $C$ does not share an edge with
-another $\ell$-cycle in $G$,
-\[
-F_{C}\left(G\right)\ge\falling n{\ell}d^{\ell}\left(1-\frac{2\ell\gamma\left(G\right)+O\left(\ell\left(d-1\right)^{\ell}\right)}{nd}\right),
-\]
-where $\gamma\left(G\right)$ is the number of $\ell$-cycles in $G$.\end{lem}
-\begin{proof}
-adsf\end{proof}
-\begin{lem}
-Uniformly in $C$ and $G$,
-\[
-B_{C}\left(G\right)\ge\left(d\left(d-1\right)\right)^{\ell}\left(1-\frac{O\left(\ell\left(d-1\right)^{\ell-1}\right)}{n}\right)
-\]
-\end{lem}
-\begin{proof}
-adsf
-\end{proof}
-
-\begin{proof}
-[Proof of \ref{lem:forward-switching-bound}]We partition $\rG nd$
-into three events:
-\begin{alignat*}{1}
-\A_{1} & =\left\{ G\in\Om:C\nsubseteq G\right\} ,\\
-\A_{2} & =\left\{ G\in\Om:C\subseteq G,\, C\mbox{ does not share an edge with another \ensuremath{\ell}-cycle in }G\right\} ,\\
-\A_{3} & =\left\{ G\in\Om:C\subseteq G,\, C\mbox{ shares an edge with another \ensuremath{\ell}-cycle in }G\right\} .
-\end{alignat*}
-If $G\in\A_{1}$ then $C\nsubseteq G$, and no switching can destroy
-$C$, so $F_{C}\left(G\right)=0$. If $G\in\A_{3}$, then a switching
-that destroys $C$ also destroys some other $\ell$-cycle, which is
-not allowed in the definition of $\rightsquigarrow$. So, $F_{C}\left(G\right)=0$.
-Also, note that a switching that deletes $C$ is determined by the
-$\ell$ oriented edges $e_{\i}$ in the definition of $\rightsquigarrow$.
-There are at most $\falling n{\ell}d^{\ell}$ ways to choose these
-edges (choose the $\ell$ vertices $u_{\i}$ then choose a neighbor
-$w_{\i}$ for each), so $F_{C}\le\falling n{\ell}d^{\ell}$.
-
-It follows that
-\begin{alignat*}{1}
-\E\left|\one_{C\subseteq G_{1}}-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right| & =\E\left[\one_{A_{1}}\left|0-0\right|+\one_{\A_{2}}\left|1-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right|+\one_{\A_{1}}\left(1-0\right)\right]\\
- & =\E\left[\one_{\A_{2}}\left(1-\frac{F_{C}\left(G_{1}\right)}{\falling n{\ell}d^{\ell}}\right)\right]+\Pr\left(\A_{3}\right)\\
-\end{alignat*}
-
-
-Note that a switching that deletes $C$ is determined by the $\ell$
-oriented edges $e_{\i}$ in the definition of $\rightsquigarrow$.
-There are at most $\falling n{\ell}d^{\ell}$ ways to choose these
-edges (choose the $\ell$ vertices $u_{\i}$ then choose a neighbor
-$w_{\i}$ for each), so $F_{C}\le\falling n{\ell}d^{\ell}$.
-
-, so $F_{C}\left(G\right)\le\falling n{\ell}d^{\ell}$ and
-\end{proof}
-
-\begin{proof}
-[Proof of \ref{lem:backward-switching-bound}]asfd
-\end{proof}
-\end{comment}
+\ref{thm:short-cycles-variable} can be shown to follow.
 
 
 \section{Further Reading}
 
 There are many aspects of Stein's method that we were unable to cover
-in this thesis.
+in this thesis. We have discussed approximation only with the Poisson
+and normal distributions, but Stein's method has been applied in much
+more generality. The method has been applied for other ``special''
+distributions such as the exponential, geometric and semicircle distributions
+(\cite{Ros11,FL14}). More interestingly, Stein's method has been
+used to approximate with application-specific distributions (see,
+for example, \cite{BCX07}). This is done using general characterizing
+operator constructions such as the exchangeable pairs approach (\ref{thm:characterizing-from-exchangeable-pair}),
+and the ``generator approach'' (\cite{BC05}).
 
-\begin{note}Possibly mention:
-\begin{itemize}
-\item different distributions, both standard and ad-hoc
-\item different techniques, such as zero-biasing
-\item Ways to construct characterizing operators other than exchangeable
-pairs
-\item Active research: random matrices, semicircle laws
-\end{itemize}
-\end{note}
+Also, while we were able to discuss the method of size-bias coupling
+(\ref{sec:size-bias-coupling}), there are several other distributional
+transformations that can be used to control the expectations produced
+by the Stein transformation. The most notable of these is zero-biasing
+(see, for example, \cite[Section 2.3.3]{CGS10}).
 
-\begin{comment}
+We have also only discussed Stein's method as a tool for bounding
+the distance between distributions, but the method can be applied
+to prove other types of results, including, for example, concentration
+inequalities (see, for example, \cite[Section 7]{Ros11}). The method
+has even been used for totally non-probabilistic results, such as
+the asymptotic enumeration of Latin rectangles (\cite[Section XI]{Ste86}).
 
-I'd like to go into a number of small examples (perhaps interspersed
-in the discussion of Stein's method in Part I), but I'd like to also
-go through a number of ``big'' examples. I'd like these examples
-to showcase
-\begin{itemize}
-\item different types of results: most applications give quantitative estimates.
-\cite{Joh11} gives a non-quantitative distributional convergence
-result that was not previously proved using other methods. There are
-also results that have no connection with distribution metrics, such
-as the concentration inequalities in \cite{Ros11}. In particular,
-the Latin rectangle example in \cite{Ste86} is interesting in that
-the final result is not probabilistic.
-\item different types of distributions: definitely at least the Poisson
-and normal case, perhaps also an example of a more exotic distribution
-like the one in \cite{FS12} or perturbations of Poisson/normal distributions
-as in \cite{BCX07}.
-\item different ways to apply stein's method: definitely exchangeable pairs
-and probably size-biasing. Maybe also Zero-bias coupling.
-\end{itemize}
-\end{comment}
+Finally, it is worth remarking that Stein's method is currently an
+active area of research, particularly in the fields of stochastic
+processes and random matrix theory. In fact, several interesting papers
+appeared on the arXiv too recently for me to be able to discuss them
+in the body of this thesis. The reader may be interested in a very
+recent survey paper \cite{Cha14} discussing the history of Stein's
+method and some current open problems.
 
 \let\textbf\oldtextbf
 
