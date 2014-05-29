@@ -27,6 +27,7 @@
 \AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
 \crefname{section}{Chapter}{Chapters}
 \crefname{subsection}{Section}{Sections}
+\crefname{remark}{Remark}{Remarks}
 
 % LyX won't let me include cleveref before theorem declarations so I need to redefine everything as a hack
 \theoremstyle{plain}
@@ -250,7 +251,7 @@ Supervisor: Catherine Greenhill
 \begin_inset Newline newline
 \end_inset
 
-School of Mathematics,
+School of Mathematics and Statistics,
 \begin_inset Newline newline
 \end_inset
 
@@ -281,6 +282,22 @@ status open
 thispagestyle{empty}
 \backslash
 end{titlepage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{roman}
 \end_layout
 
 \end_inset
@@ -475,7 +492,16 @@ end{comment}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\rest}{|}
+\newcommand{\rest}[2]{#1|_{#2}}
+{#1\boldsymbol{|}_{#2}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\cond}{\,\middle\vert\,}
 {\boldsymbol{|}}
 \end_inset
 
@@ -523,22 +549,6 @@ Acknowledgements
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 First and foremost I would like to thank my supervisor Catherine Greenhill
  for her support and guidance for the duration of the thesis, and also for
  providing me with invaluable advice and opportunities outside of her role
@@ -560,22 +570,6 @@ I would also like to thank the honours coordinators Hendrik Grundling and
 Finally, I would like to thank every one of my maths and stats lecturers
  from 2010 to 2014, whose effort and expertise have managed to transform
  me into an enthusiastic (and maybe even capable!) student of mathematics.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{comment}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -602,7 +596,7 @@ status open
 
 
 \backslash
-begin{todo}
+begin{comment}
 \end_layout
 
 \end_inset
@@ -622,8 +616,27 @@ address and remove comments
 fix overfull hboxes and large empty spaces
 \end_layout
 
-\begin_layout Itemize
-(only if time) law of small numbers
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{comment}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -634,7 +647,7 @@ status open
 
 
 \backslash
-end{todo}
+pagenumbering{arabic}
 \end_layout
 
 \end_inset
@@ -643,7 +656,16 @@ end{todo}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage newpage
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{-1}
+\end_layout
+
 \end_inset
 
 
@@ -740,7 +762,7 @@ rare
 \begin_inset Quotes erd
 \end_inset
 
- events over a given time period is 
+ events 
 \begin_inset Quotes eld
 \end_inset
 
@@ -759,13 +781,8 @@ These types of results are generally formally stated asymptotically, with
 \emph on
 weak convergence
 \emph default
-, or 
-\emph on
-convergence in distribution
-\emph default
 .
- Such results are very powerful, but an obvious shortcoming is that they
- do not 
+ Such results are powerful, but a shortcoming is that they do not 
 \begin_inset Quotes eld
 \end_inset
 
@@ -782,16 +799,8 @@ asymptotically normal
 \begin_inset Quotes erd
 \end_inset
 
-, but we cannot say that any particular random variable in that sequence
- is individually 
-\begin_inset Quotes eld
-\end_inset
-
-close to normal
-\begin_inset Quotes erd
-\end_inset
-
-.
+, but we cannot say anything about the normality of any particular random
+ variable in that sequence.
  Even if we are only interested in asymptotic results, it can be problematic
  that we cannot say convergence is 
 \begin_inset Quotes eld
@@ -809,8 +818,6 @@ The solution to both these problems is to define a distance metric between
  probability distributions, and study convergence with respect to this metric.
  Fortunately, weak convergence is in fact convergence with respect to a
  topology, and this topology is metrizable.
- That is, there is a metric on the set of probability distributions such
- that convergence in this metric space is equivalent to weak convergence.
 \end_layout
 
 \begin_layout Standard
@@ -818,19 +825,18 @@ The solution to both these problems is to define a distance metric between
 \emph on
 Stein's method 
 \emph default
-was introduced by Charles Stein in 1972.
- It is most generally a method for approximating expected values.
- However, at least in probabilistic combinatorics, Stein's method has proved
- especially useful for bounding the distance between probability distributions,
- in a variety of metrics consistent with weak convergence.
+was introduced by Charles Stein in 1972, as a general method for approximating
+ expected values.
+ Stein's method has since proved especially useful for bounding the distance
+ between probability distributions, in a variety of metrics consistent with
+ weak convergence.
  Such bounds can be used to quantify existing limit theorems, and can also
  be used as a tool to prove purely asymptotic results.
 \end_layout
 
 \begin_layout Standard
-In this thesis, we will first set out the theoretical groundwork for Stein's
- method, including an overview of basic probability theory and a discussion
- of weak convergence (
+In this thesis, we will first set out some theoretical groundwork, including
+ an overview of basic probability theory and weak convergence (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:probability-theory"
@@ -838,7 +844,7 @@ reference "sec:probability-theory"
 \end_inset
 
 ).
- We then present a very general framework for the Stein's method (
+ We then present a general framework for Stein's method (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:stein-general"
@@ -888,8 +894,8 @@ original
  in that I came up with them, although many are quite straightforward and
  probably exist elsewhere.
  For the proofs that I have adapted from other sources (which are all cited),
- I tried to add value with clearer explanation and filling in skipped steps,
- or by adapting (and simplifying) the proof for a special case.
+ I tried to add value with clearer and more complete explanation, or by
+ simplifying to a special case.
 \end_layout
 
 \begin_layout Subsection
@@ -932,7 +938,7 @@ For this thesis, the set of natural numbers
 \end_inset
 
  is denoted 
-\begin_inset Formula $f\rest_{A}$
+\begin_inset Formula $\rest fA$
 \end_inset
 
 .
@@ -958,20 +964,11 @@ For this thesis, the set of natural numbers
 \end_layout
 
 \begin_layout Standard
-Unless otherwise specified, all asympotics are as 
+All asymptotics are as 
 \begin_inset Formula $n\to\infty$
 \end_inset
 
-.
- Apart from standard asymptotic notation, 
-\begin_inset Formula $f\sim g$
-\end_inset
-
- means 
-\begin_inset Formula $f=g\left(1+o\left(1\right)\right)$
-\end_inset
-
-.
+ unless stated otherwise.
  We will occasionally use big-oh notation non-asymptotically, to avoid writing
  constant factors.
 \end_layout
@@ -1085,6 +1082,10 @@ reference "fig:graph-conventions"
 \end_inset
 
 .
+\begin_inset Newline newline
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1573,8 +1574,8 @@ For many combinatorial applications, an informal understanding of probability
  theory (often considering only discrete spaces) will suffice.
  However, in this thesis a rigorous foundation in probability theory will
  be useful.
- This section will therefore assume knowledge of basic measure theory; see,
- for example, 
+ This section will assume knowledge of basic measure theory; see, for example,
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Rud66"
@@ -1678,7 +1679,7 @@ For our purposes
  in 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:random-structures"
+reference "sub:random-structures"
 
 \end_inset
 
@@ -1706,11 +1707,11 @@ For an event
 \begin_inset Formula $\A$
 \end_inset
 
-, 
+, we interpret 
 \begin_inset Formula $\Pr\left(\A\right)$
 \end_inset
 
- is interpreted as the 
+ as the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1777,7 +1778,11 @@ random element
 \begin_inset Formula $\sigma$
 \end_inset
 
--algebra on 
+-algebra 
+\begin_inset Formula $\mathcal{B}\left(\RR^{n}\right)$
+\end_inset
+
+ on 
 \begin_inset Formula $\RR^{n}$
 \end_inset
 
@@ -1948,7 +1953,7 @@ It is worth noting that in fact any probability measure is the distribution
 \end_inset
 
 .
- We also use the notation 
+ We use the notation 
 \begin_inset Formula $\X\in\L{}$
 \end_inset
 
@@ -1993,7 +1998,7 @@ normal distribution
 \end_inset
 
 for any Borel set 
-\begin_inset Formula $B$
+\begin_inset Formula $B\in\mathcal{B}\left(\RR\right)$
 \end_inset
 
 .
@@ -2022,7 +2027,11 @@ The normal distribution will be of particular importance in this thesis,
 
  (this second fact can be established using integration by parts and the
  Gaussian integral).
- Also, note that 
+ Also, if 
+\begin_inset Formula $\X\in\N\left(\mu,\sigma\right)$
+\end_inset
+
+ then 
 \begin_inset Formula $\frac{\X-\mu}{\sigma}\in\N\left(0,1\right)$
 \end_inset
 
@@ -2098,7 +2107,7 @@ the set of values a random element can take
 \begin_inset Quotes erd
 \end_inset
 
-, but this is straightforward in the discrete case.
+, but this is straightforward in the discrete case:
 \end_layout
 
 \begin_layout Definition
@@ -2227,7 +2236,7 @@ conditional probability
 \end_layout
 
 \begin_layout Standard
-We have 
+Note that 
 \begin_inset Formula $\Pr\left(\A|\A'\right)=\Pr\left(\A\right)$
 \end_inset
 
@@ -2295,7 +2304,7 @@ Given a finite collection of measure spaces
  (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Chapter 8"
+after "Chapter~8"
 key "Rud66"
 
 \end_inset
@@ -2427,24 +2436,15 @@ Let
 \begin_inset Formula $\left\{ 0,1\right\} ^{2}$
 \end_inset
 
-, defined by 
-\begin_inset Formula $\L{X,Y}\left(0,0\right)=\frac{1}{3}$
+, defined by
+\begin_inset Formula 
+\[
+\L{X,Y}\left(0,0\right)=\frac{1}{3},\quad\L{X,Y}\left(0,1\right)=\frac{1}{6},\quad\L{X,Y}\left(1,0\right)=0,\quad\L{X,Y}\left(1,1\right)=\frac{1}{2}.
+\]
+
 \end_inset
 
-, 
-\begin_inset Formula $\L{X,Y}\left(0,1\right)=\frac{1}{6}$
-\end_inset
-
-, 
-\begin_inset Formula $\L{X,Y}\left(1,0\right)=0$
-\end_inset
-
- and 
-\begin_inset Formula $\L{X,Y}\left(1,1\right)=\frac{1}{2}$
-\end_inset
-
-.
- In this coupling, whenever 
+In this coupling, whenever 
 \begin_inset Formula $Y=0$
 \end_inset
 
@@ -2506,6 +2506,12 @@ variance
 \end_layout
 
 \begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:discrete-expectation"
+
+\end_inset
+
 For a random variable 
 \begin_inset Formula $\X$
 \end_inset
@@ -2583,17 +2589,23 @@ If we fix a particular underlying probability space
 \end_inset
 
 , we can also equivalently view expectation as a linear functional on the
- space of integrable functions (i.e.
- random variables): 
+ space of real integrable functions (i.e.
+ random variables).
+ That is, 
+\begin_inset Formula $\E:L^{1}\left(\Om,\Pr\right)\to\RR$
+\end_inset
+
+ satisfies 
 \begin_inset Formula $\E f=\int f\left(\om\right)\d\Pr$
 \end_inset
 
 .
- Sometimes we will define a new probability space 
-\begin_inset Formula $\left(\Om,\cA,\Pr'\right)$
+ Sometimes we will define a new probability measure on an existing measurable
+ space 
+\begin_inset Formula $\left(\Om,\cA\right)$
 \end_inset
 
- on an existing measurable space.
+.
  In this case we will write 
 \begin_inset Formula $\E_{\Pr'}$
 \end_inset
@@ -2603,12 +2615,17 @@ If we fix a particular underlying probability space
 \end_inset
 
 , to avoid ambiguity.
- We can also define the expectation functional of a random variable 
+ We can also define the expectation functional of a random variable: 
 \begin_inset Formula $\E_{\X}:=\E_{\Lb{\X}}$
 \end_inset
 
-, so that 
+.
+ We have 
 \begin_inset Formula $\E_{\X}f=\E f\left(\X\right)$
+\end_inset
+
+ for all 
+\begin_inset Formula $f:L^{1}\left(\RR,\Lb{\X}\right)$
 \end_inset
 
 .
@@ -2735,15 +2752,15 @@ A set of real functions
 determining class
 \emph default
  if 
+\begin_inset Formula $\rest{\E_{\Pr_{1}}}{\cH}=\rest{\E_{\Pr_{2}}}{\cH}$
+\end_inset
+
+ implies 
 \begin_inset Formula $\Pr_{1}=\Pr_{2}$
 \end_inset
 
- whenever it is true that 
-\begin_inset Formula $\E_{\Pr_{1}}\h=\E_{\Pr_{2}}\h$
-\end_inset
-
- for all 
-\begin_inset Formula $\h\in\cH$
+, for any 
+\begin_inset Formula $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$
 \end_inset
 
 .
@@ -2823,7 +2840,16 @@ Another important concept later will be the idea of conditional expectation.
 \end_layout
 
 \begin_layout Definition
-The expected value of a random variable with distribution 
+Let 
+\begin_inset Formula $\X$
+\end_inset
+
+ be a random variable and 
+\begin_inset Formula $\A$
+\end_inset
+
+ be an event with nonzero probability.
+ The expected value of the distribution 
 \begin_inset Formula $\L{\X|\A_{1}}$
 \end_inset
 
@@ -2865,8 +2891,8 @@ We can also define conditional expectation with respect to another random
 \begin_inset Formula $\X_{2}^{-1}\left(B\right)$
 \end_inset
 
- for Borel 
-\begin_inset Formula $B$
+ for 
+\begin_inset Formula $B\in\mathcal{B}\left(\RR\right)$
 \end_inset
 
  comprise a sub-
@@ -2906,7 +2932,7 @@ t
 heorem (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 6.10"
+after "Theorem~6.10"
 key "Rud66"
 
 \end_inset
@@ -2960,27 +2986,23 @@ conditional expectation of
 .
  We can also view conditional expectation as a linear operator between functions
 : we define 
-\begin_inset Formula $\E^{\X_{2}}$
+\begin_inset Formula 
+\[
+\E^{\X_{2}}\,:\, L^{1}\left(\RR,\mathcal{B}\left(\RR\right),\Pr\right)\to L^{1}\left(\RR,\sigma\left(\X_{2}\right),\Pr\right)\,:\,\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right].
+\]
+
 \end_inset
 
- by 
-\begin_inset Formula $\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right]$
-\end_inset
 
-.
 \end_layout
 
 \begin_layout Remark
 This definition generalizes the previous definition of expectation conditioned
- on an event: if 
+ on an event: for almost all 
 \begin_inset Formula $\om\in\A$
 \end_inset
 
- and 
-\begin_inset Formula $\Pr\left(\A\right)>0$
-\end_inset
-
- then 
+ we have 
 \begin_inset Formula $\E\left[\X|\one_{\A}\right]\left(\om\right)=\E\left[\X|\A\right]$
 \end_inset
 
@@ -3001,6 +3023,12 @@ status open
 \end_layout
 
 \begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:discrete-conditional-expectation"
+
+\end_inset
+
 Note that if 
 \begin_inset Formula $\X_{2}$
 \end_inset
@@ -3026,7 +3054,8 @@ for all
 \begin_inset Formula $\Pr\left(\X_{2}=\X_{2}\left(\om\right)\right)>0$
 \end_inset
 
-; this defines 
+.
+ This defines 
 \begin_inset Formula $\E\left[\X_{1}|\X_{2}\right]$
 \end_inset
 
@@ -3085,7 +3114,7 @@ Suppose
 \begin_inset Formula $\X_{3}$
 \end_inset
 
- is dependent only on the information from 
+ is dependent only on the information in 
 \begin_inset Formula $\X_{2}$
 \end_inset
 
@@ -3124,11 +3153,11 @@ item
 \end_inset
 
 .
- In particular, taking 
-\begin_inset Formula $\X_{3}\equiv1$
+ In particular, if we take 
+\begin_inset Formula $\X_{3}=\one_{\Om}$
 \end_inset
 
-, we have 
+ then it follows that 
 \begin_inset Formula $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$
 \end_inset
 
@@ -3209,8 +3238,50 @@ Since
 proving contractivity.
 \end_layout
 
+\begin_layout Remark
+Suppose 
+\begin_inset Formula $\X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\X_{2}$
+\end_inset
+
+ are discrete.
+ Combining 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:discrete-expectation"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:discrete-conditional-expectation"
+
+\end_inset
+
+, the tower law says that
+\begin_inset Formula 
+\[
+\E\left[\X_{1}\right]=\sum_{x\in\supp\X_{2}}\Pr\left(\X_{2}=x\right)\E\left[\X_{1}|\X_{2}=x\right].
+\]
+
+\end_inset
+
+We will occasionally use this in applications.
+\end_layout
+
 \begin_layout Subsection
 Markov Chains
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:markov-chains"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3281,7 +3352,7 @@ rocesses in general) is a very rich area of probability theory, see for
  example 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Chapter 7"
+after "Chapter~7"
 key "Kal02"
 
 \end_inset
@@ -3343,7 +3414,7 @@ for all
 \end_inset
 
 , 
-\begin_inset Formula $n\in\ZZ$
+\begin_inset Formula $\i\in\ZZ$
 \end_inset
 
 .
@@ -3485,11 +3556,15 @@ hain
 \emph on
 reversible
 \emph default
- if 
-\begin_inset Formula $\Lb{X_{\i}}_{\i\in\ZZ}=\Lb{X_{-\i}}_{\i\in\ZZ}$
+ if the distribution of the sequence 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
 \end_inset
 
-.
+ is the same as the distribution of the sequence 
+\begin_inset Formula $\left(X_{-\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3547,8 +3622,8 @@ irreducible
 \end_layout
 
 \begin_layout Standard
-Irreducibility means that every state can be accessed from every other state.
- Irreducibility is equivalent to the condition that for any 
+Irreducibility means that every state is accessible from every other.
+ This is equivalent to the condition that for any 
 \begin_inset Formula $x,y\in\Om$
 \end_inset
 
@@ -3706,7 +3781,7 @@ hain is a random walk: at each time-step, there is equal probability of
 \begin_layout Subsection
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:weak-topology"
+name "sub:weak-topology"
 
 \end_inset
 
@@ -3767,7 +3842,17 @@ The Weak Topology on Probability Measures
 
 \end_layout
 
+\begin_layout Standard
+We begin with a definition.
+\end_layout
+
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:weak-convergence"
+
+\end_inset
+
 Let 
 \begin_inset Formula $\left(\X_{n}\right)_{n\in\NN}$
 \end_inset
@@ -3839,7 +3924,117 @@ weakly
 \end_layout
 
 \begin_layout Standard
-This is only one of a number of equivalent natural definitions for convergence
+This allows us to give a formal statement of the two limit theorems mentioned
+ in the introduction.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Central 
+\backslash
+textbf limit 
+\backslash
+textbf theorem]
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $Q_{1},Q_{2},\dots\in\L Q$
+\end_inset
+
+ be independent random variables, with 
+\begin_inset Formula $\E Q=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\E Q^{2}=\Var Q=1$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula 
+\[
+\X_{n}=\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{i}.
+\]
+
+\end_inset
+
+Then 
+\begin_inset Formula $\Lb{\X_{n}}\to\N\left(0,1\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Poisson 
+\backslash
+textbf limit 
+\backslash
+textbf theorem]
+\end_layout
+
+\end_inset
+
+For each 
+\begin_inset Formula $n$
+\end_inset
+
+, let 
+\begin_inset Formula $Q_{n}^{\left(1\right)},\dots,Q_{n}^{\left(n\right)}\in\Lb{Q_{n}}$
+\end_inset
+
+ be independent zero-one random variables, with 
+\begin_inset Formula $n\E Q_{n}=n\L{Q_{n}}\left(1\right)\to\lambda$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula 
+\[
+\X_{n}=\sum_{\i=1}^{n}Q_{n}^{\left(\i\right)}.
+\]
+
+\end_inset
+
+Then 
+\begin_inset Formula $\Lb{\X_{n}}\to\Po\left(\lambda\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:weak-convergence"
+
+\end_inset
+
+ is only one of a number of equivalent natural definitions for convergence
  in distribution.
 \end_layout
 
@@ -4071,7 +4266,7 @@ t
 heorem (
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 3.25"
+after "Theorem~3.25"
 key "Kal02"
 
 \end_inset
@@ -4138,7 +4333,7 @@ status open
  (
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 4.3"
+after "Theorem~4.3"
 key "Kal02"
 
 \end_inset
@@ -4305,7 +4500,7 @@ Although
  is in fact metrizable (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorems 3.15 and 3.16"
+after "Theorems~3.15~and~3.16"
 key "Rud73"
 
 \end_inset
@@ -4814,7 +5009,11 @@ Since
 \begin_inset Formula $\sigma$
 \end_inset
 
--algebra, 
+-algebra 
+\begin_inset Formula $\mathcal{B}\left(\RR\right)$
+\end_inset
+
+, it follows that 
 \begin_inset Formula $\Pr_{1}=\Pr_{2}$
 \end_inset
 
@@ -4914,7 +5113,7 @@ t
 heorem (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 1.34"
+after "Theorem~1.34"
 key "Rud66"
 
 \end_inset
@@ -5028,7 +5227,7 @@ reference "prop:metric"
 
 .
  Since 
-\begin_inset Formula $d_{n}\h_{x,d_{n}}\in\cH_{\W}$
+\begin_inset Formula $d_{n}\h_{x,d_{n}}\in\cH_{\BL}$
 \end_inset
 
  for each 
@@ -5038,7 +5237,7 @@ reference "prop:metric"
 , we have 
 \begin_inset Formula 
 \[
-\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\W}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0
+\E_{\X_{n}}\h_{x,d_{n}}-\E_{\X}\h_{x,d_{n}}\le d_{\BL}\left(\X_{n},\X\right)/d_{n}=d_{n}\to0
 \]
 
 \end_inset
@@ -5244,7 +5443,7 @@ t
 heorem (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 1.34"
+after "Theorem~1.34"
 key "Rud66"
 
 \end_inset
@@ -5281,7 +5480,7 @@ ref{thm:BL-metrizes-weak}]
 This proof is simplified from a more general proof in 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 7.12"
+after "Theorem~7.12"
 key "Vil03"
 
 \end_inset
@@ -5361,7 +5560,7 @@ For each
 \end_inset
 
 , let 
-\begin_inset Formula $\cH_{\BL}^{\left(k\right)}=\left\{ \h\rest_{\left[-k,k\right]}:\h\in\cH_{\BL}\right\} $
+\begin_inset Formula $\cH_{\BL}^{\left(k\right)}=\left\{ \rest{\h}{\left[-k,k\right]}:\h\in\cH_{\BL}\right\} $
 \end_inset
 
 .
@@ -5372,7 +5571,7 @@ t
 heorem (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 11.28"
+after "Theorem~11.28"
 key "Rud66"
 
 \end_inset
@@ -5399,7 +5598,7 @@ key "Rud66"
 \end_inset
 
  such that 
-\begin_inset Formula $\h_{n}^{\left(k\right)}\rest_{\left[-k,k\right]}$
+\begin_inset Formula $\rest{\h_{n}^{\left(k\right)}}{\left[-k,k\right]}$
 \end_inset
 
  converges uniformly to some 
@@ -5411,7 +5610,7 @@ key "Rud66"
 
 \begin_layout Proof
 Note that 
-\begin_inset Formula $\h_{n}^{\left(n\right)}\rest_{\left[-k,k\right]}\to\h^{\left(k\right)}$
+\begin_inset Formula $\rest{\h_{n}^{\left(n\right)}}{\left[-k,k\right]}\to\h^{\left(k\right)}$
 \end_inset
 
  uniformly for each 
@@ -5427,7 +5626,7 @@ Note that
 \end_inset
 
  that satisfies 
-\begin_inset Formula $\h\rest_{\left[-k,k\right]}=\h^{\left(k\right)}$
+\begin_inset Formula $\rest{\h}{\left[-k,k\right]}=\h^{\left(k\right)}$
 \end_inset
 
  for all 
@@ -5570,7 +5769,7 @@ consistent
 \begin_inset Quotes erd
 \end_inset
 
- with weak convergence in some way, and 
+ with weak convergence, and in particular 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:BL-metrizes-weak"
@@ -5596,7 +5795,7 @@ status open
 
 
 \backslash
-begin{note}
+begin{comment}
 \end_layout
 
 \end_inset
@@ -5612,7 +5811,7 @@ status open
 
 
 \backslash
-end{note}
+end{comment}
 \end_layout
 
 \end_inset
@@ -5866,7 +6065,7 @@ end{enumerate}
 (Adapted from 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Proposition 1.2"
+after "Proposition~1.2"
 key "Ros11"
 
 \end_inset
@@ -6064,7 +6263,7 @@ end{comment}
 Random Combinatorial Structures
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:random-structures"
+name "sub:random-structures"
 
 \end_inset
 
@@ -6084,39 +6283,6 @@ name "sec:random-structures"
 \begin_inset FormulaMacro
 \newcommand{\rS}[1]{\mathcal{S}_{#1}}
 {\boldsymbol{\mathcal{S}_{#1}}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-Given a finite space of combinatorial objects 
-\begin_inset Formula $\Om$
-\end_inset
-
-, a probability space 
-\begin_inset Formula $\left(\Om,2^{\Om},\Pr\right)$
-\end_inset
-
- is often called a 
-\emph on
-model
-\emph default
- of 
-\begin_inset Formula $\Om$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -6147,7 +6313,7 @@ uniform
 \end_layout
 
 \begin_layout Standard
-Uniform models are the simplest examples of random structures.
+Uniform spaces are the simplest examples of random structures.
  For example, the uniform space 
 \begin_inset Formula $\rS n$
 \end_inset
@@ -6313,13 +6479,6 @@ y
 .
  Each coin toss corresponds to a particular potential edge, and determines
  whether that edge is present in the final random graph.
- When we define more complicated random models, we will often use this kind
- of informal description rather than giving an explicit formula for each
- 
-\begin_inset Formula $\Pr\left(\om\right)$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -6773,7 +6932,7 @@ Stein transform
 ) such that the following two equations hold:
 \begin_inset Formula 
 \begin{align}
-\Eo\To & =0_{\Fo},\label{eq:E_0T_0-consistency}\\
+\Eo\To & =0,\label{eq:E_0T_0-consistency}\\
 \To\Uo+\Eo & =\id_{\Xo}.\label{eq:U_0-characterizing}
 \end{align}
 
@@ -6953,7 +7112,7 @@ status open
 
 
 \backslash
-begin{note}
+begin{comment}
 \end_layout
 
 \end_inset
@@ -6986,7 +7145,7 @@ status open
 
 
 \backslash
-end{note}
+end{comment}
 \end_layout
 
 \end_inset
@@ -7407,7 +7566,7 @@ Let
  (For a definition and characterization of absolute continuity, see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Definition 7.17 and Theorem 7.18"
+after "Definition~7.17 and Theorem~7.18"
 key "Rud66"
 
 \end_inset
@@ -7435,7 +7594,7 @@ The linear operator
 (Adapted from 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Lecture II"
+after "Lecture~II"
 key "Ste86"
 
 \end_inset
@@ -7546,7 +7705,7 @@ status open
 lder's inequality (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 3.6 (1)"
+after "Theorem~3.6~(1)"
 key "Rud66"
 
 \end_inset
@@ -7662,7 +7821,7 @@ status open
 
 
 \backslash
-begin{note}
+begin{comment}
 \end_layout
 
 \end_inset
@@ -7686,7 +7845,7 @@ status open
 
 
 \backslash
-end{note}
+end{comment}
 \end_layout
 
 \end_inset
@@ -7726,7 +7885,7 @@ with the substitution
  With Fubini's theorem (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 8.8"
+after "Theorem~8.8"
 key "Rud66"
 
 \end_inset
@@ -8034,7 +8193,7 @@ reference "thm:normal-characterizing"
 (Adapted from 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 3.1"
+after "Section~3.1"
 key "Ste12"
 
 \end_inset
@@ -8204,7 +8363,7 @@ reference "eq:normal-stein-identity"
 Using Fubini's theorem (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 8.8"
+after "Theorem~8.8"
 key "Rud66"
 
 \end_inset
@@ -8321,7 +8480,7 @@ reference "eq:diff-eqn"
  There's also a different (longer) argument in the proof of 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Lemma 2.4"
+after "Lemma~2.4"
 key "Ste12"
 
 \end_inset
@@ -8527,7 +8686,7 @@ Similarly,
 , so 
 \begin_inset Formula 
 \[
-\left\Vert \left(\U_{\N}\h\right)''\right\Vert _{\infty}=\left\Vert \left(\U_{\N}g\right)'\right\Vert _{\infty}\le6.
+\left\Vert \left(\U_{\N}\h\right)''\right\Vert _{\infty}=\left\Vert \left(\U_{\N}g\right)'\right\Vert _{\infty}\le6.\qedhere
 \]
 
 \end_inset
@@ -8562,7 +8721,7 @@ reference "thm:wasserstein-normal-bounds"
  See 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Lemma 2.4"
+after "Lemma~2.4"
 key "CGS10"
 
 \end_inset
@@ -8615,10 +8774,7 @@ key "Ess42"
 
  with some relatively involved Fourier analysis.
  However, the machinery of Stein's method allows for a very simple proof.
-\end_layout
-
-\begin_layout Standard
-The purpose of this section is to make the theory from 
+ This section should help make the theory from 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:stein-general"
@@ -8626,7 +8782,6 @@ reference "sec:stein-general"
 \end_inset
 
  a bit more concrete by giving our first example of Stein's method in action.
- Of course, the result is also of practical interest in statistics.
 \end_layout
 
 \begin_layout Theorem
@@ -8735,7 +8890,7 @@ heorem is usually stated for the Kolmogorov metric, because it has a direct
  (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 6"
+after "Section~6"
 key "Ste12"
 
 \end_inset
@@ -8759,7 +8914,7 @@ ref{thm:berry-esseen}]
 (Adapted from 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 5"
+after "Section~5"
 key "Ste12"
 
 \end_inset
@@ -8896,7 +9051,7 @@ status open
 lder's inequality (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 3.6 (1)"
+after "Theorem~3.6~(1)"
 key "Rud66"
 
 \end_inset
@@ -8963,7 +9118,7 @@ sseen-error-bounds,eq:berry-esseen-holder}
 
 \end_inset
 
-
+This completes the proof.
 \end_layout
 
 \begin_layout Section
@@ -9042,7 +9197,7 @@ as
 \end_inset
 
 , and 
-\begin_inset Formula $\cX_{\N}$
+\begin_inset Formula $\cX_{\Po\left(\lambda\right)}$
 \end_inset
 
  contains the constant functions.
@@ -9074,7 +9229,7 @@ Now, we check that
 
 \end_inset
 
-We have 
+We have
 \begin_inset Formula 
 \begin{alignat*}{1}
 \E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\fo\left(\X_{\Po\left(\lambda\right)}+1\right)\right|\right] & =O\left(\sum_{\i=0}^{\infty}\i^{k}\frac{\lambda^{\i}}{\i!}\left|\fo\left(\i+1\right)\right|\right)\\
@@ -9159,13 +9314,12 @@ For
 \E\left[\X_{\Po\left(\lambda\right)}^{k}\left|\U_{\Po\left(\lambda\right)}\h\left(\X_{\Po\left(\lambda\right)}\right)\right|\right] & =O\left(\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=0}^{\i-1}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\right)\\
  & =O\left(\sum_{\i=1}^{\infty}\i^{k-1}\left|\sum_{\ii=\i}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left(\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right)\right|\right)\\
  & =O\left(\sum_{\ii=1}^{\infty}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\sum_{\i=1}^{\ii}\i^{k-1}\right)\\
- & =O\left(\sum_{\ii=1}^{\infty}\ii^{k}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\right)\\
- & <\infty,
+ & =O\left(\sum_{\ii=1}^{\infty}\ii^{k}\frac{\lambda^{\ii}}{\ii!}\left|\h\left(\ii\right)-\E_{\Po\left(\lambda\right)}\h\right|\right)<\infty.
 \end{alignat*}
 
 \end_inset
 
-so 
+So, 
 \begin_inset Formula $\U_{\Po\left(\lambda\right)}\h\in\cF_{\Po\left(\lambda\right)}$
 \end_inset
 
@@ -9239,46 +9393,37 @@ The natural metric to use in Poisson approximation is the total variation
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
-name "example:poisson-bound"
+name "thm:poisson-bound"
 
 \end_inset
 
-Suppose 
-\begin_inset Formula $\cH=\cH_{\TV}$
-\end_inset
-
- and 
-\begin_inset Formula $\Lo=\Po\left(\lambda\right)$
-\end_inset
-
-.
- Using the characterizing operator in 
+Using the characterizing operator in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:poisson-characterizing"
 
 \end_inset
 
+, for all 
+\begin_inset Formula $\h\in\cH_{\TV}$
+\end_inset
+
 , 
 \begin_inset Formula 
 \[
-\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} ,\quad\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right)
+\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} ,\quad\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right).
 \]
 
 \end_inset
 
-for all 
-\begin_inset Formula $\h\in\cH$
-\end_inset
 
-.
 \end_layout
 
 \begin_layout Proof
 (Adapted from 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Lemma 1.1.1"
+after "Lemma~1.1.1"
 key "BHJ92"
 
 \end_inset
@@ -9381,7 +9526,7 @@ Note
  Also, 
 \begin_inset Formula 
 \[
-a_{\iii}\le\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2}\mbox{, and }a_{\iii+1}/a_{\iii}=\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2}
+a_{\iii}\le\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2},\quad a_{\iii+1}/a_{\iii}=\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2}
 \]
 
 \end_inset
@@ -9415,15 +9560,39 @@ for
 \end_inset
 
 .
- Then
+ T
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+hen
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
 \begin_inset Formula 
 \begin{alignat*}{1}
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[\i,\infty\right]\right)\\
  & =\i^{-1}\sum_{\ii=\i}^{\infty}\frac{\i!}{\ii!\lambda^{\i-\ii}}\\
  & =\i^{-1}\sum_{\iii=0}^{\infty}\frac{\lambda^{\iii}\i!}{\left(\i+\iii\right)!}\\
- & \le\i^{-1}\sum_{\ii=\i}^{\infty}\frac{\lambda^{\iii}}{\left(\i+1\right)^{\iii}}\\
+ & \le\i^{-1}\sum_{\iii=0}^{\infty}\frac{\lambda^{\iii}}{\left(\i+1\right)^{\iii}}\\
  & =\frac{\i+1}{\i\left(\i+1-\lambda\right)}\\
- & \le2.
+ & <2.
 \end{alignat*}
 
 \end_inset
@@ -9441,8 +9610,7 @@ This also shows that
 \begin_inset Formula $b_{\iii}=\lambda^{\iii}\i!/\left(\i+\iii\right)!$
 \end_inset
 
-.
- As for the previous case, 
+, so 
 \begin_inset Formula 
 \[
 b_{\iii}\le\frac{\lambda^{\iii}}{\left(\i+1\right)^{\iii}}\le1.
@@ -9462,10 +9630,14 @@ b_{\iii}\le\frac{\lambda}{\i+\iii}<\frac{\lambda}{\lambda+\lambda^{1/2}}\mbox{ a
 
 \end_inset
 
-So,
+So, for 
+\begin_inset Formula $\lambda\ge1$
+\end_inset
+
+,
 \begin_inset Formula 
 \begin{alignat}{1}
-\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & =\i^{-1}\sum_{\iii=0}^{\floor{\lambda^{1/2}}}b_{\iii}+\i^{-1}\sum_{\iii=\ceil{\lambda^{1/2}}}^{\infty}b_{\iii}\nonumber \\
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\i^{-1}\sum_{\iii=0}^{\floor{\lambda^{1/2}}}b_{\iii}+\i^{-1}\sum_{\iii=\ceil{\lambda^{1/2}}}^{\infty}b_{\iii}\nonumber \\
  & =\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(\frac{\lambda}{\lambda+\lambda^{1/2}}\right)^{\iiii}\label{eq:U_Po-upper-estimate-2}\\
  & =\lambda^{-1}+2\lambda^{-1/2}\nonumber \\
  & \le3\lambda^{-1/2}.\nonumber 
@@ -9492,7 +9664,7 @@ status open
 
 
 \backslash
-begin{note}
+begin{comment}
 \end_layout
 
 \end_inset
@@ -9503,7 +9675,7 @@ begin{note}
 \begin_layout Proof
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Lemma 1.1.1"
+after "Lemma~1.1.1"
 key "BHJ92"
 
 \end_inset
@@ -9525,7 +9697,7 @@ status open
 
 
 \backslash
-end{note}
+end{comment}
 \end_layout
 
 \end_inset
@@ -9534,8 +9706,17 @@ end{note}
 \end_layout
 
 \begin_layout Proof
-Let 
+Now, we prove the bound on 
+\begin_inset Formula $\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}$
+\end_inset
+
+.
+ Let 
 \begin_inset Formula $\i,k\in\NN$
+\end_inset
+
+ and suppose 
+\begin_inset Formula $\i\le k$
 \end_inset
 
 .
@@ -9561,16 +9742,31 @@ reference "eq:U_po-bound-in-progress"
  
 \begin_inset Formula 
 \begin{alignat*}{1}
-\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i-1\right) & =-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\ii=0}^{\i-2}\lambda^{\ii-\i}\frac{\left(\i-1\right)!}{\ii!}\\
- & =-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=1}^{\i-1}\lambda^{\iii-\i}\frac{\left(\i-2\right)!}{\left(\iii-1\right)!}\\
- & \le-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=0}^{\i-1}\lambda^{\iii-\i}\frac{\left(\i-1\right)!}{\iii!}\\
+\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i-1\right) & =-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\ii=0}^{\i-2}\lambda^{\ii-\i}\frac{\left(\i-2\right)!}{\ii!}\\
+ & =-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=1}^{\i-1}\lambda^{\iii-\i-1}\frac{\left(\i-2\right)!}{\left(\iii-1\right)!}.
+\end{alignat*}
+
+\end_inset
+
+If 
+\begin_inset Formula $\iii\le\i-1$
+\end_inset
+
+ then 
+\begin_inset Formula $\frac{\i-1}{\iii}\ge1$
+\end_inset
+
+ so
+\begin_inset Formula 
+\begin{alignat*}{1}
+\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i-1\right) & \ge-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=0}^{\i-1}\lambda^{\iii-\i-1}\frac{\left(\i-1\right)!}{\iii!}\\
  & =\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i\right).
 \end{alignat*}
 
 \end_inset
 
 Similarly, if 
-\begin_inset Formula $\i>k$
+\begin_inset Formula $\i\ge k$
 \end_inset
 
  then 
@@ -9578,7 +9774,7 @@ Similarly, if
 \begin{alignat*}{1}
 \U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i\right) & =\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\ii=\i}^{\infty}\lambda^{\ii-\i}\frac{\left(\i-1\right)!}{\ii!}\\
  & =\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=\i+1}^{\infty}\lambda^{\iii-\i-1}\frac{\left(\i-1\right)!}{\left(\iii-1\right)!}\\
- & \le\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=\i+1}^{\infty}\lambda^{\iii-\i-1}\frac{\i!}{\iii!}\\
+ & \ge\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\iii=\i+1}^{\infty}\lambda^{\iii-\i-1}\frac{\i!}{\iii!}\\
  & =\U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i+1\right).
 \end{alignat*}
 
@@ -9609,7 +9805,7 @@ Now, for any
 \begin_inset Formula $\A\subseteq\NN$
 \end_inset
 
-, 
+ we have 
 \begin_inset Formula $\one_{\A}=\sum_{k\in\A}\one_{\left\{ k\right\} }$
 \end_inset
 
@@ -9649,7 +9845,7 @@ for all
 , so 
 \begin_inset Formula 
 \[
--\Delta\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)\ge\Delta\U_{\Po\left(\lambda\right)}\one_{\NN\backslash\A}\left(k\right)\ge\lambda^{-1}\left(1-e^{-\lambda}\right).
+-\Delta\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)=\Delta\U_{\Po\left(\lambda\right)}\one_{\NN\backslash\A}\left(k\right)\ge\lambda^{-1}\left(1-e^{-\lambda}\right).
 \]
 
 \end_inset
@@ -9692,7 +9888,7 @@ A similarly elementary but more fiddly argument can be used to show that
  (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Lemma 4"
+after "Lemma~4"
 key "Bar83"
 
 \end_inset
@@ -9713,7 +9909,7 @@ key "Bar83"
  A much more sophisticated argument in 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Remark 10.2.4"
+after "Remark~10.2.4"
 key "BHJ92"
 
 \end_inset
@@ -9725,9 +9921,204 @@ key "BHJ92"
 .
 \end_layout
 
+\begin_layout Subsection
+A Quantitative Poisson Limit Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:quantitative-poisson-limit"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-We will see some examples of Poisson approximation using Stein's method
- in the coming sections.
+Just as we quantified the 
+\series bold
+c
+\series default
+entral 
+\series bold
+l
+\series default
+imit 
+\series bold
+t
+\series default
+heorem in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:berry-esseen"
+
+\end_inset
+
+, we can quantify the Poisson 
+\series bold
+l
+\series default
+imit 
+\series bold
+t
+\series default
+heorem to give our first example of Poisson approximation by Stein's method.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:quantitative-poisson-limit"
+
+\end_inset
+
+Let 
+\begin_inset Formula $Q_{1},\dots,Q_{n}\in\L Q$
+\end_inset
+
+ be independent zero-one random variables.
+ Define
+\begin_inset Formula 
+\[
+\X=\sum_{\i=1}^{n}Q_{\i},
+\]
+
+\end_inset
+
+and let 
+\begin_inset Formula $\lambda=\E\X=n\E Q$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\[
+d_{\TV}\left(\X,\Po\left(\lambda\right)\right)\le\frac{\lambda\left(1-e^{-\lambda}\right)}{n}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+(Adapted from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem~4.6"
+key "Ros11"
+
+\end_inset
+
+).
+ Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a function satisfying the bounds in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:poisson-bound"
+
+\end_inset
+
+.
+ The idea of the proof is fairly similar to that of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:berry-esseen"
+
+\end_inset
+
+: we are trying to compare 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\E\left[\X f\left(\X\right)\right]$
+\end_inset
+
+ to 
+\begin_inset Formula $\E\left[\lambda f\left(\X+1\right)\right]$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $W_{\i}=X-Q_{\i}$
+\end_inset
+
+, so each 
+\begin_inset Formula $W_{\i}$
+\end_inset
+
+ and 
+\begin_inset Formula $Q_{\i}$
+\end_inset
+
+ are independent.
+ We have
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula 
+\begin{alignat}{1}
+\E\left[\X f\left(\X\right)\right] & =\sum_{\i=1}^{n}\E\left[Q_{\i}f\left(X\right)\right]\nonumber \\
+ & =\sum_{\i=1}^{n}\Pr\left(Q_{\i}=1\right)\E\left[f\left(X\right)|Q_{\i}=1\right]\nonumber \\
+ & =\sum_{\i=1}^{n}\frac{\lambda}{n}\E\left[f\left(W_{\i}+1\right)\right].\label{eq:poisson-limit-EXfX}
+\end{alignat}
+
+\end_inset
+
+Since 
+\begin_inset Formula $X-W_{\i}=Q_{\i}$
+\end_inset
+
+, we then have 
+\begin_inset Formula 
+\begin{equation}
+\E\left[f\left(X+1\right)-f\left(W_{\i}+1\right)\right]=\E\left[\sum_{\i=W_{\i}+1}^{\X}\Delta f\left(\i\right)\right]\le\E Q_{\i}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}=\frac{\lambda}{n}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}.\label{eq:poisson-limit-E-difference}
+\end{equation}
+
+\end_inset
+
+Combining 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:poisson-limit-EXfX"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:poisson-limit-E-difference"
+
+\end_inset
+
+ gives
+\begin_inset Formula 
+\[
+\left|\E\left[\X f\left(\X\right)\right]-\E\left[\lambda f\left(\X+1\right)\right]\right|\le\sum_{\i=1}^{n}\left(\frac{\lambda}{n}\right)^{2}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\le\frac{\lambda\left(1-e^{-\lambda}\right)}{n},
+\]
+
+\end_inset
+
+as required.
 \end_layout
 
 \begin_layout Section
@@ -9771,18 +10162,24 @@ In both the Normal and Poisson cases, estimation of the necessary expectation
 
 .
  In 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:exchangeable-pairs"
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ref{sub:berry-esseen,sub:quantitative-poisson-limit}
+\end_layout
 
 \end_inset
 
-, we were able to achieve this with an ad-hoc argument exploiting independence
+, we were able to achieve this with ad-hoc arguments exploiting independence
  in our random variable of interest.
  However, in order to apply Stein's method in less ideal circumstances,
  we will need some more machinery.
  There are a number of different techiques that can be used in different
- circumstances.
+ cases.
  In the case of positive random variables such as those found in combinatorial
  applications, one particularly useful technique is 
 \emph on
@@ -9833,7 +10230,7 @@ The reason this is called size-biasing is because the probability of each
 \end_inset
 
  is biased proportionally by that value.
- To be precise, in the discrete the definition of 
+ To be precise, in the discrete case the definition of 
 \begin_inset Formula $\Ls{\X}$
 \end_inset
 
@@ -9870,10 +10267,10 @@ reference "rem:size-bias-discrete"
 
 \end_inset
 
- that in the discrete case 
+ that in the discrete case, 
 \begin_inset Formula 
 \begin{equation}
-\E\fo\left(\s{\X}\right)=\E\left[\X\fo\left(\X\right)\right]/\E\X\label{eq:size-bias-transformation}
+\E\fo(\s{\X})=\E\left[\X\fo\left(\X\right)\right]/\E\X\label{eq:size-bias-transformation}
 \end{equation}
 
 \end_inset
@@ -9907,21 +10304,21 @@ Size-biasing therefore gives us a way to work with expectations of the form
 \end_inset
 
  in an appropriate way.
- There is a general construction that can be frequently used for both normal
- and Poisson approximation in combinatorial applications.
+ There is a general construction that can be used for both normal and Poisson
+ approximation in combinatorial applications.
 \end_layout
 
 \begin_layout Proposition
-Let 
+Suppose 
 \begin_inset Formula $\left(Q_{\i}\right)_{\i=1}^{n}$
 \end_inset
 
- be a sequence of zero-one random variables, and let 
+ is a sequence of zero-one random variables, such that 
 \begin_inset Formula $\X=\sum_{\i=1}^{n}Q_{\i}$
 \end_inset
 
 .
- Suppose 
+ Also suppose that 
 \family roman
 \series medium
 \shape up
@@ -9934,7 +10331,11 @@ Let
 \noun off
 \color none
 
-\begin_inset Formula $\left(\X^{\left(\i\right)}\right)_{\i=1}^{n},\left(Q_{\i}\right)_{\i=1}^{n}$
+\begin_inset Formula $\left(\X^{\left(\i\right)}\right)_{\i=1}^{n}$
+\end_inset
+
+, 
+\begin_inset Formula $\left(Q_{\i}\right)_{\i=1}^{n}$
 \end_inset
 
  and 
@@ -9983,7 +10384,7 @@ Let
 We have 
 \begin_inset Formula 
 \begin{alignat*}{1}
-\Pr\left(\X^{\left(I\right)}=k\right) & =\sum_{\i=1}^{n}\frac{\Pr\left(Q_{\i}=1\right)}{\E\X}\Pr\left(\X=k|Q_{\i}=1\right)\\
+\Pr(\X^{\left(I\right)}=k) & =\sum_{\i=1}^{n}\frac{\Pr\left(Q_{\i}=1\right)}{\E\X}\Pr\left(\X=k|Q_{\i}=1\right)\\
  & =\frac{1}{\E\X}\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right).
 \end{alignat*}
 
@@ -10031,7 +10432,7 @@ status open
 
 [adapted from {
 \backslash
-cite[Example 4.21]{Ros11}}]
+cite[Example~4.21]{Ros11}}]
 \end_layout
 
 \end_inset
@@ -10063,7 +10464,7 @@ if it has no neighbours.
  (see 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:random-structures"
+reference "sub:random-structures"
 
 \end_inset
 
@@ -10197,12 +10598,12 @@ rare event
 \begin_inset Formula $p$
 \end_inset
 
- vanishes at just the right rate (compared to 
+ is chosen to be a function of 
 \begin_inset Formula $n$
 \end_inset
 
-), then we might expect the central limit theorem to approximately hold,
- so that 
+ which vanishes at just the right rate, then we might expect the central
+ limit theorem to approximately hold, so that 
 \begin_inset Formula $\X$
 \end_inset
 
@@ -10221,37 +10622,42 @@ In both cases, we will need to compute
 \end_inset
 
 , so we do this now.
- Using 
+ For all expectation calculations in this section, we will use the idea
+ of 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "rem:indicator-expectation"
 
 \end_inset
 
-, we can immediately deduce that 
-\begin_inset Formula $\E\X=n\left(1-p\right)^{n-1}$
+.
+ We can immediately deduce that 
+\begin_inset Formula 
+\begin{equation}
+\E\X=n\left(1-p\right)^{n-1}.\label{eq:isolated-vertices-expectation}
+\end{equation}
+
 \end_inset
 
-.
- For a pair of distinct vertices, the probability that both are isolated
+For a pair of distinct vertices, the probability that both are isolated
  is 
 \begin_inset Formula $\left(1-p\right)^{2n-3}$
 \end_inset
 
 , so
 \begin_inset Formula 
-\[
-\E\left[\X\left(\X-1\right)/2\right]={n \choose 2}\left(1-p\right)^{2n-3}
-\]
+\begin{alignat*}{1}
+\E{\X \choose 2} & =\E\left[\X^{2}/2-\X/2\right]={n \choose 2}\left(1-p\right)^{2n-3}
+\end{alignat*}
 
 \end_inset
 
 and
 \begin_inset Formula 
-\begin{alignat*}{1}
-\Var\X & =n\left(n-1\right)\left(1-p\right)^{2n-3}+n\left(1-p\right)^{n-1}-n^{2}\left(1-p\right)^{2n-2}\\
- & =n\left(1-p\right)^{n-1}\left(1+\left(np-1\right)\left(1-p\right)^{n-2}\right).
-\end{alignat*}
+\begin{alignat}{1}
+\Var\X & =n\left(n-1\right)\left(1-p\right)^{2n-3}+n\left(1-p\right)^{n-1}-n^{2}\left(1-p\right)^{2n-2}\nonumber \\
+ & =n\left(1-p\right)^{n-1}\left(1+\left(np-1\right)\left(1-p\right)^{n-2}\right).\label{eq:isolated-vertices-variance}
+\end{alignat}
 
 \end_inset
 
@@ -10259,7 +10665,7 @@ and
 \end_layout
 
 \begin_layout Subsection
-Normal approximation
+Normal Approximation
 \end_layout
 
 \begin_layout Standard
@@ -10293,10 +10699,10 @@ For a nonnegative random variable
 \begin_inset Formula $\E\left[f'\left(W\right)\right]$
 \end_inset
 
-, as in 
+, as in the proof of 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sub:berry-esseen"
+reference "thm:berry-esseen"
 
 \end_inset
 
@@ -10345,7 +10751,7 @@ for some (random)
 
 .
  So, for 
-\begin_inset Formula $\To=\T_{\N}$
+\begin_inset Formula $\T_{\N}$
 \end_inset
 
  as defined in 
@@ -10357,9 +10763,9 @@ reference "thm:normal-characterizing"
 
 , we have 
 \begin_inset Formula 
-\begin{equation}
-\left|\E_{W}\To f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.\label{eq:size-bias-normal-bound}
-\end{equation}
+\[
+\left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.
+\]
 
 \end_inset
 
@@ -10423,7 +10829,7 @@ status open
 lder's inequality (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 3.6 (1)"
+after "Theorem~3.6~(1)"
 key "Rud66"
 
 \end_inset
@@ -10434,21 +10840,25 @@ key "Rud66"
 
  norm then gives
 \begin_inset Formula 
+\[
+\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|\le\sqrt{\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)},
+\]
+
+\end_inset
+
+which allows us to conclude
+\begin_inset Formula 
 \begin{equation}
-\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|\le\sqrt{\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)}.\label{eq:size-bias-normal-variance-bound}
+\left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\sqrt{\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)}+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.\label{eq:size-bias-normal-bound}
 \end{equation}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-It follows that 
+We will be able to show that 
 \begin_inset Formula $d_{\W}\left(\X,\N\left(0,1\right)\right)$
 \end_inset
 
- will be small when 
+ is small when 
 \begin_inset Formula $\s{\X}$
 \end_inset
 
@@ -10472,6 +10882,12 @@ reference "example:isolated-vertices"
 \end_layout
 
 \begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "example:isolated-points-normal-example"
+
+\end_inset
+
 As in 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -10480,14 +10896,68 @@ reference "example:isolated-vertices"
 \end_inset
 
 , let 
-\begin_inset Formula $\X$
+\begin_inset Formula $\X=\sum_{\i=1}^{n}Q_{\i}$
 \end_inset
 
  be the number of isolated vertices in a random 
 \begin_inset Formula $G\in\rG np$
 \end_inset
 
-, let 
+.
+ We should expect 
+\begin_inset Formula $\L{\X}$
+\end_inset
+
+ to be approximately normal when 
+\begin_inset Formula $\E Q_{\i}=\L{Q_{\i}}\left(1\right)=\left(1-p\right)^{n-1}$
+\end_inset
+
+ is approximately constant.
+ Note that 
+\begin_inset Formula $1-p\approx e^{-p}$
+\end_inset
+
+ for small 
+\begin_inset Formula $p$
+\end_inset
+
+, so 
+\begin_inset Formula $\left(1-p\right)^{n-1}\approx e^{-np}$
+\end_inset
+
+.
+ For the duration of this example, we will assume 
+\begin_inset Formula $np=\Theta\left(1\right)$
+\end_inset
+
+.
+ From 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:isolated-vertices-expectation"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:isolated-vertices-variance"
+
+\end_inset
+
+, it can be shown that 
+\begin_inset Formula $\mu=\Theta\left(n\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=\Theta\left(\sqrt{n}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+let 
 \begin_inset Formula $I$
 \end_inset
 
@@ -10517,19 +10987,23 @@ reference "example:isolated-vertices"
 \begin_inset Formula $1$
 \end_inset
 
-, and as before let 
-\begin_inset Formula $Q_{\i}$
+, and let 
+\begin_inset Formula $R_{\i}=1-Q_{\i}$
 \end_inset
 
  be the indicator random variable for the event that 
 \begin_inset Formula $\i$
 \end_inset
 
- is isolated.
+ is 
+\emph on
+not
+\emph default
+ isolated.
  Then, we have 
 \begin_inset Formula 
 \[
-\s{\X}-\X=D_{I}+Q_{I}.
+\s{\X}-\X=D_{I}+R_{I}.
 \]
 
 \end_inset
@@ -10537,7 +11011,61 @@ reference "example:isolated-vertices"
 First, note that
 \begin_inset Formula 
 \begin{equation}
-\E\left(\s{\X}-\X\right)^{2}=\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+Q_{\i}\right)^{2}\le\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+1\right)^{2}=\E D_{\i}^{2}+2\E D_{\i}+1.\label{eq:isolated-vertices-E(X^s-X)^2-bound}
+\E\left(\s{\X}-\X\right)^{2}=\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+R_{\i}\right)^{2}\le\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+1\right)^{2}=\E\left(D_{\i}+1\right)^{2}.\label{eq:isolated-vertices-E(X^s-X)^2-bound-progress}
+\end{equation}
+
+\end_inset
+
+The probability that a particular vertex is a degree-1 neighbour of the
+ vertex 
+\begin_inset Formula $\i$
+\end_inset
+
+ is 
+\begin_inset Formula $p\left(1-p\right)^{n-2}$
+\end_inset
+
+ because 1 particular edge must be present and 
+\begin_inset Formula $n-2$
+\end_inset
+
+ particular edges must be absent.
+ So,
+\begin_inset Formula 
+\[
+\E D_{\i}=\left(n-1\right)p\left(1-p\right)^{n-2}=\Theta\left(1\right).
+\]
+
+\end_inset
+
+The probability that two particular vertices are both degree-1 neighbours
+ of the vertex 
+\begin_inset Formula $\i$
+\end_inset
+
+ is 
+\begin_inset Formula $p^{2}\left(1-p\right)^{2n-5}$
+\end_inset
+
+, so 
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E{D_{\i} \choose 2} & ={n-1 \choose 2}p\left(1-p\right)^{2n-5}.
+\end{alignat*}
+
+\end_inset
+
+It follows from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:isolated-vertices-E(X^s-X)^2-bound-progress"
+
+\end_inset
+
+ that
+\begin_inset Formula 
+\begin{equation}
+\E\left(\s{\X}-\X\right)^{2}\le\left(n-1\right)p\left(1-p\right)^{n-2}\left(\left(n-2\right)p\left(1-p\right)^{n-3}+3\right)+1=\Theta\left(1\right).\label{eq:isolated-vertices-E(X^s-X)^2-bound}
 \end{equation}
 
 \end_inset
@@ -10610,14 +11138,30 @@ The interpretation of
 \end_inset
 
 .
- That is,
-\begin_inset Formula 
-\[
-\E^{G}\left[\s{\X}-\X\right]=\sum_{\i=1}^{n}\frac{1}{n}\left(D_{\i}+Q_{\i}\right).
-\]
-
+ That is, 
+\begin_inset Formula $\E^{G}\left[\s{\X}-\X\right]$
 \end_inset
 
+ has the distribution of 
+\begin_inset Formula $\sum_{\i=1}^{n}\frac{1}{n}\left(D_{\i}+R_{\i}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 Now, let 
 \begin_inset Formula $D=\sum_{\i=1}^{n}D_{\i}$
 \end_inset
@@ -10626,39 +11170,156 @@ Now, let
 \begin_inset Formula $G$
 \end_inset
 
-, and let 
+, so that 
+\begin_inset Formula $\E^{G}\left[\s{\X}-\X\right]$
+\end_inset
+
+ has the distribution of 
+\begin_inset Formula $\frac{1}{n}\left(D+n-\X\right)$
+\end_inset
+
+.
+ Let 
 \begin_inset Formula $\hat{D}=D-\E D$
 \end_inset
 
-.
- Recall that 
-\begin_inset Formula $\X=\sum_{\i=1}^{n}Q_{\i}$
-\end_inset
-
-, and let 
+ and 
 \begin_inset Formula $\hat{\X}=\X-\E\X$
 \end_inset
 
-.
- We have
+, so that
 \begin_inset Formula 
-\begin{equation}
-\Var\left(\E^{G}\left[\s{\X}-\X\right]\right)=\frac{1}{n^{2}}\E\left(\hat{D}+\hat{\X}\right)^{2}=\frac{1}{n^{2}}\E\left[2\hat{D}^{2}-2\hat{\X}^{2}-\left(\hat{D}-\hat{\X}\right)^{2}\right]\le\frac{2}{n^{2}}\left(\Var D+\Var\X\right).\label{eq:isolated-vertices-var-full-bound}
-\end{equation}
+\[
+\Var\left(\E^{G}\left[\s{\X}-\X\right]\right)=\frac{1}{n^{2}}\E(\hat{D}-\hat{\X})^{2}=\frac{1}{n^{2}}\E\left[2\hat{D}^{2}+2\hat{\X}^{2}-(\hat{D}+\hat{\X})^{2}\right]\le\frac{2}{n^{2}}\left(\Var D+\sigma^{2}\right).
+\]
 
 \end_inset
 
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+The probability that a particular vertex 
+\begin_inset Formula $\i$
+\end_inset
+
+ has 
+\begin_inset Formula $\ii$
+\end_inset
+
+ as its only neighbor is 
+\begin_inset Formula $p\left(1-p\right)^{n-2}$
+\end_inset
+
+ because 1 particular edge must be present and 
+\begin_inset Formula $n-2$
+\end_inset
+
+ particular edges must be absent.
+ So, the probability that a particular vertex has degree 1 is 
+\begin_inset Formula $\left(n-1\right)p\left(1-p\right)^{n-2}$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+\E D=n\left(n-1\right)p\left(1-p\right)^{n-2}.
+\]
+
+\end_inset
+
+Consider a particular unordered pair of vertices 
+\begin_inset Formula $\left\{ \i,\ii\right\} $
+\end_inset
+
+.
+ There are two possibilities for both 
+\begin_inset Formula $\i$
+\end_inset
+
+ and 
+\begin_inset Formula $\ii$
+\end_inset
+
+ to have degree 1.
+ The first possibility is 
+\begin_inset Formula $\i$
+\end_inset
+
+ and 
+\begin_inset Formula $\ii$
+\end_inset
+
+ are adjacent, and have no other neighbours.
+ This event has probability 
+\begin_inset Formula $p\left(1-p\right)^{2n-4}$
+\end_inset
+
+.
+ The second possibility is that 
+\begin_inset Formula $\i$
+\end_inset
+
+ has a single non-
+\begin_inset Formula $\ii$
+\end_inset
+
+ neighbour and 
+\begin_inset Formula $\ii$
+\end_inset
+
+ has a single non-
+\begin_inset Formula $\i$
+\end_inset
+
+ neighbour.
+ This event has probability 
+\begin_inset Formula $\left(n-1\right)^{2}p^{2}\left(1-p\right)^{2n-5}$
+\end_inset
+
+.
+ We conclude that
+\begin_inset Formula 
+\begin{alignat*}{1}
+\E\left[D\left(D-1\right)/2\right] & ={n \choose 2}\left(p\left(1-p\right)^{2n-4}+\left(n-1\right)^{2}p^{2}\left(1-p\right)^{2n-5}\right),\\
+\Var D & =n\left(n-1\right)p\left(1-p\right)^{n-2}\left(1+\left(n-1\right)p\left(1-p\right)^{n-3}\left(np-1\right)+\left(1-p\right)^{n-2}\right)\\
+ & =O\left(n\right).
+\end{alignat*}
+
+\end_inset
+
+It follows that
+\begin_inset Formula 
+\begin{alignat}{1}
+\Var\left(\E^{G}\left[\s{\X}-\X\right]\right) & \le\Theta\left(\frac{1}{n}\right)\label{eq:isolated-vertices-var-full-bound}
+\end{alignat}
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 Combining Equations 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:size-bias-normal-bound"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:size-bias-normal-variance-bound"
 
 \end_inset
 
@@ -10683,22 +11344,22 @@ reference "eq:isolated-vertices-var-full-bound"
 
 \end_inset
 
-, we just need to estimate 
-\begin_inset Formula $\Var D$
-\end_inset
-
-, 
-\begin_inset Formula $\E D_{i}$
-\end_inset
-
- and 
-\begin_inset Formula $\E D_{i}^{2}$
-\end_inset
-
- in order to obtain a bound for 
+, we conclude
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
 \begin_inset Formula 
 \[
-d_{\W}\left(\frac{\X-\mu}{\sigma},\N\left(0,1\right)\right).
+d_{\W}\left(\frac{\X-\mu}{\sigma},\N\left(0,1\right)\right)=O\left(n^{-3/2}\right).
 \]
 
 \end_inset
@@ -10708,6 +11369,187 @@ d_{\W}\left(\frac{\X-\mu}{\sigma},\N\left(0,1\right)\right).
 
 \begin_layout Subsection
 Poisson Approximation
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\lambda=\E\X$
+\end_inset
+
+, and suppose we believe 
+\begin_inset Formula $\L{\X}\approx\Po\left(\lambda\right)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\T_{\Po\left(\lambda\right)}$
+\end_inset
+
+ be the Poisson characterizing operator defined in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:poisson-characterizing"
+
+\end_inset
+
+, and suppose 
+\begin_inset Formula $f$
+\end_inset
+
+ satisfies the bounds in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:poisson-bound"
+
+\end_inset
+
+.
+ We have 
+\begin_inset Formula 
+\[
+\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|=\left|\E\left[\X f\left(\X\right)-\lambda f\left(\X+1\right)\right]\right|\le\lambda\E\left|f(\s{\X})-f\left(\X+1\right)\right|.
+\]
+
+\end_inset
+
+By the tower law (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:tower-contractivity"
+
+\end_inset
+
+) and similar reasoning to the proof of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:quantitative-poisson-limit"
+
+\end_inset
+
+, it follows that
+\begin_inset Formula 
+\begin{equation}
+\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|\le\lambda\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\E\left|\X+1-\s{\X}\right|\le(1-e^{-\lambda})\E\left|\X+1-\s{\X}\right|.\label{eq:size-bias-poisson-bound}
+\end{equation}
+
+\end_inset
+
+We conclude that 
+\begin_inset Formula $d_{\TV}\left(\X,\Po\left(\lambda\right)\right)$
+\end_inset
+
+ will be small when 
+\begin_inset Formula $\s{\X}$
+\end_inset
+
+ is coupled such that it effectively increments 
+\begin_inset Formula $\X$
+\end_inset
+
+.
+ This is almost exactly what the coupling in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:isolated-vertices"
+
+\end_inset
+
+ accomplishes.
+ We turn now to the completion of that example.
+\end_layout
+
+\begin_layout Example
+Recall the definitions of 
+\begin_inset Formula $\X$
+\end_inset
+
+ and 
+\begin_inset Formula $\s{\X}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:isolated-vertices"
+
+\end_inset
+
+, and the definition and expectation of 
+\begin_inset Formula $D_{\i}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:isolated-points-normal-example"
+
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+\E\left|\X+1-\s{\X}\right|=\sum_{\i=1}^{n}\frac{1}{n}\E\left[|\X+1-\s{\X}|\,\middle\vert I=\i\right]
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+\E\left[|\X+1-\s{\X}|\,\middle\vert I=\i\right]=\E\left|Q_{\i}-D_{\i}\right|\le\E Q_{\i}+\E D_{\i}=\left(1-p\right)^{n-1}+\left(n-1\right)p\left(1-p\right)^{n-2}.
+\]
+
+\end_inset
+
+Recall that 
+\begin_inset Formula $\lambda=\E\X=n\left(1-p\right)^{n-1}$
+\end_inset
+
+ so with 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:size-bias-poisson-bound"
+
+\end_inset
+
+ we have 
+\begin_inset Formula 
+\begin{alignat*}{1}
+d_{\TV}\left(\X,\Po\left(\lambda\right)\right) & \le(1-e^{-\lambda})\left(\left(1-p\right)^{n-1}+\left(n-1\right)p\left(1-p\right)^{n-2}\right)\\
+ & \le\lambda^{2}(1-e^{-\lambda})\left(\frac{1}{n}+\frac{p}{1-p}\right).
+\end{alignat*}
+
+\end_inset
+
+As we guessed in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example:isolated-vertices"
+
+\end_inset
+
+, this means 
+\begin_inset Formula $\X$
+\end_inset
+
+ is approximately Poisson when 
+\begin_inset Formula $n$
+\end_inset
+
+ is large and 
+\begin_inset Formula $p$
+\end_inset
+
+ is not too small, so that 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is small and 
+\begin_inset Formula $\frac{p}{1-p}$
+\end_inset
+
+ is not too big.
 \end_layout
 
 \begin_layout Section
@@ -10928,7 +11770,7 @@ status open
 
 [adapted from {
 \backslash
-cite[Example 4.21]{Ros11}}]
+cite[Example~4.21]{Ros11}}]
 \end_layout
 
 \end_inset
@@ -11134,11 +11976,19 @@ Given an exchangeable pair
 \end_inset
 
 .
- With 
+ As in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:markov-chains"
+
+\end_inset
+
+, let 
 \begin_inset Formula $\pi\left(x\right)=\L{\X}\left(x\right)$
 \end_inset
 
-, we then have
+.
+ We have
 \begin_inset Formula 
 \[
 \pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\L{\bX}\left(x_{1},x_{2}\right)=\L{\bX}\left(x_{2},x_{1}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)
@@ -11173,93 +12023,6 @@ hain with steady-state distribution
 \end_inset
 
  in exactly the same way.
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\end_layout
-
-\end_inset
-
-Conversely, suppose we have a time-homogeneous reversible Markov 
-\series bold
-c
-\series default
-hain with steady-state distribution 
-\begin_inset Formula $\L{\X}$
-\end_inset
-
-.
- Let the transition probability between 
-\begin_inset Formula $x$
-\end_inset
-
- and 
-\begin_inset Formula $x'$
-\end_inset
-
- be 
-\begin_inset Formula $p\left(x,x'\right)$
-\end_inset
-
- and let the probability of state 
-\begin_inset Formula $x$
-\end_inset
-
- in the steady-state distribution be 
-\begin_inset Formula $\pi\left(x\right)$
-\end_inset
-
-.
- We can then define an exchangeable pair 
-\begin_inset Formula $\eX$
-\end_inset
-
- by 
-\begin_inset Formula 
-\[
-\Pr\left(\eX=\left(x_{1},x_{2}\right)\right)=\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)=\Pr\left(\eX=\left(x_{2},x_{1}\right)\right).
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{comment}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Definition
@@ -11357,7 +12120,7 @@ reference "example:fixed-points"
 \end_inset
 
 .
- We will define a specific exchangeable pair 
+ Define a specific exchangeable pair 
 \begin_inset Formula $\mathbf{W}=\left(W_{1},W_{2}\right)$
 \end_inset
 
@@ -11444,8 +12207,8 @@ hain underlying a connected exchangeable pair can be naturally viewed as
 \begin_inset Formula $\ker\partial_{0}/\im\partial_{1}$
 \end_inset
 
- of a connected simplicial complex has dimension zero, and this motivates
- the construction of a characterizing operator in a natural way.
+ of a connected simplicial complex is trivial, and this motivates the constructi
+on of a characterizing operator in a natural way.
  (The following theorem is self-contained and requires no knowledge of homology).
 \end_layout
 
@@ -11546,12 +12309,12 @@ Define
 This theorem appears in 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 4"
+after "Section~4"
 key "Ste92"
 
 \end_inset
 
-, but the proof appears to be incorrect.
+, but the proof there appears to be incorrect.
  I have adjusted it fairly significantly.
 \end_layout
 
@@ -11583,7 +12346,7 @@ By exchangeability and antisymmetry,
 \begin_inset Formula $\E\fX\left(\eX\right)=\E\fX\left(\X_{2},\X_{1}\right)=-\E\fX\left(\eX\right)$
 \end_inset
 
-, so 
+, so we can deduce 
 \begin_inset Formula $\E\fX\left(\X_{1},\X_{2}\right)=\E_{\X}\TX\fX=0$
 \end_inset
 
@@ -11720,7 +12483,7 @@ x=\x 0,\x 1,\dots,\x{k-1},\x k=x^{*}
 \end_inset
 
  for 
-\begin_inset Formula $\i=1,\dots k$
+\begin_inset Formula $\i\in\range k$
 \end_inset
 
 .
@@ -11772,7 +12535,7 @@ status open
 
 
 \backslash
-begin{note}
+begin{comment}
 \end_layout
 
 \end_inset
@@ -11809,7 +12572,7 @@ status open
 
 
 \backslash
-end{note}
+end{comment}
 \end_layout
 
 \end_inset
@@ -11866,7 +12629,7 @@ for some
 \end_inset
 
 so 
-\begin_inset Formula $\E_{\X}\To\fo=\E_{\X}\left(\To\fo-\TX\conn\fX\right)$
+\begin_inset Formula $\E_{\X}\T_{\Po\left(\lambda\right)}\fo=\E_{\X}\left(\T_{\Po\left(\lambda\right)}\fo-\TX\conn\fX\right)$
 \end_inset
 
  equals 
@@ -11880,7 +12643,7 @@ so
 Using the triangle inequality, we have 
 \begin_inset Formula 
 \begin{equation}
-\left|\E_{\X}\To\fo\right|\le\min\left(2,3\lambda^{-1/2}\right)\left(\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right)\label{eq:EXT0-immigration-death-bound}
+\left|\E_{\X}\T_{\Po\left(\lambda\right)}\fo\right|\le\min(2,3\lambda^{-1/2})\left(\vphantom{\sum}\E\left|\lambda-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\X_{1}-c\Pr\left(\X_{1}=\X_{2}+1|\X_{1}\right)\right|\right)\label{eq:EXT0-immigration-death-bound}
 \end{equation}
 
 \end_inset
@@ -11892,15 +12655,12 @@ for all
  satisfying the bound in 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "example:poisson-bound"
+reference "thm:poisson-bound"
 
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Example
-This approximation is effective when 
+ This bound is effective when 
 \begin_inset Formula 
 \begin{equation}
 \Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\approx\lambda/c,\quad\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)\approx\X_{1}/c.\label{eq:immigration-death}
@@ -12323,8 +13083,8 @@ reference "rem:indicator-expectation"
 \end_layout
 
 \begin_layout Example
-Now, 
-\begin_inset Formula $\E\left[\X_{1}\left(\X_{1}-1\right)/2\right]$
+Next, 
+\begin_inset Formula $\E{\X_{1} \choose 2}$
 \end_inset
 
  is the expected number of unordered pairs of distinct fixed points in a
@@ -12386,11 +13146,7 @@ Now,
 \end_inset
 
 .
- The total number of unordered pairs is 
-\begin_inset Formula ${n \choose 2}=n\left(n-1\right)/2$
-\end_inset
-
-, so again applying 
+ Again applying 
 \family default
 \series default
 \shape default
@@ -12422,7 +13178,7 @@ reference "rem:indicator-expectation"
 \noun off
 \color none
 , we have 
-\begin_inset Formula $\E\left[\X_{1}\left(\X_{1}-1\right)/2\right]=1/2$
+\begin_inset Formula $\E{\X_{1} \choose 2}=\E\left[\X_{1}^{2}/2-\X_{1}/2\right]={n \choose 2}\left(n\left(n-1\right)\right)^{-1}=1/2$
 \end_inset
 
  and 
@@ -12485,7 +13241,7 @@ We stress that this example was included only for illustrative purposes.
  bound we obtained by Stein's method (see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 1.1"
+after "Section~1.1"
 key "ABT03"
 
 \end_inset
@@ -12684,7 +13440,7 @@ as
 This theorem is most easily proved with the method of moments; see 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 2.5"
+after "Theorem~2.5"
 key "Wor99"
 
 \end_inset
@@ -13536,7 +14292,7 @@ flow
 In 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 3"
+after "Section~3"
 key "MWW04"
 
 \end_inset
@@ -13565,7 +14321,7 @@ switch into
 \begin_inset Formula $G'\in S\left(k-1\right)$
 \end_inset
 
- satisfying 
+ which satisfy 
 \begin_inset Formula $G\rightsquigarrow G'$
 \end_inset
 
@@ -14358,7 +15114,7 @@ reference "sec:size-bias-coupling"
  The most notable of these is zero-biasing (see, for example, 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 2.3.3"
+after "Section~2.3.3"
 key "CGS10"
 
 \end_inset
@@ -14373,7 +15129,7 @@ We have also only discussed Stein's method as a tool for bounding the distance
  example, 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section 7"
+after "Section~7"
 key "Ros11"
 
 \end_inset
@@ -14383,7 +15139,7 @@ key "Ros11"
  as the asymptotic enumeration of Latin rectangles (
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Section XI"
+after "Section~XI"
 key "Ste86"
 
 \end_inset
