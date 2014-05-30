@@ -3361,7 +3361,7 @@ key "Kal02"
 \end_layout
 
 \begin_layout Standard
-For our purposes, a (time-homogeneous, two-sided) 
+For our purposes, a (two-sided) 
 \begin_inset ERT
 status open
 
@@ -3401,16 +3401,54 @@ status open
 \emph on
 state space
 \emph default
-), such that 
+), such that
+\begin_inset Formula 
+\[
+\Lb{X_{\i+1}|X_{\i}=x_{\i},X_{\i-1}=x_{\i-1},\dots}=\Lb{X_{\i+1}|X_{\i}=x_{\i}}
+\]
+
+\end_inset
+
+for all 
+\begin_inset Formula $\i\in\ZZ$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{\i},x_{\i-1},\dots\in\Om$
+\end_inset
+
+.
+ We can think of 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ as a process evolving in time in such a way that, given the current state,
+ the next state does not depend on any other past states.
+\end_layout
+
+\begin_layout Definition
+A Markov 
+\series bold
+c
+\series default
+hain 
+\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
+\end_inset
+
+ is 
+\emph on
+time-homogeneous
+\emph default
+ if
 \begin_inset Formula 
 \begin{equation}
-\Pr\left(X_{\i+1}=y|X_{\i}=x\right)=\Pr\left(X_{\i}=y|X_{\i-1}=x\right)\label{eq:time-homogeneous-defn}
+\Lb{X_{\i+1}|X_{\i}=x}=\Lb{X_{\i}|X_{\i-1}=x}\label{eq:time-homogeneous-defn}
 \end{equation}
 
 \end_inset
 
 for all 
-\begin_inset Formula $x,y\in\Om$
+\begin_inset Formula $x\in\Om$
 \end_inset
 
 , 
@@ -3418,6 +3456,15 @@ for all
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+As the name suggests, time-homogeneity means the evolution of the Markov
+ 
+\series bold
+c
+\series default
+hain does not depend on the current point in time, given the current state.
  The probability in 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3446,16 +3493,10 @@ transition probability
 \end_inset
 
 .
- We can think of 
-\begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
-\end_inset
-
- as a process evolving in time in such a way that, given the current state,
- the next state does not depend on past states or the current point in time.
 \end_layout
 
 \begin_layout Definition
-A Markov 
+A time-homogeneous Markov 
 \series bold
 c
 \series default
@@ -3463,7 +3504,11 @@ hain
 \begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
 \end_inset
 
- is stationary with respect to the distribution 
+ is 
+\emph on
+stationary
+\emph default
+ with respect to the distribution 
 \begin_inset Formula $\Lb X$
 \end_inset
 
@@ -3594,7 +3639,7 @@ hain can be equally well understood as evolving forward or backward in time.
 \end_layout
 
 \begin_layout Definition
-A Markov 
+A time-homogeneous Markov 
 \series bold
 c
 \series default
@@ -3615,7 +3660,7 @@ irreducible
 \end_inset
 
  such that 
-\begin_inset Formula $\Pr\left(X_{\i+t}=y|X_{\i}=x\right)>0$
+\begin_inset Formula $\Pr\left(X_{t}=y|X_{0}=x\right)>0$
 \end_inset
 
 .
@@ -9636,12 +9681,12 @@ So, for
 
 ,
 \begin_inset Formula 
-\begin{alignat}{1}
-\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\i^{-1}\sum_{\iii=0}^{\floor{\lambda^{1/2}}}b_{\iii}+\i^{-1}\sum_{\iii=\ceil{\lambda^{1/2}}}^{\infty}b_{\iii}\nonumber \\
- & =\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(\frac{\lambda}{\lambda+\lambda^{1/2}}\right)^{\iiii}\label{eq:U_Po-upper-estimate-2}\\
- & =\lambda^{-1}+2\lambda^{-1/2}\nonumber \\
- & \le3\lambda^{-1/2}.\nonumber 
-\end{alignat}
+\begin{alignat*}{1}
+\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\i^{-1}\sum_{\iii=0}^{\floor{\lambda^{1/2}}}b_{\iii}+\i^{-1}\sum_{\iii=\ceil{\lambda^{1/2}}}^{\infty}b_{\iii}\\
+ & =\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(\frac{\lambda}{\lambda+\lambda^{1/2}}\right)^{\iiii}\\
+ & =\lambda^{-1}+2\lambda^{-1/2}\\
+ & \le3\lambda^{-1/2}.
+\end{alignat*}
 
 \end_inset
 
@@ -10826,7 +10871,7 @@ status open
 
 \end_inset
 
-lder's inequality (see 
+lder's inequality (
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Theorem~3.6~(1)"
@@ -14397,9 +14442,9 @@ The estimates on
 
  can be combined for an estimate of 
 \begin_inset Formula 
-\begin{equation}
-\frac{\Pr\left(\X_{\ell,n}^{\left(d\right)}=k\right)}{\Pr\left(\X_{\ell,n}^{\left(d\right)}=0\right)}=\frac{S\left(k\right)}{S\left(0\right)}=\frac{B\left(0\right)\dots B\left(k-1\right)}{F\left(1\right)\dots F\left(k\right)},\label{eq:switching-quotient}
-\end{equation}
+\[
+\frac{\Pr\left(\X_{\ell,n}^{\left(d\right)}=k\right)}{\Pr\left(\X_{\ell,n}^{\left(d\right)}=0\right)}=\frac{S\left(k\right)}{S\left(0\right)}=\frac{B\left(0\right)\dots B\left(k-1\right)}{F\left(1\right)\dots F\left(k\right)},
+\]
 
 \end_inset
 
