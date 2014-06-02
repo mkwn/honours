@@ -313,10 +313,10 @@ me into an enthusiastic (and maybe even capable!) student of mathematics.
 
 \pagenumbering{arabic}
 
-\setcounter{section}{-1}
 
+\section*{Introduction}
 
-\section{Introduction}
+\addcontentsline{toc}{section}{Introduction}
 
 The \emph{\textbf{c}entral \textbf{l}imit \textbf{t}heorem}, roughly
 speaking, says that sums of independent, identically distributed random
@@ -364,7 +364,9 @@ exist elsewhere. For the proofs that I have adapted from other sources
 complete explanation, or by simplifying to a special case.
 
 
-\subsection{Notation and Assumed Knowledge}
+\subsection*{Notation and Assumed Knowledge}
+
+\addcontentsline{toc}{subsection}{Notation and Assumed Knowledge}
 
 For this thesis, the set of natural numbers $\NN$ includes zero.
 We write $\one_{A}$ for the characteristic function of a set $A$;
@@ -504,7 +506,7 @@ is not a graph, and two different graphs on the vertex set $\left\{ 1,2,3,4\righ
 For many combinatorial applications, an informal understanding of
 probability theory (often considering only discrete spaces) will suffice.
 However, in this thesis a rigorous foundation in probability theory
-will be useful. This section will assume knowledge of basic measure
+will be useful. This chapter will assume knowledge of basic measure
 theory; see, for example, \cite{Rud66}. However, where possible,
 we will note any simplifications that arise from assuming discreteness.
 
@@ -772,14 +774,15 @@ random variable. If $\X_{1}$ and $\X_{2}$ are random variables defined
 on the same underlying probability space $\left(\Om,\cA,\Pr\right)$,
 then the sets $\X_{2}^{-1}\left(B\right)$ for $B\in\mathcal{B}\left(\RR\right)$
 comprise a sub-$\sigma$-algebra $\sigma\left(\X_{2}\right)$ of $\cA$.
-Then, $\m:\A'\mapsto\E\left[\X_{1}\one_{\A'}\right]$ is a signed
-measure on $\sigma\left(\X_{2}\right)$ that is absolutely continuous
-with respect to the restriction of $\Pr$ to $\cA'$. By the Radon-Nikodym
-\textbf{t}heorem (see \cite[Theorem~6.10]{Rud66}) there is an $\cA'$-measurable
-random variable $\E\left[\X_{1}|\X_{2}\right]$ that satisfies $\E\left[\X_{1}\one_{\A'}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A'}\right]$
-for all $\A'$ in $\cA'$. This random variable is almost uniquely
-defined: for any two choices of $\E\left[\X_{1}|\X_{2}\right]$, the
-probability that they differ is zero.
+Then, $\m:\A\mapsto\E\left[\X_{1}\one_{\A}\right]$ is a signed measure
+on $\left(\Om,\sigma\left(\X_{2}\right)\right)$ that is absolutely
+continuous with respect to the restriction of $\Pr$ to $\sigma\left(\X_{2}\right)$.
+By the Radon-Nikodym \textbf{t}heorem (see \cite[Theorem~6.10]{Rud66})
+there is an $\sigma\left(\X_{2}\right)$-measurable random variable
+$\E\left[\X_{1}|\X_{2}\right]$ that satisfies $\E\left[\X_{1}\one_{\A}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A}\right]$
+for all $\A$ in $\sigma\left(\X_{2}\right)$. This random variable
+is almost uniquely defined: for any two choices of $\E\left[\X_{1}|\X_{2}\right]$,
+the probability that they differ is zero.
 \begin{defn}
 The random variable $\E\left[\X_{1}|\X_{2}\right]$ as defined above
 is called the \emph{conditional expectation of $\X_{1}$ with respect
@@ -792,6 +795,16 @@ operator between functions: we define
 \begin{rem}
 This definition generalizes the previous definition of expectation
 conditioned on an event: for almost all $\om\in\A$ we have $\E\left[\X|\one_{\A}\right]\left(\om\right)=\E\left[\X|\A\right]$.
+\end{rem}
+
+\begin{rem}
+Since $\one_{\A_{1}}\one_{\A_{2}}=\one_{\A_{1}\cap\A_{2}}$, note
+that $\E\left[\one_{\A_{1}}\E\left[\X_{1}|\X_{2}\right]\one_{\A_{2}}\right]=\E\left[\one_{\A_{1}}\X_{1}\one_{\A_{2}}\right]$
+for all $\A_{1},\A_{2}\in\sigma\left(\X_{2}\right)$. That is, $\one_{\A_{1}}\E\left[\X_{1}|\X_{2}\right]=\E\left[\X_{1}\one_{\A_{1}}|\X_{2}\right]$.
+By linearity and an approximation argument, it follows that $\X_{3}\E\left[\X_{1}|\X_{2}\right]=\E\left[\X_{3}\X_{1}|\X_{2}\right]$
+for all $\sigma\left(\X_{2}\right)$-measurable integerable random
+variables $\X_{3}$. This is ``linearity of expectation'' for conditional
+expectation.
 \end{rem}
 
 \begin{rem}
@@ -819,14 +832,16 @@ Then\begin{enumerate}
 In particular, if we take $\X_{3}=\one_{\Om}$ then it follows that
 $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$.
 
-\item (Contractivity) $\E\left|\E^{\X_{2}}\X_{1}\right|\le\E\left|\X_{1}\right|$.
+\item (Contractivity, $L^{1}$ version) $\E\left|\E^{\X_{2}}\X_{1}\right|\le\E\left|\X_{1}\right|$.
+
+\item (Contractivity, $L^{2}$ version) $\E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left(\X_{1}\right)^{2}$.
 
 \end{enumerate}\end{prop}
 \begin{proof}
 Recall the definition of conditional expectation. For all $\A\in\sigma\left(\X_{3}\right)\subseteq\sigma\left(\X_{2}\right)$
 we have
 \[
-\E\left[\E\left[\X_{1}|\X_{3}\right]\one_{\A}\right]=\E\left[\X_{1}\one_{\A}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A}\right].
+\E\left[\E^{\X_{3}}\left[\X_{1}\right]\one_{\A}\right]=\E\left[\X_{1}\one_{\A}\right]=\E\left[\E^{\X_{2}}\left[\X_{1}\right]\one_{\A}\right].
 \]
 Since $\E\left[\X_{1}|\X_{3}\right]$ is $\sigma\left(\X_{3}\right)$-measurable,
 the tower law is proved. Next, let $\A=\left\{ \E^{\X_{2}}\X_{1}\ge0\right\} $,
@@ -834,7 +849,15 @@ so
 \[
 \E\left|\E^{\X_{2}}\X_{1}\right|=\E\left[\one_{\A}\E^{\X_{2}}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\E^{\X_{2}}\X_{1}\right]=\E\left[\one_{\A}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\X_{1}\right]\le\E\left|\X_{1}\right|,
 \]
-proving contractivity.\end{proof}
+proving the $L^{1}$ version of contractivity. Finally, note $\E^{\X_{2}}\left[\X_{1}\E^{\X_{2}}\X_{1}\right]=\left(\E^{\X_{2}}\X_{1}\right)^{2}$
+by ``linearity of expectation'', so $\E^{\X_{2}}\left(\X_{1}-\E^{\X_{2}}\X_{1}\right)^{2}=\E^{\X_{2}}\X_{1}^{2}-\left(\E^{\X_{2}}\X_{1}\right)^{2}>0$
+and by the tower law,
+\[
+\E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left[\E^{\X_{2}}\X_{1}^{2}\right]=\E\left(\X_{1}\right)^{2}.
+\]
+We have proved the $L^{2}$ version of contractivity.
+\end{proof}
+
 \begin{rem}
 Suppose $\X_{1}$ and $\X_{2}$ are discrete. Combining \ref{rem:discrete-expectation}
 and \ref{rem:discrete-conditional-expectation}, the tower law says
@@ -847,27 +870,14 @@ We will occasionally use this in applications.
 
 \subsection{Markov Chains\label{sub:markov-chains}}
 
-\begin{comment}
+We discuss Markov chains only superficially, to the extent that is
+required for \ref{sec:exchangeable-pairs}. The theory of Markov chains
+(and Markov processes in general) is a very rich area of probability
+theory, see for example \cite[Chapter~7]{Kal02}.
 
-I'll need to define Markov Chains, stationary distributions, irreducibility
-and time-reversibility.
-
-Perhaps I should talk more generally about stochastic processes, because
-applying exchangeable pairs to Stein's method is has connections with
-Ornstein-Uhlenbeck processes and also Stein's method can be applied
-to Poisson processes.
-
-\end{comment}
-
-We discuss Markov \textbf{c}hains only superficially, to the extent
-that is required for \ref{sec:exchangeable-pairs}. The theory of
-Markov \textbf{c}hains (and Markov \textbf{p}rocesses in general)
-is a very rich area of probability theory, see for example \cite[Chapter~7]{Kal02}.
-
-For our purposes, a (two-sided) \emph{Markov \textbf{c}hain} is
-a sequence of discrete random elements $\left(X_{\i}\right)_{\i\in\ZZ}$
-taking values on a common set $\Om$ (the \emph{state space}), such
-that
+For our purposes, a (two-sided) \emph{Markov chain} is a sequence
+of discrete random elements $\left(X_{\i}\right)_{\i\in\ZZ}$ taking
+values on a common set $\Om$ (the \emph{state space}), such that
 \[
 \Lb{X_{\i+1}|X_{\i}=x_{\i},X_{\i-1}=x_{\i-1},\dots}=\Lb{X_{\i+1}|X_{\i}=x_{\i}}
 \]
@@ -876,7 +886,7 @@ of $\left(X_{\i}\right)_{\i\in\ZZ}$ as a process evolving in time
 in such a way that, given the current state, the next state does not
 depend on any other past states.
 \begin{defn}
-A Markov \textbf{c}hain $\left(X_{\i}\right)_{\i\in\ZZ}$ is \emph{time-homogeneous}
+A Markov chain $\left(X_{\i}\right)_{\i\in\ZZ}$ is \emph{time-homogeneous}
 if
 \begin{equation}
 \Lb{X_{\i+1}|X_{\i}=x}=\Lb{X_{\i}|X_{\i-1}=x}\label{eq:time-homogeneous-defn}
@@ -884,12 +894,12 @@ if
 for all $x\in\Om$, $\i\in\ZZ$.
 \end{defn}
 As the name suggests, time-homogeneity means the evolution of the
-Markov \textbf{c}hain does not depend on the current point in time,
-given the current state. The probability in \ref{eq:time-homogeneous-defn}
+Markov chain does not depend on the current point in time, given the
+current state. The probability in \ref{eq:time-homogeneous-defn}
 is called the \emph{transition probability} from $x$ to $y$, and
 is denoted $p_{xy}$ or $p\left(x,y\right)$.
 \begin{defn}
-A time-homogeneous Markov \textbf{c}hain $\left(X_{\i}\right)_{\i\in\ZZ}$
+A time-homogeneous Markov chain $\left(X_{\i}\right)_{\i\in\ZZ}$
 is \emph{stationary} with respect to the distribution $\Lb X$ if
 $\Lb{X_{\i}}=\Lb X$ for all $\i\in\ZZ$.
 \end{defn}
@@ -899,22 +909,22 @@ is stationary with respect to $\Lb X$, then we must have
 \pi_{y}=\Pr\left(X_{\i}=y\right)=\sum_{x\in\Om}\Pr\left(X_{\i}=y,\, X_{\i-1}=x\right)=\sum_{x\in\Om}\pi_{x}p_{xy}\label{eq:stationary-defn}
 \end{equation}
 for all $y\in\Om$. In fact, the distribution $\Lb{X_{\i}}_{\i\in\ZZ}$
-of a stationary Markov \textbf{c}hain is uniquely defined by a stationary
-distribution $\L X$ and a set of transition probabilities $\left\{ p_{xy}\right\} _{x,y\in\Om}$
+of a stationary Markov chain is uniquely defined by a stationary distribution
+$\L X$ and a set of transition probabilities $\left\{ p_{xy}\right\} _{x,y\in\Om}$
 which satisfy \ref{eq:stationary-defn} for all $y\in\Om$ and $\sum_{y\in\Om}p_{xy}=1$
 for all $x\in\Om$.
 \begin{defn}
-A stationary Markov \textbf{c}hain $\left(X_{\i}\right)_{\i\in\ZZ}$
-is \emph{reversible} if the distribution of the sequence $\left(X_{\i}\right)_{\i\in\ZZ}$
+A stationary Markov chain $\left(X_{\i}\right)_{\i\in\ZZ}$ is \emph{reversible}
+if the distribution of the sequence $\left(X_{\i}\right)_{\i\in\ZZ}$
 is the same as the distribution of the sequence $\left(X_{-\i}\right)_{\i\in\ZZ}$ 
 \end{defn}
-Reversibility means that a Markov\textbf{ c}hain can be equally well
+Reversibility means that a Markov\textbf{ }chain can be equally well
 understood as evolving forward or backward in time. As before, let
 $\pi_{x}=\Pr\left(X=x\right)$ for the stationary distribution $\L X$.
 Then, reversibility is equivalent to the condition $\pi_{x}p_{xy}=\pi_{y}p_{yx}$
 for all $x,y\in\Om$.
 \begin{defn}
-A time-homogeneous Markov \textbf{c}hain $\left(X_{\i}\right)_{\i\in\ZZ}$
+A time-homogeneous Markov chain $\left(X_{\i}\right)_{\i\in\ZZ}$
 is \emph{irreducible} if for all $x,y\in\Om$ there is $t\in\ZZ$
 such that $\Pr\left(X_{t}=y|X_{0}=x\right)>0$.
 \end{defn}
@@ -926,8 +936,8 @@ for all $\i<k$.
 \label{prop:graph-to-markov}Let $G$ be a finite connected edge-weighted
 multigraph. Suppose that each edge weight is positive, and the sum
 of the weights at each vertex is $\Delta$. Then $G$ defines a reversible
-Markov \textbf{c}hain on its vertex set $V$, which is stationary
-with respect to the uniform distribution on $V$.\end{prop}
+Markov chain on its vertex set $V$, which is stationary with respect
+to the uniform distribution on $V$.\end{prop}
 \begin{proof}
 For $x,y\in V$, let $p_{xy}=p_{yx}$ be the sum of the weights of
 all edges between $x$ and $y$, divided by $\Delta$. By construction,
@@ -941,13 +951,13 @@ for all $y\in V$, and also
 \pi_{x}p_{xy}=\frac{1}{\left|V\right|}p_{xy}=\pi_{y}p_{yx}
 \]
 for each $x,y\in V$. We conclude that the transition probabilities
-$\left\{ p_{xy}\right\} _{x,y\in V}$ define a reversible Markov \textbf{c}hain
+$\left\{ p_{xy}\right\} _{x,y\in V}$ define a reversible Markov chain
 stationary with respect to $\L X$. \end{proof}
 \begin{example}
 Let $G$ be a cycle of length $n$, with a weight of 1 on each edge.
-The corresponding Markov \textbf{c}hain is a random walk: at each
-time-step, there is equal probability of moving one step clockwise
-or counterclockwise around the cycle.
+The corresponding Markov chain is a random walk: at each time-step,
+there is equal probability of moving one step clockwise or counterclockwise
+around the cycle.
 \end{example}
 
 \subsection{\label{sub:weak-topology}The Weak Topology on Probability Measures}
@@ -977,7 +987,7 @@ be a sequence of random variables, not necessarily on the same underlying
 probability space. We say $\X_{n}$ \emph{converges in distribution}
 to a random variable $\X$ if $\E f\left(\X_{n}\right)\to\E f\left(\X\right)$
 for all bounded continuous functions $f:\RR\to\RR$. Alternatively,
-we say $\Lb{\X_{n}}$ converges \emph{weakly} to $\Lb{\X}$, or simply
+we say $\Lb{\X_{n}}$ converges \emph{weakly} to $\Lb{\X}$, and write
 $\Lb{\X_{n}}\to\Lb{\X}$.
 \end{defn}
 This allows us to give a formal statement of the two limit theorems
@@ -993,11 +1003,12 @@ Then $\Lb{\X_{n}}\to\N\left(0,1\right)$.
 \end{thm}
 
 \begin{thm}
-[Poisson \textbf limit \textbf theorem]For each $n$, let $Q_{n}^{\left(1\right)},\dots,Q_{n}^{\left(n\right)}\in\Lb{Q_{n}}$
-be independent zero-one random variables, with $n\E Q_{n}=n\L{Q_{n}}\left(1\right)\to\lambda$.
-Define 
+[Poisson \textbf limit \textbf theorem]Let $\L n$ be the distribution
+of a zero-one random variable with $n\L n\left(1\right)\to\lambda$.
+For each $n\in\NN$, let $Q_{1}^{\left(n\right)},Q_{2}^{\left(n\right)},\dots\in\L Q$
+be independent random variables and let 
 \[
-\X_{n}=\sum_{\i=1}^{n}Q_{n}^{\left(\i\right)}.
+\X_{n}=\sum_{\i=1}^{n}Q_{\i}^{\left(n\right)}.
 \]
 Then $\Lb{\X_{n}}\to\Po\left(\lambda\right)$.
 \end{thm}
@@ -1572,7 +1583,7 @@ $\fo\in\cY$). Especially in the cases where $\Lo$ is normal or Poisson
 and $\cH$ is one of the standard choices in \ref{def:special-metrics},
 there are a number of known convenient choices of $\cY$.
 
-In the next two sections, we will present characterizing operators
+In the next two chapters, we will present characterizing operators
 for the normal and Poisson distributions, and some associated convenient
 choices for $\cY$.
 
@@ -1735,10 +1746,10 @@ $\cY$ to be the set of functions that satisfies these bounds. This
 makes these metrics good choices for normal approximation.
 \begin{thm}
 \label{thm:wasserstein-normal-bounds}Suppose that $\cH\in\left\{ \cH_{\W},\cH_{\BL}\right\} $
-and $\Lo=\N\left(0,1\right)$. Using the characterizing operator in
-\ref{thm:normal-characterizing}, 
+and $\Lo=\N\left(0,1\right)$. Let $\U_{\N}$ be the Stein transform
+defined in \ref{thm:normal-characterizing}. Then, for all $\fo\in\U_{\N}\cH$,
 \[
-\left\Vert \U_{\N}\h\right\Vert _{\infty}\le2,\quad\left\Vert \left(\U_{\N}\h\right)'\right\Vert _{\infty}\le3\sqrt{\pi/2},\quad\left\Vert \left(\U_{\N}\h\right)''\right\Vert _{\infty}\le6.
+\left\Vert \fo\right\Vert _{\infty}\le2,\quad\left\Vert \fo'\right\Vert _{\infty}\le3\sqrt{\pi/2},\quad\left\Vert \fo''\right\Vert _{\infty}\le6.
 \]
 \end{thm}
 \begin{proof}
@@ -1879,7 +1890,7 @@ our first example of Stein's method in action.
 \begin{thm}
 \label{thm:berry-esseen}Let $Q_{1},\dots,Q_{n}\in\L Q$ be independent,
 with $\E Q=0$, $\E Q^{2}=1$ and $\E\left|Q\right|^{3}<\infty$.
-Define 
+Fix $n$ and define 
 \[
 \X=\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{i}.
 \]
@@ -1910,15 +1921,15 @@ We need to compare
 \begin{equation}
 \E\left[\X f\left(\X\right)\right]=\E\left[\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{\i}f\left(\X\right)\right]\label{eq:berry-esseen-EXfX}
 \end{equation}
-with $\E f'\left(\X\right)$. Define $W_{\i}=\X-\frac{1}{\sqrt{n}}Q_{\i}$,
-so each $W_{\i}$ and $Q_{\i}$ are independent. For each $\i$ we
-then have $\E Q_{\i}f\left(W_{\i}\right)=\E Q_{\i}\E f\left(W_{\i}\right)=0$,
+with $\E f'\left(\X\right)$. For each $\i$ define $W_{\i}=\X-\frac{1}{\sqrt{n}}Q_{\i}$,
+so $W_{\i}$ and $Q_{\i}$ are independent. Now, fix $\i$. Note that
+$\E Q_{\i}f\left(W_{\i}\right)=\E Q_{\i}\E f\left(W_{\i}\right)=0$,
 so 
 \begin{equation}
 \E\left[Q_{\i}f\left(\X\right)\right]=\E\left[Q_{\i}\left(f\left(\X\right)-f\left(W_{\i}\right)\right)\right].\label{eq:berry-esseen-EQfX}
 \end{equation}
-Now, we use a Taylor expansion with the Lagrange form of the remainder.
-Noting that $\X-W_{\i}=\frac{1}{\sqrt{n}}Q_{\i}$, we have
+We now use a Taylor expansion with the Lagrange form of the remainder.
+Since $\X-W_{\i}=\frac{1}{\sqrt{n}}Q_{\i}$, we have
 \[
 f\left(\X\right)=f\left(W_{\i}\right)+\frac{1}{\sqrt{n}}Q_{\i}f'\left(W_{\i}\right)+\frac{1}{2n}Q_{\i}^{2}f''\left(E\right)
 \]
@@ -1954,7 +1965,7 @@ gives
  & \le\frac{3}{\sqrt{n}}\,\E\left|Q^{3}\right|+\frac{6}{\sqrt{n}}\,\E\left|Q^{3}\right|\\
  & =\frac{9}{\sqrt{n}}\,\E\left|Q^{3}\right|.
 \end{alignat*}
-This completes the proof.
+With \ref{eq:stein-distance-transform}, this completes the proof.
 \end{proof}
 
 \section{The Poisson Case\label{sec:poisson}}
@@ -2026,12 +2037,13 @@ operator in the sense of \ref{prop:characterizing}, because $\cH_{\TV}\subseteq\
 \end{rem}
 The natural metric to use in Poisson approximation is the total variation
 metric. We can bound the functions in $\U_{\Po\left(\lambda\right)}\cH_{\TV}$
-as well as their first differences (define $\Delta\fo\left(\i\right)=\fo\left(\i+1\right)-\fo\left(\i\right)$).
+as well as their first differences (define the difference operator
+$\Delta$ by $\Delta\fo\left(\i\right)=\fo\left(\i+1\right)-\fo\left(\i\right)$).
 \begin{thm}
-\label{thm:poisson-bound}Using the characterizing operator in \ref{thm:poisson-characterizing},
-for all $\h\in\cH_{\TV}$, 
+\label{thm:poisson-bound}Using the Stein transform in \ref{thm:poisson-characterizing},
+for all $\fo\in\U_{\Po\left(\lambda\right)}\cH_{\TV}$, 
 \[
-\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} ,\quad\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right).
+\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} ,\quad\left\Vert \Delta\fo\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right).
 \]
 \end{thm}
 \begin{proof}
@@ -2100,8 +2112,8 @@ So, for $\lambda\ge1$,
  & =\lambda^{-1}+2\lambda^{-1/2}\\
  & \le3\lambda^{-1/2}.
 \end{alignat*}
-We have proved that $\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} $
-for $\h\in\cH$.
+We have proved that $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} $
+for $\one_{\A}\in\cH$.
 
 \begin{comment}
 
@@ -2111,7 +2123,7 @@ I'm not seeing it though... I might revisit this.
 
 \end{comment}
 
-Now, we prove the bound on $\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}$.
+Now, we prove the bound on $\left\Vert \Delta\fo\right\Vert _{\infty}$.
 Let $\i,k\in\NN$ and suppose $\i\le k$. By \ref{eq:U_po-bound-in-progress},
 \begin{alignat*}{1}
 \U_{\Po\left(\lambda\right)}\one_{\left\{ k\right\} }\left(\i-1\right) & =-\frac{\lambda^{k}}{e^{\lambda}k!}\sum_{\ii=0}^{\i-2}\lambda^{\ii-\i}\frac{\left(\i-2\right)!}{\ii!}\\
@@ -2148,8 +2160,8 @@ so
 \[
 -\Delta\U_{\Po\left(\lambda\right)}\one_{\A}\left(k\right)=\Delta\U_{\Po\left(\lambda\right)}\one_{\NN\backslash\A}\left(k\right)\ge\lambda^{-1}\left(1-e^{-\lambda}\right).
 \]
-We conclude that $\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right)$
-for $\h\in\cH_{\TV}$.\end{proof}
+We conclude that $\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right)$
+for $\one_{\A}\in\cH_{\TV}$.\end{proof}
 \begin{rem}
 \label{rem:poisson-better-bounds}A similarly elementary but more
 fiddly argument can be used to show that the bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,1.4\lambda^{-1/2}\right\} $
@@ -2164,7 +2176,7 @@ in \ref{sub:berry-esseen}, we can quantify the Poisson \textbf{l}imit
 \textbf{t}heorem to give our first example of Poisson approximation
 by Stein's method.
 \begin{thm}
-\label{thm:quantitative-poisson-limit}Let $Q_{1},\dots,Q_{n}\in\L Q$
+\label{thm:quantitative-poisson-limit}Fix $n$ and let $Q_{1},\dots,Q_{n}\in\L Q$
 be independent zero-one random variables. Define
 \[
 \X=\sum_{\i=1}^{n}Q_{\i},
@@ -2179,23 +2191,23 @@ d_{\TV}\left(\X,\Po\left(\lambda\right)\right)\le\frac{\lambda\left(1-e^{-\lambd
 satisfying the bounds in \ref{thm:poisson-bound}. The idea of the
 proof is fairly similar to that of \ref{thm:berry-esseen}: we are
 trying to compare $\E\left[\X f\left(\X\right)\right]$ to $\E\left[\lambda f\left(\X+1\right)\right]$.
-Define $W_{\i}=X-Q_{\i}$, so each $W_{\i}$ and $Q_{\i}$ are independent.
-We have 
+For each $\i$ define $W_{\i}=X-Q_{\i}$ , so $W_{\i}$ and $Q_{\i}$
+are independent. We have 
 \begin{alignat}{1}
 \E\left[\X f\left(\X\right)\right] & =\sum_{\i=1}^{n}\E\left[Q_{\i}f\left(X\right)\right]\nonumber \\
  & =\sum_{\i=1}^{n}\Pr\left(Q_{\i}=1\right)\E\left[f\left(X\right)|Q_{\i}=1\right]\nonumber \\
- & =\sum_{\i=1}^{n}\frac{\lambda}{n}\E\left[f\left(W_{\i}+1\right)\right].\label{eq:poisson-limit-EXfX}
+ & =\sum_{\i=1}^{n}\frac{\lambda}{n}\,\E\left[f\left(W_{\i}+1\right)\right].\label{eq:poisson-limit-EXfX}
 \end{alignat}
-Since $X-W_{\i}=Q_{\i}$, we then have 
+Now, fix $\i$. Since $X-W_{\i}=Q_{\i}$, we have 
 \begin{equation}
 \E\left[f\left(X+1\right)-f\left(W_{\i}+1\right)\right]=\E\left[\sum_{\i=W_{\i}+1}^{\X}\Delta f\left(\i\right)\right]\le\E Q_{\i}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}=\frac{\lambda}{n}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}.\label{eq:poisson-limit-E-difference}
 \end{equation}
 Combining \ref{eq:poisson-limit-EXfX} and \ref{eq:poisson-limit-E-difference}
 gives
 \[
-\left|\E\left[\X f\left(\X\right)\right]-\E\left[\lambda f\left(\X+1\right)\right]\right|\le\sum_{\i=1}^{n}\left(\frac{\lambda}{n}\right)^{2}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\le\frac{\lambda\left(1-e^{-\lambda}\right)}{n},
+\left|\E\left[\X f\left(\X\right)\right]-\E\left[\lambda f\left(\X+1\right)\right]\right|\le\sum_{\i=1}^{n}\left(\frac{\lambda}{n}\right)^{2}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\le\frac{\lambda\left(1-e^{-\lambda}\right)}{n}.
 \]
-as required.
+With \ref{eq:stein-distance-transform}, this completes the proof.
 \end{proof}
 
 \section{Size-Bias Coupling\label{sec:size-bias-coupling}}
@@ -2212,22 +2224,22 @@ of the form $\E\left[\X f\left(\X\right)\right]$. In \ref{sub:berry-esseen,sub:q
 we were able to achieve this with ad-hoc arguments exploiting independence
 in our random variable of interest. However, in order to apply Stein's
 method in less ideal circumstances, we will need some more machinery.
-There are a number of different techiques that can be used in different
-cases. In the case of positive random variables such as those found
+There are a number of different techniques that can be used in different
+cases. In the case of nonnegative random variables such as those found
 in combinatorial applications, one particularly useful technique is
-\emph{size-bias coupling}, which we will discuss in this section.
+\emph{size-bias coupling}, which we will discuss in this chapter.
 \begin{defn}
 The \emph{size-bias distribution} $\Ls{\X}$ with respect to a nonnegative
 integrable random variable $\X$ is given by $\Ls{\X}\left(A\right)=\E\left[\X\one_{\X\in\A}\right]/\E\X$.
-In this section, $\s{\X}$ will always denote a random variable with
+In this chapter, $\s{\X}$ will always denote a random variable with
 the distribution $\Ls{\X}$.\end{defn}
 \begin{rem}
 \label{rem:size-bias-discrete}The reason this is called size-biasing
 is because the probability of each value of $\X$ is biased proportionally
-by that value. To be precise, in the discrete case the definition
+by that value. To be precise, in the discrete setting the definition
 of $\Ls{\X}$ can be stated as 
 \begin{equation}
-\Ls{\X}\left(k\right)=\frac{k}{\E\X}\L{\X}\left(k\right).\label{eq:discrete-size-bias-definition}
+\Ls{\X}\left(k\right)=\frac{k}{\E\X}\,\L{\X}\left(k\right).\label{eq:discrete-size-bias-definition}
 \end{equation}
 for each $k$. This often has a combinatorial interpretation. Intuitively
 speaking, if $\L{\X}$ is the number of balls in a random bin, then
@@ -2259,13 +2271,13 @@ Then $\X^{\left(I\right)}\in\Ls{\X}$.\end{prop}
 \begin{proof}
 We have 
 \begin{alignat*}{1}
-\Pr(\X^{\left(I\right)}=k) & =\sum_{\i=1}^{n}\frac{\Pr\left(Q_{\i}=1\right)}{\E\X}\Pr\left(\X=k|Q_{\i}=1\right)\\
+\Pr(\X^{\left(I\right)}=k) & =\sum_{\i=1}^{n}\frac{\Pr\left(Q_{\i}=1\right)}{\E\X}\,\Pr\left(\X=k|Q_{\i}=1\right)\\
  & =\frac{1}{\E\X}\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right).
 \end{alignat*}
 Now, when $\X=k$, exactly $k$ of the events $\left\{ Q_{\i}=1\right\} $
 will hold, so
 \[
-\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right)=\L{\X}\left(k\right).
+\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right)=k\L{\X}\left(k\right).
 \]
 Then, the discrete definition \ref{eq:discrete-size-bias-definition}
 for the size-bias distribution proves $\X^{\left(I\right)}\in\Ls{\X}$.\end{proof}
@@ -2284,24 +2296,25 @@ of $\Lb{\X|Q_{i}=1}$ can be realized as the number of isolated vertices
 in a graph obtained by deleting from $G$ all edges incident to $\i$.
 By symmetry, each $\Pr\left(Q_{i}=1\right)$ is equal, so we can couple
 $\s{\X}$ with $\X$ by letting $\s{\X}$ be the number of isolated
-vertices in the graph obtained by picking a vertex in $G$ at random
+vertices in the graph obtained by choosing a vertex in $G$ at random
 and deleting all its adjacent edges.
 
 Now, the distribution of $\X$ depends on the relationship between
 $n$ and $p$. First, note that each $Q_{\i}$ is ``almost'' independent.
 Next, the probability that a vertex is isolated is $\left(1-p\right)^{n-1}$
-because the $n-1$ potential edges incident to that vertex must independently
-not be present. So if $p$ is not vanishingly small compared to $n$
-then isolated points are a ``rare event'' and we might expect $\X$
-to have an approximate Poisson distribution. If $p$ is chosen to
-be a function of $n$ which vanishes at just the right rate, then
-we might expect the central limit theorem to approximately hold, so
-that $\X$ has an approximate normal distribution. We will therefore
-return to this example to illustrate the application of size-bias
-coupling for both normal and Poisson approximation.
+because the $n-1$ potential edges incident to that vertex must each
+independently not be present. So if $p$ is not vanishingly small
+compared to $n$ then isolated points are a ``rare event'' and we
+might expect $\X$ to have an approximate Poisson distribution. If
+$p$ is chosen to be a function of $n$ which vanishes at just the
+right rate, then we might expect the central limit theorem to approximately
+hold, so that $\X$ has an approximate normal distribution. We will
+therefore return to this example throughout this chapter to illustrate
+the application of size-bias coupling for both normal and Poisson
+approximation.
 
 In both cases, we will need to compute $\E\X$ and $\Var\X$, so we
-do this now. For all expectation calculations in this section, we
+do this now. For all expectation calculations in this chapter, we
 will use the idea of \ref{rem:indicator-expectation}. We can immediately
 deduce that 
 \begin{equation}
@@ -2310,11 +2323,11 @@ deduce that
 For a pair of distinct vertices, the probability that both are isolated
 is $\left(1-p\right)^{2n-3}$, so
 \begin{alignat*}{1}
-\E{\X \choose 2} & =\E\left[\X^{2}/2-\X/2\right]={n \choose 2}\left(1-p\right)^{2n-3}
+\E{\X \choose 2} & =\E\X^{2}/2-\E\X/2={n \choose 2}\left(1-p\right)^{2n-3}
 \end{alignat*}
 and
 \begin{alignat}{1}
-\Var\X & =n\left(n-1\right)\left(1-p\right)^{2n-3}+n\left(1-p\right)^{n-1}-n^{2}\left(1-p\right)^{2n-2}\nonumber \\
+\Var\X=\E\X^{2}-\left(\E\X\right)^{2} & =n\left(n-1\right)\left(1-p\right)^{2n-3}+n\left(1-p\right)^{n-1}-n^{2}\left(1-p\right)^{2n-2}\nonumber \\
  & =n\left(1-p\right)^{n-1}\left(1+\left(np-1\right)\left(1-p\right)^{n-2}\right).\label{eq:isolated-vertices-variance}
 \end{alignat}
 
@@ -2325,12 +2338,13 @@ and
 For a nonnegative random variable $\X$, let $\mu=\E\X$ and $\sigma^{2}=\Var\X$.
 Suppose we believe $W=\left(\X-\mu\right)/\sigma$ is approximately
 distributed as $\N\left(0,1\right)$. In order to prove this, our
-objective is to compare $\E\left[f\left(W\right)\right]$ to $\E\left[f'\left(W\right)\right]$,
+objective is to compare $\E\left[Wf\left(W\right)\right]$ to $\E\left[f'\left(W\right)\right]$,
 as in the proof of \ref{thm:berry-esseen}.
 
 Now, for any function $f:\RR\to\RR$, by considering \ref{eq:size-bias-transformation}
 with the function $x\mapsto f\left(\left(\X-\mu\right)/\sigma\right)$,
-we have
+we have $\E\left[\X f\left(\left(\X-\mu\right)/\sigma\right)\right]=\mu\E\left[f\left(\left(\s{\X}-\mu\right)/\sigma\right)\right]$
+and
 \[
 \E\left[Wf\left(W\right)\right]=\E\left[\frac{\X-\mu}{\sigma}f\left(\frac{\X-\mu}{\sigma}\right)\right]=\frac{\mu}{\sigma}\E\left[f\left(\frac{\s{\X}-\mu}{\sigma}\right)-f\left(\frac{\X-\mu}{\sigma}\right)\right].
 \]
@@ -2341,7 +2355,7 @@ A Taylor expansion (assuming $f$ is twice-differentiable) then gives
 for some (random) $E$. So, for $\T_{\N}$ as defined in \ref{thm:normal-characterizing},
 we have 
 \[
-\left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.
+\left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\,\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|+\,\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}
 \]
 for $f$ satisfying the bounds in \ref{thm:wasserstein-normal-bounds}.
 (We have used the tower law of expectation, see \ref{prop:tower-contractivity}).
@@ -2350,19 +2364,19 @@ observe that
 \[
 \E\s{\X}=\frac{\E\X^{2}}{\E\X}=\frac{\sigma^{2}+\mu^{2}}{\mu},
 \]
-so $\E\left[\E^{\X}\left[\s{\X}-\X\right]\right]=\E\left[\s{\X}-\X\right]=\sigma^{2}/\mu$.
+so by the tower law, $\E\left[\E^{\X}\left[\s{\X}-\X\right]\right]=\E\left[\s{\X}-\X\right]=\sigma^{2}/\mu$.
 H\"older's inequality (\cite[Theorem~3.6~(1)]{Rud66}) for the $L^{2}$
 norm then gives
 \[
 \E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|\le\sqrt{\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)},
 \]
-which allows us to conclude
+which allows us to conclude that
 \begin{equation}
 \left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\sqrt{\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)}+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.\label{eq:size-bias-normal-bound}
 \end{equation}
 We will be able to show that $d_{\W}\left(\X,\N\left(0,1\right)\right)$
 is small when $\s{\X}$ is coupled in such a way that it is a slight
-perturbation of $\X$. We will show how $d_{\W}\left(\X,\N\left(0,1\right)\right)$
+perturbation of $\X$. We show how $d_{\W}\left(\X,\N\left(0,1\right)\right)$
 can be bounded in practice with the continuation of \ref{example:isolated-vertices}.
 \begin{example}
 \label{example:isolated-points-normal-example}As in \ref{example:isolated-vertices},
@@ -2375,37 +2389,38 @@ of this example, we will assume $np=\Theta\left(1\right)$. From \ref{eq:isolated
 and \ref{eq:isolated-vertices-variance}, it can be shown that $\mu=\Theta\left(n\right)$
 and $\sigma=\Theta\left(\sqrt{n}\right)$.
 
-let $I$ be a random vertex, and let $\s{\X}$ be the number of isolated
-vertices with the edges incident to a random vertex deleted. For each
-vertex $\i$ in $G$, let $D_{\i}$ be the number of vertices adjacent
-to $\i$ which have degree $1$, and let $R_{\i}=1-Q_{\i}$ be the
-indicator random variable for the event that $\i$ is \emph{not} isolated.
-Then, we have 
+Let $\s{\X}$ be the number of isolated vertices with the edges incident
+to a random vertex deleted. For each vertex $\i$ in $G$, let $D_{\i}$
+be the number of vertices adjacent to $\i$ which have degree $1$,
+and let $R_{\i}=1-Q_{\i}$ be the indicator random variable for the
+event that $\i$ is \emph{not} isolated. Let $I$ be a (uniformly)
+random vertex in $\range n$, so that 
 \[
 \s{\X}-\X=D_{I}+R_{I}.
 \]
-First, note that
+Let $\L D$ be the common distribution of each $D_{\i}$ and note
+that
 \begin{equation}
-\E\left(\s{\X}-\X\right)^{2}=\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+R_{\i}\right)^{2}\le\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+1\right)^{2}=\E\left(D_{\i}+1\right)^{2}.\label{eq:isolated-vertices-E(X^s-X)^2-bound-progress}
+\E\left(\s{\X}-\X\right)^{2}=\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+R_{\i}\right)^{2}\le\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+1\right)^{2}=\E\left(D+1\right)^{2}.\label{eq:isolated-vertices-E(X^s-X)^2-bound-progress}
 \end{equation}
 The probability that a particular vertex is a degree-1 neighbour of
-the vertex $\i$ is $p\left(1-p\right)^{n-2}$ because 1 particular
+the vertex $\i$ is $p\left(1-p\right)^{n-2}$ because one particular
 edge must be present and $n-2$ particular edges must be absent. So,
-\[
-\E D_{\i}=\left(n-1\right)p\left(1-p\right)^{n-2}=\Theta\left(1\right).
-\]
+\begin{equation}
+\E D=\left(n-1\right)p\left(1-p\right)^{n-2}=O\left(1\right).\label{eq:isolated-vertices-ED}
+\end{equation}
 The probability that two particular vertices are both degree-1 neighbours
 of the vertex $\i$ is $p^{2}\left(1-p\right)^{2n-5}$, so 
 \begin{alignat*}{1}
-\E{D_{\i} \choose 2} & ={n-1 \choose 2}p\left(1-p\right)^{2n-5}.
+\E{D \choose 2} & =\E D^{2}/2-\E D/2={n-1 \choose 2}p^{2}\left(1-p\right)^{2n-5}=O\left(1\right)
 \end{alignat*}
 It follows from \ref{eq:isolated-vertices-E(X^s-X)^2-bound-progress}
 that
 \begin{equation}
-\E\left(\s{\X}-\X\right)^{2}\le\left(n-1\right)p\left(1-p\right)^{n-2}\left(\left(n-2\right)p\left(1-p\right)^{n-3}+3\right)+1=\Theta\left(1\right).\label{eq:isolated-vertices-E(X^s-X)^2-bound}
+\E\left(\s{\X}-\X\right)^{2}\le2\E{D \choose 2}+3\E D+1=O\left(1\right).\label{eq:isolated-vertices-E(X^s-X)^2-bound}
 \end{equation}
-Next, by contractivity and the tower law (see \ref{prop:tower-contractivity}),
-we have
+Next, by the $L^{2}$ version of contractivity and the tower law (see
+\ref{prop:tower-contractivity}), we have
 \begin{equation}
 \Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)=\Var\left(\E^{\X}\left[\E^{G}\left[\s{\X}-\X\right]\right]\right)\le\Var\left(\E^{G}\left[\s{\X}-\X\right]\right).\label{eq:isolated-vertices-var-contractive-bound}
 \end{equation}
@@ -2413,60 +2428,59 @@ The interpretation of $\E^{G}\left[\s{\X}-\X\right]$ is that $\s{\X}-\X$
 is averaged over all choices of the random vertex $I$, for each $G$.
 That is, $\E^{G}\left[\s{\X}-\X\right]$ has the distribution of $\sum_{\i=1}^{n}\frac{1}{n}\left(D_{\i}+R_{\i}\right)$.
 
-Now, let $D=\sum_{\i=1}^{n}D_{\i}$ be the number of vertices with
+Now, let $Y=\sum_{\i=1}^{n}D_{\i}$ be the number of vertices with
 degree 1 in $G$, so that $\E^{G}\left[\s{\X}-\X\right]$ has the
-distribution of $\frac{1}{n}\left(D+n-\X\right)$. Let $\hat{D}=D-\E D$
+distribution of $\frac{1}{n}\left(Y+n-\X\right)$. Let $\hat{Y}=Y-\E Y$
 and $\hat{\X}=\X-\E\X$, so that
 \[
-\Var\left(\E^{G}\left[\s{\X}-\X\right]\right)=\frac{1}{n^{2}}\E(\hat{D}-\hat{\X})^{2}=\frac{1}{n^{2}}\E\left[2\hat{D}^{2}+2\hat{\X}^{2}-(\hat{D}+\hat{\X})^{2}\right]\le\frac{2}{n^{2}}\left(\Var D+\sigma^{2}\right).
+\Var\left(\E^{G}\left[\s{\X}-\X\right]\right)=\frac{1}{n^{2}}\E(\hat{Y}-\hat{\X})^{2}=\frac{1}{n^{2}}\E\left[2\hat{Y}^{2}+2\hat{\X}^{2}-(\hat{Y}+\hat{\X})^{2}\right]\le\frac{2}{n^{2}}\left(\Var Y+\sigma^{2}\right).
 \]
-The probability that a particular vertex $\i$ has $\ii$ as its only
-neighbor is $p\left(1-p\right)^{n-2}$ because 1 particular edge must
-be present and $n-2$ particular edges must be absent. So, the probability
-that a particular vertex has degree 1 is $\left(n-1\right)p\left(1-p\right)^{n-2}$
-and 
+From \ref{eq:isolated-vertices-ED}, we can deduce 
 \[
-\E D=n\left(n-1\right)p\left(1-p\right)^{n-2}.
+\E Y=n\left(n-1\right)p\left(1-p\right)^{n-2}.
 \]
 Consider a particular unordered pair of vertices $\left\{ \i,\ii\right\} $.
 There are two possibilities for both $\i$ and $\ii$ to have degree
 1. The first possibility is $\i$ and $\ii$ are adjacent, and have
 no other neighbours. This event has probability $p\left(1-p\right)^{2n-4}$.
 The second possibility is that $\i$ has a single non-$\ii$ neighbour
-and $\ii$ has a single non-$\i$ neighbour. This event has probability
-$\left(n-1\right)^{2}p^{2}\left(1-p\right)^{2n-5}$. We conclude that
+and $\ii$ has a single non-$\i$ neighbour (possibly both the same).
+This event has probability $\left(n-2\right)^{2}p^{2}\left(1-p\right)^{2n-5}$.
+So, 
 \begin{alignat*}{1}
-\E\left[D\left(D-1\right)/2\right] & ={n \choose 2}\left(p\left(1-p\right)^{2n-4}+\left(n-1\right)^{2}p^{2}\left(1-p\right)^{2n-5}\right),\\
-\Var D & =n\left(n-1\right)p\left(1-p\right)^{n-2}\left(1+\left(n-1\right)p\left(1-p\right)^{n-3}\left(np-1\right)+\left(1-p\right)^{n-2}\right)\\
- & =O\left(n\right).
+\E{Y \choose 2} & ={n \choose 2}\left(p\left(1-p\right)^{2n-4}+\left(n-2\right)^{2}p^{2}\left(1-p\right)^{2n-5}\right).
 \end{alignat*}
-It follows that
+It follows that $\Var Y=2\E{Y \choose 2}-\left(\E Y\right)^{2}+\E Y$
+is equal to
+\[
+n\left(n-1\right)p\left(1-p\right)^{n-2}\left(\left(1-p\right)^{n-2}+p\left(1-p\right)^{n-3}\left(\left(n-2\right)^{2}-n\left(n-1\right)\right)+1\right)=O\left(n\right).
+\]
+Recalling that $\sigma^{2}=O\left(n^{2}\right)$, we have
 \begin{alignat}{1}
-\Var\left(\E^{G}\left[\s{\X}-\X\right]\right) & \le\Theta\left(\frac{1}{n}\right)\label{eq:isolated-vertices-var-full-bound}
+\Var\left(\E^{G}\left[\s{\X}-\X\right]\right) & =O\left(\frac{1}{n}\right).\label{eq:isolated-vertices-var-full-bound}
 \end{alignat}
 Combining Equations \ref{eq:size-bias-normal-bound}, \ref{eq:isolated-vertices-E(X^s-X)^2-bound},
-\ref{eq:isolated-vertices-var-contractive-bound} and \ref{eq:isolated-vertices-var-full-bound},
-we conclude 
+\ref{eq:isolated-vertices-var-contractive-bound}, \ref{eq:isolated-vertices-var-full-bound}
+and \ref{eq:stein-distance-transform}, we conclude 
 \[
-d_{\W}\left(\frac{\X-\mu}{\sigma},\N\left(0,1\right)\right)=O\left(n^{-3/2}\right).
+d_{\W}\left(\frac{\X-\mu}{\sigma},\,\N\left(0,1\right)\right)=O\left(n^{-3/2}\right).
 \]
 
 \end{example}
 
 \subsection{Poisson Approximation}
 
-Let $\lambda=\E\X$, and suppose we believe $\L{\X}\approx\Po\left(\lambda\right)$.
+Let $\lambda=\E\X$, and suppose we believe that $\L{\X}\approx\Po\left(\lambda\right)$.
 Let $\T_{\Po\left(\lambda\right)}$ be the Poisson characterizing
 operator defined in \ref{thm:poisson-characterizing}, and suppose
-$f$ satisfies the bounds in \ref{thm:poisson-bound}. We have 
+$f$ that satisfies the bounds in \ref{thm:poisson-bound}. We have
 \[
-\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|=\left|\E\left[\X f\left(\X\right)-\lambda f\left(\X+1\right)\right]\right|\le\lambda\E\left|f(\s{\X})-f\left(\X+1\right)\right|.
+\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|=\left|\E\left[\X f\left(\X\right)-\lambda f\left(\X+1\right)\right]\right|\le\lambda\,\E\left|f(\s{\X})-f\left(\X+1\right)\right|.
 \]
 By the tower law (\ref{prop:tower-contractivity}) and similar reasoning
-to the proof of \ref{thm:quantitative-poisson-limit}, it follows
-that
+to \ref{eq:poisson-limit-E-difference}, it follows that
 \begin{equation}
-\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|\le\lambda\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\E\left|\X+1-\s{\X}\right|\le(1-e^{-\lambda})\E\left|\X+1-\s{\X}\right|.\label{eq:size-bias-poisson-bound}
+\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|\le\lambda\left\Vert \Delta f\right\Vert _{\infty}\E\left|\X+1-\s{\X}\right|\le(1-e^{-\lambda})\,\E\left|\X+1-\s{\X}\right|.\label{eq:size-bias-poisson-bound}
 \end{equation}
 We conclude that $d_{\TV}\left(\X,\Po\left(\lambda\right)\right)$
 will be small when $\s{\X}$ is coupled such that it effectively increments
@@ -2484,14 +2498,15 @@ and
 \E\left[|\X+1-\s{\X}|\,\middle\vert I=\i\right]=\E\left|Q_{\i}-D_{\i}\right|\le\E Q_{\i}+\E D_{\i}=\left(1-p\right)^{n-1}+\left(n-1\right)p\left(1-p\right)^{n-2}.
 \]
 Recall that $\lambda=\E\X=n\left(1-p\right)^{n-1}$ so with \ref{eq:size-bias-poisson-bound}
-we have 
+and \ref{eq:stein-distance-transform} we have 
 \begin{alignat*}{1}
 d_{\TV}\left(\X,\Po\left(\lambda\right)\right) & \le(1-e^{-\lambda})\left(\left(1-p\right)^{n-1}+\left(n-1\right)p\left(1-p\right)^{n-2}\right)\\
- & \le\lambda^{2}(1-e^{-\lambda})\left(\frac{1}{n}+\frac{p}{1-p}\right).
+ & \le\lambda(1-e^{-\lambda})\left(\frac{1}{n}+\frac{p}{1-p}\right).
 \end{alignat*}
 As we guessed in \ref{example:isolated-vertices}, this means $\X$
-is approximately Poisson when $n$ is large and $p$ is not too small,
-so that $\lambda$ is small and $\frac{p}{1-p}$ is not too big.
+is approximately Poisson when $n$ is large and $p$ is not too close
+to zero (or one), so that $\lambda$ is small and $\frac{p}{1-p}$
+is not too big.
 \end{example}
 
 \section{The Method of Exchangeable Pairs\label{sec:exchangeable-pairs}}
@@ -2531,7 +2546,7 @@ a characterizing operator using an object called an \emph{exchangeable}
 \emph{pair}. Up until this point, we have only been interested in
 characterizing operators for our ``special'' distributions $\Lo$
 to which we compare our distribution of interest $\L{\X}$. The exchangeable
-pairs construction can be used for this purpose, but in this section
+pairs construction can be used for this purpose, but in this chapter
 we will be more interested in a technique for applying Stein's method
 that involves the construction of a characterizing operator for $\L{\X}$.
 
@@ -2548,7 +2563,7 @@ we assume throughout that the random variable of interest $\X$ has
 finite support $\OmX$.
 \begin{example}
 [adapted from {\cite[Example~4.21]{Ros11}}]\label{example:fixed-points}Throughout
-this section, we will refer to an example problem to illustrate the
+this chapter, we will refer to an example problem to illustrate the
 principles of Stein's method for exchangeable pairs.
 
 We will say a \emph{fixed point} of a permutation $\sigma\in S_{n}$
@@ -2575,8 +2590,8 @@ the marginal distributions of $\X_{1}$ and $\X_{2}$ must be the
 same.
 \begin{prop}
 There is a natural equivalence between time-homogeneous reversible
-Markov \textbf{c}hains with steady-state distribution $\L{\X}$, and
-exchangeable pairs with margins $\L{\X}$.\end{prop}
+Markov chains with steady-state distribution $\L{\X}$, and exchangeable
+pairs with margins $\L{\X}$.\end{prop}
 \begin{proof}
 Given an exchangeable pair $\eX$ with margins $\L{\X}$, we can define
 a time-homogenous Markov chain $M$ with transition probabilities
@@ -2587,12 +2602,12 @@ We have
 \pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)=\L{\bX}\left(x_{1},x_{2}\right)=\L{\bX}\left(x_{2},x_{1}\right)=\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)
 \]
 for any $x_{1},x_{2}\in\OmX$. So, $M$ is reversible with steady-state
-distribution $\L{\X}$. Of course, given a reversible Markov \textbf{c}hain
+distribution $\L{\X}$. Of course, given a reversible Markov chain
 with steady-state distribution $\L{\X}$, we can define the distribution
 $\L{\bX}$ in exactly the same way.\end{proof}
 \begin{defn}
 We say an exchangeable pair $\eX$ is \emph{connected} if the corresponding
-Markov \textbf{c}hain is irreducible.\end{defn}
+Markov chain is irreducible.\end{defn}
 \begin{rem}
 \label{rem:underlying-pair}We are particularly interested in exchangeable
 pairs $\eX$ with marginal distributions $\L{\X_{1}}=\L{\X_{2}}=\L{\X}$.
@@ -2613,21 +2628,20 @@ with margins $\rS n$ by
 \end{cases}
 \]
 The relation of differing by a transposition is symmetric, so $\mathbf{W}$
-is indeed an exchangeable pair. The Markov \textbf{c}hain associated
-with $\mathbf{W}$ has a simple interpretation. Given a random permutation
-$\sigma$, to make a transition in the Markov \textbf{c}hain we just
-randomly choose one of the ${n \choose 2}$ possible transpositions
-and compose it with $\sigma$. Because the transpositions generate
-$S_{n}$, the pair $\mathbf{W}$ is connected, so we can use the construction
-from \ref{rem:underlying-pair} to produce a connected exchangeable
-pair $\eX$ with margins $X$.
+is indeed an exchangeable pair. The Markov chain associated with $\mathbf{W}$
+has a simple interpretation. Given a random permutation $\sigma$,
+to make a transition in the Markov chain we just randomly choose one
+of the ${n \choose 2}$ possible transpositions and compose it with
+$\sigma$. Because the transpositions generate $S_{n}$, the pair
+$\mathbf{W}$ is connected, so we can use the construction from \ref{rem:underlying-pair}
+to produce a connected exchangeable pair $\eX$ with margins $X$.
 \end{example}
-The Markov \textbf{c}hain underlying a connected exchangeable pair
-can be naturally viewed as a connected one-dimensional simplicial
-complex. The zeroth reduced homology group $\ker\partial_{0}/\im\partial_{1}$
-of a connected simplicial complex is trivial, and this motivates the
-construction of a characterizing operator in a natural way. (The following
-theorem is self-contained and requires no knowledge of homology).
+The Markov chain underlying a connected exchangeable pair can be naturally
+viewed as a connected one-dimensional simplicial complex. The zeroth
+reduced homology group $\ker\partial_{0}/\im\partial_{1}$ of a connected
+simplicial complex is trivial, and this motivates the construction
+of a characterizing operator in a natural way. (The following theorem
+is self-contained and requires no knowledge of homology).
 \begin{thm}
 \label{thm:characterizing-from-exchangeable-pair}Suppose\textup{
 $\eX$ }is a connected exchangeable pair with margins $\L{\X}$. Let
@@ -2652,7 +2666,7 @@ so we can deduce $\E\fX\left(\X_{1},\X_{2}\right)=\E_{\X}\TX\fX=0$.
 This did not require the connectedness condition. We can similarly
 prove that $\TX$ is well-defined as an operator from $\FX$ to $\XX$:
 note that for $\fX\in\FX$ we have $\E_{\X}\left|\TX\fX\right|\le\E\left|\fX\left(\eX\right)\right|<\infty$
-by contractivity, so $\TX\fX\in\XX$.
+by the $L^{1}$ version of contractivity, so $\TX\fX\in\XX$.
 
 We will next prove $\ker\E_{\X}\subseteq\im\TX$, but first we make
 some definitions. For each $x\in\OmX$, let $\hX_{x}$ be the function
@@ -2667,7 +2681,7 @@ ${\displaystyle \left(\pi\left(x_{1}\right)p\left(x_{1},x_{2}\right)\right)^{-1}
 on $\left(x_{1},x_{2}\right)$, takes the value $-\left(\pi\left(x_{2}\right)p\left(x_{2},x_{1}\right)\right)^{-1}$
 on $\left(x_{2},x_{1}\right)$, and takes the value zero elsewhere.
 Note that this function is antisymmetric by the reversibility of the
-Markov \textbf{c}hain of $\eX$. We have $\TX\fX_{x_{1},x_{2}}=\hX_{x_{2}}-\hX_{x_{1}}$.
+Markov chain of $\eX$. We have $\TX\fX_{x_{1},x_{2}}=\hX_{x_{2}}-\hX_{x_{1}}$.
 
 Let $\hX\in\ker\E_{\X}$, and fix an arbitrary $x^{*}\in\OmX$. By
 the connectedness assumption, for each $x\in\OmX$ there is a sequence
@@ -2722,13 +2736,13 @@ bound is effective when
 \Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\approx\lambda/c,\quad\Pr\left(\X_{2}=\X_{1}-1|\X_{1}\right)\approx\X_{1}/c.\label{eq:immigration-death}
 \end{equation}
 The interpretation of these approximate equalities is that the Markov
-\textbf{c}hain associated with $\eX$ is approximately an immigration-death
+chain associated with $\eX$ is approximately an immigration-death
 process. This is likely to happen when $\X\left(\om\right)$ is in
 some sense a statistic of the amount of local structure over the object
-$\om$, and $\eX$ is defined by a Markov \textbf{c}hain on $\Om$
-(as in \ref{rem:underlying-pair}) that (uniformly) randomly disturbs
-local structure. The conclusion to \ref{example:fixed-points}, presented
-in \ref{example:fixed-point-conclusion} below, should make this clear.
+$\om$, and $\eX$ is defined by a Markov chain on $\Om$ (as in \ref{rem:underlying-pair})
+that (uniformly) randomly disturbs local structure. The conclusion
+to \ref{example:fixed-points}, presented in \ref{example:fixed-point-conclusion}
+below, should make this clear.
 \end{example}
 \begin{comment}
 
@@ -2794,7 +2808,7 @@ the probability that both are fixed is $\left(n\left(n-1\right)\right)^{-1}$
 because $\i$ must map to $\i$ out of the $n$ possible options in
 $\range n$, then $\ii$ must map to $\ii$ out of the $n-1$ possible
 options in $\range n\backslash\left\{ \i\right\} $. Again applying
-\ref{rem:indicator-expectation}, we have $\E{\X_{1} \choose 2}=\E\left[\X_{1}^{2}/2-\X_{1}/2\right]={n \choose 2}\left(n\left(n-1\right)\right)^{-1}=1/2$
+\ref{rem:indicator-expectation}, we have $\E{\X_{1} \choose 2}=\E\left[\X_{1}^{2}\right]/2-\E\X_{1}/2={n \choose 2}\left(n\left(n-1\right)\right)^{-1}=1/2$
 and $\E\left[\X_{1}^{2}\right]=2$.
 
 Combining \ref{eq:stein-distance-transform}, \ref{eq:EXT0-immigration-death-bound},
@@ -3054,12 +3068,12 @@ The idea is that a switching $\rightsquigarrow$ defines a graph $\fG$
 with an edge for every pair $\left(G,G'\right)$ with $G\rightsquigarrow G'$,
 whose edges we can weight if desired. Loops are then added as necessary
 to so that each vertex has the same weight $\Delta$. By \ref{prop:graph-to-markov},
-$\fG$ induces a reversible Markov \textbf{c}hain with uniform stationary
-distribution (in our case $\rG nd)$, which corresponds to an exchangeable
-pair $\mathbf{G}=\left(G_{1},G_{2}\right)$ with margins $\rG nd$.
-With \ref{rem:underlying-pair}, this provides us an exchangeable
-pair $\bX=\left(\X_{1},\X_{2}\right)$ with margins $\L{\X}$, which
-we use to apply Stein's method.
+$\fG$ induces a reversible Markov chain with uniform stationary distribution
+(in our case $\rG nd)$, which corresponds to an exchangeable pair
+$\mathbf{G}=\left(G_{1},G_{2}\right)$ with margins $\rG nd$. With
+\ref{rem:underlying-pair}, this provides us an exchangeable pair
+$\bX=\left(\X_{1},\X_{2}\right)$ with margins $\L{\X}$, which we
+use to apply Stein's method.
 
 We give a very simplified sketch of the proof of \ref{thm:short-cycles-variable}.
 We use the switching in \ref{def:cycle-switching}. Assign all edges
@@ -3068,15 +3082,15 @@ Let $F_{C}\left(G\right)$ be the number of ways to switch out of
 a graph $G$ by destroying an $\ell$-cycle $C\subseteq K_{n}$. Now,
 there are $\falling n{\ell}/\left(2\ell\right)$ cycles in the complete
 graph $K_{n}$ on $n$ vertices, so 
-\begin{alignat*}{1}
-\E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right| & \le\E\left|\sum_{C\in K_{n}}\one_{C\subseteq G_{1}}-\frac{c}{\Delta}\sum_{C\in K_{n}}F_{C}\left(G_{1}\right)\right|\\
- & \le\frac{\falling n{\ell}}{2\ell}\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|.
-\end{alignat*}
+\begin{alignat}{1}
+\E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right| & \le\E\left|\sum_{C\in K_{n}}\one_{C\subseteq G_{1}}-\frac{c}{\Delta}\sum_{C\in K_{n}}F_{C}\left(G_{1}\right)\right|\nonumber \\
+ & \le\frac{\falling n{\ell}}{2\ell}\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|.\label{eq:short-cycles-increment-bound}
+\end{alignat}
 Similarly, let $B_{C}\left(G\right)$ be the number of ways to switch
 into $G$ by destroying $C$. We have 
-\[
-\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\,\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.
-\]
+\begin{equation}
+\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\,\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.\label{eq:short-cycles-decrement-bound}
+\end{equation}
 Now, if $C\subseteq G$, then 
 \begin{equation}
 F_{C}\left(G\right)\approx\falling n{\ell}\, d^{\ell}/2^{\ell}.\label{eq:FC-approximate}
@@ -3097,23 +3111,13 @@ with a path $u_{\i}v_{\i}w_{\i}$ for each $v_{\i}\in C$, and there
 are about ${d \choose 2}^{\ell}$ ways to choose these paths. With
 these estimates in mind, we choose $c=\Delta2^{\ell}/\left(\falling n{\ell}d^{\ell}\right)$,
 so that both of 
-\begin{equation}
-\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|\label{eq:switchings-required-expectation-bound}
-\end{equation}
-are small. This will give us a bound on 
 \[
-\E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|,
+\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|
 \]
-as is required to prove that 
-\[
-d_{\TV}\left(\X,\Po\left(\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}\right)\right)\approx0.
-\]
-
-
-The arguments needed to actually obtain bounds on the expectations
-in \ref{eq:switchings-required-expectation-bound} can be mostly adapted
-from corresponding arguments in the bare-hands application of switchings
-in \cite{MWW04}, which we will now sketch.
+are small. The arguments needed to actually obtain bounds on these
+expectations can be mostly adapted from corresponding arguments in
+the bare-hands application of switchings in \cite{MWW04}, which we
+will now sketch.
 
 By the argument used to establish \ref{eq:FC-approximate}, we know
 that a switching that destroys a cycle $C$ is determined by a choice
@@ -3121,8 +3125,8 @@ of a set of edges $\left\{ w_{\i}u_{\i}\right\} _{\i=1}^{\ell}$.
 To estimate $\E\left[F_{C}\left(G\right)\right]$, we need a lower
 bound (in expectation) of the number of such choices that are ``legal''
 as per \ref{def:cycle-switching} (that is, the relevant vertices
-are distinct and no extraoneous cycles are created or destroyed).
-A choice will certainly be legal if we require that each of the edges
+are distinct and no extraneous cycles are created or destroyed). A
+choice will certainly be legal if we require that each of the edges
 $w_{\i}u_{\i}$ are a certain minimum distance (say $\ell$) away
 from each other and of the cycle $C$, and we also require that none
 of the edges $w_{\i}u_{\i}$ are part of a ``short cycle'' (a cycle
@@ -3145,10 +3149,15 @@ obtain a similar bound
 \[
 \E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n^{\ell+1}}\right).
 \]
-\ref{thm:short-cycles-variable} can be shown to follow.
+Combining these estimates with \ref{eq:short-cycles-increment-bound},
+\ref{eq:short-cycles-decrement-bound}, \ref{eq:EXT0-immigration-death-bound},
+and \ref{eq:stein-distance-transform}, \ref{thm:short-cycles-variable}
+can be shown to follow.
 
 
-\section{Further Reading}
+\section*{Further Reading}
+
+\addcontentsline{toc}{section}{Further Reading}
 
 There are many aspects of Stein's method that we were unable to cover
 in this thesis. We have discussed approximation only with the Poisson
@@ -3156,8 +3165,8 @@ and normal distributions, but Stein's method has been applied in much
 more generality. The method has been applied for other ``special''
 distributions such as the exponential, geometric and semicircle distributions
 (\cite{Ros11,FL14}). More interestingly, Stein's method has been
-used to approximate with application-specific distributions (see,
-for example, \cite{BCX07}). This is done using general characterizing
+used to make approximations to application-specific distributions
+(see, for example, \cite{BCX07}). This is done using general characterizing
 operator constructions such as the exchangeable pairs approach (\ref{thm:characterizing-from-exchangeable-pair}),
 and the ``generator approach'' (\cite{BC05}).
 
@@ -3167,12 +3176,12 @@ transformations that can be used to control the expectations produced
 by the Stein transformation. The most notable of these is zero-biasing
 (see, for example, \cite[Section~2.3.3]{CGS10}).
 
-We have also only discussed Stein's method as a tool for bounding
-the distance between distributions, but the method can be applied
-to prove other types of results, including, for example, concentration
-inequalities (see, for example, \cite[Section~7]{Ros11}). The method
-has even been used for totally non-probabilistic results, such as
-the asymptotic enumeration of Latin rectangles (\cite[Section~XI]{Ste86}).
+We have only discussed Stein's method as a tool for bounding the distance
+between distributions, but the method can be applied to prove other
+types of results, including, for example, concentration inequalities
+(see, for example, \cite[Section~7]{Ros11}). The method has even
+been used for totally non-probabilistic results, such as the asymptotic
+enumeration of Latin rectangles (\cite[Section~XI]{Ste86}).
 
 Finally, it is worth remarking that Stein's method is currently an
 active area of research, particularly in the fields of stochastic

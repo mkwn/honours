@@ -655,6 +655,10 @@ pagenumbering{arabic}
 
 \end_layout
 
+\begin_layout Section*
+Introduction
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status open
@@ -663,16 +667,12 @@ status open
 
 
 \backslash
-setcounter{section}{-1}
+addcontentsline{toc}{section}{Introduction}
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-Introduction
 \end_layout
 
 \begin_layout Standard
@@ -898,8 +898,24 @@ original
  simplifying to a special case.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsection*
 Notation and Assumed Knowledge
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+addcontentsline{toc}{subsection}{Notation and Assumed Knowledge}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1574,7 +1590,7 @@ For many combinatorial applications, an informal understanding of probability
  theory (often considering only discrete spaces) will suffice.
  However, in this thesis a rigorous foundation in probability theory will
  be useful.
- This section will assume knowledge of basic measure theory; see, for example,
+ This chapter will assume knowledge of basic measure theory; see, for example,
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2909,11 +2925,11 @@ We can also define conditional expectation with respect to another random
 
 .
  Then, 
-\begin_inset Formula $\m:\A'\mapsto\E\left[\X_{1}\one_{\A'}\right]$
+\begin_inset Formula $\m:\A\mapsto\E\left[\X_{1}\one_{\A}\right]$
 \end_inset
 
  is a signed measure on 
-\begin_inset Formula $\sigma\left(\X_{2}\right)$
+\begin_inset Formula $\left(\Om,\sigma\left(\X_{2}\right)\right)$
 \end_inset
 
  that is absolutely continuous with respect to the restriction of 
@@ -2921,7 +2937,7 @@ We can also define conditional expectation with respect to another random
 \end_inset
 
  to 
-\begin_inset Formula $\cA'$
+\begin_inset Formula $\sigma\left(\X_{2}\right)$
 \end_inset
 
 .
@@ -2938,7 +2954,7 @@ key "Rud66"
 \end_inset
 
 ) there is an 
-\begin_inset Formula $\cA'$
+\begin_inset Formula $\sigma\left(\X_{2}\right)$
 \end_inset
 
 -measurable random variable 
@@ -2946,15 +2962,15 @@ key "Rud66"
 \end_inset
 
  that satisfies 
-\begin_inset Formula $\E\left[\X_{1}\one_{\A'}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A'}\right]$
+\begin_inset Formula $\E\left[\X_{1}\one_{\A}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A}\right]$
 \end_inset
 
  for all 
-\begin_inset Formula $\A'$
+\begin_inset Formula $\A$
 \end_inset
 
  in 
-\begin_inset Formula $\cA'$
+\begin_inset Formula $\sigma\left(\X_{2}\right)$
 \end_inset
 
 .
@@ -3007,6 +3023,62 @@ This definition generalizes the previous definition of expectation conditioned
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Since 
+\begin_inset Formula $\one_{\A_{1}}\one_{\A_{2}}=\one_{\A_{1}\cap\A_{2}}$
+\end_inset
+
+, note that 
+\begin_inset Formula $\E\left[\one_{\A_{1}}\E\left[\X_{1}|\X_{2}\right]\one_{\A_{2}}\right]=\E\left[\one_{\A_{1}}\X_{1}\one_{\A_{2}}\right]$
+\end_inset
+
+ for all 
+\begin_inset Formula $\A_{1},\A_{2}\in\sigma\left(\X_{2}\right)$
+\end_inset
+
+.
+ That is, 
+\begin_inset Formula $\one_{\A_{1}}\E\left[\X_{1}|\X_{2}\right]=\E\left[\X_{1}\one_{\A_{1}}|\X_{2}\right]$
+\end_inset
+
+.
+ By linearity and an approximation argument, it follows that 
+\begin_inset Formula $\X_{3}\E\left[\X_{1}|\X_{2}\right]=\E\left[\X_{3}\X_{1}|\X_{2}\right]$
+\end_inset
+
+ for all 
+\begin_inset Formula $\sigma\left(\X_{2}\right)$
+\end_inset
+
+-measurable integerable random variables 
+\begin_inset Formula $\X_{3}$
+\end_inset
+
+.
+ This is 
+\begin_inset Quotes eld
+\end_inset
+
+linearity of expectation
+\begin_inset Quotes erd
+\end_inset
+
+ for conditional expectation.
 \end_layout
 
 \begin_layout Standard
@@ -3177,8 +3249,36 @@ item
 
 \end_inset
 
-(Contractivity) 
+(Contractivity, 
+\begin_inset Formula $L^{1}$
+\end_inset
+
+ version) 
 \begin_inset Formula $\E\left|\E^{\X_{2}}\X_{1}\right|\le\E\left|\X_{1}\right|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+item 
+\end_layout
+
+\end_inset
+
+(Contractivity, 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ version) 
+\begin_inset Formula $\E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left(\X_{1}\right)^{2}$
 \end_inset
 
 .
@@ -3209,7 +3309,7 @@ Recall the definition of conditional expectation.
  we have
 \begin_inset Formula 
 \[
-\E\left[\E\left[\X_{1}|\X_{3}\right]\one_{\A}\right]=\E\left[\X_{1}\one_{\A}\right]=\E\left[\E\left[\X_{1}|\X_{2}\right]\one_{\A}\right].
+\E\left[\E^{\X_{3}}\left[\X_{1}\right]\one_{\A}\right]=\E\left[\X_{1}\one_{\A}\right]=\E\left[\E^{\X_{2}}\left[\X_{1}\right]\one_{\A}\right].
 \]
 
 \end_inset
@@ -3235,7 +3335,53 @@ Since
 
 \end_inset
 
-proving contractivity.
+proving the 
+\begin_inset Formula $L^{1}$
+\end_inset
+
+ version of contractivity.
+ Finally, note 
+\begin_inset Formula $\E^{\X_{2}}\left[\X_{1}\E^{\X_{2}}\X_{1}\right]=\left(\E^{\X_{2}}\X_{1}\right)^{2}$
+\end_inset
+
+ by 
+\begin_inset Quotes eld
+\end_inset
+
+linearity of expectation
+\begin_inset Quotes erd
+\end_inset
+
+, so 
+\begin_inset Formula $\E^{\X_{2}}\left(\X_{1}-\E^{\X_{2}}\X_{1}\right)^{2}=\E^{\X_{2}}\X_{1}^{2}-\left(\E^{\X_{2}}\X_{1}\right)^{2}>0$
+\end_inset
+
+ and by the tower law,
+\begin_inset Formula 
+\[
+\E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left[\E^{\X_{2}}\X_{1}^{2}\right]=\E\left(\X_{1}\right)^{2}.
+\]
+
+\end_inset
+
+We have proved the 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ version of contractivity.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -3285,54 +3431,8 @@ name "sub:markov-chains"
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{comment}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-I'll need to define Markov Chains, stationary distributions, irreducibility
- and time-reversibility.
-\end_layout
-
-\begin_layout Standard
-Perhaps I should talk more generally about stochastic processes, because
- applying exchangeable pairs to Stein's method is has connections with Ornstein-
-Uhlenbeck processes and also Stein's method can be applied to Poisson processes.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{comment}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We discuss Markov 
-\series bold
-c
-\series default
-hains only superficially, to the extent that is required for 
+We discuss Markov chains only superficially, to the extent that is required
+ for 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:exchangeable-pairs"
@@ -3340,16 +3440,8 @@ reference "sec:exchangeable-pairs"
 \end_inset
 
 .
- The theory of Markov 
-\series bold
-c
-\series default
-hains (and Markov 
-\series bold
-p
-\series default
-rocesses in general) is a very rich area of probability theory, see for
- example 
+ The theory of Markov chains (and Markov processes in general) is a very
+ rich area of probability theory, see for example 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Chapter~7"
@@ -3374,11 +3466,7 @@ emph{
 
 \end_inset
 
-Markov 
-\series bold
-c
-\series default
-hain
+Markov chain
 \begin_inset ERT
 status open
 
@@ -3427,11 +3515,7 @@ for all
 \end_layout
 
 \begin_layout Definition
-A Markov 
-\series bold
-c
-\series default
-hain 
+A Markov chain 
 \begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
 \end_inset
 
@@ -3460,11 +3544,7 @@ for all
 
 \begin_layout Standard
 As the name suggests, time-homogeneity means the evolution of the Markov
- 
-\series bold
-c
-\series default
-hain does not depend on the current point in time, given the current state.
+ chain does not depend on the current point in time, given the current state.
  The probability in 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3496,11 +3576,7 @@ transition probability
 \end_layout
 
 \begin_layout Definition
-A time-homogeneous Markov 
-\series bold
-c
-\series default
-hain 
+A time-homogeneous Markov chain 
 \begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
 \end_inset
 
@@ -3554,11 +3630,8 @@ for all
 \begin_inset Formula $\Lb{X_{\i}}_{\i\in\ZZ}$
 \end_inset
 
- of a stationary Markov 
-\series bold
-c
-\series default
-hain is uniquely defined by a stationary distribution 
+ of a stationary Markov chain is uniquely defined by a stationary distribution
+ 
 \begin_inset Formula $\L X$
 \end_inset
 
@@ -3589,11 +3662,7 @@ reference "eq:stationary-defn"
 \end_layout
 
 \begin_layout Definition
-A stationary Markov 
-\series bold
-c
-\series default
-hain 
+A stationary Markov chain 
 \begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
 \end_inset
 
@@ -3615,9 +3684,10 @@ reversible
 \begin_layout Standard
 Reversibility means that a Markov
 \series bold
- c
+ 
 \series default
-hain can be equally well understood as evolving forward or backward in time.
+chain can be equally well understood as evolving forward or backward in
+ time.
  As before, let 
 \begin_inset Formula $\pi_{x}=\Pr\left(X=x\right)$
 \end_inset
@@ -3639,11 +3709,7 @@ hain can be equally well understood as evolving forward or backward in time.
 \end_layout
 
 \begin_layout Definition
-A time-homogeneous Markov 
-\series bold
-c
-\series default
-hain 
+A time-homogeneous Markov chain 
 \begin_inset Formula $\left(X_{\i}\right)_{\i\in\ZZ}$
 \end_inset
 
@@ -3709,11 +3775,7 @@ Let
 \begin_inset Formula $G$
 \end_inset
 
- defines a reversible Markov 
-\series bold
-c
-\series default
-hain on its vertex set 
+ defines a reversible Markov chain on its vertex set 
 \begin_inset Formula $V$
 \end_inset
 
@@ -3793,11 +3855,7 @@ for each
 \begin_inset Formula $\left\{ p_{xy}\right\} _{x,y\in V}$
 \end_inset
 
- define a reversible Markov 
-\series bold
-c
-\series default
-hain stationary with respect to 
+ define a reversible Markov chain stationary with respect to 
 \begin_inset Formula $\L X$
 \end_inset
 
@@ -3815,12 +3873,9 @@ Let
 \end_inset
 
 , with a weight of 1 on each edge.
- The corresponding Markov 
-\series bold
-c
-\series default
-hain is a random walk: at each time-step, there is equal probability of
- moving one step clockwise or counterclockwise around the cycle.
+ The corresponding Markov chain is a random walk: at each time-step, there
+ is equal probability of moving one step clockwise or counterclockwise around
+ the cycle.
 \end_layout
 
 \begin_layout Subsection
@@ -3961,7 +4016,7 @@ weakly
 \begin_inset Formula $\Lb{\X}$
 \end_inset
 
-, or simply 
+, and write 
 \begin_inset Formula $\Lb{\X_{n}}\to\Lb{\X}$
 \end_inset
 
@@ -4044,23 +4099,27 @@ textbf theorem]
 
 \end_inset
 
-For each 
-\begin_inset Formula $n$
+Let 
+\begin_inset Formula $\L n$
 \end_inset
 
-, let 
-\begin_inset Formula $Q_{n}^{\left(1\right)},\dots,Q_{n}^{\left(n\right)}\in\Lb{Q_{n}}$
-\end_inset
-
- be independent zero-one random variables, with 
-\begin_inset Formula $n\E Q_{n}=n\L{Q_{n}}\left(1\right)\to\lambda$
+ be the distribution of a zero-one random variable with 
+\begin_inset Formula $n\L n\left(1\right)\to\lambda$
 \end_inset
 
 .
- Define 
+ For each 
+\begin_inset Formula $n\in\NN$
+\end_inset
+
+, let 
+\begin_inset Formula $Q_{1}^{\left(n\right)},Q_{2}^{\left(n\right)},\dots\in\L Q$
+\end_inset
+
+ be independent random variables and let 
 \begin_inset Formula 
 \[
-\X_{n}=\sum_{\i=1}^{n}Q_{n}^{\left(\i\right)}.
+\X_{n}=\sum_{\i=1}^{n}Q_{\i}^{\left(n\right)}.
 \]
 
 \end_inset
@@ -7545,7 +7604,7 @@ reference "def:special-metrics"
 \end_layout
 
 \begin_layout Standard
-In the next two sections, we will present characterizing operators for the
+In the next two chapters, we will present characterizing operators for the
  normal and Poisson distributions, and some associated convenient choices
  for 
 \begin_inset Formula $\cY$
@@ -8216,17 +8275,26 @@ Suppose that
 \end_inset
 
 .
- Using the characterizing operator in 
+ Let 
+\begin_inset Formula $\U_{\N}$
+\end_inset
+
+ be the Stein transform defined in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:normal-characterizing"
 
 \end_inset
 
+.
+ Then, for all 
+\begin_inset Formula $\fo\in\U_{\N}\cH$
+\end_inset
+
 , 
 \begin_inset Formula 
 \[
-\left\Vert \U_{\N}\h\right\Vert _{\infty}\le2,\quad\left\Vert \left(\U_{\N}\h\right)'\right\Vert _{\infty}\le3\sqrt{\pi/2},\quad\left\Vert \left(\U_{\N}\h\right)''\right\Vert _{\infty}\le6.
+\left\Vert \fo\right\Vert _{\infty}\le2,\quad\left\Vert \fo'\right\Vert _{\infty}\le3\sqrt{\pi/2},\quad\left\Vert \fo''\right\Vert _{\infty}\le6.
 \]
 
 \end_inset
@@ -8853,7 +8921,11 @@ Let
 \end_inset
 
 .
- Define 
+ Fix 
+\begin_inset Formula $n$
+\end_inset
+
+ and define 
 \begin_inset Formula 
 \[
 \X=\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{i}.
@@ -8993,11 +9065,15 @@ with
 \end_inset
 
 .
- Define 
+ For each 
+\begin_inset Formula $\i$
+\end_inset
+
+ define 
 \begin_inset Formula $W_{\i}=\X-\frac{1}{\sqrt{n}}Q_{\i}$
 \end_inset
 
-, so each 
+, so 
 \begin_inset Formula $W_{\i}$
 \end_inset
 
@@ -9006,11 +9082,12 @@ with
 \end_inset
 
  are independent.
- For each 
+ Now, fix 
 \begin_inset Formula $\i$
 \end_inset
 
- we then have 
+.
+ Note that 
 \begin_inset Formula $\E Q_{\i}f\left(W_{\i}\right)=\E Q_{\i}\E f\left(W_{\i}\right)=0$
 \end_inset
 
@@ -9022,8 +9099,8 @@ with
 
 \end_inset
 
-Now, we use a Taylor expansion with the Lagrange form of the remainder.
- Noting that 
+We now use a Taylor expansion with the Lagrange form of the remainder.
+ Since 
 \begin_inset Formula $\X-W_{\i}=\frac{1}{\sqrt{n}}Q_{\i}$
 \end_inset
 
@@ -9163,7 +9240,14 @@ sseen-error-bounds,eq:berry-esseen-holder}
 
 \end_inset
 
-This completes the proof.
+With 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stein-distance-transform"
+
+\end_inset
+
+, this completes the proof.
 \end_layout
 
 \begin_layout Section
@@ -9428,7 +9512,11 @@ The natural metric to use in Poisson approximation is the total variation
 \begin_inset Formula $\U_{\Po\left(\lambda\right)}\cH_{\TV}$
 \end_inset
 
- as well as their first differences (define 
+ as well as their first differences (define the difference operator 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ by 
 \begin_inset Formula $\Delta\fo\left(\i\right)=\fo\left(\i+1\right)-\fo\left(\i\right)$
 \end_inset
 
@@ -9442,7 +9530,7 @@ name "thm:poisson-bound"
 
 \end_inset
 
-Using the characterizing operator in 
+Using the Stein transform in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:poisson-characterizing"
@@ -9450,13 +9538,13 @@ reference "thm:poisson-characterizing"
 \end_inset
 
 , for all 
-\begin_inset Formula $\h\in\cH_{\TV}$
+\begin_inset Formula $\fo\in\U_{\Po\left(\lambda\right)}\cH_{\TV}$
 \end_inset
 
 , 
 \begin_inset Formula 
 \[
-\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} ,\quad\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right).
+\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} ,\quad\left\Vert \Delta\fo\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right).
 \]
 
 \end_inset
@@ -9691,11 +9779,11 @@ So, for
 \end_inset
 
 We have proved that 
-\begin_inset Formula $\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} $
+\begin_inset Formula $\left\Vert \U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\le\min\left\{ 2,3\lambda^{-1/2}\right\} $
 \end_inset
 
  for 
-\begin_inset Formula $\h\in\cH$
+\begin_inset Formula $\one_{\A}\in\cH$
 \end_inset
 
 .
@@ -9752,7 +9840,7 @@ end{comment}
 
 \begin_layout Proof
 Now, we prove the bound on 
-\begin_inset Formula $\left\Vert \Delta\U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}$
+\begin_inset Formula $\left\Vert \Delta\fo\right\Vert _{\infty}$
 \end_inset
 
 .
@@ -9896,11 +9984,11 @@ for all
 \end_inset
 
 We conclude that 
-\begin_inset Formula $\left\Vert \U_{\Po\left(\lambda\right)}\h\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right)$
+\begin_inset Formula $\left\Vert \Delta\U_{\Po\left(\lambda\right)}\one_{\A}\right\Vert _{\infty}\le\lambda^{-1}\left(1-e^{-\lambda}\right)$
 \end_inset
 
  for 
-\begin_inset Formula $\h\in\cH_{\TV}$
+\begin_inset Formula $\one_{\A}\in\cH_{\TV}$
 \end_inset
 
 .
@@ -10015,7 +10103,11 @@ name "thm:quantitative-poisson-limit"
 
 \end_inset
 
-Let 
+Fix 
+\begin_inset Formula $n$
+\end_inset
+
+ and let 
 \begin_inset Formula $Q_{1},\dots,Q_{n}\in\L Q$
 \end_inset
 
@@ -10094,11 +10186,15 @@ reference "thm:berry-esseen"
 \end_inset
 
 .
- Define 
+ For each 
+\begin_inset Formula $\i$
+\end_inset
+
+ define 
 \begin_inset Formula $W_{\i}=X-Q_{\i}$
 \end_inset
 
-, so each 
+ , so 
 \begin_inset Formula $W_{\i}$
 \end_inset
 
@@ -10124,16 +10220,21 @@ reference "thm:berry-esseen"
 \begin{alignat}{1}
 \E\left[\X f\left(\X\right)\right] & =\sum_{\i=1}^{n}\E\left[Q_{\i}f\left(X\right)\right]\nonumber \\
  & =\sum_{\i=1}^{n}\Pr\left(Q_{\i}=1\right)\E\left[f\left(X\right)|Q_{\i}=1\right]\nonumber \\
- & =\sum_{\i=1}^{n}\frac{\lambda}{n}\E\left[f\left(W_{\i}+1\right)\right].\label{eq:poisson-limit-EXfX}
+ & =\sum_{\i=1}^{n}\frac{\lambda}{n}\,\E\left[f\left(W_{\i}+1\right)\right].\label{eq:poisson-limit-EXfX}
 \end{alignat}
 
 \end_inset
 
-Since 
+Now, fix 
+\begin_inset Formula $\i$
+\end_inset
+
+.
+ Since 
 \begin_inset Formula $X-W_{\i}=Q_{\i}$
 \end_inset
 
-, we then have 
+, we have 
 \begin_inset Formula 
 \begin{equation}
 \E\left[f\left(X+1\right)-f\left(W_{\i}+1\right)\right]=\E\left[\sum_{\i=W_{\i}+1}^{\X}\Delta f\left(\i\right)\right]\le\E Q_{\i}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}=\frac{\lambda}{n}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}.\label{eq:poisson-limit-E-difference}
@@ -10158,12 +10259,19 @@ reference "eq:poisson-limit-E-difference"
  gives
 \begin_inset Formula 
 \[
-\left|\E\left[\X f\left(\X\right)\right]-\E\left[\lambda f\left(\X+1\right)\right]\right|\le\sum_{\i=1}^{n}\left(\frac{\lambda}{n}\right)^{2}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\le\frac{\lambda\left(1-e^{-\lambda}\right)}{n},
+\left|\E\left[\X f\left(\X\right)\right]-\E\left[\lambda f\left(\X+1\right)\right]\right|\le\sum_{\i=1}^{n}\left(\frac{\lambda}{n}\right)^{2}\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\le\frac{\lambda\left(1-e^{-\lambda}\right)}{n}.
 \]
 
 \end_inset
 
-as required.
+With 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stein-distance-transform"
+
+\end_inset
+
+, this completes the proof.
 \end_layout
 
 \begin_layout Section
@@ -10223,14 +10331,14 @@ ref{sub:berry-esseen,sub:quantitative-poisson-limit}
  in our random variable of interest.
  However, in order to apply Stein's method in less ideal circumstances,
  we will need some more machinery.
- There are a number of different techiques that can be used in different
+ There are a number of different techniques that can be used in different
  cases.
- In the case of positive random variables such as those found in combinatorial
- applications, one particularly useful technique is 
+ In the case of nonnegative random variables such as those found in combinatoria
+l applications, one particularly useful technique is 
 \emph on
 size-bias coupling
 \emph default
-, which we will discuss in this section.
+, which we will discuss in this chapter.
 \end_layout
 
 \begin_layout Definition
@@ -10251,7 +10359,7 @@ size-bias distribution
 \end_inset
 
 .
- In this section, 
+ In this chapter, 
 \begin_inset Formula $\s{\X}$
 \end_inset
 
@@ -10275,14 +10383,14 @@ The reason this is called size-biasing is because the probability of each
 \end_inset
 
  is biased proportionally by that value.
- To be precise, in the discrete case the definition of 
+ To be precise, in the discrete setting the definition of 
 \begin_inset Formula $\Ls{\X}$
 \end_inset
 
  can be stated as 
 \begin_inset Formula 
 \begin{equation}
-\Ls{\X}\left(k\right)=\frac{k}{\E\X}\L{\X}\left(k\right).\label{eq:discrete-size-bias-definition}
+\Ls{\X}\left(k\right)=\frac{k}{\E\X}\,\L{\X}\left(k\right).\label{eq:discrete-size-bias-definition}
 \end{equation}
 
 \end_inset
@@ -10429,7 +10537,7 @@ Suppose
 We have 
 \begin_inset Formula 
 \begin{alignat*}{1}
-\Pr(\X^{\left(I\right)}=k) & =\sum_{\i=1}^{n}\frac{\Pr\left(Q_{\i}=1\right)}{\E\X}\Pr\left(\X=k|Q_{\i}=1\right)\\
+\Pr(\X^{\left(I\right)}=k) & =\sum_{\i=1}^{n}\frac{\Pr\left(Q_{\i}=1\right)}{\E\X}\,\Pr\left(\X=k|Q_{\i}=1\right)\\
  & =\frac{1}{\E\X}\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right).
 \end{alignat*}
 
@@ -10450,7 +10558,7 @@ Now, when
  will hold, so
 \begin_inset Formula 
 \[
-\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right)=\L{\X}\left(k\right).
+\sum_{\i=1}^{n}\Pr\left(\X=k\mbox{ and }Q_{\i}=1\right)=k\L{\X}\left(k\right).
 \]
 
 \end_inset
@@ -10574,8 +10682,8 @@ so that
 \begin_inset Formula $\s{\X}$
 \end_inset
 
- be the number of isolated vertices in the graph obtained by picking a vertex
- in 
+ be the number of isolated vertices in the graph obtained by choosing a
+ vertex in 
 \begin_inset Formula $G$
 \end_inset
 
@@ -10617,7 +10725,8 @@ almost
 \begin_inset Formula $n-1$
 \end_inset
 
- potential edges incident to that vertex must independently not be present.
+ potential edges incident to that vertex must each independently not be
+ present.
  So if 
 \begin_inset Formula $p$
 \end_inset
@@ -10653,8 +10762,8 @@ rare event
 \end_inset
 
  has an approximate normal distribution.
- We will therefore return to this example to illustrate the application
- of size-bias coupling for both normal and Poisson approximation.
+ We will therefore return to this example throughout this chapter to illustrate
+ the application of size-bias coupling for both normal and Poisson approximation.
 \end_layout
 
 \begin_layout Example
@@ -10667,7 +10776,7 @@ In both cases, we will need to compute
 \end_inset
 
 , so we do this now.
- For all expectation calculations in this section, we will use the idea
+ For all expectation calculations in this chapter, we will use the idea
  of 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -10692,7 +10801,7 @@ For a pair of distinct vertices, the probability that both are isolated
 , so
 \begin_inset Formula 
 \begin{alignat*}{1}
-\E{\X \choose 2} & =\E\left[\X^{2}/2-\X/2\right]={n \choose 2}\left(1-p\right)^{2n-3}
+\E{\X \choose 2} & =\E\X^{2}/2-\E\X/2={n \choose 2}\left(1-p\right)^{2n-3}
 \end{alignat*}
 
 \end_inset
@@ -10700,7 +10809,7 @@ For a pair of distinct vertices, the probability that both are isolated
 and
 \begin_inset Formula 
 \begin{alignat}{1}
-\Var\X & =n\left(n-1\right)\left(1-p\right)^{2n-3}+n\left(1-p\right)^{n-1}-n^{2}\left(1-p\right)^{2n-2}\nonumber \\
+\Var\X=\E\X^{2}-\left(\E\X\right)^{2} & =n\left(n-1\right)\left(1-p\right)^{2n-3}+n\left(1-p\right)^{n-1}-n^{2}\left(1-p\right)^{2n-2}\nonumber \\
  & =n\left(1-p\right)^{n-1}\left(1+\left(np-1\right)\left(1-p\right)^{n-2}\right).\label{eq:isolated-vertices-variance}
 \end{alignat}
 
@@ -10737,7 +10846,7 @@ For a nonnegative random variable
 
 .
  In order to prove this, our objective is to compare 
-\begin_inset Formula $\E\left[f\left(W\right)\right]$
+\begin_inset Formula $\E\left[Wf\left(W\right)\right]$
 \end_inset
 
  to 
@@ -10770,7 +10879,11 @@ reference "eq:size-bias-transformation"
 \begin_inset Formula $x\mapsto f\left(\left(\X-\mu\right)/\sigma\right)$
 \end_inset
 
-, we have
+, we have 
+\begin_inset Formula $\E\left[\X f\left(\left(\X-\mu\right)/\sigma\right)\right]=\mu\E\left[f\left(\left(\s{\X}-\mu\right)/\sigma\right)\right]$
+\end_inset
+
+ and
 \begin_inset Formula 
 \[
 \E\left[Wf\left(W\right)\right]=\E\left[\frac{\X-\mu}{\sigma}f\left(\frac{\X-\mu}{\sigma}\right)\right]=\frac{\mu}{\sigma}\E\left[f\left(\frac{\s{\X}-\mu}{\sigma}\right)-f\left(\frac{\X-\mu}{\sigma}\right)\right].
@@ -10809,7 +10922,7 @@ reference "thm:normal-characterizing"
 , we have 
 \begin_inset Formula 
 \[
-\left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.
+\left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\,\E\left|\frac{\sigma^{2}}{\mu}-\E^{\X}\left[\s{\X}-\X\right]\right|+\,\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}
 \]
 
 \end_inset
@@ -10853,7 +10966,7 @@ reference "eq:size-bias-transformation"
 
 \end_inset
 
-so 
+so by the tower law, 
 \begin_inset Formula $\E\left[\E^{\X}\left[\s{\X}-\X\right]\right]=\E\left[\s{\X}-\X\right]=\sigma^{2}/\mu$
 \end_inset
 
@@ -10891,7 +11004,7 @@ key "Rud66"
 
 \end_inset
 
-which allows us to conclude
+which allows us to conclude that
 \begin_inset Formula 
 \begin{equation}
 \left|\E_{W}\T_{\N}f\right|\le\frac{3\mu}{\sigma^{2}}\sqrt{\frac{\pi}{2}}\sqrt{\Var\left(\E^{\X}\left[\s{\X}-\X\right]\right)}+\frac{3\mu}{\sigma^{3}}\E\left(\s{\X}-\X\right)^{2}.\label{eq:size-bias-normal-bound}
@@ -10912,7 +11025,7 @@ We will be able to show that
 \end_inset
 
 .
- We will show how 
+ We show how 
 \begin_inset Formula $d_{\W}\left(\X,\N\left(0,1\right)\right)$
 \end_inset
 
@@ -11002,11 +11115,7 @@ reference "eq:isolated-vertices-variance"
 \end_layout
 
 \begin_layout Example
-let 
-\begin_inset Formula $I$
-\end_inset
-
- be a random vertex, and let 
+Let 
 \begin_inset Formula $\s{\X}$
 \end_inset
 
@@ -11045,7 +11154,15 @@ let
 not
 \emph default
  isolated.
- Then, we have 
+ Let 
+\begin_inset Formula $I$
+\end_inset
+
+ be a (uniformly) random vertex in 
+\begin_inset Formula $\range n$
+\end_inset
+
+, so that 
 \begin_inset Formula 
 \[
 \s{\X}-\X=D_{I}+R_{I}.
@@ -11053,10 +11170,18 @@ not
 
 \end_inset
 
-First, note that
+Let 
+\begin_inset Formula $\L D$
+\end_inset
+
+ be the common distribution of each 
+\begin_inset Formula $D_{\i}$
+\end_inset
+
+ and note that
 \begin_inset Formula 
 \begin{equation}
-\E\left(\s{\X}-\X\right)^{2}=\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+R_{\i}\right)^{2}\le\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+1\right)^{2}=\E\left(D_{\i}+1\right)^{2}.\label{eq:isolated-vertices-E(X^s-X)^2-bound-progress}
+\E\left(\s{\X}-\X\right)^{2}=\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+R_{\i}\right)^{2}\le\sum_{\i=1}^{n}\frac{1}{n}\E\left(D_{\i}+1\right)^{2}=\E\left(D+1\right)^{2}.\label{eq:isolated-vertices-E(X^s-X)^2-bound-progress}
 \end{equation}
 
 \end_inset
@@ -11070,16 +11195,16 @@ The probability that a particular vertex is a degree-1 neighbour of the
 \begin_inset Formula $p\left(1-p\right)^{n-2}$
 \end_inset
 
- because 1 particular edge must be present and 
+ because one particular edge must be present and 
 \begin_inset Formula $n-2$
 \end_inset
 
  particular edges must be absent.
  So,
 \begin_inset Formula 
-\[
-\E D_{\i}=\left(n-1\right)p\left(1-p\right)^{n-2}=\Theta\left(1\right).
-\]
+\begin{equation}
+\E D=\left(n-1\right)p\left(1-p\right)^{n-2}=O\left(1\right).\label{eq:isolated-vertices-ED}
+\end{equation}
 
 \end_inset
 
@@ -11095,7 +11220,7 @@ The probability that two particular vertices are both degree-1 neighbours
 , so 
 \begin_inset Formula 
 \begin{alignat*}{1}
-\E{D_{\i} \choose 2} & ={n-1 \choose 2}p\left(1-p\right)^{2n-5}.
+\E{D \choose 2} & =\E D^{2}/2-\E D/2={n-1 \choose 2}p^{2}\left(1-p\right)^{2n-5}=O\left(1\right)
 \end{alignat*}
 
 \end_inset
@@ -11110,12 +11235,16 @@ reference "eq:isolated-vertices-E(X^s-X)^2-bound-progress"
  that
 \begin_inset Formula 
 \begin{equation}
-\E\left(\s{\X}-\X\right)^{2}\le\left(n-1\right)p\left(1-p\right)^{n-2}\left(\left(n-2\right)p\left(1-p\right)^{n-3}+3\right)+1=\Theta\left(1\right).\label{eq:isolated-vertices-E(X^s-X)^2-bound}
+\E\left(\s{\X}-\X\right)^{2}\le2\E{D \choose 2}+3\E D+1=O\left(1\right).\label{eq:isolated-vertices-E(X^s-X)^2-bound}
 \end{equation}
 
 \end_inset
 
-Next, by contractivity and the tower law
+Next, by the 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ version of contractivity and the tower law
 \family roman
 \series medium
 \shape up
@@ -11208,7 +11337,7 @@ The interpretation of
 \noun off
 \color none
 Now, let 
-\begin_inset Formula $D=\sum_{\i=1}^{n}D_{\i}$
+\begin_inset Formula $Y=\sum_{\i=1}^{n}D_{\i}$
 \end_inset
 
  be the number of vertices with degree 1 in 
@@ -11220,12 +11349,12 @@ Now, let
 \end_inset
 
  has the distribution of 
-\begin_inset Formula $\frac{1}{n}\left(D+n-\X\right)$
+\begin_inset Formula $\frac{1}{n}\left(Y+n-\X\right)$
 \end_inset
 
 .
  Let 
-\begin_inset Formula $\hat{D}=D-\E D$
+\begin_inset Formula $\hat{Y}=Y-\E Y$
 \end_inset
 
  and 
@@ -11235,8 +11364,15 @@ Now, let
 , so that
 \begin_inset Formula 
 \[
-\Var\left(\E^{G}\left[\s{\X}-\X\right]\right)=\frac{1}{n^{2}}\E(\hat{D}-\hat{\X})^{2}=\frac{1}{n^{2}}\E\left[2\hat{D}^{2}+2\hat{\X}^{2}-(\hat{D}+\hat{\X})^{2}\right]\le\frac{2}{n^{2}}\left(\Var D+\sigma^{2}\right).
+\Var\left(\E^{G}\left[\s{\X}-\X\right]\right)=\frac{1}{n^{2}}\E(\hat{Y}-\hat{\X})^{2}=\frac{1}{n^{2}}\E\left[2\hat{Y}^{2}+2\hat{\X}^{2}-(\hat{Y}+\hat{\X})^{2}\right]\le\frac{2}{n^{2}}\left(\Var Y+\sigma^{2}\right).
 \]
+
+\end_inset
+
+From 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:isolated-vertices-ED"
 
 \end_inset
 
@@ -11252,31 +11388,10 @@ Now, let
 \uwave default
 \noun default
 \color inherit
-The probability that a particular vertex 
-\begin_inset Formula $\i$
-\end_inset
-
- has 
-\begin_inset Formula $\ii$
-\end_inset
-
- as its only neighbor is 
-\begin_inset Formula $p\left(1-p\right)^{n-2}$
-\end_inset
-
- because 1 particular edge must be present and 
-\begin_inset Formula $n-2$
-\end_inset
-
- particular edges must be absent.
- So, the probability that a particular vertex has degree 1 is 
-\begin_inset Formula $\left(n-1\right)p\left(1-p\right)^{n-2}$
-\end_inset
-
- and 
+, we can deduce 
 \begin_inset Formula 
 \[
-\E D=n\left(n-1\right)p\left(1-p\right)^{n-2}.
+\E Y=n\left(n-1\right)p\left(1-p\right)^{n-2}.
 \]
 
 \end_inset
@@ -11325,26 +11440,40 @@ Consider a particular unordered pair of vertices
 \begin_inset Formula $\i$
 \end_inset
 
- neighbour.
+ neighbour (possibly both the same).
  This event has probability 
-\begin_inset Formula $\left(n-1\right)^{2}p^{2}\left(1-p\right)^{2n-5}$
+\begin_inset Formula $\left(n-2\right)^{2}p^{2}\left(1-p\right)^{2n-5}$
 \end_inset
 
 .
- We conclude that
+ So, 
 \begin_inset Formula 
 \begin{alignat*}{1}
-\E\left[D\left(D-1\right)/2\right] & ={n \choose 2}\left(p\left(1-p\right)^{2n-4}+\left(n-1\right)^{2}p^{2}\left(1-p\right)^{2n-5}\right),\\
-\Var D & =n\left(n-1\right)p\left(1-p\right)^{n-2}\left(1+\left(n-1\right)p\left(1-p\right)^{n-3}\left(np-1\right)+\left(1-p\right)^{n-2}\right)\\
- & =O\left(n\right).
+\E{Y \choose 2} & ={n \choose 2}\left(p\left(1-p\right)^{2n-4}+\left(n-2\right)^{2}p^{2}\left(1-p\right)^{2n-5}\right).
 \end{alignat*}
 
 \end_inset
 
-It follows that
+It follows that 
+\begin_inset Formula $\Var Y=2\E{Y \choose 2}-\left(\E Y\right)^{2}+\E Y$
+\end_inset
+
+ is equal to
+\begin_inset Formula 
+\[
+n\left(n-1\right)p\left(1-p\right)^{n-2}\left(\left(1-p\right)^{n-2}+p\left(1-p\right)^{n-3}\left(\left(n-2\right)^{2}-n\left(n-1\right)\right)+1\right)=O\left(n\right).
+\]
+
+\end_inset
+
+Recalling that 
+\begin_inset Formula $\sigma^{2}=O\left(n^{2}\right)$
+\end_inset
+
+, we have
 \begin_inset Formula 
 \begin{alignat}{1}
-\Var\left(\E^{G}\left[\s{\X}-\X\right]\right) & \le\Theta\left(\frac{1}{n}\right)\label{eq:isolated-vertices-var-full-bound}
+\Var\left(\E^{G}\left[\s{\X}-\X\right]\right) & =O\left(\frac{1}{n}\right).\label{eq:isolated-vertices-var-full-bound}
 \end{alignat}
 
 \end_inset
@@ -11382,10 +11511,17 @@ reference "eq:isolated-vertices-var-contractive-bound"
 
 \end_inset
 
- and 
+, 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:isolated-vertices-var-full-bound"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stein-distance-transform"
 
 \end_inset
 
@@ -11404,7 +11540,7 @@ reference "eq:isolated-vertices-var-full-bound"
  
 \begin_inset Formula 
 \[
-d_{\W}\left(\frac{\X-\mu}{\sigma},\N\left(0,1\right)\right)=O\left(n^{-3/2}\right).
+d_{\W}\left(\frac{\X-\mu}{\sigma},\,\N\left(0,1\right)\right)=O\left(n^{-3/2}\right).
 \]
 
 \end_inset
@@ -11421,7 +11557,7 @@ Let
 \begin_inset Formula $\lambda=\E\X$
 \end_inset
 
-, and suppose we believe 
+, and suppose we believe that 
 \begin_inset Formula $\L{\X}\approx\Po\left(\lambda\right)$
 \end_inset
 
@@ -11441,7 +11577,7 @@ reference "thm:poisson-characterizing"
 \begin_inset Formula $f$
 \end_inset
 
- satisfies the bounds in 
+ that satisfies the bounds in 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:poisson-bound"
@@ -11452,7 +11588,7 @@ reference "thm:poisson-bound"
  We have 
 \begin_inset Formula 
 \[
-\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|=\left|\E\left[\X f\left(\X\right)-\lambda f\left(\X+1\right)\right]\right|\le\lambda\E\left|f(\s{\X})-f\left(\X+1\right)\right|.
+\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|=\left|\E\left[\X f\left(\X\right)-\lambda f\left(\X+1\right)\right]\right|\le\lambda\,\E\left|f(\s{\X})-f\left(\X+1\right)\right|.
 \]
 
 \end_inset
@@ -11464,17 +11600,17 @@ reference "prop:tower-contractivity"
 
 \end_inset
 
-) and similar reasoning to the proof of 
+) and similar reasoning to 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "thm:quantitative-poisson-limit"
+reference "eq:poisson-limit-E-difference"
 
 \end_inset
 
 , it follows that
 \begin_inset Formula 
 \begin{equation}
-\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|\le\lambda\left\Vert \Delta f\left(\i\right)\right\Vert _{\infty}\E\left|\X+1-\s{\X}\right|\le(1-e^{-\lambda})\E\left|\X+1-\s{\X}\right|.\label{eq:size-bias-poisson-bound}
+\left|\E_{\X}\T_{\Po\left(\lambda\right)}f\right|\le\lambda\left\Vert \Delta f\right\Vert _{\infty}\E\left|\X+1-\s{\X}\right|\le(1-e^{-\lambda})\,\E\left|\X+1-\s{\X}\right|.\label{eq:size-bias-poisson-bound}
 \end{equation}
 
 \end_inset
@@ -11558,11 +11694,42 @@ reference "eq:size-bias-poisson-bound"
 
 \end_inset
 
+ and 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stein-distance-transform"
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
  we have 
 \begin_inset Formula 
 \begin{alignat*}{1}
 d_{\TV}\left(\X,\Po\left(\lambda\right)\right) & \le(1-e^{-\lambda})\left(\left(1-p\right)^{n-1}+\left(n-1\right)p\left(1-p\right)^{n-2}\right)\\
- & \le\lambda^{2}(1-e^{-\lambda})\left(\frac{1}{n}+\frac{p}{1-p}\right).
+ & \le\lambda(1-e^{-\lambda})\left(\frac{1}{n}+\frac{p}{1-p}\right).
 \end{alignat*}
 
 \end_inset
@@ -11586,7 +11753,7 @@ reference "example:isolated-vertices"
 \begin_inset Formula $p$
 \end_inset
 
- is not too small, so that 
+ is not too close to zero (or one), so that 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -11735,7 +11902,7 @@ special
 
 .
  The exchangeable pairs construction can be used for this purpose, but in
- this section we will be more interested in a technique for applying Stein's
+ this chapter we will be more interested in a technique for applying Stein's
  method that involves the construction of a characterizing operator for
  
 \begin_inset Formula $\L{\X}$
@@ -11827,7 +11994,7 @@ name "example:fixed-points"
 
 \end_inset
 
-Throughout this section, we will refer to an example problem to illustrate
+Throughout this chapter, we will refer to an example problem to illustrate
  the principles of Stein's method for exchangeable pairs.
 \end_layout
 
@@ -11988,11 +12155,7 @@ a pair
 
 \begin_layout Proposition
 There is a natural equivalence between time-homogeneous reversible Markov
- 
-\series bold
-c
-\series default
-hains with steady-state distribution 
+ chains with steady-state distribution 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
@@ -12055,11 +12218,8 @@ for any
 \end_inset
 
 .
- Of course, given a reversible Markov 
-\series bold
-c
-\series default
-hain with steady-state distribution 
+ Of course, given a reversible Markov chain with steady-state distribution
+ 
 \begin_inset Formula $\L{\X}$
 \end_inset
 
@@ -12079,11 +12239,7 @@ We say an exchangeable pair
 \emph on
 connected
 \emph default
- if the corresponding Markov 
-\series bold
-c
-\series default
-hain is irreducible.
+ if the corresponding Markov chain is irreducible.
 \end_layout
 
 \begin_layout Remark
@@ -12189,11 +12345,7 @@ The relation of differing by a transposition is symmetric, so
 \end_inset
 
  is indeed an exchangeable pair.
- The Markov 
-\series bold
-c
-\series default
-hain associated with 
+ The Markov chain associated with 
 \begin_inset Formula $\mathbf{W}$
 \end_inset
 
@@ -12202,11 +12354,8 @@ hain associated with
 \begin_inset Formula $\sigma$
 \end_inset
 
-, to make a transition in the Markov 
-\series bold
-c
-\series default
-hain we just randomly choose one of the 
+, to make a transition in the Markov chain we just randomly choose one of
+ the 
 \begin_inset Formula ${n \choose 2}$
 \end_inset
 
@@ -12242,12 +12391,8 @@ reference "rem:underlying-pair"
 \end_layout
 
 \begin_layout Standard
-The Markov 
-\series bold
-c
-\series default
-hain underlying a connected exchangeable pair can be naturally viewed as
- a connected one-dimensional simplicial complex.
+The Markov chain underlying a connected exchangeable pair can be naturally
+ viewed as a connected one-dimensional simplicial complex.
  The zeroth reduced homology group 
 \begin_inset Formula $\ker\partial_{0}/\im\partial_{1}$
 \end_inset
@@ -12417,7 +12562,11 @@ By exchangeability and antisymmetry,
 \begin_inset Formula $\E_{\X}\left|\TX\fX\right|\le\E\left|\fX\left(\eX\right)\right|<\infty$
 \end_inset
 
- by contractivity, so 
+ by the 
+\begin_inset Formula $L^{1}$
+\end_inset
+
+ version of contractivity, so 
 \begin_inset Formula $\TX\fX\in\XX$
 \end_inset
 
@@ -12485,11 +12634,7 @@ We will next prove
 
 , and takes the value zero elsewhere.
  Note that this function is antisymmetric by the reversibility of the Markov
- 
-\series bold
-c
-\series default
-hain of 
+ chain of 
 \begin_inset Formula $\eX$
 \end_inset
 
@@ -12713,11 +12858,8 @@ reference "thm:poisson-bound"
 
 \end_inset
 
-The interpretation of these approximate equalities is that the Markov 
-\series bold
-c
-\series default
-hain associated with 
+The interpretation of these approximate equalities is that the Markov chain
+ associated with 
 \begin_inset Formula $\eX$
 \end_inset
 
@@ -12735,11 +12877,7 @@ hain associated with
 \begin_inset Formula $\eX$
 \end_inset
 
- is defined by a Markov 
-\series bold
-c
-\series default
-hain on 
+ is defined by a Markov chain on 
 \begin_inset Formula $\Om$
 \end_inset
 
@@ -13223,7 +13361,7 @@ reference "rem:indicator-expectation"
 \noun off
 \color none
 , we have 
-\begin_inset Formula $\E{\X_{1} \choose 2}=\E\left[\X_{1}^{2}/2-\X_{1}/2\right]={n \choose 2}\left(n\left(n-1\right)\right)^{-1}=1/2$
+\begin_inset Formula $\E{\X_{1} \choose 2}=\E\left[\X_{1}^{2}\right]/2-\E\X_{1}/2={n \choose 2}\left(n\left(n-1\right)\right)^{-1}=1/2$
 \end_inset
 
  and 
@@ -14658,11 +14796,8 @@ reference "prop:graph-to-markov"
 \begin_inset Formula $\fG$
 \end_inset
 
- induces a reversible Markov 
-\series bold
-c
-\series default
-hain with uniform stationary distribution (in our case 
+ induces a reversible Markov chain with uniform stationary distribution
+ (in our case 
 \begin_inset Formula $\rG nd)$
 \end_inset
 
@@ -14750,10 +14885,10 @@ reference "def:cycle-switching"
 
  vertices, so 
 \begin_inset Formula 
-\begin{alignat*}{1}
-\E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right| & \le\E\left|\sum_{C\in K_{n}}\one_{C\subseteq G_{1}}-\frac{c}{\Delta}\sum_{C\in K_{n}}F_{C}\left(G_{1}\right)\right|\\
- & \le\frac{\falling n{\ell}}{2\ell}\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|.
-\end{alignat*}
+\begin{alignat}{1}
+\E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right| & \le\E\left|\sum_{C\in K_{n}}\one_{C\subseteq G_{1}}-\frac{c}{\Delta}\sum_{C\in K_{n}}F_{C}\left(G_{1}\right)\right|\nonumber \\
+ & \le\frac{\falling n{\ell}}{2\ell}\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|.\label{eq:short-cycles-increment-bound}
+\end{alignat}
 
 \end_inset
 
@@ -14772,9 +14907,9 @@ Similarly, let
 .
  We have 
 \begin_inset Formula 
-\[
-\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\,\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.
-\]
+\begin{equation}
+\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|\le\frac{\falling n{\ell}}{2\ell}\,\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|.\label{eq:short-cycles-decrement-bound}
+\end{equation}
 
 \end_inset
 
@@ -14877,42 +15012,16 @@ because a switching that destroyed
 
 , so that both of 
 \begin_inset Formula 
-\begin{equation}
-\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|\label{eq:switchings-required-expectation-bound}
-\end{equation}
+\[
+\E\left|\one_{C\subseteq G_{1}}-\frac{c}{\Delta}F_{C}\left(G_{1}\right)\right|,\quad\E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|
+\]
 
 \end_inset
 
 are small.
- This will give us a bound on 
-\begin_inset Formula 
-\[
-\E\left|\X_{1}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|+\E\left|\frac{\left(d-1\right)^{\ell}}{2\ell}-c\Pr\left(\X_{2}=\X_{1}+1|\X_{1}\right)\right|,
-\]
-
-\end_inset
-
-as is required to prove that 
-\begin_inset Formula 
-\[
-d_{\TV}\left(\X,\Po\left(\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}\right)\right)\approx0.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The arguments needed to actually obtain bounds on the expectations in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:switchings-required-expectation-bound"
-
-\end_inset
-
- can be mostly adapted from corresponding arguments in the bare-hands applicatio
-n of switchings in 
+ The arguments needed to actually obtain bounds on these expectations can
+ be mostly adapted from corresponding arguments in the bare-hands application
+ of switchings in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "MWW04"
@@ -14959,8 +15068,8 @@ reference "def:cycle-switching"
 
 \end_inset
 
- (that is, the relevant vertices are distinct and no extraoneous cycles
- are created or destroyed).
+ (that is, the relevant vertices are distinct and no extraneous cycles are
+ created or destroyed).
  A choice will certainly be legal if we require that each of the edges 
 \begin_inset Formula $w_{\i}u_{\i}$
 \end_inset
@@ -15075,7 +15184,35 @@ legal
 
 \end_inset
 
+Combining these estimates with 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:short-cycles-increment-bound"
 
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:short-cycles-decrement-bound"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EXT0-immigration-death-bound"
+
+\end_inset
+
+, and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:stein-distance-transform"
+
+\end_inset
+
+, 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:short-cycles-variable"
@@ -15085,8 +15222,24 @@ reference "thm:short-cycles-variable"
  can be shown to follow.
 \end_layout
 
-\begin_layout Section
+\begin_layout Section*
 Further Reading
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+addcontentsline{toc}{section}{Further Reading}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15111,8 +15264,8 @@ key "Ros11,FL14"
 \end_inset
 
 ).
- More interestingly, Stein's method has been used to approximate with applicatio
-n-specific distributions (see, for example, 
+ More interestingly, Stein's method has been used to make approximations
+ to application-specific distributions (see, for example, 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "BCX07"
@@ -15168,7 +15321,7 @@ key "CGS10"
 \end_layout
 
 \begin_layout Standard
-We have also only discussed Stein's method as a tool for bounding the distance
+We have only discussed Stein's method as a tool for bounding the distance
  between distributions, but the method can be applied to prove other types
  of results, including, for example, concentration inequalities (see, for
  example, 
