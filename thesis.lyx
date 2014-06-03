@@ -3349,7 +3349,7 @@ item
 \end_inset
 
  version) 
-\begin_inset Formula $\E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left(\X_{1}\right)^{2}$
+\begin_inset Formula $\E\left|\E^{\X_{2}}\X_{1}\right|^{2}\le\E\left|\X_{1}\right|^{2}$
 \end_inset
 
 .
@@ -3415,15 +3415,7 @@ proving the
 \begin_inset Formula $\E^{\X_{2}}\left[\X_{1}\E^{\X_{2}}\X_{1}\right]=\left(\E^{\X_{2}}\X_{1}\right)^{2}$
 \end_inset
 
- by 
-\begin_inset Quotes eld
-\end_inset
-
-linearity of expectation
-\begin_inset Quotes erd
-\end_inset
-
-, so 
+ by linearity of expectation, so 
 \begin_inset Formula $\E^{\X_{2}}\left(\X_{1}-\E^{\X_{2}}\X_{1}\right)^{2}=\E^{\X_{2}}\X_{1}^{2}-\left(\E^{\X_{2}}\X_{1}\right)^{2}>0$
 \end_inset
 
@@ -5488,6 +5480,19 @@ reference "thm:BL-metrizes-weak"
 \end_inset
 
 .
+ This is a special case of Prokhorov's 
+\series bold
+t
+\series default
+heorem (
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem~14.3"
+key "Kal02"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Lemma
@@ -14469,7 +14474,7 @@ reference "fig:cycle-switching"
 
 \end_inset
 
- below illustrates the idea.
+ illustrates the idea.
 \end_layout
 
 \begin_layout Standard
@@ -14597,7 +14602,7 @@ node at ({90+360/
 \backslash
 iN * (
 \backslash
-s - 0.75)}:2.42cm){$u_
+s - 0.75)}:2.22cm){$u_
 \backslash
 s$};
 \end_layout
@@ -14610,7 +14615,7 @@ node at ({90+360/
 \backslash
 iN * (
 \backslash
-s - 1.25)}:2.42cm){$w_
+s - 1.25)}:2.22cm){$w_
 \backslash
 s$};
 \end_layout
@@ -14646,7 +14651,7 @@ s) at ({360/
 \backslash
 oN * (
 \backslash
-s - 1)}:2cm){};% {$
+s - 1)}:1.8cm){};% {$
 \backslash
 s$};
 \end_layout
@@ -15660,6 +15665,13 @@ legal
 Combining these estimates with 
 \begin_inset CommandInset ref
 LatexCommand ref
+reference "eq:stein-distance-transform"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "eq:short-cycles-increment-bound"
 
 \end_inset
@@ -15671,17 +15683,10 @@ reference "eq:short-cycles-decrement-bound"
 
 \end_inset
 
-, 
+ and 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EXT0-immigration-death-bound"
-
-\end_inset
-
-, and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:stein-distance-transform"
 
 \end_inset
 

@@ -849,7 +849,7 @@ $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$.
 
 \item (Contractivity, $L^{1}$ version) $\E\left|\E^{\X_{2}}\X_{1}\right|\le\E\left|\X_{1}\right|$.
 
-\item (Contractivity, $L^{2}$ version) $\E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left(\X_{1}\right)^{2}$.
+\item (Contractivity, $L^{2}$ version) $\E\left|\E^{\X_{2}}\X_{1}\right|^{2}\le\E\left|\X_{1}\right|^{2}$.
 
 \end{enumerate}\end{prop}
 \begin{proof}
@@ -865,7 +865,7 @@ so
 \E\left|\E^{\X_{2}}\X_{1}\right|=\E\left[\one_{\A}\E^{\X_{2}}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\E^{\X_{2}}\X_{1}\right]=\E\left[\one_{\A}\X_{1}\right]-\E\left[\one_{\Om\backslash\A}\X_{1}\right]\le\E\left|\X_{1}\right|,
 \]
 proving the $L^{1}$ version of contractivity. Finally, note $\E^{\X_{2}}\left[\X_{1}\E^{\X_{2}}\X_{1}\right]=\left(\E^{\X_{2}}\X_{1}\right)^{2}$
-by ``linearity of expectation'', so $\E^{\X_{2}}\left(\X_{1}-\E^{\X_{2}}\X_{1}\right)^{2}=\E^{\X_{2}}\X_{1}^{2}-\left(\E^{\X_{2}}\X_{1}\right)^{2}>0$
+by linearity of expectation, so $\E^{\X_{2}}\left(\X_{1}-\E^{\X_{2}}\X_{1}\right)^{2}=\E^{\X_{2}}\X_{1}^{2}-\left(\E^{\X_{2}}\X_{1}\right)^{2}>0$
 and by the tower law,
 \[
 \E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left[\E^{\X_{2}}\X_{1}^{2}\right]=\E\left(\X_{1}\right)^{2}.
@@ -1207,7 +1207,8 @@ so \ref{prop:dist-F} of \ref{prop:dist} holds.\end{proof}
 \label{thm:BL-metrizes-weak}The bounded Lipschitz metric metrizes
 the weak topology.
 \end{thm}
-We will need a small lemma to prove \ref{thm:BL-metrizes-weak}.
+We will need a small lemma to prove \ref{thm:BL-metrizes-weak}. This
+is a special case of Prokhorov's \textbf{t}heorem (\cite[Theorem~14.3]{Kal02}).
 \begin{lem}
 \label{lem:prokhorov}Let $S\subseteq\P\left(\RR\right)$ be compact
 in the weak topology. For each $\varepsilon>0$, there is $k\in\NN$
@@ -3212,9 +3213,9 @@ obtain a similar bound
 \[
 \E\left|\frac{\left(d-1\right)^{\ell}}{\falling n{\ell}}-\frac{c}{\Delta}B_{C}\left(G_{1}\right)\right|=O\left(\frac{\ell\left(d-1\right)^{2\ell-1}}{n^{\ell+1}}\right).
 \]
-Combining these estimates with \ref{eq:short-cycles-increment-bound},
-\ref{eq:short-cycles-decrement-bound}, \ref{eq:EXT0-immigration-death-bound},
-and \ref{eq:stein-distance-transform}, \ref{thm:short-cycles-variable}
+Combining these estimates with \ref{eq:stein-distance-transform},
+\ref{eq:short-cycles-increment-bound}, \ref{eq:short-cycles-decrement-bound}
+and \ref{eq:EXT0-immigration-death-bound}, \ref{thm:short-cycles-variable}
 can be shown to follow.
 
 
