@@ -1,14 +1,15 @@
 %% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[11pt,english]{article}
+\documentclass[11pt,twoside,english]{article}
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
-\usepackage{geometry}
-\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=3cm,headsep=3cm,footskip=1.5cm}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3.5cm,rmargin=2.5cm,headheight=3cm,headsep=3cm,footskip=1.5cm}
 \setlength{\parskip}{\bigskipamount}
 \setlength{\parindent}{0pt}
 \synctex=1
 \usepackage{babel}
+\usepackage{float}
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -164,6 +165,8 @@
  pdfauthor = {Matthew Kwan}
 }
 
+\numberwithin{figure}{section}
+
 \makeatother
 
   \providecommand{\claimname}{Claim}
@@ -199,6 +202,10 @@ Bachelor of Science with Honours
 \par\end{center}
 
 \thispagestyle{empty}\end{titlepage}
+
+$$$$\thispagestyle{empty}
+
+\newpage{}
 
 \pagenumbering{roman}
 
@@ -299,6 +306,10 @@ me into an enthusiastic (and maybe even capable!) student of mathematics.
 
 \newpage{}
 
+$$$$\thispagestyle{empty}
+
+\newpage{}
+
 \tableofcontents{}
 
 \begin{comment}Things remaining:
@@ -308,6 +319,10 @@ me into an enthusiastic (and maybe even capable!) student of mathematics.
 \item fix overfull hboxes and large empty spaces
 \end{itemize}
 \end{comment}
+
+\newpage{}
+
+$$$$\thispagestyle{empty}
 
 \newpage{}
 
@@ -2085,8 +2100,8 @@ for $\iii>\lambda^{1/2}$. So,
  & \le\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(1-\lambda^{-1/2}\right)^{\iiii}\\
  & =2\lambda^{-1/2}
 \end{alignat*}
-(note $\lambda\ge\i\ge1$, so $0\le1-\lambda^{-1/2}<1$). Now, suppose
-that $\i>\lambda$. Then
+\begingroup\allowdisplaybreaks (note $\lambda\ge\i\ge1$, so $0\le1-\lambda^{-1/2}<1$).
+Now, suppose that $\i>\lambda$. Then
 \begin{alignat*}{1}
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[\i,\infty\right]\right)\\
  & =\i^{-1}\sum_{\ii=\i}^{\infty}\frac{\i!}{\ii!\lambda^{\i-\ii}}\\
@@ -2097,7 +2112,7 @@ that $\i>\lambda$. Then
 \end{alignat*}
 This also shows that $\left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right|\le2\lambda^{-1/2}$
 if $\lambda<1$. Now, let $b_{\iii}=\lambda^{\iii}\i!/\left(\i+\iii\right)!$,
-so 
+so\endgroup 
 \[
 b_{\iii}\le\frac{\lambda^{\iii}}{\left(\i+1\right)^{\iii}}\le1.
 \]
@@ -2297,7 +2312,55 @@ in a graph obtained by deleting from $G$ all edges incident to $\i$.
 By symmetry, each $\Pr\left(Q_{i}=1\right)$ is equal, so we can couple
 $\s{\X}$ with $\X$ by letting $\s{\X}$ be the number of isolated
 vertices in the graph obtained by choosing a vertex in $G$ at random
-and deleting all its adjacent edges.
+and deleting all its adjacent edges. \ref{fig:isolated-vertices}
+illustrates the idea.\\
+\begin{figure}[H]
+\begin{center}
+\hspace{0.5cm}
+\foreach \j in {1,2}
+{
+\begin{tikzpicture}
+
+\def \iN {5}
+\node[vertex] (0) at (0,0){};
+\node at ({90+360/\iN * (-1/2)}:0.35cm){0};
+{
+ \foreach \s in {1,...,\iN}
+ {
+  \node[vertex] (\s) at ({90+360/\iN * (\s - 1)}:1.1cm){};
+  \node at ({90+360/\iN * (\s - 1)}:1.45cm){\s};
+ }
+}
+
+\ifthenelse{\equal{\j}{1}}{
+\path
+(0) edge (2)
+ edge (3)
+ edge (4)
+(1) edge (2)
+(1) edge (3)
+(2) edge (3);
+\node[font=\Huge] at (3cm,0) {$\rightarrow$};
+}
+{
+\path
+(1) edge (2)
+(1) edge (3)
+(2) edge (3);
+}
+\end{tikzpicture}
+\hspace{0.5cm}
+}
+\end{center}
+
+\caption{\label{fig:isolated-vertices}Suppose the $G$ is the graph on the
+left. The only isolated vertex is 5, so $\X=1$. Now, suppose $I=0$,
+so all the edges adjacent to 0 are deleted to obtain the graph on
+the right with $\s{\X}=3$ isolated vertices. The new isolated vertex
+0 arose because $I$ was not isolated in $G$, and the new isolated
+vertex 4 arose because 4 was a degree-1 neighbour of 0 in $G$.}
+\end{figure}
+
 
 Now, the distribution of $\X$ depends on the relationship between
 $n$ and $p$. First, note that each $Q_{\i}$ is ``almost'' independent.
@@ -2941,7 +3004,7 @@ graph obtained from $G$ by deleting each $e_{\i}$ and all the edges
 in $C$ and adding each of the edges $u_{\i}v_{\i}$ and $v_{\i}w_{\i}$.
 Suppose that no cycles of length less than or equal to $\ell$ other
 than $C$ are created or destroyed by this process. Then, we say $G\rightsquigarrow G'$.
-\ref{fig:cycle-switching} below illustrates the idea.
+\ref{fig:cycle-switching} illustrates the idea.
 \end{defn}
 \begin{figure}[h]
 \begin{center}
@@ -2957,12 +3020,12 @@ than $C$ are created or destroyed by this process. Then, we say $G\rightsquigarr
  {
   \node[vertex] (i\s) at ({90+360/\iN * (\s - 1)}:1cm){};% {$\s$};
   \node at ({90+360/\iN * (\s - 1)}:0.67cm){$v_\s$};
-  \node at ({90+360/\iN * (\s - 0.75)}:2.42cm){$u_\s$};
-  \node at ({90+360/\iN * (\s - 1.25)}:2.42cm){$w_\s$};
+  \node at ({90+360/\iN * (\s - 0.75)}:2.22cm){$u_\s$};
+  \node at ({90+360/\iN * (\s - 1.25)}:2.22cm){$w_\s$};
  }
  \foreach \s in {1,...,\oN}
  {
-  \node[vertex] (o\s) at ({360/\oN * (\s - 1)}:2cm){};% {$\s$};
+  \node[vertex] (o\s) at ({360/\oN * (\s - 1)}:1.8cm){};% {$\s$};
  }
 }
 
