@@ -522,8 +522,8 @@ For many combinatorial applications, an informal understanding of
 probability theory (often considering only discrete spaces) will suffice.
 However, in this thesis a rigorous foundation in probability theory
 will be useful. This chapter will assume knowledge of basic measure
-theory; see, for example, \cite{Rud66}. However, where possible,
-we will note any simplifications that arise from assuming discreteness.
+theory; see, for example, \cite{Rud66}. Where possible, we will note
+any simplifications that arise from assuming discreteness.
 
 No knowledge of probability theory is assumed; the first few subsections
 will briefly review the foundations of probability. The reader may
@@ -578,11 +578,11 @@ underlying probability space. This motivates the following definition:
 \begin{defn}
 Suppose $\X$ is a random element which takes values in the measurable
 space $\left(\Om,\cA\right)$. The \emph{distribution} (or \emph{law})
-$\L{\X}$ of $\X$ with respect to an underlying probability $\Pr$
-is the pushforward measure with respect to $\X$. That is, it is a
-probability measure defined by $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)$
-for $\A\subseteq\cA$. Also, we occasionally use the notation $\Lb{\X}:=\L{\X}$
-for ease of reading.
+$\L{\X}\in\P\left(\Om\right)$ of $\X$ with respect to an underlying
+probability $\Pr$ is the pushforward measure with respect to $\X$.
+That is, it is a probability measure defined by $\L{\X}\left(\A\right)=\Pr\left(\X^{-1}\left(\A\right)\right)=\Pr\left(\X\in\A\right)$
+for $\A\subseteq\cA$. For ease of reading we occasionally write $\Lb{\X}$
+instead of $\L{\X}$.
 \end{defn}
 It is worth noting that in fact any probability measure is the distribution
 of some random element, so we can define a probability distribution
@@ -601,13 +601,8 @@ is defined by
 \]
 for any Borel set $B\in\mathcal{B}\left(\RR\right)$. We can use the
 Gaussian integral to show that this is indeed a probability measure,
-with $\N_{\mu,\sigma}\left(\RR\right)=1$.
-
-The normal distribution will be of particular importance in this thesis,
-so we make some remarks. Note that if $\X\in\N\left(\mu,\sigma\right)$
-then $\E\X=\mu$ and $\Var\X=\sigma^{2}$ (this second fact can be
-established using integration by parts and the Gaussian integral).
-Also, if $\X\in\N\left(\mu,\sigma\right)$ then $\frac{\X-\mu}{\sigma}\in\N\left(0,1\right)$.
+with $\N_{\mu,\sigma}\left(\RR\right)=1$. If $\X\in\N\left(\mu,\sigma\right)$
+then it is a simple exercise to prove that $\frac{\X-\mu}{\sigma}\in\N\left(0,1\right)$.
 So, we will sometimes only consider the \emph{standard normal} distribution
 $\N\left(0,1\right)$, with the understanding that it is very easy
 to transfer results to other normal distributions.
@@ -713,44 +708,62 @@ comparisons between their distributions.
 The \emph{expected value} of a random variable $\X$ (or its distribution)
 is the measure-theoretic integral $\E\X=\int x\d\L{\X}\left(x\right)$.
 It can be intuitively understood as the ``average'' value that random
-variable takes. The \emph{variance} of $\X$ is a measure of how much
-variation there is from the expected value; it is defined by $\Var\X=\E\left(\X-\E\X\right)^{2}=\E\X^{2}-\left(\E\X\right)^{2}$.\end{defn}
-\begin{rem}
-\label{rem:discrete-expectation}For a random variable $\X$ that
-takes integer values, our definition of expected value is equivalent
-to the well-known formula $\E\X=\sum_{x\in\ZZ}x\,\Pr\left(\X=x\right)$.
-\end{rem}
+variable takes.
 
+The \emph{variance} of $\X$ is a measure of how much variation there
+is from the expected value; it is defined by $\Var\X=\E\left(\X-\E\X\right)^{2}=\E\X^{2}-\left(\E\X\right)^{2}$.\end{defn}
 \begin{rem}
 \label{rem:indicator-expectation}If $\X$ is a random variable that
 can be interpreted as counting the number of objects that satisfy
 some property, then we can express $\X$ as a sum of indicator variables
 $\sum_{\i}\one_{\A_{\i}}$, where $\A_{\i}$ is the event that the
 $\i$th object satisfies our property. Noting that $\E$ is linear,
-we have $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$. So,
-in order to compute the expectation of $\X$ we just need to compute
-the probability that each object satisfies our required property.
+we have $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$.
 \end{rem}
+If a random variable $\X$ has underlying probability space $\left(\Om_{1},\cA_{1},\Pr\right)$,
+then by immediate properties of the pushforward measure, we have $\E\X=\int\X\left(\om\right)\d\Pr\left(\om\right)$.
+It follows that if $\X:\left(\Om_{1},\cA_{1},\Pr\right)\to\left(\Om_{2},\cA_{2}\right)$
+is an arbitrary random element, and $h\in L^{1}\left(\Om_{2},\cA_{2}\right)$,
+then $\E\left[h\left(\X\right)\right]=\int h\left(x\right)\L{\X}\left(x\right)$.
+
+If $\X$ is discrete, we obtain the well-known formula 
+\begin{equation}
+\E\left[h\left(\X\right)\right]=\sum_{x\in\supp\X}h\left(x\right)\,\Pr\left(\X=x\right).\label{eq:discrete-expectation}
+\end{equation}
+
+\begin{example}
+If $\X\in\Po\left(\lambda\right)$, then \ref{eq:discrete-expectation}
+and the Taylor expansion of the exponential can be used to show that
+$\E\X=\lambda$ and $\E\left[\X\left(\X-1\right)\right]=\lambda^{2}$,
+so $\Var\X=\lambda$.
+\end{example}
+There is a ``continuous analogue'' of \ref{eq:discrete-expectation}
+for certain random variables.
+\begin{defn}
+The \emph{distribution function} $\F_{\X}$ of a random variable $\X$
+is defined by\\
+$\F_{\X}\left(x\right)=\Pr\left(\X\le x\right)$ for all $x\in\RR$.
+If (for all $x\in\RR$), $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
+for some $f_{\X}$, then $f_{\X}$ is called a \emph{Lebesgue density}
+of $\X$, and $\X$ is called a \emph{continuous} random variable.
+\end{defn}
+If $\X$ is a continuous random variable, then it follows from the
+measure-theoretic definition of the integral that 
+\begin{equation}
+\E\left[h\left(\X\right)\right]=\int_{\RR}h\left(x\right)f_{\X}\left(x\right)\d x.\label{eq:continuous-expectation}
+\end{equation}
+
+\begin{example}
+If $\X\in\N\left(\mu,\sigma\right)$, then $\left(2\pi\right)^{-1/2}e^{-x^{2}/2}$
+is a Lebesgue density of $\X$. We can use \ref{eq:continuous-expectation}
+together with integration by parts and the Gaussian integral to establish
+$\E\X=\mu$ and $\Var\X=\sigma^{2}$.
+\end{example}
 If we fix a particular underlying probability space $\left(\Om,\cA,\Pr\right)$,
-we can also equivalently view expectation as a linear functional on
-the space of real integrable functions (i.e. random variables). That
-is, $\E:L^{1}\left(\Om,\Pr\right)\to\RR$ satisfies $\E f=\int f\left(\om\right)\d\Pr$.
-Sometimes we will define a new probability measure on an existing
-measurable space $\left(\Om,\cA\right)$. In this case we will write
-$\E_{\Pr'}$ to indicate expectation with respect to the measure $\Pr'$,
-to avoid ambiguity. We can also define the expectation functional
-of a random variable: $\E_{\X}:=\E_{\Lb{\X}}$. We have $\E_{\X}f=\E f\left(\X\right)$
-for all $f:L^{1}\left(\RR,\Lb{\X}\right)$.
-
-\begin{comment}
-
-If $\iota$ is the natural injection that takes $r\in\RR$ to the
-constant function $x\mapsto r$, and $I$ is the identity operator
-on $L^{1}\left(\Om,\Pr\right)$, then $\iota\E$ and $I-\iota\E$
-are both projection operators on $L^{1}\left(\Om,\Pr\right)$. In
-particular
-
-\end{comment}
+we can view expectation as a linear functional $\E_{\Pr}:L^{1}\left(\Om,\Pr\right)\to\RR$,
+satisfying $\E_{\Pr}h=\int h\left(\om\right)\d\Pr$. For a random
+variable $\X$, define $\E_{\X}=\E_{\Lb{\X}}$, so that $\E_{\X}h=\E h\left(\X\right)$
+for all $h\in L^{1}\left(\RR,\Lb{\X}\right)$.
 
 In fact, probability measures are uniquely determined by their expectation
 functional, because $\E_{\Pr}\one_{\A}=\Pr\left(\A\right)$ for all
@@ -768,15 +781,6 @@ distinguish expectation operators.
 \emph{determining class} if $\rest{\E_{\Pr_{1}}}{\cH}=\rest{\E_{\Pr_{2}}}{\cH}$
 implies $\Pr_{1}=\Pr_{2}$, for any $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$.
 \end{defn}
-\begin{comment}
-\begin{defn}
-The \emph{variance }of a random variable $\X$ is $\Var\X=\E\left(\X-\E X\right)^{2}$.
-The \emph{$n$th moment} of a random variable $\X$ is $\E\left[\X^{n}\right]$.
-\end{defn}
-conditional variance?
-
-\end{comment}
-
 Another important concept later will be the idea of conditional expectation.
 \begin{defn}
 Let $\X$ be a random variable and $\A$ be an event with nonzero
@@ -804,7 +808,7 @@ is called the \emph{conditional expectation of $\X_{1}$ with respect
 to $\X_{2}$}. We can also view conditional expectation as a linear
 operator between functions: we define 
 \[
-\E^{\X_{2}}\,:\, L^{1}\left(\RR,\mathcal{B}\left(\RR\right),\Pr\right)\to L^{1}\left(\RR,\sigma\left(\X_{2}\right),\Pr\right)\,:\,\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right].
+\E^{\X_{2}}\,:\, L^{1}\left(\Om,\cA,\Pr\right)\to L^{1}\left(\Om,\sigma\left(\X_{2}\right),\Pr\right)\,:\,\X_{1}\mapsto\E\left[\X_{1}|\X_{2}\right].
 \]
 \end{defn}
 \begin{rem}
@@ -814,9 +818,9 @@ conditioned on an event: for almost all $\om\in\A$ we have $\E\left[\X|\one_{\A}
 
 \begin{rem}
 Since $\one_{\A_{1}}\one_{\A_{2}}=\one_{\A_{1}\cap\A_{2}}$, note
-that $\E\left[\one_{\A_{1}}\E\left[\X_{1}|\X_{2}\right]\one_{\A_{2}}\right]=\E\left[\one_{\A_{1}}\X_{1}\one_{\A_{2}}\right]$
-for all $\A_{1},\A_{2}\in\sigma\left(\X_{2}\right)$. That is, $\one_{\A_{1}}\E\left[\X_{1}|\X_{2}\right]=\E\left[\X_{1}\one_{\A_{1}}|\X_{2}\right]$.
-By linearity and an approximation argument, it follows that $\X_{3}\E\left[\X_{1}|\X_{2}\right]=\E\left[\X_{3}\X_{1}|\X_{2}\right]$
+that $\E\left[\left(\E^{\X_{2}}\X_{1}\right)\one_{\A_{1}}\one_{\A_{2}}\right]=\E\left[\X_{1}\one_{\A_{1}}\one_{\A_{2}}\right]$
+for all $\A_{1},\A_{2}\in\sigma\left(\X_{2}\right)$. That is, $\left(\E^{\X_{2}}\X_{1}\right)\one_{\A_{1}}=\E^{\X_{2}}\left[\X_{1}\one_{\A_{1}}\right]$.
+By linearity and an approximation argument, it follows that $\left(\E^{\X_{2}}\X_{1}\right)\X_{3}=\E^{\X_{2}}\left[\X_{1}\X_{3}\one_{\A_{1}}\right]$
 for all $\sigma\left(\X_{2}\right)$-measurable integerable random
 variables $\X_{3}$. This is ``linearity of expectation'' for conditional
 expectation.
@@ -836,14 +840,13 @@ zero.
 We finally present some simple consequences of the definition of conditional
 expectation.
 \begin{prop}
-[Tower Law of Expectation]\label{prop:tower-contractivity}Suppose
-$\X_{1}$, $\X_{2}$ and $\X_{3}$ are random variables defined on
-the same underlying probability space $\left(\Om,\cA\right)$. Further,
-suppose $\X_{3}$ is $\sigma\left(\X_{2}\right)$-measurable (intuitively,
-this means $\X_{3}$ is dependent only on the information in $\X_{2}$).
-Then\begin{enumerate}
+\label{prop:tower-contractivity}Suppose $\X_{1}$, $\X_{2}$ and
+$\X_{3}$ are random variables defined on the same underlying probability
+space $\left(\Om,\cA\right)$. Further, suppose $\X_{3}$ is $\sigma\left(\X_{2}\right)$-measurable
+(intuitively, this means $\X_{3}$ is dependent only on the information
+in $\X_{2}$). Then\begin{enumerate}
 
-\item (Tower Law) $\E^{\X_{3}}\left[\E^{\X_{2}}\X_{1}\right]=\E^{\X_{3}}\left[\X_{1}\right]$.
+\item (Tower Law) $\E^{\X_{3}}\left[\E^{\X_{2}}\X_{1}\right]=\E^{\X_{3}}\X_{1}$.
 In particular, if we take $\X_{3}=\one_{\Om}$ then it follows that
 $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$.
 
@@ -856,9 +859,9 @@ $\E\left[\E^{\X_{2}}\X_{1}\right]=\E\left[\X_{1}\right]$.
 Recall the definition of conditional expectation. For all $\A\in\sigma\left(\X_{3}\right)\subseteq\sigma\left(\X_{2}\right)$
 we have
 \[
-\E\left[\E^{\X_{3}}\left[\X_{1}\right]\one_{\A}\right]=\E\left[\X_{1}\one_{\A}\right]=\E\left[\E^{\X_{2}}\left[\X_{1}\right]\one_{\A}\right].
+\E\left[\left(\E^{\X_{3}}\X_{1}\right)\one_{\A}\right]=\E\left[\X_{1}\one_{\A}\right]=\E\left[\left(\E^{\X_{2}}\X_{1}\right)\one_{\A}\right].
 \]
-Since $\E\left[\X_{1}|\X_{3}\right]$ is $\sigma\left(\X_{3}\right)$-measurable,
+Since $\E^{\X_{3}}\X_{1}$ is $\sigma\left(\X_{3}\right)$-measurable,
 the tower law is proved. Next, let $\A=\left\{ \E^{\X_{2}}\X_{1}\ge0\right\} $,
 so
 \[
@@ -868,20 +871,59 @@ proving the $L^{1}$ version of contractivity. Finally, note $\E^{\X_{2}}\left[\X
 by linearity of expectation, so $\E^{\X_{2}}\left(\X_{1}-\E^{\X_{2}}\X_{1}\right)^{2}=\E^{\X_{2}}\X_{1}^{2}-\left(\E^{\X_{2}}\X_{1}\right)^{2}>0$
 and by the tower law,
 \[
-\E\left(\E^{\X_{2}}\X_{1}\right)^{2}\le\E\left[\E^{\X_{2}}\X_{1}^{2}\right]=\E\left(\X_{1}\right)^{2}.
+\E\left|\E^{\X_{2}}\X_{1}\right|^{2}\le\E\left[\E^{\X_{2}}\X_{1}^{2}\right]=\E\left|\X_{1}\right|^{2}.
 \]
 We have proved the $L^{2}$ version of contractivity.
 \end{proof}
 
 \begin{rem}
-Suppose $\X_{1}$ and $\X_{2}$ are discrete. Combining \ref{rem:discrete-expectation}
+Suppose $\X_{1}$ and $\X_{2}$ are discrete. Combining \ref{eq:discrete-expectation}
 and \ref{rem:discrete-conditional-expectation}, the tower law says
 that
 \[
-\E\left[\X_{1}\right]=\sum_{x\in\supp\X_{2}}\Pr\left(\X_{2}=x\right)\E\left[\X_{1}|\X_{2}=x\right].
+\E\left[\X_{1}\right]=\!\!\sum_{x\in\supp\X_{2}}\Pr\left(\X_{2}=x\right)\E\left[\X_{1}|\X_{2}=x\right].
 \]
 We will occasionally use this in applications.
 \end{rem}
+
+\subsection{Random Combinatorial Structures\label{sub:random-structures}}
+
+\global\long\def\rG#1#2{\mathcal{G}_{#1,#2}}
+
+
+\global\long\def\rS#1{\mathcal{S}_{#1}}
+
+\begin{defn}
+In a probability space $\left(\Om,2^{\Om},\Pr\right)$ where $\Om$
+is finite, if $\Pr\left(\om\right)=1/\left|\Om\right|$ for each $\om\in\Om$,
+then we say the space is \emph{uniform}.
+\end{defn}
+Uniform spaces are the simplest examples of random structures. For
+example, the uniform space $\rS n$ of permutations on $n$ elements
+has $\Pr\left(\sigma\right)=1/n!$ for each $\sigma\in S_{n}$. The
+uniform random regular graph model $\rG nd$ is uniform on the set
+of all $d$-regular graphs on the vertex set $\range n$, though an
+explicit formula for the number of such graphs is not known. (Recall
+that a $d$-regular graph is a graph where each vertex has degree
+$d$, where the degree of a vertex is the number of incident edges).
+
+As an important example of a (generally) non-uniform model, the (Erd\H{o}s-R\'enyi)
+binomial random graph model $\rG np$ has
+\[
+\Pr\left(G\right)=p^{\left|E\left(G\right)\right|}\left(1-p\right)^{{n \choose 2}-\left|E\left(G\right)\right|}
+\]
+for each graph $G$ on the vertex set $\range n$. When $p=1/2$,
+we obtain the uniform model on all graphs on the vertex set $\range n$.
+It is unfortunate that the common notations for the random regular
+model and the binomial model clash, but hopefully in this thesis the
+intended meaning will always be very clear from context.
+
+One way to conceptualize the binomial model is to consider a sequence
+of independent coin tosses, where the coin is biased to land heads
+with probability $p$. Each coin toss corresponds to a particular
+potential edge, and determines whether that edge is present in the
+final random graph.
+
 
 \subsection{Markov Chains\label{sub:markov-chains}}
 
@@ -921,7 +963,7 @@ $\Lb{X_{\i}}=\Lb X$ for all $\i\in\ZZ$.
 Define $\pi_{x}=\Pr\left(X=x\right)$. Note that if $\left(X_{\i}\right)_{\i\in\ZZ}$
 is stationary with respect to $\Lb X$, then we must have 
 \begin{equation}
-\pi_{y}=\Pr\left(X_{\i}=y\right)=\sum_{x\in\Om}\Pr\left(X_{\i}=y,\, X_{\i-1}=x\right)=\sum_{x\in\Om}\pi_{x}p_{xy}\label{eq:stationary-defn}
+\pi_{y}=\Pr\left(X_{\i}=y\right)=\sum_{x\in\Om}\Pr\left(X_{\i}=y\mbox{ and }X_{\i-1}=x\right)=\sum_{x\in\Om}\pi_{x}p_{xy}\label{eq:stationary-defn}
 \end{equation}
 for all $y\in\Om$. In fact, the distribution $\Lb{X_{\i}}_{\i\in\ZZ}$
 of a stationary Markov chain is uniquely defined by a stationary distribution
@@ -939,7 +981,7 @@ $\pi_{x}=\Pr\left(X=x\right)$ for the stationary distribution $\L X$.
 Then, reversibility is equivalent to the condition $\pi_{x}p_{xy}=\pi_{y}p_{yx}$
 for all $x,y\in\Om$.
 \begin{defn}
-A time-homogeneous Markov chain $\left(X_{\i}\right)_{\i\in\ZZ}$
+We say a time-homogeneous Markov chain $\left(X_{\i}\right)_{\i\in\ZZ}$
 is \emph{irreducible} if for all $x,y\in\Om$ there is $t\in\ZZ$
 such that $\Pr\left(X_{t}=y|X_{0}=x\right)>0$.
 \end{defn}
@@ -1029,10 +1071,6 @@ Then $\Lb{\X_{n}}\to\Po\left(\lambda\right)$.
 \end{thm}
 \ref{def:weak-convergence} is only one of a number of equivalent
 natural definitions for convergence in distribution.
-\begin{defn}
-The \emph{distribution function} $\F_{\X}$ of a random variable $\X$
-is defined by\\
-$\F_{\X}\left(x\right)=\Pr\left(\X\le x\right)$ for all $x\in\RR$.\end{defn}
 \begin{thm}
 \label{prop:dist}For a sequence of random variables $\left(\X_{n}\right)_{n\in\NN}$
 and a random variable $\X$, the following are equivalent.
@@ -1078,8 +1116,8 @@ In functional analysis terms, note that expectation operators are
 bounded linear functionals on the space of real bounded continuous
 functions. Then, $\Lb{\X_{n}}\to\Lb{\X}$ just means that $\E_{\X_{n}}\to\E_{\X}$
 in the weak-star topology. The subspace corresponding to the set of
-probability distributions $\P\left(\RR\right)$ is confusingly called
-the \emph{weak topology} on probability distributions.
+real probability distributions $\P\left(\RR\right)$ is confusingly
+called the \emph{weak topology} on probability distributions.
 
 Although $C_{b}\left(\RR\right)^{*}$ is not metrizable, the unit
 ball (in operator norm) of $C_{b}\left(\RR\right)^{*}$ is in fact
@@ -1113,7 +1151,7 @@ then $d_{\K}:=d_{\cH_{\K}}$ is called the \emph{Kolmogorov metric}.
 
 \item Let $\cH_{\BL}$ be the set of functions $\h$ that are absolutely
 bounded by 1 (that is, $\left|\h\left(x\right)\right|\le1$ for all
-$x\in\RR$), and have Lipschitz constant at most 1 (that is, $\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
+$x\in\RR$), and have Lipschitz modulus at most 1 (that is, $\left|\h\left(x_{1}\right)-\h\left(x_{2}\right)\right|\le\left|x_{1}-x_{2}\right|$
 for all $x_{1},x_{2}\in\RR$). Then, $d_{\BL}:=d_{\cH_{\BL}}$ is
 called the \emph{Bounded Lipschitz metric}.
 
@@ -1121,7 +1159,7 @@ called the \emph{Bounded Lipschitz metric}.
 $B$, then $d_{\TV}:=d_{\cH_{\TV}}$ is called the \emph{total variation
 metric}.
 
-\item If $\cH_{\W}$ is the set of functions with Lipschitz constant
+\item If $\cH_{\W}$ is the set of functions with Lipschitz modulus
 at most 1, then $d_{\W}:=d_{\cH_{\W}}$ is called the \emph{Wasserstein}
 \emph{metric}. However, since $\cH$ is not uniformly bounded, $d_{\W}$
 is not strictly speaking a metric on $\P\left(\RR\right)$; the Wasserstein
@@ -1300,14 +1338,6 @@ directly in the desired metric).
 Kolmogorov and Total Variation topologies. In particular, Wasserstein
 convergence is just weak convergence plus convergence of the first
 moment.\end{comment}
-\begin{defn}
-If (for all $x\in\RR$), $\F_{\X}\left(x\right)=\int_{-\infty}^{x}f_{\X}\left(x\right)\d x$
-for some $f_{\X}$, then $f_{\X}$ is called the \emph{Lebesgue density}
-of $\X$, and $\X$ is called a \emph{continuous} random variable.
-\end{defn}
-If $\X$ is a continuous random variable, then $\E_{\X}\h=\int_{\RR}\h\left(x\right)f_{\X}\left(x\right)\d x$
-for measurable $\h$. (This is immediate from the measure-theoretic
-definition of the integral).
 \begin{prop}
 \label{prop:transfer}Let $\X_{1},\X_{2}$ be random variables. Then\begin{enumerate}
 
@@ -1368,56 +1398,6 @@ d_{\TV}\left(\X_{1},\X_{2}\right)=\left(d_{\A_{>}}-d_{\A_{<}}\right)/2=\frac{1}{
 
 \end{proof}
 \end{comment}
-
-
-\subsection{Random Combinatorial Structures\label{sub:random-structures}}
-
-\global\long\def\rG#1#2{\mathcal{G}_{#1,#2}}
-
-
-\global\long\def\rS#1{\mathcal{S}_{#1}}
-
-\begin{defn}
-In a probability space $\left(\Om,2^{\Om},\Pr\right)$ where $\Om$
-is finite, if $\Pr\left(\om\right)=1/\left|\Om\right|$ for each $\om\in\Om$,
-then we say the space is \emph{uniform}.
-\end{defn}
-Uniform spaces are the simplest examples of random structures. For
-example, the uniform space $\rS n$ of permutations on $n$ elements
-has $\Pr\left(\sigma\right)=1/n!$ for each $\sigma\in S_{n}$. The
-uniform random regular graph model $\rG nd$ is uniform on the set
-of all $d$-regular graphs on the vertex set $\range n$, though an
-explicit formula for the number of such graphs is not known. (Recall
-that a $d$-regular graph is a graph where each vertex has exactly
-$d$ incident edges).
-
-\begin{comment}The uniform random graph model $\rG nM$ has $\Pr\left(G\right)=\begin{pmatrix}{n \choose 2}\\
-M
-\end{pmatrix}^{-1}$ for each graph $G$ on the vertex set $\range n$ which has $M$
-edges. \end{comment}
-
-As an important example of a (generally) non-uniform model, the (Erd\H{o}s-R\'enyi)
-binomial random graph model $\rG np$ has
-\[
-\Pr\left(G\right)=p^{\left|E\left(G\right)\right|}\left(1-p\right)^{{n \choose 2}-\left|E\left(G\right)\right|}
-\]
-for each graph $G$ on the vertex set $\range n$. When $p=1/2$,
-we obtain the uniform model on all graphs on the vertex set $\range n$.
-It is unfortunate that the common notations for the random regular
-model and the binomial model clash, but hopefully in this thesis the
-intended meaning will always be very clear from context.
-
-One way to conceptualize the binomial model is to consider a sequence
-of independent coin tosses, where the coin is biased to land heads
-with probability $p$. Each coin toss corresponds to a particular
-potential edge, and determines whether that edge is present in the
-final random graph.
-
-\begin{comment}As another example, the uniform model $\rG nM$ can
-be alternatively defined recursively: $\rG n0$ is always the trivial
-graph with no edges, and for each $M>0$, to obtain $\rG nM$ we choose
-$G\in\rG n{M-1}$ and add one of the ${n \choose 2}-\left(M-1\right)$
-possible edges at random.\end{comment}
 
 
 \section{Stein's Method in Generality\label{sec:stein-general}}
@@ -1637,41 +1617,7 @@ codomain $\cX_{\N}$. Fix $\fo\in\cF_{\N}$ and $k\ge0$. We have
  & \E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]\nonumber \\
  & \quad\le\E\left[\left|\X_{\N}\right|^{k}\left|\fo'\left(\X_{\N}\right)\right|\right]+\E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)-\fo\left(0\right)\right|\right]+\left|\fo\left(0\right)\right|\E\left[\left|\X_{\N}\right|^{k+1}\right].\label{eq:normal-well-defined-bound}
 \end{alignat}
-\begin{comment}Now, $\E\left|\X\right|^{a}\le\left(\E\left|\X\right|^{b}\right)^{a/b}$
-for $a\le b$ by H\"older's inequality (see \cite[Theorem~3.6~(1)]{Rud66})
-\begin{alignat*}{1}
-\E\left|\X_{\N}\right|^{k+1} & \prec\int_{0}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\\
- & \prec\int_{0}^{\infty}x^{k}\frac{\d}{\d x}e^{-x^{2}/2}\d x\\
- & \prec\left.x^{k}e^{-x^{2}/2}\right|_{0}^{\infty}-\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x\\
- & \prec\int_{0}^{\infty}x^{k-1}e^{-x^{2}/2}\d x
-\end{alignat*}
-Proceeding inductively, we have $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}xe^{-x^{2}/2}\d x\prec\left.e^{-x^{2}/2}\right|_{0}^{\infty}<\infty$
-if $k$ is even, or $\E\left|\X_{\N}\right|^{k+1}\prec\int_{0}^{\infty}e^{-x^{2}/2}\d x<\infty$
-if $k$ is odd
 
-Note that the function $x\mapsto x^{k+3}e^{-x^{2}/2}$ is decreasing
-for sufficiently large $x$ (say for $x\ge C_{2}$), so 
-\begin{alignat*}{1}
-\int_{t}^{\infty}x^{k+1}e^{-x^{2}/2}\d x & \le t^{k+3}e^{-t^{2}/2}\int_{C_{2}}^{\infty}\frac{1}{x^{2}}\d x
-\end{alignat*}
-for $t\ge C_{2}$, and
-\[
-\int_{t}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\le\E\left|\X_{\N}\right|^{k+1}e^{C_{2}^{2}/2}e^{-t^{2}/2}
-\]
-for $0\le t<C_{2}$. That is, there is $C_{3}$ with 
-\[
-\int_{t}^{\infty}x^{k+1}e^{-x^{2}/2}\d x\le C_{3}\left(1+t^{k+3}\right)
-\]
-for $t\ge0$.
-
-\end{comment}
-
-\begin{comment}
-
-Stein had $\int_{t}^{\infty}x^{k}e^{-x^{2}/2}\d x\le C_{3}\left(1+t^{k}\right)$,
-but I couldn't immediately see how to prove that, and this works too.
-
-\end{comment}
 
 The first term in \ref{eq:normal-well-defined-bound} is finite by
 the definition of $\cF_{\N}$, and the third term is finite, as above.
@@ -1681,7 +1627,8 @@ We will now bound the second term. Note that
  & =O\left(e^{-t^{2}/2}\left(1+t+\dots t^{k+1}\right)\right)\\
  & =O\left(e^{-t^{2}/2}\left(1+t^{k+1}\right)\right),
 \end{alignat*}
-with the substitution $y=x-t$. With Fubini's theorem (see \cite[Theorem~8.8]{Rud66}),
+\begingroup\allowdisplaybreaks with the substitution $y=x-t$. With
+Fubini's theorem (see \cite[Theorem~8.8]{Rud66}),
 \begin{alignat*}{1}
 \E\left[\left|\X_{\N}\right|^{k+1}\left|\fo\left(\X_{\N}\right)\right|\right] & =O\left(\,\int_{0}^{\infty}x^{k+1}\left|\int_{0}^{x}\fo'\left(t\right)\d t\right|e^{-x^{2}/2}\d x\right.\\
  & \qquad\qquad\left.-\int_{-\infty}^{0}x^{k+1}\left|\int_{0}^{x}\fo'\left(t\right)\d t\right|e^{-x^{2}/2}\d x\right)\\
@@ -1693,7 +1640,7 @@ with the substitution $y=x-t$. With Fubini's theorem (see \cite[Theorem~8.8]{Rud
  & <\infty.
 \end{alignat*}
 It follows that $\E\left[\left|\X_{\N}\right|^{k}\left|\T_{\N}\fo\left(\X_{\N}\right)\right|\right]<\infty$
-and $\T_{\N}\fo\in\cX_{\N}$.
+and $\T_{\N}\fo\in\cX_{\N}$.\endgroup
 
 Now, for any $\fo\in\cF_{\N}$, integration by parts gives
 \begin{equation}
@@ -1784,7 +1731,7 @@ $\h\in\cH_{\N}$, it suffices to consider $\h\in\cH$ with $\h\left(0\right)=0$.
 So, fix such a $\h\in\cH$. We have $\h\left(x\right)\le\left|x\right|$
 for all $x\in\RR$, and it follows that 
 \[
-\left|\E_{\N}\h\right|\le\E\left|\X_{\N}\right|=\frac{2}{\sqrt{2\pi}}\int_{0}^{\infty}xe^{-x^{2}/2}\d x=\sqrt{2/\pi}.
+\left|\E_{\N}\h\right|\le\E\left|\X_{\N}\right|=\frac{2}{\sqrt{2\pi}}\int_{0}^{\infty}xe^{-x^{2}/2}\d x=\sqrt{\frac{2}{\pi}}.
 \]
 Then, for $x\ge0$,
 \begin{alignat*}{1}
@@ -1798,64 +1745,22 @@ With the alternative form for $\U_{\N}$ in \ref{eq:U_N}, an identical
 argument gives $\left|\U_{\N}\h\left(x\right)\right|\le2$ for $x\le0$,
 so $\left\Vert \U_{\N}\h\right\Vert _{\infty}\le2$.
 
-\begin{comment}Now, define the differentiable function $\fo_{h}$
-by 
-\[
-\fo_{\h}\left(x\right)=-\int_{0}^{1}\frac{1}{2\sqrt{t\left(1-t\right)}}\E\left[\X_{\N}\h\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t.
-\]
-We have 
-\[
-\fo_{\h}'\left(x\right)=-\int_{0}^{1}\frac{1}{2\sqrt{1-t}}\E\left[\X_{\N}\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t.
-\]
-Now, integration by parts as in \ref{eq:normal-stein-identity} gives
-\[
-\E\left[\X_{\N}\h\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]=\E\left[\sqrt{1-t}\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right].
-\]
-Using Fubini's theorem (see \cite[Theorem~8.8]{Rud66}), 
-\begin{alignat*}{1}
-\fo_{\h}'\left(x\right)-x\fo_{\h}\left(x\right) & =\int_{0}^{1}\E\left[\left(-\frac{\X_{\N}}{2\sqrt{1-t}}+\frac{x}{2\sqrt{t}}\right)\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t\\
- & =\int_{0}^{1}\E\left[\frac{\d}{\d t}\h\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t\\
- & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-y^{2}/2}\int_{0}^{1}\frac{\d}{\d t}\h\left(\sqrt{t}x+\sqrt{1-t}y\right)\d t\d y\\
- & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-y^{2}/2}\left(\h\left(x\right)-\h\left(y\right)\right)\d t\d y\\
- & =\h\left(x\right)-\E\h.
-\end{alignat*}
-So, $\fo_{\h}$ satisfies \ref{eq:diff-eqn} and we must have 
-\[
-\fo_{\h}=e^{x^{2}/2}\int_{-\infty}^{x}\left(\h\left(t\right)-\E_{\N}\h\right)e^{-t^{2}/2}\d t+ce^{x^{2}/2}
-\]
-for some $c$, by the general form \ref{eq:diff-eqn-soln} of the
-solution to \ref{eq:diff-eqn}. By the Lipschitz condition on $\h$,
-\[
-\left|\fo_{\h}\left(x\right)\right|=\left|\int_{0}^{1}\frac{1}{2\sqrt{t}}\E\left[\h'\left(\sqrt{t}x+\sqrt{1-t}\X_{\N}\right)\right]\d t\right|\le\int_{0}^{1}\frac{1}{2\sqrt{t}}\d t,
-\]
-so $e^{-x^{2}/2}\fo_{\h}\left(x\right)$ as $x\to-\infty$. That is,
-$c=0$ and 
-\[
-\left\Vert \left(\U_{\N}\h\right)'\right\Vert _{\infty}=\left\Vert \fo_{\h}'\right\Vert _{\infty}\le\E\left|\X_{\N}\right|\int_{0}^{1}\frac{1}{2\sqrt{1-t}}\d t\le\sqrt{\frac{2}{\pi}}.
-\]
-
-
-\begin{note}The preceding argument is very unmotivated. If I have
-time I'll try to frame it differently, as a different way of solving
-the differential equation \ref{eq:diff-eqn}. There's also a different
-(longer) argument in the proof of \cite[Lemma~2.4]{Ste12}.\end{note}
-
-\end{comment}
-
-Now, note that
-\[
-\left(\T_{\N}\U_{\N}\h\right)'\left(x\right)=\left(\U_{\N}\h\right)''\left(x\right)-x\left(\U_{\N}\h\right)'\left(x\right)-\U_{\N}\h\left(x\right)=\h'\left(x\right).
-\]
 Set $g=\h'+\U_{\N}\h$. Note $\left\Vert g\right\Vert _{\infty}\le\left\Vert \h'\right\Vert _{\infty}+\left\Vert \U_{\N}\h\right\Vert _{\infty}\le3$,
-so $g\in\cX_{\N}$, and 
+so $g\in\cX_{\N}$. Now, by the definition of $\T_{\N}$ and \ref{eq:U_0-characterizing},
+note that
 \[
-\E_{\N}g=\E\left[\left(\U_{\N}\h\right)''\left(\X_{\N}\right)-\X_{\N}\left(\U_{\N}\h\right)'\left(\X_{\N}\right)\right]=0
+\h'\left(x\right)=\left(\T_{\N}\U_{\N}\h\right)'\left(x\right)=\left(\U_{\N}\h\right)''\left(x\right)-x\left(\U_{\N}\h\right)'\left(x\right)-\U_{\N}\h\left(x\right),
 \]
-as in \ref{eq:normal-stein-identity}. Hence
+so $g=\T_{\N}\left(\left(\U_{\N}\h\right)'\right)$. As in \ref{eq:normal-stein-identity},
+we have 
 \[
-\T_{\N}\left(\left(\U_{\N}\h\right)'\right)=g+\E_{\N}g,
+\E_{\N}g=\E\left[\left(\U_{\N}\h\right)''\left(\X_{\N}\right)-\X_{\N}\left(\U_{\N}\h\right)'\left(\X_{\N}\right)\right]=0,
 \]
-and $\left(\U_{\N}\h\right)'$ satisfies \ref{eq:diff-eqn} (with
+so
+\[
+\T_{\N}\left(\left(\U_{\N}\h\right)'\right)=g+\E_{\N}g.
+\]
+That is, $\left(\U_{\N}\h\right)'$ satisfies \ref{eq:diff-eqn} (with
 $g$ taking the role of $\h$). By the general form \ref{eq:diff-eqn-soln}
 of the solution to \ref{eq:diff-eqn}, we must have 
 \[
@@ -1864,12 +1769,11 @@ of the solution to \ref{eq:diff-eqn}, we must have
 for some $c$. Since $\left(\U_{\N}\h\right)'\in\cX_{\N}$, we must
 have $e^{-x^{2}/2}\left(\U_{\N}\h\right)'\left(x\right)\to0$. That
 is, $c=0$. For $x\ge0$, we have
-
 \[
 \left|\left(\U_{\N}\h\right)'\left(x\right)\right|\le e^{x^{2}/2}\int_{x}^{\infty}\left|g\left(t\right)\right|e^{-t^{2}/2}\d t\le3\int_{0}^{\infty}e^{-s^{2}/2}\d s\le3\sqrt{\frac{\pi}{2}}.
 \]
-(As before, $s=t-x$). A similar calculation shows that $\left|\left(\U_{\N}\h\right)'\left(x\right)\right|\le3\sqrt{\frac{\pi}{2}}$
-for $x<0$, so 
+(As before, $s=t-x$). A similar calculation shows that $\left|\left(\U_{\N}\h\right)'\left(x\right)\right|\le3\sqrt{\pi/2}$
+for $x\le0$, so 
 \[
 \left\Vert \left(\U_{\N}\h\right)'\right\Vert _{\infty}\le3\sqrt{\frac{\pi}{2}}.
 \]
@@ -1889,7 +1793,7 @@ for $x<0$, so
 \begin{rem}
 \label{rem:better-wasserstein-bounds}In the interests of a simple
 proof, the bounds in \ref{thm:wasserstein-normal-bounds} are very
-crude. The stronger bounds $\left\Vert \fo'\right\Vert _{\infty}\le\sqrt{\frac{2}{\pi}}$
+crude. The stronger bounds $\left\Vert \fo'\right\Vert _{\infty}\le\sqrt{\pi/2}$
 and $\left\Vert \fo''\right\Vert _{\infty}\le2$ can be shown to hold,
 with similarly elementary but much more fiddly proofs. See \cite[Lemma~2.4]{CGS10}.
 \end{rem}
@@ -1905,7 +1809,7 @@ the theory from \ref{sec:stein-general} a bit more concrete by giving
 our first example of Stein's method in action.
 \begin{thm}
 \label{thm:berry-esseen}Let $Q_{1},\dots,Q_{n}\in\L Q$ be independent,
-with $\E Q=0$, $\E Q^{2}=1$ and $\E\left|Q\right|^{3}<\infty$.
+with $\E Q=0$ and $\E Q^{2}=1$ and $\E\left|Q\right|^{3}<\infty$.
 Fix $n$ and define 
 \[
 \X=\frac{1}{\sqrt{n}}\sum_{\i=1}^{n}Q_{i}.
@@ -2079,7 +1983,7 @@ so
 \[
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right|\le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[0,\i-1\right]\right)\Po_{\lambda}\left(\left[\i,\infty\right]\right).
 \]
-If $1\le\i\le\lambda$, then
+If $1\le\i\le\lambda$, then\vspace{-0.3cm}
 \begin{alignat*}{1}
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\frac{e^{\lambda}\,\left(\i-1\right)!}{\lambda^{\i}}\Po_{\lambda}\left(\left[0,\i-1\right]\right)\\
  & =\lambda^{-1}\sum_{\ii=0}^{\i-1}\frac{\left(\i-1\right)!}{\ii!\lambda^{\i-1-\ii}}\\
@@ -2095,11 +1999,10 @@ Also,
 \[
 a_{\iii}\le\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2},\quad a_{\iii+1}/a_{\iii}=\frac{\i-\iii}{\lambda}\le1-\lambda^{-1/2}
 \]
-for $\iii>\lambda^{1/2}$. So,
+for $\iii>\lambda^{1/2}$. So,\vspace{-0.4cm}
 \begin{alignat*}{1}
 \left|\U_{\Po\left(\lambda\right)}\one_{\A}\left(\i\right)\right| & \le\lambda^{-1}\sum_{\iii=0}^{\floor{\lambda^{1/2}}}a_{\iii}+\lambda^{-1}\sum_{\iii=\ceil{\lambda^{1/2}}}^{\i-1}a_{\iii}\\
- & \le\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(1-\lambda^{-1/2}\right)^{\iiii}\\
- & =2\lambda^{-1/2}
+ & \le\lambda^{-1}\left(1+\lambda^{1/2}\right)+\lambda^{-1}\sum_{\iiii=1}^{\infty}\left(1-\lambda^{-1/2}\right)^{\iiii}=2\lambda^{-1/2}
 \end{alignat*}
 \begingroup\allowdisplaybreaks (note $\lambda\ge\i\ge1$, so $0\le1-\lambda^{-1/2}<1$).
 Now, suppose that $\i>\lambda$. Then
@@ -2182,7 +2085,8 @@ for $\one_{\A}\in\cH_{\TV}$.\end{proof}
 \label{rem:poisson-better-bounds}A similarly elementary but more
 fiddly argument can be used to show that the bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,1.4\lambda^{-1/2}\right\} $
 is also valid (see \cite[Lemma~4]{Bar83}). A much more sophisticated
-argument in \cite[Remark~10.2.4]{BHJ92} gives the sharper bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\sqrt{2/\left(e\lambda\right)}\right\} $.
+argument (see \cite[Remark~10.2.4]{BHJ92}) can be used to give the
+sharper bound $\left\Vert \fo\right\Vert _{\infty}\le\min\left\{ 1,\sqrt{2/\left(e\lambda\right)}\right\} $.
 \end{rem}
 
 \subsection{A Quantitative Poisson Limit Theorem\label{sub:quantitative-poisson-limit}}
@@ -2258,9 +2162,9 @@ of $\Ls{\X}$ can be stated as
 \Ls{\X}\left(k\right)=\frac{k}{\E\X}\,\L{\X}\left(k\right).\label{eq:discrete-size-bias-definition}
 \end{equation}
 for each $k$. This often has a combinatorial interpretation. Intuitively
-speaking, if $\L{\X}$ is the number of balls in a random bin, then
-$\Ls{\X}$ is the distribution of the number of balls in the bin of
-a random ball.
+speaking, if $\L{\X}$ is the distribution of the number of balls
+in a random bin, then $\Ls{\X}$ is the distribution of the number
+of balls in the bin of a random ball.
 \end{rem}
 We can immediately see from \ref{rem:size-bias-discrete} that in
 the discrete case, 
@@ -2658,7 +2562,7 @@ Markov chains with steady-state distribution $\L{\X}$, and exchangeable
 pairs with margins $\L{\X}$.\end{prop}
 \begin{proof}
 Given an exchangeable pair $\eX$ with margins $\L{\X}$, we can define
-a time-homogenous Markov chain $M$ with transition probabilities
+a time-homogeneous Markov chain $M$ with transition probabilities
 $p\left(x_{1},x_{2}\right)=\Pr\left(\X_{2}=x_{2}|\X_{1}=x_{1}\right)$.
 As in \ref{sub:markov-chains}, let $\pi\left(x\right)=\L{\X}\left(x\right)$.
 We have
