@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage[a4paper]{geometry}
-\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3.5cm,rmargin=2.5cm,headheight=3cm,headsep=3cm,footskip=1.5cm}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=3cm,headsep=3cm,footskip=1.5cm}
 \setlength{\parskip}{\bigskipamount}
 \setlength{\parindent}{0pt}
 \synctex=1
@@ -337,7 +337,7 @@ The \emph{\textbf{c}entral \textbf{l}imit \textbf{t}heorem}, roughly
 speaking, says that sums of independent, identically distributed random
 variables are ``approximately normal'', with the approximation improving
 as the number of terms in the sum increases. Similarly, the \emph{Poisson
-\textbf{l}imit \textbf{t}heorem} says that the number of occurences
+\textbf{l}imit \textbf{t}heorem} says that the number of occurrences
 of independent ``rare'' events ``approximately Poisson''. These
 two limit theorems are archetypal examples of a large class of related
 results in statistics and probabilistic combinatorics.
@@ -601,9 +601,11 @@ is defined by
 \]
 for any Borel set $B\in\mathcal{B}\left(\RR\right)$. We can use the
 Gaussian integral to show that this is indeed a probability measure,
-with $\N_{\mu,\sigma}\left(\RR\right)=1$. If $\X\in\N\left(\mu,\sigma\right)$
-then it is a simple exercise to prove that $\frac{\X-\mu}{\sigma}\in\N\left(0,1\right)$.
-So, we will sometimes only consider the \emph{standard normal} distribution
+with $\N_{\mu,\sigma}\left(\RR\right)=1$.
+
+If $\X\in\N\left(\mu,\sigma\right)$ then it is a simple exercise
+to prove that $\frac{\X-\mu}{\sigma}\in\N\left(0,1\right)$. So, we
+will sometimes only consider the \emph{standard normal} distribution
 $\N\left(0,1\right)$, with the understanding that it is very easy
 to transfer results to other normal distributions.
 \end{example}
@@ -713,12 +715,13 @@ variable takes.
 The \emph{variance} of $\X$ is a measure of how much variation there
 is from the expected value; it is defined by $\Var\X=\E\left(\X-\E\X\right)^{2}=\E\X^{2}-\left(\E\X\right)^{2}$.\end{defn}
 \begin{rem}
-\label{rem:indicator-expectation}If $\X$ is a random variable that
-can be interpreted as counting the number of objects that satisfy
-some property, then we can express $\X$ as a sum of indicator variables
-$\sum_{\i}\one_{\A_{\i}}$, where $\A_{\i}$ is the event that the
-$\i$th object satisfies our property. Noting that $\E$ is linear,
-we have $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$.
+\label{rem:indicator-expectation}The expected value of an indicator
+random variable $\one_{\A}$ is just $\Pr\left(\A\right)$. If $\X$
+is a random variable that can be interpreted as counting the number
+of objects that satisfy some property, then we can express $\X$ as
+a sum of indicator variables $\sum_{\i}\one_{\A_{\i}}$, where $\A_{\i}$
+is the event that the $\i$th object satisfies our property. Noting
+that $\E$ is linear, we have $\E\X=\sum_{\i}\E\one_{\A_{\i}}=\sum_{\i}\Pr\A_{\i}$.
 \end{rem}
 If a random variable $\X$ has underlying probability space $\left(\Om_{1},\cA_{1},\Pr\right)$,
 then by immediate properties of the pushforward measure, we have $\E\X=\int\X\left(\om\right)\d\Pr\left(\om\right)$.
@@ -821,7 +824,7 @@ Since $\one_{\A_{1}}\one_{\A_{2}}=\one_{\A_{1}\cap\A_{2}}$, note
 that $\E\left[\left(\E^{\X_{2}}\X_{1}\right)\one_{\A_{1}}\one_{\A_{2}}\right]=\E\left[\X_{1}\one_{\A_{1}}\one_{\A_{2}}\right]$
 for all $\A_{1},\A_{2}\in\sigma\left(\X_{2}\right)$. That is, $\left(\E^{\X_{2}}\X_{1}\right)\one_{\A_{1}}=\E^{\X_{2}}\left[\X_{1}\one_{\A_{1}}\right]$.
 By linearity and an approximation argument, it follows that $\left(\E^{\X_{2}}\X_{1}\right)\X_{3}=\E^{\X_{2}}\left[\X_{1}\X_{3}\one_{\A_{1}}\right]$
-for all $\sigma\left(\X_{2}\right)$-measurable integerable random
+for all $\sigma\left(\X_{2}\right)$-measurable integrable random
 variables $\X_{3}$. This is ``linearity of expectation'' for conditional
 expectation.
 \end{rem}
@@ -1345,8 +1348,9 @@ moment.\end{comment}
 
 \item \label{prop:transfer-BL/W}$d_{\BL}\left(\X_{1},\X_{2}\right)\le d_{\W}\left(\X_{1},\X_{2}\right)$;
 
-\item \label{prop:transfer-K/W}If there is $C>0$ such that $\left|f_{\X_{2}}\left(x\right)\right|\le C$
-for all $x$, then $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\BL}\left(\X_{1},\X_{2}\right)}$.
+\item \label{prop:transfer-K/W}If $\X_{2}$ is continuous and has
+density $f_{\X_{2}}$ satisfying $\left\Vert f_{\X_{2}}\right\Vert _{\infty}\le C$
+for some $C>0$, then $d_{\K}\left(\X_{1},\X_{2}\right)\le\sqrt{2Cd_{\BL}\left(\X_{1},\X_{2}\right)}$.
 
 \end{enumerate}\end{prop}
 \begin{proof}
@@ -1364,8 +1368,9 @@ and similarly\vspace{-10pt}
 So, we can take $\varepsilon=\sqrt{2d_{\BL}\left(\X_{1},\X_{2}\right)/C}$
 to prove \ref{prop:transfer-K/W}.\end{proof}
 \begin{example}
-If $\Lb{\X_{2}}=\N\left(0,1\right)$ then $f_{\X_{2}}\left(x\right)=\left(2\pi\right)^{-1/2}e^{-x^{2}/2}$
-so we can take $C=\left(2\pi\right)^{-1/2}$ to obtain $d_{\K}\le\left(2/\pi\right)^{1/4}\sqrt{d_{\BL}\left(\X_{1},\X_{2}\right)}$.
+If $\X_{2}\in\N\left(0,1\right)$ then $\X_{2}$ has density given
+by $f_{\X_{2}}\left(x\right)=\left(2\pi\right)^{-1/2}e^{-x^{2}/2}$.
+We can take $C=\left(2\pi\right)^{-1/2}$ to obtain $d_{\K}\left(\X_{1},\X_{2}\right)\le\left(2/\pi\right)^{1/4}\sqrt{d_{\BL}\left(\X_{1},\X_{2}\right)}$.
 \end{example}
 \begin{comment}In a combinatorial setting, many of our results are
 about integer random variables. The total variation metric is usually
@@ -1820,7 +1825,7 @@ d_{\W}\left(\X,\N\left(0,1\right)\right)\le\frac{C}{\sqrt{n}}\,\E\left|Q\right|^
 \]
 for some constant $C$.\end{thm}
 \begin{rem}
-In the following proof, we will prove the theoren with $C=9$. The
+In the following proof, we will prove the theorem with $C=9$. The
 sharper bounds in \ref{rem:better-wasserstein-bounds} yield $C=3$
 with the same argument.
 \end{rem}
@@ -2609,7 +2614,7 @@ viewed as a connected one-dimensional simplicial complex. The zeroth
 reduced homology group $\ker\partial_{0}/\im\partial_{1}$ of a connected
 simplicial complex is trivial, and this motivates the construction
 of a characterizing operator in a natural way. (The following theorem
-is self-contained and requires no knowledge of homology).
+is self-contained and requires no knowledge of simplicial homology).
 \begin{thm}
 \label{thm:characterizing-from-exchangeable-pair}Suppose\textup{
 $\eX$ }is a connected exchangeable pair with margins $\L{\X}$. Let
