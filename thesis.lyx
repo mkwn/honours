@@ -271,6 +271,12 @@ Submitted in partial fulfillment of the requirements of the degree of
 \end_inset
 
 Bachelor of Science with Honours
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+(Updated with corrections since submission)
 \end_layout
 
 \begin_layout Standard
@@ -3000,7 +3006,7 @@ Let
 
  be an event with nonzero probability.
  The expected value of the distribution 
-\begin_inset Formula $\L{\X|\A_{1}}$
+\begin_inset Formula $\L{\X|\A}$
 \end_inset
 
  is called the 
@@ -3010,13 +3016,13 @@ conditional expected value of
 \end_inset
 
  given 
-\begin_inset Formula $\A_{1}$
+\begin_inset Formula $\A$
 \end_inset
 
 
 \emph default
  and is denoted 
-\begin_inset Formula $\E\left[\X|\A_{1}\right]$
+\begin_inset Formula $\E\left[\X|\A\right]$
 \end_inset
 
 .
@@ -4838,8 +4844,8 @@ In functional analysis terms, note that
 \end_inset
 
  in the weak-star topology.
- The subspace corresponding to the set of real probability distributions
- 
+ The subspace topology corresponding to the set of real probability distribution
+s 
 \begin_inset Formula $\P\left(\RR\right)$
 \end_inset
 
@@ -4855,7 +4861,7 @@ Although
 \begin_inset Formula $C_{b}\left(\RR\right)^{*}$
 \end_inset
 
- is not metrizable, the unit ball (in operator norm) of 
+ is not metrizable, the unit ball (in dual space norm) of 
 \begin_inset Formula $C_{b}\left(\RR\right)^{*}$
 \end_inset
 
@@ -4895,7 +4901,14 @@ Let
 \begin_inset Formula $\cH$
 \end_inset
 
- be a determining class of real measurable 
+ be a determining class (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:determining-class"
+
+\end_inset
+
+) of real measurable 
 \begin_inset Quotes eld
 \end_inset
 
@@ -4903,7 +4916,7 @@ test
 \begin_inset Quotes erd
 \end_inset
 
- functions that are uniformly absolutely bounded.
+ functions that are uniformly bounded.
  Define 
 \begin_inset Formula $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$
 \end_inset
@@ -10085,18 +10098,6 @@ Suppose
 
 .
  Also suppose that 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
 \begin_inset Formula $\left(\X^{\left(\i\right)}\right)_{\i=1}^{n}$
 \end_inset
 
@@ -10109,18 +10110,6 @@ Suppose
 \end_inset
 
  are coupled in such a way that 
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-
 \begin_inset Formula $\X^{\left(\i\right)}\in\Lb{\X|Q_{i}=1}$
 \end_inset
 

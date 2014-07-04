@@ -198,7 +198,8 @@ The University of New South Wales}
 \vfill{}
 Submitted in partial fulfillment of the requirements of the degree
 of\\
-Bachelor of Science with Honours
+Bachelor of Science with Honours\\
+\textbf{(Updated with corrections since submission)}
 \par\end{center}
 
 \thispagestyle{empty}\end{titlepage}
@@ -787,9 +788,9 @@ implies $\Pr_{1}=\Pr_{2}$, for any $\Pr_{1},\Pr_{2}\in\P\left(\RR\right)$.
 Another important concept later will be the idea of conditional expectation.
 \begin{defn}
 Let $\X$ be a random variable and $\A$ be an event with nonzero
-probability. The expected value of the distribution $\L{\X|\A_{1}}$
-is called the \emph{conditional expected value of $\X$ given $\A_{1}$}
-and is denoted $\E\left[\X|\A_{1}\right]$.
+probability. The expected value of the distribution $\L{\X|\A}$ is
+called the \emph{conditional expected value of $\X$ given $\A$}
+and is denoted $\E\left[\X|\A\right]$.
 \end{defn}
 We can also define conditional expectation with respect to another
 random variable. If $\X_{1}$ and $\X_{2}$ are random variables defined
@@ -1118,18 +1119,18 @@ to the same underlying space.
 In functional analysis terms, note that expectation operators are
 bounded linear functionals on the space of real bounded continuous
 functions. Then, $\Lb{\X_{n}}\to\Lb{\X}$ just means that $\E_{\X_{n}}\to\E_{\X}$
-in the weak-star topology. The subspace corresponding to the set of
-real probability distributions $\P\left(\RR\right)$ is confusingly
-called the \emph{weak topology} on probability distributions.
+in the weak-star topology. The subspace topology corresponding to
+the set of real probability distributions $\P\left(\RR\right)$ is
+confusingly called the \emph{weak topology} on probability distributions.
 
 Although $C_{b}\left(\RR\right)^{*}$ is not metrizable, the unit
-ball (in operator norm) of $C_{b}\left(\RR\right)^{*}$ is in fact
+ball (in dual space norm) of $C_{b}\left(\RR\right)^{*}$ is in fact
 metrizable (see \cite[Theorems~3.15~and~3.16]{Rud73}). Every expectation
 functional $\E$ has unit operator norm because $\E\left|\h\right|\le\E\left|1\right|=1$
 for $\h$ with unit uniform norm. So, the weak topology is metrizable.
 \begin{defn}
-\label{def:general-metrics}Let $\cH$ be a determining class of real
-measurable ``test'' functions that are uniformly absolutely bounded.
+\label{def:general-metrics}Let $\cH$ be a determining class (\ref{def:determining-class})
+of real measurable ``test'' functions that are uniformly bounded.
 Define $d_{\cH}:\P\left(\RR\right)^{2}\to\RR^{+}$ by 
 \[
 d_{\cH}\left(\Pr_{1},\Pr_{2}\right)=\sup_{\h\in\cH}\left|\E_{\Pr_{1}}\h-\E_{\Pr_{2}}\h\right|.
@@ -2188,8 +2189,8 @@ and Poisson approximation in combinatorial applications.
 \begin{prop}
 Suppose $\left(Q_{\i}\right)_{\i=1}^{n}$ is a sequence of zero-one
 random variables, such that $\X=\sum_{\i=1}^{n}Q_{\i}$. Also suppose
-that \textup{$\left(\X^{\left(\i\right)}\right)_{\i=1}^{n}$, $\left(Q_{\i}\right)_{\i=1}^{n}$
-and $\X$ are coupled in such a way that }$\X^{\left(\i\right)}\in\Lb{\X|Q_{i}=1}$
+that $\left(\X^{\left(\i\right)}\right)_{\i=1}^{n}$, $\left(Q_{\i}\right)_{\i=1}^{n}$
+and $\X$ are coupled in such a way that $\X^{\left(\i\right)}\in\Lb{\X|Q_{i}=1}$
 for each $\i$. Let $I$ be a random variable independent of all the
 random variables defined so far, with distribution satisfying $\L I\left(i\right)=\Pr\left(Q_{i}=1\right)/\E\X$.
 Then $\X^{\left(I\right)}\in\Ls{\X}$.\end{prop}
