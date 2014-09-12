@@ -267,6 +267,19 @@ School of Mathematics and Statistics,
 \end_inset
 
 The University of New South Wales
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+date{June 5, 2014}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -283,9 +296,20 @@ Bachelor of Science with Honours
 \begin_inset Newline newline
 \end_inset
 
+(Updated with corrections on 
+\begin_inset ERT
+status open
 
-\series bold
-(Updated with corrections since submission)
+\begin_layout Plain Layout
+
+
+\backslash
+today
+\end_layout
+
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Standard
