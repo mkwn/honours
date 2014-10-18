@@ -14747,7 +14747,7 @@ The idea is that a switching
 \end_inset
 
 , whose edges we can weight if desired.
- Loops are then added as necessary to so that each vertex has the same weight
+ Loops are then added as necessary so that each vertex has the same weight
  
 \begin_inset Formula $\Delta$
 \end_inset
